@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators } from '@an
 import { AttributeService } from './attribute.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import Utils from 'src/app/shared/utils';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ActionData } from '../../action.data';
 import { ActionComponent } from '../../action.component';
 import { ActionService } from '../../action.service';

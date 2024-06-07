@@ -9,7 +9,7 @@ import Utils from 'src/app/shared/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 //import { VerifyCustomerDialogComponent } from './verify-customer-dialog/verify-customer-dialog.component';
 import { CustomerVerifyData } from './verify-customer-dialog/customer-verify-data';
 import { TabManageService, TabParam } from 'src/app/layouts/admin/tab-manage.service';

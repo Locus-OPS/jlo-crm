@@ -3,7 +3,7 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { RedeemSummaryDialogComponent } from './redeem-summary-dialog/redeem-summary-dialog.component';
 import { TableControl } from 'src/app/shared/table-control';
 import { RedemptionMemberInfo, RedemptionReward } from './member-redeem.model';
@@ -12,7 +12,7 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({

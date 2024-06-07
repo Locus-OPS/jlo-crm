@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TransactionReceiptService } from './transaction-receipt.service';
 import { ModalMemberComponent } from '../../common/modal-member/modal-member.component';
 import { ModalShopComponent } from '../../common/modal-shop/modal-shop.component';

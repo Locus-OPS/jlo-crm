@@ -9,7 +9,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { filter } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs';
 
 @Component({
   selector: 'app-layout',

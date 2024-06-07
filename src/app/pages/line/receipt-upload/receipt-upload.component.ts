@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalConfirmComponent } from '../../common/modal-confirm/modal-confirm.component';
 import { LineUserProfile } from '../liff.model';
 import { LiffService } from '../liff.service';

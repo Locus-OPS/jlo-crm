@@ -5,7 +5,7 @@ import { AttributeService } from './attribute.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import Utils from 'src/app/shared/utils';
 import { CriteriaService } from '../../criteria.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { CriteriaComponent } from '../../criteria.component';
 import { CriteriaData } from '../../criteria.data';
 

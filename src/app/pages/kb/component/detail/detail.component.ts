@@ -9,7 +9,7 @@ import { KbDetail } from '../../kb.model';
 import { KbStore } from '../../kb.store';
 import * as moment from 'moment';
 import { of } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TreeModalComponent } from './tree-modal/tree-modal.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';

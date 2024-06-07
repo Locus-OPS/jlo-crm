@@ -4,7 +4,7 @@ import { TableControl } from 'src/app/shared/table-control';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { RoleService } from './role.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ResponsibilityComponent } from './responsibility/responsibility.component';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';

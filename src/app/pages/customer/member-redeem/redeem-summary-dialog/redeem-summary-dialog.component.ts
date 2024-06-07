@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { RedemptionReward, RedemptionMemberInfo } from '../member-redeem.model';
 import Utils from 'src/app/shared/utils';
 import { MemberRedeemService } from '../member-redeem.service';

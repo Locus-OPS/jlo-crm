@@ -18,7 +18,7 @@ import { Case } from '../../case/case.model';
 import { CaseStore } from '../../case/case.store';
 import { TabParam, TabManageService } from 'src/app/layouts/admin/tab-manage.service';
 import { ReIssuesCardComponent } from './re-issues-card/re-issues-card.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BlockCardComponent } from './block-card/block-card.component';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';

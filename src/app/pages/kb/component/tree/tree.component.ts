@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, OnDestroy } from '@angular/core';
 import { KbNode, FlatNode } from '../../kb.model';
-import { MatDialog } from '@angular/material/dialog';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { KbService } from '../../kb.service';
