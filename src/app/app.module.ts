@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from './../environments/environment';
@@ -37,51 +37,45 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, environment.endpoint + '/api/internationalization/getTranslation/', '.json');
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-    AuthLayoutComponent,
-    BaseComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    NgxSpinnerModule,
-    SweetAlert2Module.forRoot({
-      buttonsStyling: false,
-      customClass: 'modal-content',
-      confirmButtonClass: 'btn btn-primary',
-      cancelButtonClass: 'btn'
-    }),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: jwtTokenGetter,
-        whitelistedDomains: environment.whitelistedDomains,
-        blacklistedRoutes: [new RegExp('.+\/oauth\/token')]
-      }
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    HttpClientModule,
-    SharedModule,
-    SidebarModule,
-    NavbarModule,
-    FooterModule,
-    FixedpluginModule
-  ],
-  providers: [
-    Globals,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AdminLayoutComponent,
+        AuthLayoutComponent,
+        BaseComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        CommonModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        NgxSpinnerModule,
+        SweetAlert2Module.forRoot({
+            buttonsStyling: false,
+            customClass: 'modal-content',
+            confirmButtonClass: 'btn btn-primary',
+            cancelButtonClass: 'btn'
+        }),
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: jwtTokenGetter,
+                whitelistedDomains: environment.whitelistedDomains,
+                blacklistedRoutes: [new RegExp('.+\/oauth\/token')]
+            }
+        }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        SharedModule,
+        SidebarModule,
+        NavbarModule,
+        FooterModule,
+        FixedpluginModule], providers: [
+        Globals,
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}
