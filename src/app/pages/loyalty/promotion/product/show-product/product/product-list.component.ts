@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { ProductListData } from './product-list-data';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { ProductListService } from './product-list.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -25,7 +25,7 @@ export class ProductListComponent implements OnInit {
 
   dataSource: any;
   displayedColumns: string[] = ['select', 'item', 'parentCategory', 'category'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   selectedRow: ProductListData;
 
   parentCategoryList: Dropdown[];
@@ -38,7 +38,7 @@ export class ProductListComponent implements OnInit {
   constructor(
     private api: ApiService,
     private productListService: ProductListService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<ProductListComponent>,
     //@Inject(MAT_DIALOG_DATA) public data: ProductData
   ) {

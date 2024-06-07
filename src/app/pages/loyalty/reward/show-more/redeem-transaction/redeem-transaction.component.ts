@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import Utils from 'src/app/shared/utils';
 import { RedeemTransactionService } from './redeem-transaction.service';
@@ -31,10 +31,10 @@ export class RedeemTransactionComponent extends BaseComponent implements OnInit,
   displayedColumns: string[] = ['txnId', 'memberId', 'firstName', 'lastName', 'memberTierName', 'channelName', 'redeemMethodName'
     , 'quantity', 'requestPoint', 'requestCash', 'processedDate'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private redeemTransactionService: RedeemTransactionService,
     private rewardStore: RewardStore,
     public router: Router,

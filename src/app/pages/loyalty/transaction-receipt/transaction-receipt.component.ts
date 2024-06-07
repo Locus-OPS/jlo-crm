@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TransactionReceiptService } from './transaction-receipt.service';
@@ -21,7 +21,7 @@ export class TransactionReceiptComponent extends BaseComponent implements OnInit
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
   
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   
   receiptInfo: ReceiptModel;
 
@@ -30,7 +30,7 @@ export class TransactionReceiptComponent extends BaseComponent implements OnInit
     private receiptService: TransactionReceiptService,
     public router: Router,
     public globals: Globals,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialog: MatDialog
   ) {
     super(router, globals);

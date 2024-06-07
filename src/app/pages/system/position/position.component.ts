@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { PositionService } from './position.service';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -22,8 +22,8 @@ export class PositionComponent extends BaseComponent implements OnInit {
 
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   posList: Dropdown[];
 
@@ -32,7 +32,7 @@ export class PositionComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['posId', 'posName', 'parentPosName', 'action'];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private positionService: PositionService,
     private api: ApiService,
     public router: Router,

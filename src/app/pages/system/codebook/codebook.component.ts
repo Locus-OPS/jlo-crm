@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { CodebookService } from './codebook.service';
 import Utils from 'src/app/shared/utils';
 import { MatSort } from '@angular/material/sort';
@@ -26,8 +26,8 @@ export class CodebookComponent extends BaseComponent implements OnInit {
   businessUnitList: Dropdown[];
   codeTypeList: Dropdown[];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   sortColumn: string;
   sortDirection: string;
@@ -43,7 +43,7 @@ export class CodebookComponent extends BaseComponent implements OnInit {
   constructor(
     public codebookService: CodebookService,
     private api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

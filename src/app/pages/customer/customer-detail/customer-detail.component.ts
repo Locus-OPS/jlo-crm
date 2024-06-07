@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { CustomerAddressData } from '../customer-address-data';
 import { TableControl } from 'src/app/shared/table-control';
 import { ChangeLog } from 'src/app/model/change-log.model';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { CustomerService } from '../customer.service';
 import Utils from 'src/app/shared/utils';
@@ -51,9 +51,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   changeLogColumn: string[] = ['changedBy', 'changedDetail', 'changedDate'];
   changeLogTableControl: TableControl = new TableControl(() => { this.searchChangeLog() });
 
-  createForm: FormGroup;
-  addressForm: FormGroup;
-  caseForm:FormGroup;
+  createForm: UntypedFormGroup;
+  addressForm: UntypedFormGroup;
+  caseForm:UntypedFormGroup;
 
   createDisabled: Boolean;
   addressDisabled: Boolean;
@@ -88,7 +88,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     private tabManageService: TabManageService,
     private tabParam: TabParam,
     private api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private customerService: CustomerService,
     private el: ElementRef,
     public dialog: MatDialog,
@@ -149,10 +149,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       registrationStore: [''],
       remark: [''],
       programId: [''],
-      createdBy: new FormControl({ value: '', disabled: true }),
-      createdDate: new FormControl({ value: '', disabled: true }),
-      updatedBy: new FormControl({ value: '', disabled: true }),
-      updatedDate: new FormControl({ value: '', disabled: true })
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true })
     });
 
     this.addressForm = this.formBuilder.group({
@@ -167,10 +167,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       district: [''],
       province: [''],
       country: [''],
-      createdBy: new FormControl({ value: '', disabled: true }),
-      createdDate: new FormControl({ value: '', disabled: true }),
-      updatedBy: new FormControl({ value: '', disabled: true }),
-      updatedDate: new FormControl({ value: '', disabled: true })
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true })
     });
 
     this.caseForm = this.formBuilder.group({

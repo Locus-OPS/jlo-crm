@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { CriteriaData } from './criteria.data';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { CriteriaService } from './criteria.service';
@@ -30,7 +30,7 @@ export class CriteriaComponent extends BaseComponent implements OnInit {
   dataSource: CriteriaData[];
   displayedColumns: string[] = ['description', 'exp', 'action'];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   submitted = false;
   created = false;
@@ -40,7 +40,7 @@ export class CriteriaComponent extends BaseComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private criteriaService: CriteriaService,
     public router: Router,
     public globals: Globals

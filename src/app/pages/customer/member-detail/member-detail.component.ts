@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { MemberService } from './member.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,12 +44,12 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
 
   servicePath:string;
 
-  memberForm:FormGroup;
-  cardForm:FormGroup;
-  addressForm:FormGroup;
-  attForm:FormGroup;
-  caseForm:FormGroup;
-  transactionForm:FormGroup;
+  memberForm:UntypedFormGroup;
+  cardForm:UntypedFormGroup;
+  addressForm:UntypedFormGroup;
+  attForm:UntypedFormGroup;
+  caseForm:UntypedFormGroup;
+  transactionForm:UntypedFormGroup;
 
   /* card table */
   cardSelectedRow: MemberCardData;
@@ -119,7 +119,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     private tabManageService:TabManageService,
     private memberRedeemService: MemberRedeemService,
     private api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private customerService : CustomerService,
     private memberService:MemberService,
     private caseStore:CaseStore,
@@ -175,10 +175,10 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.memberForm = this.formBuilder.group({
       memberCardNo:[''],
       cardTierId:[''],
-      tierName:new FormControl({value: '', disabled: true}),
-      cardStatus:new FormControl({value: '', disabled: true}),
-      cardActiveDate:new FormControl({value: '', disabled: true}),
-      cardExpiryDate:new FormControl({value: '', disabled: true}),
+      tierName:new UntypedFormControl({value: '', disabled: true}),
+      cardStatus:new UntypedFormControl({value: '', disabled: true}),
+      cardActiveDate:new UntypedFormControl({value: '', disabled: true}),
+      cardExpiryDate:new UntypedFormControl({value: '', disabled: true}),
       memberId:[''],
       customerId:[''],
       // customerType:[true],
@@ -202,18 +202,18 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       phoneArea:[''],
       phoneNo:[''],
       email:[''],
-      registrationChannel:new FormControl({value: '', disabled: true}),
-      registrationStore:new FormControl({value: '', disabled: true}),
+      registrationChannel:new UntypedFormControl({value: '', disabled: true}),
+      registrationStore:new UntypedFormControl({value: '', disabled: true}),
       remark:[''],
       createdBy:[''],
       createdDate:[''],
       updatedBy:[''],
       updatedDate:[''],
       programId:[''],
-      programName:new FormControl({value: '', disabled: true}),
+      programName:new UntypedFormControl({value: '', disabled: true}),
       currentPoint:[''],
       pointExpireThisYear:[''],
-      lastCalculatedDate:new FormControl({value: '', disabled: true}),
+      lastCalculatedDate:new UntypedFormControl({value: '', disabled: true}),
     });
 
     this.cardForm = this.formBuilder.group({
@@ -230,10 +230,10 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       cardLastBlockDate:[''],
       reIssueReason:[''],
       reIssueCardNo:[''],
-      createdBy:new FormControl({value: '', disabled: true}),
-      createdDate:new FormControl({value: '', disabled: true}),
-      updatedBy:new FormControl({value: '', disabled: true}),
-      updatedDate:new FormControl({value: '', disabled: true}),
+      createdBy:new UntypedFormControl({value: '', disabled: true}),
+      createdDate:new UntypedFormControl({value: '', disabled: true}),
+      updatedBy:new UntypedFormControl({value: '', disabled: true}),
+      updatedDate:new UntypedFormControl({value: '', disabled: true}),
     });
 
     this.addressForm = this.formBuilder.group({
@@ -248,24 +248,24 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       district:[''],
       province:[''],
       country:[''],
-      createdBy:new FormControl({value: '', disabled: true}),
-      createdDate:new FormControl({value: '', disabled: true}),
-      updatedBy:new FormControl({value: '', disabled: true}),
-      updatedDate:new FormControl({value: '', disabled: true}),
+      createdBy:new UntypedFormControl({value: '', disabled: true}),
+      createdDate:new UntypedFormControl({value: '', disabled: true}),
+      updatedBy:new UntypedFormControl({value: '', disabled: true}),
+      updatedDate:new UntypedFormControl({value: '', disabled: true}),
     });
 
     this.attForm = this.formBuilder.group({
       memberAttId:[],
       memberId:[],
       attId:[],
-      fileName:new FormControl({value: '', disabled: true}),
-      filePath:new FormControl({value: '', disabled: true}),
+      fileName:new UntypedFormControl({value: '', disabled: true}),
+      filePath:new UntypedFormControl({value: '', disabled: true}),
       title: [''],
       descp:[''],
-      createdBy: new FormControl({value: '', disabled: true}),
-      createdDate:new FormControl({value: '', disabled: true}),
-      updatedBy:new FormControl({value: '', disabled: true}),
-      updatedDate:new FormControl({value: '', disabled: true}),
+      createdBy: new UntypedFormControl({value: '', disabled: true}),
+      createdDate:new UntypedFormControl({value: '', disabled: true}),
+      updatedBy:new UntypedFormControl({value: '', disabled: true}),
+      updatedDate:new UntypedFormControl({value: '', disabled: true}),
     });
 
     this.caseForm = this.formBuilder.group({

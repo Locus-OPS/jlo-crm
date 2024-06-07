@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { MemberData } from './member.data';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { MemberService } from './member.service';
 import Utils from 'src/app/shared/utils';
 import { Router } from '@angular/router';
@@ -45,7 +45,7 @@ export class MemberComponent extends BaseComponent implements OnInit, OnDestroy 
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private memberService: MemberService,
     private promotionStore: PromotionStore,
     public router: Router,

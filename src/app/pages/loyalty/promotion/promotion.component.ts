@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { PromotionData } from './promotion.data';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import { PromotionService } from './promotion.service';
@@ -30,8 +30,8 @@ export class PromotionComponent extends BaseComponent implements OnInit {
   dataSource: PromotionData[];
   displayedColumns: string[] = ['promotion', 'startDate', 'endDate', 'promotionType', 'program', 'baseFlag', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   programList: Dropdown[];
   promotionTypeList: Dropdown[];
@@ -56,7 +56,7 @@ export class PromotionComponent extends BaseComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private promotionService: PromotionService,
     private promotionStore: PromotionStore,
     public router: Router,

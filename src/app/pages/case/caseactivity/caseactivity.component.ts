@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { Caseactivity } from './caseactivity.model';
@@ -32,8 +32,8 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
 
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchForm: FormGroup;
-  actCreateForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  actCreateForm: UntypedFormGroup;
   actTypeList: Dropdown[];
   actStatusList: Dropdown[];
 
@@ -47,7 +47,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private caseactivityService: CaseactivityService,
     private caseStore: CaseStore,
     public router: Router,

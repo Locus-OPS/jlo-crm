@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { BurnData } from './burn-data';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { BurnItemService } from './burn-item.service';
 
@@ -18,11 +18,11 @@ export class BurnItemComponent implements OnInit {
   dataSource: BurnData[];
   displayedColumns: string[] = ['burnId', 'earnId', 'burnValue', 'promotion',
   'rule', 'action'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
     private burnItemService: BurnItemService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit() {

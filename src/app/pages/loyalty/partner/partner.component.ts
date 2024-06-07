@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { PartnerTypeComponent } from './partner-type/partner-type.component';
@@ -30,8 +30,8 @@ export class PartnerComponent extends BaseComponent implements OnInit {
   dataSource: PartnerData[];
   displayedColumns: string[] = ['partnerNo', 'partner', 'partnerType', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   partnerTypeList: Dropdown[];
   activeFlagList: Dropdown[];
@@ -43,7 +43,7 @@ export class PartnerComponent extends BaseComponent implements OnInit {
   constructor(
     public api: ApiService,
     private partnerService: PartnerService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialog: MatDialog,
     public router: Router,
     public globals: Globals

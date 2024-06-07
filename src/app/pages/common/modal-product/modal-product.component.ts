@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { ModalProductModel } from '../../common/modal-product/modal-product.model';
@@ -24,7 +24,7 @@ export class ModalProductComponent implements OnInit {
   dataSource: ModalProductModel[];
   displayedColumns: string[] = ['item', 'parentCategory', 'category'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   parentCategoryList: Dropdown[];
   categoryList: Dropdown[];
@@ -35,7 +35,7 @@ export class ModalProductComponent implements OnInit {
       private dialogRef: MatDialogRef<ModalProductComponent>,
       public api: ApiService,
       private productPopupService: ProductPopupService,
-      private formBuilder: FormBuilder,
+      private formBuilder: UntypedFormBuilder,
       public router: Router,
       public globals: Globals,) {
         this.api.getProductCategory().then(result => {

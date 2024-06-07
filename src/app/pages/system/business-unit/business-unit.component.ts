@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -26,8 +26,8 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   isUpdate = false;
   selectedRow: BusinessUnit;
@@ -36,7 +36,7 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private businessUnitService: BusinessUnitService,
     public router: Router,
     public globals: Globals

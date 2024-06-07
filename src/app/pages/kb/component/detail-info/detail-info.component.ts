@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { KbDetail, KbDetailInfo } from '../../kb.model';
 import { KbService } from '../../kb.service';
@@ -19,12 +19,12 @@ export class DetailInfoComponent extends BaseComponent implements OnInit, OnDest
   @Input()
   translatePrefix: string;
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   kbDetailSubscription: Subscription;
   kbDetail: KbDetail = null;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private kbService: KbService,
     private kbStore: KbStore,
     public router: Router,

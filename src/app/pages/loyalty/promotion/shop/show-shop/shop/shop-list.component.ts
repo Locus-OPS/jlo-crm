@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { ShopListService } from './shop-list.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -25,7 +25,7 @@ export class ShopListComponent implements OnInit {
 
   dataSource: any;
   displayedColumns: string[] = ['select', 'shopType', 'shopName', 'locationName'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   selectedRow: ShopListData;
 
   locationList: Dropdown[];
@@ -36,7 +36,7 @@ export class ShopListComponent implements OnInit {
   constructor(
     private api: ApiService,
     private shopListService: ShopListService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<ShopListComponent>,
     //@Inject(MAT_DIALOG_DATA) public data: ShopData
     ){

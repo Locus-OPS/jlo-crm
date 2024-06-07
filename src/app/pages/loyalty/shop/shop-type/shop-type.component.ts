@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
@@ -36,8 +36,8 @@ export class ShopTypeComponent extends BaseComponent implements OnInit {
   dataSource: ShopTypeData[];
   displayedColumns: string[] = ['shopType', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   activeFlagList: Dropdown[];
   shopTypeList: Dropdown[];
@@ -51,7 +51,7 @@ export class ShopTypeComponent extends BaseComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ShopTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ShopTypeData, // DialogData,
-    public api: ApiService, private formBuilder: FormBuilder,
+    public api: ApiService, private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

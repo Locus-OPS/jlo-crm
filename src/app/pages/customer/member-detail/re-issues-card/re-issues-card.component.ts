@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MemberCardData } from '../member-card-data';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MemberService } from '../member.service';
 import Utils from 'src/app/shared/utils';
 
@@ -12,18 +12,18 @@ import Utils from 'src/app/shared/utils';
 })
 export class ReIssuesCardComponent implements OnInit {
 
-  issueCardForm:FormGroup;
+  issueCardForm:UntypedFormGroup;
 
   tierList:Array<any>;
 
-  constructor(private memberService:MemberService ,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<ReIssuesCardComponent>,@Inject(MAT_DIALOG_DATA) public data:MemberCardData) { }
+  constructor(private memberService:MemberService ,private formBuilder:UntypedFormBuilder,public dialogRef: MatDialogRef<ReIssuesCardComponent>,@Inject(MAT_DIALOG_DATA) public data:MemberCardData) { }
 
   ngOnInit(): void {
     this.issueCardForm = this.formBuilder.group({
       memberId:this.data.memberId,
       programId:this.data.programId,
-      programName:new FormControl({value: this.data.programName, disabled: true}),
-      memberCardNo: new FormControl({value: this.data.memberCardNo, disabled: true}),
+      programName:new UntypedFormControl({value: this.data.programName, disabled: true}),
+      memberCardNo: new UntypedFormControl({value: this.data.memberCardNo, disabled: true}),
       cardTierId:[this.data.cardTierId, Validators.required],
       reIssueReason: ['', Validators.required],
       reIssueCardNo: [this.data.memberCardNo]

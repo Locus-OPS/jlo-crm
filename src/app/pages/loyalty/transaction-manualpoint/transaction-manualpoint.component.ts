@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalMemberComponent } from '../../common/modal-member/modal-member.component';
@@ -33,8 +33,8 @@ export class TransactionManualPointComponent extends BaseComponent implements On
     'createdBy', 'updatedDate', 'updatedBy'];
 
   
-  searchForm : FormGroup;
-  adjustForm : FormGroup;
+  searchForm : UntypedFormGroup;
+  adjustForm : UntypedFormGroup;
 
   submitted = false;
   isReadOnly = false;
@@ -52,7 +52,7 @@ export class TransactionManualPointComponent extends BaseComponent implements On
     private manualPointService: TransactionManualPointService,
     public router: Router,
     public globals: Globals,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialog: MatDialog,
     
   ) {

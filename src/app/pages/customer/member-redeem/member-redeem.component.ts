@@ -10,7 +10,7 @@ import { RedemptionMemberInfo, RedemptionReward } from './member-redeem.model';
 import { MemberRedeemService } from './member-redeem.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -26,7 +26,7 @@ export class MemberRedeemComponent extends BaseComponent implements OnInit {
   dataSource: RedemptionReward[];
   displayedColumns: string[] = ['productName', 'point', 'cash', 'quantity', 'action'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   memberId: number;
 
@@ -42,7 +42,7 @@ export class MemberRedeemComponent extends BaseComponent implements OnInit {
     public globals: Globals,
     private tabParam: TabParam,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: ApiService,
     private memberRedeemService: MemberRedeemService,
     private translateService: TranslateService,

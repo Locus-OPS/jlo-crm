@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { LiffService } from '../liff.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { LineService } from '../line.service';
 import { LineUserProfile } from '../liff.model';
 
@@ -25,7 +25,7 @@ export class LineMemberRegisterComponent implements OnInit {
   constructor(
     private liffService: LiffService,
     private lineService: LineService,
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {
 
   }

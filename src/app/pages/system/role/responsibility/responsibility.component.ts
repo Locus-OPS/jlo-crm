@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormArray, UntypedFormControl } from '@angular/forms';
 import { RoleService } from '../role.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import Utils from 'src/app/shared/utils';
@@ -36,14 +36,14 @@ export class ResponsibilityComponent extends BaseComponent implements OnInit {
 
   moduleList;
 
-  respForm: FormGroup;
+  respForm: UntypedFormGroup;
   roleCode: string;
   respList: Resp[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ResponsibilityComponent>,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private roleService: RoleService,
     public router: Router,
     public globals: Globals
@@ -65,7 +65,7 @@ export class ResponsibilityComponent extends BaseComponent implements OnInit {
         this.moduleList.forEach(item => {
           const formArray = this.formBuilder.array([]);
           item.subModuleList.forEach(sub => {
-            formArray.push(new FormControl(this.getRespValue(sub)));
+            formArray.push(new UntypedFormControl(this.getRespValue(sub)));
           });
           formConfig[item.formName] = formArray;
         });

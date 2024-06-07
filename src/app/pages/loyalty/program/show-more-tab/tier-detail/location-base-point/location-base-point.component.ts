@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { LocationBasePointData } from './location-base-point-data';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import Utils from 'src/app/shared/utils';
@@ -39,7 +39,7 @@ export class LocationBasePointComponent extends BaseComponent implements OnInit,
   dataSource: LocationBasePointData[];
   displayedColumns: string[] = ['location', 'shopType', 'shop', 'spending', 'point', 'activeFlag'];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   locationList: Dropdown[];
   submitted = false;
@@ -48,7 +48,7 @@ export class LocationBasePointComponent extends BaseComponent implements OnInit,
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private locationBasePointService: LocationBasePointService,
     private tierService: TierService,
     public dialog: MatDialog,

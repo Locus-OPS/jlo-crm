@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown, DropdownModel } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
@@ -32,8 +32,8 @@ export class SaleproductcategoryComponent extends BaseComponent implements OnIni
   displayedColumns: string[] = ['categoryCode', 'categoryName', 'level',
     'categoryStatusName', 'remark'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   saleProductCategoryStatusList: Dropdown[];
   productCategoryLevelList: Dropdown[];
@@ -46,7 +46,7 @@ export class SaleproductcategoryComponent extends BaseComponent implements OnIni
 
   constructor(
     public api: ApiService
-    , private formBuilder: FormBuilder
+    , private formBuilder: UntypedFormBuilder
     , private saleproductcategoryService: SaleproductcategoryService
     , public router: Router
     , public globals: Globals

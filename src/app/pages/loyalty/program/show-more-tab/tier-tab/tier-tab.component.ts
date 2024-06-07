@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { TierData } from './tier-data';
 import { TierService } from './tier.service';
@@ -40,7 +40,7 @@ export class TierTabComponent extends BaseComponent implements OnInit, OnDestroy
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private tierService: TierService,
     private programStore: ProgramStore,
     private tierStore: TierStore,

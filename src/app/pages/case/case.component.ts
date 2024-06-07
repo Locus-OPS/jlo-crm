@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -26,9 +26,9 @@ export class CaseComponent extends BaseComponent implements OnInit {
 
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
-  customerForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
+  customerForm: UntypedFormGroup;
 
   typeList: Dropdown[];
   subTypeList: Dropdown[];
@@ -50,7 +50,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private caseService: CaseService,
     private caseStore: CaseStore,
     public dialog: MatDialog,

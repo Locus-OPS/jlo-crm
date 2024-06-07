@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MemberCardData } from '../member-card-data';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, Validators, UntypedFormGroup } from '@angular/forms';
 import { MemberService } from '../member.service';
 import Utils from 'src/app/shared/utils';
 
@@ -12,9 +12,9 @@ import Utils from 'src/app/shared/utils';
 })
 export class BlockCardComponent implements OnInit {
 
-  blockCardForm:FormGroup;
+  blockCardForm:UntypedFormGroup;
 
-  constructor(private memberService:MemberService ,private formBuilder:FormBuilder,public dialogRef: MatDialogRef<BlockCardComponent>,@Inject(MAT_DIALOG_DATA) public data:MemberCardData) { }
+  constructor(private memberService:MemberService ,private formBuilder:UntypedFormBuilder,public dialogRef: MatDialogRef<BlockCardComponent>,@Inject(MAT_DIALOG_DATA) public data:MemberCardData) { }
 
   ngOnInit(): void {
     this.blockCardForm = this.formBuilder.group({

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { KbStore } from '../../kb.store';
 import { KbDetail } from '../../kb.model';
 import Utils from 'src/app/shared/utils';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
@@ -25,7 +25,7 @@ export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   kbDetail: KbDetail;
   keywords = [];
@@ -37,7 +37,7 @@ export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy
   constructor(
     private kbService: KbService,
     private kbStore: KbStore,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

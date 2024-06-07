@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -32,8 +32,8 @@ import { ModalCustomerComponent } from '../../common/modal-customer/modal-custom
 export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   selectedTab: number;
-  createForm: FormGroup;
-  customerForm: FormGroup;
+  createForm: UntypedFormGroup;
+  customerForm: UntypedFormGroup;
 
   typeList: Dropdown[];
   subTypeList: Dropdown[];
@@ -63,7 +63,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private caseService: CaseService,
     private _location: Location,
     private caseStore: CaseStore,

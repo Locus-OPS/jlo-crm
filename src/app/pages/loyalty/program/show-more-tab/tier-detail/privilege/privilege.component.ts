@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { PrivilegeData } from './privilege.data';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { PrivilegeService } from './privilege.service';
 import Utils from 'src/app/shared/utils';
@@ -35,7 +35,7 @@ export class PrivilegeComponent extends BaseComponent implements OnInit, OnDestr
   dataSource: PrivilegeData[];
   displayedColumns: string[] = ['serviceName', 'serviceTypeName', 'locationName', 'unitName', 'unitValue'];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   privilegeTypeList: Dropdown[];
   locationList: Dropdown[];
@@ -47,7 +47,7 @@ export class PrivilegeComponent extends BaseComponent implements OnInit, OnDestr
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private privilegeService: PrivilegeService,
     private tierStore: TierStore,
     public router: Router,

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import Utils from 'src/app/shared/utils';
@@ -31,8 +31,8 @@ export class ProgramComponent extends BaseComponent implements OnInit {
   dataSource: ProgramData[];
   displayedColumns: string[] = ['programCode', 'program', 'description', 'promotionCalculateRule', 'startDate', 'endDate', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   promotionCalculateRuleList: Dropdown[];
   activeFlagList: Dropdown[];
@@ -49,7 +49,7 @@ export class ProgramComponent extends BaseComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private programService: ProgramService,
     private programStore: ProgramStore,
     public router: Router,

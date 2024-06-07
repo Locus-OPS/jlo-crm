@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { AttributeTabData } from './attribute-tab-data';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import { AttributeTabService } from './attribute-tab.service';
@@ -37,8 +37,8 @@ export class AttributeTabComponent extends BaseComponent implements OnInit, OnDe
   programSubscription: Subscription;
   programData: ProgramData;
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   dataTypeList: Dropdown[];
   codeTypeList: Dropdown[];
@@ -55,7 +55,7 @@ export class AttributeTabComponent extends BaseComponent implements OnInit, OnDe
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private attributeTabService: AttributeTabService,
     private programStore: ProgramStore,
     public router: Router,

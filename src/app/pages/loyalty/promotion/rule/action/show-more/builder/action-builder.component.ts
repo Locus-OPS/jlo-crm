@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 import { AttributeService } from './attribute.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import Utils from 'src/app/shared/utils';
@@ -41,7 +41,7 @@ export class ActionBuilderComponent implements OnInit {
 
   pointExpireUnitList: Dropdown[];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   isCompareToObject = false;
   isCompareToValue = false;
   itemString: string;
@@ -85,7 +85,7 @@ export class ActionBuilderComponent implements OnInit {
                   , {codeId: '/', codeName: 'Divide'}];
 
   constructor( public dialogRef: MatDialogRef<ActionComponent>,
-    public api: ApiService, private formBuilder: FormBuilder
+    public api: ApiService, private formBuilder: UntypedFormBuilder
     , private attributeService: AttributeService, private actionService: ActionService) {
     //api.getCodebookByCodeType({ data: 'PROGRAM_DATA_TYPE_ATTRIBUTE' }).then(result => { this.dataTypeList = result.data; });
 

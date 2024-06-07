@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { PartnerService } from '../partner.service';
@@ -41,8 +41,8 @@ export class PartnerTypeComponent extends BaseComponent implements OnInit {
 
   displayedColumns: string[] = ['partnerType', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   activeFlagList: Dropdown[];
 
@@ -55,7 +55,7 @@ export class PartnerTypeComponent extends BaseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: PartnerTypeData, // DialogData,
     private api: ApiService,
     private partnerService: PartnerService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

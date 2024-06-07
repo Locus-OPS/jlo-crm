@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { UserService } from '../../user.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 interface LoginLogData {
   userId?: string;
@@ -28,11 +28,11 @@ export class LoginLogComponent implements OnInit {
   dataSource: LoginLogData[];
   displayedColumns: string[] = ['userId', 'attemptDate', 'type', 'ipAddress', 'statusCode', 'statusMessage'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit() {

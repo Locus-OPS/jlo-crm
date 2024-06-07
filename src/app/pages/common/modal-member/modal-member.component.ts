@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { ModalMemberModel } from '../../common/modal-member/modal-member.model';
@@ -24,14 +24,14 @@ export class ModalMemberComponent extends BaseComponent implements OnInit {
   dataSource: ModalMemberModel[];
   displayedColumns: string[] = ['memberId', 'memberName', 'memberType', 'cardNumber', 'memberMobile'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
       @Inject(MAT_DIALOG_DATA) public memberInfo: any,
       private dialogRef: MatDialogRef<ModalMemberComponent>,
       public api: ApiService,
       private memberPopupService: MemberPopupService,
-      private formBuilder: FormBuilder,
+      private formBuilder: UntypedFormBuilder,
       public router: Router,
       public globals: Globals) {
         super(router, globals);

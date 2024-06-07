@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, FormControl } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -27,8 +27,8 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
   langList: Dropdown[];
   tmpList: string[];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   isUpdate = false;
   selectedRow: Internationalization;
@@ -37,7 +37,7 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private internationalizationService: InternationalizationService,
     public router: Router,
     public globals: Globals,
@@ -49,7 +49,7 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
   }
 
   get formArray() {
-    return this.createForm.get('langs') as FormArray;
+    return this.createForm.get('langs') as UntypedFormArray;
   }
 
   ngOnInit() {

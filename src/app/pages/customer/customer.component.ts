@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { CustomerData } from './customer-data'
 import { CustomerService } from './customer.service';
@@ -30,17 +30,17 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'memberCardNo', 'customerType', 'approvedDate', 'approvedBy'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   
   selectedRow: CustomerData;
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   
   customerStatusList=[];
   titleNameList=[];
   nationalityList=[];
 
-  constructor(private api: ApiService,private formBuilder: FormBuilder, private customerService:CustomerService, private el:ElementRef, public router:Router,public globals:Globals  ) { 
+  constructor(private api: ApiService,private formBuilder: UntypedFormBuilder, private customerService:CustomerService, private el:ElementRef, public router:Router,public globals:Globals  ) { 
     super(router,globals);
     this.api.getMultipleCodebookByCodeType({
       data: ['CUSTOMER_STATUS','TITLE_NAME','NATIONALITY']
@@ -69,18 +69,18 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       customerId:[''],
       customerType:[true],
       customerStatus:['1'],
-      title:new FormControl({ value: '', disabled: true }),
-      firstName:new FormControl({ value: '', disabled: true }),
-      lastName:new FormControl({ value: '', disabled: true }),
-      nationality:new FormControl({ value: this.THAI_NATIONALITY, disabled: true }),
-      citizenId:new FormControl({ value: '', disabled: true }),
-      passportNo:new FormControl({ value: '', disabled: true }),
+      title:new UntypedFormControl({ value: '', disabled: true }),
+      firstName:new UntypedFormControl({ value: '', disabled: true }),
+      lastName:new UntypedFormControl({ value: '', disabled: true }),
+      nationality:new UntypedFormControl({ value: this.THAI_NATIONALITY, disabled: true }),
+      citizenId:new UntypedFormControl({ value: '', disabled: true }),
+      passportNo:new UntypedFormControl({ value: '', disabled: true }),
       birthDate:[''],
       gender:[''],
       maritalStatus:[''],
       occupation:[''],
-      businessName:new FormControl({ value: '', disabled: true }),
-      taxId:new FormControl({ value: '', disabled: true }),
+      businessName:new UntypedFormControl({ value: '', disabled: true }),
+      taxId:new UntypedFormControl({ value: '', disabled: true }),
       businessType:[''],
       phoneArea:[''],
       phoneNo:[''],

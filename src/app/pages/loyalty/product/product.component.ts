@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
@@ -31,8 +31,8 @@ export class ProductComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['productCode', 'product', 'loyProductType', 'campaign',
     'productCategory', 'productSubCategory', 'program', 'startDate', 'endDate', 'productActiveFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   productCategoryList: Dropdown[];
   productSubCategoryList: Dropdown[];
@@ -49,7 +49,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private productService: ProductService,
     public router: Router,
     public globals: Globals

@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { SweetAlertOptions } from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import * as moment from 'moment';
@@ -152,7 +152,7 @@ export default class Utils {
   }
 
 
-  static setDatePicker(source: FormGroup) {
+  static setDatePicker(source: UntypedFormGroup) {
     if (source.get('startDate').value) {
       const startDate = new Date(this.getStringForDate(source.get('startDate').value));
       source.get('startDate').setValue(startDate);
@@ -163,7 +163,7 @@ export default class Utils {
     }
   }
 
-  static setBirthDatePicker(source: FormGroup) {
+  static setBirthDatePicker(source: UntypedFormGroup) {
     if (source.get('birthDate').value) {
       const birthDate = new Date(this.getStringForDate(source.get('birthDate').value));
       source.get('birthDate').setValue(birthDate);

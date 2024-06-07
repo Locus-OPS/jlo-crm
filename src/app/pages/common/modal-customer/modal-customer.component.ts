@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
@@ -35,7 +35,7 @@ export class ModalCustomerComponent extends BaseComponent implements OnInit {
   imageSrc: string;
   uploadProgress = 0;
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   dataSource: CustomerData[];
   selectedRow: CustomerData;
@@ -48,7 +48,7 @@ export class ModalCustomerComponent extends BaseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public customerInfo: any,
     private dialogRef: MatDialogRef<ModalCustomerComponent>,
     private api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private customerModalService: CustomerModalService,
     private el: ElementRef,
     public router: Router,

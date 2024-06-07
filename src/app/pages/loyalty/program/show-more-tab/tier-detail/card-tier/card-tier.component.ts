@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
 import { CardTierData } from './card-tier-data';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { CardTierService } from './card-tier.service';
 import Utils from 'src/app/shared/utils';
@@ -34,7 +34,7 @@ export class CardTierComponent extends BaseComponent implements OnInit, OnDestro
   dataSource: CardTierData[];
   displayedColumns: string[] = ['cardType', 'prefix', 'primaryFlag'];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   submitted = false;
   created = false;
@@ -42,7 +42,7 @@ export class CardTierComponent extends BaseComponent implements OnInit, OnDestro
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cardTierService: CardTierService,
     private tierStore: TierStore,
     public router: Router,

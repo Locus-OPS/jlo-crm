@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { PromotionAttrData } from './promotion-attr-data';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { PromotionAttrService } from './promotion-attr.service';
 
@@ -18,11 +18,11 @@ export class PromotionAttrComponent implements OnInit {
   dataSource: PromotionAttrData[];
   displayedColumns: string[] = ['promotionId',
   'promotion', 'processedDate', 'attrName', 'attrValue'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
     private promotionAttrService: PromotionAttrService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit() {

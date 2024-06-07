@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseModel } from 'src/app/shared/base.model';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder, FormControl, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { RoleService } from './role.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,14 +23,14 @@ export class RoleComponent extends BaseComponent implements OnInit {
 
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   selectedRow: RoleModel;
   dataSource: RoleModel[];
   displayedColumns: string[] = ['roleName', 'useYn', 'respSetup', 'action'];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private roleService: RoleService,
     public dialog: MatDialog,
     public router: Router,

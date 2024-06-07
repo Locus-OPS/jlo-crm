@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { RedeemMethodData } from './redeem-method-data';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { RedeemMethodService } from './redeem-method.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -30,7 +30,7 @@ export class RedeemMethodComponent extends BaseComponent implements OnInit, OnDe
   selectedRow: RedeemMethodData;
   dataSource: RedeemMethodData[];
   displayedColumns: string[] = ['redeemMethodTypeName', 'point', 'cash', 'createdDate', 'createdBy', 'updatedDate', 'updatedBy'];
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   submitted = false;
   isPointReadonly = true;
@@ -43,7 +43,7 @@ export class RedeemMethodComponent extends BaseComponent implements OnInit, OnDe
   constructor(
     private redeemMethodService: RedeemMethodService,
     private rewardStore: RewardStore,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public api: ApiService,
     public router: Router,
     public globals: Globals

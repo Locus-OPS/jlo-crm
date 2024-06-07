@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { ShopData } from './tier-shop-data';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { TierShopService } from './tier-shop.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -24,8 +24,8 @@ export class TierLocationShopComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   displayedColumns: string[] = ['select', 'location', 'shop', 'shopType'];
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
   selectedRow: ShopData;
 
   locationList: Dropdown[];
@@ -37,7 +37,7 @@ export class TierLocationShopComponent implements OnInit {
   constructor(
     private api: ApiService,
     private tierShopService: TierShopService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<TierLocationShopComponent>,
   ) {
     this.api.getCodebookByCodeType({ data: 'LOCATION_CD' }).then(result => { this.locationList = result.data; });

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Globals } from './globals';
 import { MenuResp } from '../model/profile.model';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-base',
@@ -23,7 +23,7 @@ export class BaseComponent {
     this.menuResp = this.globals.profile.menuRespList.find(item => item.link === url);
   }
 
-  public CHECK_FORM_PERMISSION(formGroup: FormGroup) {
+  public CHECK_FORM_PERMISSION(formGroup: UntypedFormGroup) {
     if (!this.CAN_WRITE()) {
       formGroup.disable();
     }

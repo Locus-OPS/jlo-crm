@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import { KbService } from '../../kb.service';
@@ -33,14 +33,14 @@ export class DetailComponent extends BaseComponent implements OnInit, OnDestroy 
 
   contentIconList: Dropdown[];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   kbDetailSubscription: Subscription;
 
   creating: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private api: ApiService,
     private kbService: KbService,
     private kbStore: KbStore,

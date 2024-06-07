@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { RuleData } from './rule.data';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import Utils from 'src/app/shared/utils';
 import { RuleService } from './rule.service';
@@ -39,7 +39,7 @@ export class RuleComponent extends BaseComponent implements OnInit, OnDestroy {
   promotionSubscription: Subscription;
   promotionData: PromotionData;
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   submitted = false;
   created = false;
@@ -50,7 +50,7 @@ export class RuleComponent extends BaseComponent implements OnInit, OnDestroy {
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private ruleService: RuleService,
     private promotionStore: PromotionStore,
     public router: Router,

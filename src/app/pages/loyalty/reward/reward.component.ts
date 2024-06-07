@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import Utils from 'src/app/shared/utils';
@@ -37,8 +37,8 @@ export class RewardComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['productCode', 'product', 'campaign', 'rewardType', 'category', 'subCategory', 'startDate'
     , 'endDate', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   rewardTypeList: Dropdown[];
   allCampaignList: Dropdown[];
@@ -67,7 +67,7 @@ export class RewardComponent extends BaseComponent implements OnInit {
     public rewardApi: RewardService,
     public rewardStore: RewardStore,
     public productService: ProductService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

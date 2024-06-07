@@ -5,7 +5,7 @@ import { RewardOnHandData } from './reward-on-hand-data';
 import { RewardOnHandService } from './reward-on-hand.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
@@ -30,7 +30,7 @@ export class RewardOnHandComponent extends BaseComponent implements OnInit, OnDe
 
   dataSource: RewardOnHandData[];
   displayedColumns: string[] = ['onhandType', 'amount', 'remark', 'createdDate', 'createdBy'];
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   created: boolean;
   submitted: boolean;
   rewardOnHandTypeList: Dropdown[];
@@ -41,7 +41,7 @@ export class RewardOnHandComponent extends BaseComponent implements OnInit, OnDe
   constructor(
     private rewardOnHandService: RewardOnHandService,
     private rewardStore: RewardStore,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public api: ApiService,
     public router: Router,
     public globals: Globals

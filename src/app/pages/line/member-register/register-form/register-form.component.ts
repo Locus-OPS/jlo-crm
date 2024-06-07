@@ -1,5 +1,5 @@
 import { OnInit, Component, Output, EventEmitter, Input } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-line-register-form',
@@ -12,10 +12,10 @@ export class LineRegisterFormComponent implements OnInit {
   @Output() back = new EventEmitter<string>();
   @Output() next = new EventEmitter<any>();
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
   ) {
 
   }

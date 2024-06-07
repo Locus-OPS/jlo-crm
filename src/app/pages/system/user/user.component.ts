@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -33,8 +33,8 @@ export class UserComponent extends BaseComponent implements OnInit {
   dataSource: UserData[];
   displayedColumns: string[] = ['userId', 'firstName', 'lastName', 'buName', 'divName', 'roleName', 'posName', 'useYn'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   loginTypes: Dropdown[];
   statusList: Dropdown[];
@@ -50,7 +50,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   constructor(
     public api: ApiService,
     private userService: UserService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals,
     public dialog: MatDialog

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { CampaignService } from './campaign.service';
@@ -29,8 +29,8 @@ export class CampaignComponent extends BaseComponent implements OnInit {
   dataSource: CampaignData[];
   displayedColumns: string[] = ['campaignCode', 'campaign', 'startDate', 'endDate', 'campaignType', 'activeFlag'];
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   campaignTypeList: Dropdown[];
   activeFlagList: Dropdown[];
@@ -41,7 +41,7 @@ export class CampaignComponent extends BaseComponent implements OnInit {
   constructor(
     public api: ApiService,
     private campaignService: CampaignService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

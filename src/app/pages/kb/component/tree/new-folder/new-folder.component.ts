@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { KbService } from '../../../kb.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import Utils from 'src/app/shared/utils';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -22,11 +22,11 @@ export class NewFolderComponent extends BaseComponent implements OnInit {
 
   translatePrefix: string;
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
-    , private formBuilder: FormBuilder
+    , private formBuilder: UntypedFormBuilder
     , private api: ApiService
     , private kbService: KbService
     , private dialogRef: MatDialogRef<NewFolderComponent>

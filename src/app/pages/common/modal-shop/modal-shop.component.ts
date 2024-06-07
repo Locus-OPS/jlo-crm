@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { TableControl } from 'src/app/shared/table-control';
@@ -26,7 +26,7 @@ export class ModalShopComponent extends BaseComponent implements OnInit {
   dataSource: ModalShopModel[];
   displayedColumns: string[] = ['shopNo', 'shopName', 'shopTypeName', 'shopLocationName', 'shopFloor'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   shopTypeList: Dropdown[];
   locationList: Dropdown[];
   
@@ -35,7 +35,7 @@ export class ModalShopComponent extends BaseComponent implements OnInit {
       private dialogRef: MatDialogRef<ModalShopComponent>,
       public api: ApiService,
       private modalShopService: ModalShopService,
-      private formBuilder: FormBuilder,
+      private formBuilder: UntypedFormBuilder,
       public router: Router,
       public globals: Globals) { 
         super(router, globals);

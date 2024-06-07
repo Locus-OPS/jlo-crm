@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
@@ -36,8 +36,8 @@ export class AttrComponent extends BaseComponent implements OnInit, OnDestroy {
   promotionSubscription: Subscription;
   promotionData: PromotionData;
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   promotionAttrDataTypeList: Dropdown[];
 
@@ -47,7 +47,7 @@ export class AttrComponent extends BaseComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private attrService: AttrService,
     private promotionStore: PromotionStore,
     public router: Router,

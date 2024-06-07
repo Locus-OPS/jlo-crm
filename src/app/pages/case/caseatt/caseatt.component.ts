@@ -1,6 +1,6 @@
 
 import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import { Caseatt } from './caseatt.model';
 import { CaseattService } from './caseatt.service';
@@ -40,8 +40,8 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
 
-  searchForm: FormGroup;
-  attCreateForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  attCreateForm: UntypedFormGroup;
   file: File;
 
 
@@ -63,7 +63,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private caseacttService: CaseattService,
     public router: Router,
     public globals: Globals,

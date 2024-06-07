@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import Utils from 'src/app/shared/utils';
@@ -38,7 +38,7 @@ export class ProductComponent extends BaseComponent implements OnInit, OnDestroy
 
   created = false;
   deleted = false;
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   selectedFiles: FileList;
   base64File: string;
@@ -46,7 +46,7 @@ export class ProductComponent extends BaseComponent implements OnInit, OnDestroy
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private productService: ProductService,
     private promotionStore: PromotionStore,
     public router: Router,

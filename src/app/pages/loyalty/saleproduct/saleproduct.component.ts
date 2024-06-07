@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -27,8 +27,8 @@ export class SaleproductComponent extends BaseComponent  implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   statusList: Dropdown[];
   parentCategoryList: DropdownModel[];
@@ -46,7 +46,7 @@ export class SaleproductComponent extends BaseComponent  implements OnInit {
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private saleproductService: SaleproductService,
     public router: Router,
     public globals: Globals

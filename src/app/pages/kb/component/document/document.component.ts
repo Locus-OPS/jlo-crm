@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { KbService } from '../../kb.service';
 import { Subscription, VirtualTimeScheduler } from 'rxjs';
 import { KbStore } from '../../kb.store';
@@ -27,7 +27,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
   dataSource: KbDocument[];
   displayedColumns: string[] = ['title', 'mainFlag', 'createdBy', 'createdDate', 'action'];
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
   file: File;
 
   kbDetailSubscription: Subscription;
@@ -37,7 +37,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
   creatingDocument: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private kbService: KbService,
     private kbStore: KbStore,
     public router: Router,

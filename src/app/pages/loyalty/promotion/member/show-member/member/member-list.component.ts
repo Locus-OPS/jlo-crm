@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject, ViewChild } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { MemberListService } from './member-list.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -25,7 +25,7 @@ export class MemberListComponent implements OnInit {
 
   dataSource: any;
   displayedColumns: string[] = ['select', 'fullName',  'memberCardNo', 'memberType', 'tierName'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   selectedRow: MemberMasterData;
 
   genderList: Dropdown[];
@@ -35,7 +35,7 @@ export class MemberListComponent implements OnInit {
   constructor(
     private api: ApiService,
     private memberListService: MemberListService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<MemberListComponent>
   ) {
     api.getCodebookByCodeType({ data: 'GENDER' }).then(result => { this.genderList = result.data; });

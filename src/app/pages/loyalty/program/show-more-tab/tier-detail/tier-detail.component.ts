@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { TierData } from '../tier-tab/tier-data';
 import { ApiService } from 'src/app/services/api.service';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TierService } from '../tier-tab/tier.service';
 import Utils from 'src/app/shared/utils';
@@ -28,7 +28,7 @@ export class TierDetailComponent extends BaseComponent implements OnInit, OnDest
   tierSubscription: Subscription;
   tierData: TierData;
 
-  createForm: FormGroup;
+  createForm: UntypedFormGroup;
 
   submitted = false;
   created = false;
@@ -39,7 +39,7 @@ export class TierDetailComponent extends BaseComponent implements OnInit, OnDest
 
   constructor(
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private tierService: TierService,
     private tierStore: TierStore,
     private programStore: ProgramStore,

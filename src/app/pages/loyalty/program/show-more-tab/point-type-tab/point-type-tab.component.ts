@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
@@ -37,8 +37,8 @@ export class PointTypeTabComponent extends BaseComponent implements OnInit, OnDe
   programSubscription: Subscription;
   programData: ProgramData;
 
-  searchForm: FormGroup;
-  createForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createForm: UntypedFormGroup;
 
   expiryBasisList: Dropdown[];
   unitPeriodList: Dropdown[];
@@ -53,7 +53,7 @@ export class PointTypeTabComponent extends BaseComponent implements OnInit, OnDe
   constructor(
     public dialog: MatDialog,
     public api: ApiService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private pointTypeTabService: PointTypeTabService,
     private programStore: ProgramStore,
     public router: Router,

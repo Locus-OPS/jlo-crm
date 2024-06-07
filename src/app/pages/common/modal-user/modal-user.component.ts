@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { FormGroupDirective, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
@@ -26,7 +26,7 @@ export class ModalUserComponent extends BaseComponent implements OnInit {
   dataSource: UserData[];
   displayedColumns: string[] = ['userId', 'firstName', 'lastName', 'buName', 'divName', 'roleName', 'posName', 'useYn'];
 
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   loginTypes: Dropdown[];
   statusList: Dropdown[];
@@ -43,7 +43,7 @@ export class ModalUserComponent extends BaseComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalUserComponent>,
     public api: ApiService,
     private userService: UserService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals
   ) {

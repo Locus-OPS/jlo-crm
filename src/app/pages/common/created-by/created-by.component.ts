@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-created-by',
@@ -13,10 +13,10 @@ export class CreatedByComponent implements OnChanges {
   @Input() updatedBy: string;
   @Input() updatedDate: string;
 
-  createdForm: FormGroup;
+  createdForm: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: UntypedFormBuilder
     ) {
       this.createdForm = this.formBuilder.group({
         createdBy: [''],

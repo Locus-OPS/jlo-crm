@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TableControl } from 'src/app/shared/table-control';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { EarnData } from './earn-data';
 import { EarnItemService } from './earn-item.service';
@@ -19,11 +19,11 @@ export class EarnItemComponent implements OnInit {
   dataSource: EarnData[];
   displayedColumns: string[] = ['earnId', 'promotionId', 'promotion', 'action',
   'rule', 'pointType', 'earnValue', 'expiryDate'];
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
     private earnItemService: EarnItemService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit() {
