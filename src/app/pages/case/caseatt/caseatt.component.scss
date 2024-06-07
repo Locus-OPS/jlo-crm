@@ -1,0 +1,12 @@
+.main-content{
+    margin-top: 15px;       
+    min-height: calc(100vh - 123px);
+}
+
+iframe {
+    display: block;
+    background: rgb(252, 252, 252);
+    border: none;
+    height: 90vh;
+    width: 50vw;
+}

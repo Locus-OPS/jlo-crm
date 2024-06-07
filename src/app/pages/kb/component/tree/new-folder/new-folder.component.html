@@ -1,0 +1,19 @@
+<button class="close" mat-button [mat-dialog-close]="true">X</button>
+<div mat-dialog-content class="flex-container">
+    <form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate style="min-height:100px;">
+        <input formControlName="contentType" type="hidden" />
+        <input formControlName="parentId" type="hidden" />
+        <input formControlName="id" type="hidden" />
+        <div class="row">
+            <mat-form-field class="col-md-12">
+                <input formControlName="title" matInput [placeholder]="translatePrefix + '.newFolder' | translate" type="text" maxlength="200" />
+                <mat-error *ngIf="createForm.controls['title'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="row pull-right">
+            <button mat-raised-button type="submit" *ngIf="CAN_WRITE()" class="btn btn-rose">{{ 'button.save' | translate }}</button>
+        </div>
+    </form>
+</div>

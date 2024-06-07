@@ -1,0 +1,178 @@
+<br />
+<div class="container-fluid">
+  <form [formGroup]="createForm" (ngSubmit)="OnSubmit(createForm.value)">
+    <div class="row">
+      <mat-form-field>
+        <input matInput [placeholder]="'criteria.description' | translate" type="text" formControlName="description">
+        <mat-error *ngIf="createForm.controls['description'].hasError('required')">
+          {{ 'error.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ 'criteria.object' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.object' | translate" formControlName="srcObj" (valueChange)="onChangeAttrGroup($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of srcObjList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['srcObj'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.attribute' | translate" formControlName="srcAttr" (valueChange)="onChangeAttr($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of tmpSrcAttrList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['srcAttr'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ 'criteria.operation' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.condition' | translate" formControlName="srcCondition" (valueChange)="onChangeCondition($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of conditionList" [value]="item.condition">{{ item.description }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['srcCondition'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.compareTo' | translate" formControlName="compareToOv" (valueChange)="onChangeCompareTo($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of compareToList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['compareToOv'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="isCompareToObject">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ 'criteria.object' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.object' | translate" formControlName="dscObj" (valueChange)="onChangeDscAttrGroup($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of dscObjList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['dscObj'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.attribute' | translate" formControlName="dscAttr" (valueChange)="onChangeDscAttr($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of tmpDscAttrList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['dscAttr'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <mat-select [placeholder]="'criteria.operator' | translate" formControlName="dscOperator" (valueChange)="onChangeDscOperator($event)">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of operatorList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['dscOperator'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <input matInput [placeholder]="'criteria.value' | translate" type="text" formControlName="dscObjValue">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="isCompareToValue">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">{{ 'criteria.value' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <mat-form-field>
+                  <input matInput [placeholder]="'criteria.value' | translate" type="text" formControlName="itemValue">
+                  <mat-error *ngIf="createForm.controls['itemValue'].hasError('required')">
+                    {{ 'criteria.noValue' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <button mat-raised-button type="button" class="btn btn-rose" (click)="addItem()">{{ 'button.add' | translate }}</button>
+              </div>
+            </div>
+            <div class="row" formArrayName="items" *ngFor="let item of items.controls; let i = index;">
+              <div class="col-md-8" [formGroupName]="i">
+                <mat-form-field>
+                  <input matInput type="text" formControlName="value" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="removeItem(i); $event.stopPropagation();">
+                  <span class="mat-button-wrapper">
+                    <i class="material-icons">remove</i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">{{ 'button.save' | translate }}</button>
+    <button mat-raised-button type="button" class="btn btn-fill btn-default pull-right" (click)="onClose()">{{ 'button.close' | translate }}</button>
+  </form>
+</div>

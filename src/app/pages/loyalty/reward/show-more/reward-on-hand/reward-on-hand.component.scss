@@ -1,0 +1,20 @@
+/* .reward_number{
+  font-size: 40px;
+} */
+
+/*
+RIGHT align - for the center alignment, adjust this.
+https://stackoverflow.com/questions/48694200/angular-material2-mat-list-item-content-position
+*/
+
+
+.mat-list .mat-list-item.center .mat-list-item-content{
+    font-size: 40px;
+    justify-content: center;
+}
+
+.mat-list-item {
+  text-align: center;
+  justify-content: center;
+}
+

@@ -1,0 +1,153 @@
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective } from '@angular/forms';
+import Utils from 'src/app/shared/utils';
+import { CustomerData } from './customer-data'
+import { CustomerService } from './customer.service';
+import { TableControl } from 'src/app/shared/table-control';
+import { Router } from '@angular/router';
+import { Globals } from 'src/app/shared/globals';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { MatSort } from '@angular/material/sort';
+
+@Component({
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.scss']
+})
+export class CustomerComponent extends BaseComponent implements OnInit {
+  
+  THAI_NATIONALITY: string = "37";
+
+  /* customer table */
+  
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  @ViewChild('createFormDirective')
+  createFormDirective: FormGroupDirective;
+
+  dataSource: CustomerData[];
+  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'memberCardNo', 'customerType', 'approvedDate', 'approvedBy'];
+  tableControl: TableControl = new TableControl(() => { this.search(); });
+
+  searchForm: FormGroup;
+
+  
+  selectedRow: CustomerData;
+  createForm: FormGroup;
+  
+  customerStatusList=[];
+  titleNameList=[];
+  nationalityList=[];
+
+  constructor(private api: ApiService,private formBuilder: FormBuilder, private customerService:CustomerService, private el:ElementRef, public router:Router,public globals:Globals  ) { 
+    super(router,globals);
+    this.api.getMultipleCodebookByCodeType({
+      data: ['CUSTOMER_STATUS','TITLE_NAME','NATIONALITY']
+    }).then(
+      result => {
+        this.customerStatusList = result.data['CUSTOMER_STATUS'];
+        this.titleNameList = result.data['TITLE_NAME'];
+        this.nationalityList = result.data['NATIONALITY'];
+      }
+    );
+  }
+
+  get f() { return this.searchForm.controls; }
+
+  ngOnInit() {
+    this.searchForm = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      citizenId: [''],
+      passportNo: [''],
+      memberCardNo: [''],
+    });
+
+    this.createForm = this.formBuilder.group({
+      memberId:[''],
+      customerId:[''],
+      customerType:[true],
+      customerStatus:['1'],
+      title:new FormControl({ value: '', disabled: true }),
+      firstName:new FormControl({ value: '', disabled: true }),
+      lastName:new FormControl({ value: '', disabled: true }),
+      nationality:new FormControl({ value: this.THAI_NATIONALITY, disabled: true }),
+      citizenId:new FormControl({ value: '', disabled: true }),
+      passportNo:new FormControl({ value: '', disabled: true }),
+      birthDate:[''],
+      gender:[''],
+      maritalStatus:[''],
+      occupation:[''],
+      businessName:new FormControl({ value: '', disabled: true }),
+      taxId:new FormControl({ value: '', disabled: true }),
+      businessType:[''],
+      phoneArea:[''],
+      phoneNo:[''],
+      email:[''],
+      registrationChannel:[''],
+      registrationStore:[''],
+      remark:[''],
+      createdBy:[''],
+      createdDate:[''],
+      updatedBy:[''],
+      updatedDate:[''],
+      address:[],
+      changeLog:[]
+    });
+    this.tableControl.sortColumn = 'fullName';
+    this.tableControl.sortDirection = 'asc';
+    this.onSearch();
+
+    this.CHECK_FORM_PERMISSION(this.createForm);
+  }
+
+  onSearch() {
+    /*  if (this.searchForm.invalid) {
+       return;
+     } */
+    
+    this.selectedRow = null;
+    this.search();
+  }
+
+  search() {
+    const param = {
+      ...this.searchForm.value,
+        memberCardNo: this.searchForm.value['memberCardNo'] != null ? this.searchForm.value['memberCardNo'].replace(/\s/g, "") : this.searchForm.value['memberCardNo'], // Remove white space
+        sortColumn: this.tableControl.sortColumn,
+        sortDirection: this.tableControl.sortDirection
+    }
+    this.customerService.getCustomerList({
+      pageSize: this.tableControl.pageSize,
+      pageNo: this.tableControl.pageNo,
+      data: param
+    }).then(result => {
+      this.dataSource = result.data;
+      this.tableControl.total = result.total;
+    }, error => {
+      Utils.alertError({
+        text: 'Please try again later.',
+      });
+    });
+  }
+
+  
+
+  selectCustomer(row){
+    this.selectedRow = row;
+    this.createForm.patchValue(row);
+  }
+
+  
+  clear() {
+    this.searchForm.reset();
+    //this.clearSort();
+    this.selectedRow = null;
+  }
+
+  clearSort() {
+    this.sort.sort({ id: '', start: 'asc', disableClear: false });
+  }
+  
+}

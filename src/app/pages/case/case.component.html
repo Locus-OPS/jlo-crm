@@ -1,0 +1,303 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'case.title' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'case.number' | translate" type="text" formControlName="caseNumber">
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-select [placeholder]="'case.type' | translate" formControlName="type"
+                    (ngModelChange)="getCaseTypeId($event)">
+                    <mat-option *ngFor="let type of typeList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-select [placeholder]="'case.subType' | translate" formControlName="subType">
+                    <mat-option *ngFor="let type of subTypeList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-select [placeholder]="'case.status' | translate" formControlName="status">
+                    <mat-option *ngFor="let type of caseStatuslList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <mat-form-field class="col-md-6">
+                      <input matInput [matDatepicker]="openedDateStartRef" [max]="maxDate" readonly
+                        [placeholder]="'case.openDate' | translate" formControlName="openedDateStart"
+                        (dateChange)="addEvent('change', $event)">
+                      <mat-datepicker-toggle matSuffix [for]="openedDateStartRef"></mat-datepicker-toggle>
+                      <mat-datepicker #openedDateStartRef></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                      <input matInput [matDatepicker]="openedDateEndRef" [max]="maxDate" readonly
+                        [placeholder]="'case.openDate' | translate" formControlName="openedDateEnd"
+                        (dateChange)="addEvent('change', $event)">
+                      <mat-datepicker-toggle matSuffix [for]="openedDateEndRef"></mat-datepicker-toggle>
+                      <mat-datepicker #openedDateEndRef></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <mat-form-field class="col-md-6">
+                      <input matInput [matDatepicker]="closedDateStartRef" [max]="maxDate" readonly
+                        [placeholder]="'case.closeDate' | translate" formControlName="closedDateStart"
+                        (dateChange)="addEvent('change', $event)">
+                      <mat-datepicker-toggle matSuffix [for]="closedDateStartRef"></mat-datepicker-toggle>
+                      <mat-datepicker #closedDateStartRef></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                      <input matInput [matDatepicker]="closedDateEndRef" [max]="maxDate" readonly
+                        [placeholder]="'case.closeDate' | translate" formControlName="closedDateEnd"
+                        (dateChange)="addEvent('change', $event)">
+                      <mat-datepicker-toggle matSuffix [for]="closedDateEndRef"></mat-datepicker-toggle>
+                      <mat-datepicker #closedDateEndRef></mat-datepicker>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'case.owner' | translate" type="text" formControlName="ownerDisplay"
+                    (click)="showOwner()" readonly>
+                  <mat-icon matSuffix (click)="showOwner()">search</mat-icon>
+                  <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'customer.text' | translate" type="text"
+                    formControlName="customerDisplay" (click)="searchCustomer()" readonly>
+                  <mat-icon matSuffix (click)="searchCustomer()">search</mat-icon>
+                  <mat-icon matSuffix (click)="removeCustomer()">remove_circle_outline</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="pull-right">
+                <button mat-raised-button type="submit"
+                  class="btn btn-fill btn-rose">{{ 'button.search' | translate }}</button>
+                <button mat-raised-button type="button" (click)="onCaseCreate(); $event.stopPropagation();"
+                  class=" btn btn-fill btn-primary" [routerLink]="['/casedetails']"
+                  routerLinkActive="router-link-active">{{ 'button.create' | translate }}</button>
+                <button mat-raised-button type="reset"
+                  class="btn btn-fill btn-default">{{ 'button.clear' | translate }}</button>
+              </div>
+            </form>
+
+
+            <div class="material-datatables">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="asc" matSortDisableClear>
+
+                <ng-container matColumnDef="customerId">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="btn btn-danger btn-round btn-fab mat-raised-button"
+                      (click)="onCaseEdit(element); $event.stopPropagation();" [routerLink]="['/casedetails']">
+                      <span class="mat-button-wrapper">
+                        <i class="material-icons">mode_edit</i>
+                      </span>
+                    </button>
+                  </td>
+                </ng-container>
+                <!-- displayedColumns -->
+                <ng-container matColumnDef="caseNumber">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'case.number' | translate }}</th>
+                  <td mat-cell *matCellDef="let element"> {{element.caseNumber}} </td>
+                </ng-container>
+                <ng-container matColumnDef="typeName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'case.type' | translate }}</th>
+                  <td mat-cell *matCellDef="let element"> {{element.typeName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fullName">
+                  <th mat-header-cell *matHeaderCellDef> {{'member.firstName' | translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{element.businessName?element.businessName:(element.firstName+' '+element.lastName)}} </td>
+                </ng-container>
+                <ng-container matColumnDef="subTypeName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'case.subType' | translate }}</th>
+                  <td mat-cell *matCellDef="let element"> {{element.subTypeName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="priorityName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'case.priority' | translate }}</th>
+                  <td mat-cell *matCellDef="let element"> {{element.priorityName}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }">
+                </tr>
+
+              </table>
+
+              <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
+                [length]="tableControl.total" [pageSize]="tableControl.pageSize"
+                [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+              </mat-paginator>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card" *ngIf="selectedRow">
+
+
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">person</i>
+            </div>
+            <h4 class="card-title">{{ 'case.custdetail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="customerForm">
+              <div class="row">
+                <div class="col-md-7" *ngIf="customerForm.value.businessName == null">
+                  <div class="row">
+                    <mat-form-field class="col-md-2" disabled>
+                      <mat-select placeholder="{{'member.title' | translate }}" formControlName="title">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">
+                          {{ item.codeName }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-5" disabled>
+                      <input matInput placeholder="{{'member.firstName' | translate }}" type="text"
+                        formControlName="firstName">
+                    </mat-form-field>
+                    <mat-form-field class="col-md-5" disabled>
+                      <input matInput placeholder="{{'member.lastName' | translate }}" type="text"
+                        formControlName="lastName">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-7" *ngIf="customerForm.value.businessName != null">
+                  <div class="row">
+                    <mat-form-field class="col-md-12" disabled>
+                      <input matInput placeholder="{{'member.businessName' | translate }}" type="text"
+                        formControlName="businessName">
+                    </mat-form-field>
+                  </div>
+                </div>
+                <mat-form-field class="col-md-2" disabled>
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <input matInput type="text" placeholder="{{'member.phoneNo' | translate}}" formControlName="phoneNo">
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput type="text" placeholder="{{'member.email' | translate}}" formControlName="email">
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+
+        <div class="card" *ngIf="selectedRow">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'case.detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+
+            <form [formGroup]="createForm">
+              <div class="row">
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput [placeholder]="'case.number' | translate" type="text" formControlName="caseNumber"
+                    readonly>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput [placeholder]="'case.subject' | translate" type="text" formControlName="subject">
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-6" disabled>
+                  <textarea matInput matTextareaAutosize matAutosizeMinRows=4 matAutosizeMaxRows=20
+                    [placeholder]="'case.description' | translate" type="text" formControlName="detail">
+                            </textarea>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-select [placeholder]="'case.type' | translate" formControlName="type"
+                    (ngModelChange)="getCaseTypeId($event)">
+                    <mat-option *ngFor="let type of typeList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-select [placeholder]="'case.subType' | translate" formControlName="subType">
+                    <mat-option *ngFor="let type of subTypeList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-select [placeholder]="'case.priority' | translate" formControlName="priority">
+                    <mat-option *ngFor="let type of priorityList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-select [placeholder]="'case.status' | translate" formControlName="status">
+                    <mat-option *ngFor="let type of caseStatuslList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-select [placeholder]="'case.channel' | translate" formControlName="channel">
+                    <mat-option *ngFor="let type of caseChannelList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput [placeholder]="'case.owner' | translate" type="text" formControlName="displayName">
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput [placeholder]="'case.openDate' | translate" type="text" formControlName="openedDate"
+                    readonly>
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <input matInput [placeholder]="'case.closeDate' | translate" type="text" formControlName="closedDate"
+                    readonly>
+                </mat-form-field>
+              </div>
+              <app-created-by
+                  [createdBy]="createForm.controls['createdBy'].value"
+                  [createdDate]="createForm.controls['createdDate'].value"
+                  [updatedBy]="createForm.controls['updatedBy'].value"
+                  [updatedDate]="createForm.controls['updatedDate'].value">
+              </app-created-by>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

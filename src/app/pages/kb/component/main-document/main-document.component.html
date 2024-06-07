@@ -1,0 +1,7 @@
+<div class="d-flex justify-content-center">
+  <div *ngIf="mainDoc">
+    <pdf-viewer *ngIf="isPdf(mainDoc.fileExtension)" [src]="getDocPath(mainDoc.filePath, mainDoc.fileName)" class="pdf-viewer" [render-text]="true"
+      style="display: block;"></pdf-viewer>
+    <img *ngIf="isImg(mainDoc.fileExtension)" [src]="getDocPath(mainDoc.filePath, mainDoc.fileName)" />
+  </div>
+</div>

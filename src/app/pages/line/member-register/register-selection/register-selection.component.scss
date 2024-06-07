@@ -1,0 +1,22 @@
+@import "src/assets/scss/core/variables.scss";
+
+.logo {
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.box {
+  width: 45%;
+  cursor: pointer;
+  color: $brand-locus;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}

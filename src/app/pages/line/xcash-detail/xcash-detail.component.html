@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row header">
+    <div class="col-2">
+      <button (click)="onBack()" class="back_button" mat-button>
+        <mat-icon class="back_icon">navigate_before</mat-icon>Back
+      </button>
+    </div>
+    <div class="col-8">
+      <div class="page-title">xCash</div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+  <div class="row body justify-content-md-center">
+    <div class="col-md-6">
+      <img class="product-image" src="assets/img/xcash.png">
+      <ng-container *ngIf="step === 1">
+        <div class="product-name">
+          เลือกจำนวนแต้มที่ต้องการแลก
+        </div>
+        <div class="mt-5">
+          <button *ngFor="let item of typeList" (click)="confirmTransfer(item.type)" mat-raised-button class="xcash-point">{{ item.text }}</button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="step === 2">
+        <div class="product-name">
+          การแลกคะแนนสำเร็จ
+        </div>
+        <div class="mt-5">
+          <div class="result-message">
+            {{ resultMessage1 }}<br/>
+            {{ resultMessage2 }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row footer justify-content-md-center">
+    <div class="col-md-6">
+
+    </div>
+  </div>
+</div>

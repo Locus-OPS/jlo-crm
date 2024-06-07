@@ -1,0 +1,75 @@
+@import "src/assets/scss/core/variables.scss";
+
+.container {
+  background-color: white;
+}
+
+.header {
+  height: 60px;
+  text-align: left;
+  border-bottom: inset;
+  background-color: $brand-locus;
+  color: white;
+}
+
+.page-title {
+  margin-top: 17px;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+}
+
+.body {
+  height: calc(100vh - 120px);
+  text-align: center;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.footer {
+  height: 60px;
+  text-align: center;
+  background-color: white;
+}
+
+.back_button {
+  font-size: 18px;
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-top: 10px;
+}
+
+.back_icon {
+  height: 27px;
+}
+
+.cancel_button {
+  width: 40%;
+  background-color: grey;
+  margin-right: 20px;
+}
+
+.submit_button {
+  width: 40%;
+}
+
+/*****************************************/
+
+.product-image {
+  max-width: 100%;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.product-detail {
+  font-size: 16px;
+}
+
+.line-item {
+  height: 40px;
+  line-height: 40px;
+  border-bottom-style: inset;
+}

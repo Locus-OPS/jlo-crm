@@ -1,0 +1,114 @@
+<button class="close" mat-button [mat-dialog-close]="true">X</button>
+<div mat-dialog-content class="flex-container">
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">{{'customer.text' | translate}}</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+                <div class="row">
+                  <mat-form-field class="col-md-3">
+                    <mat-label>{{'member.firstName' | translate }}</mat-label>
+                    <input matInput type="text" formControlName="firstName">
+                  </mat-form-field>
+                  <mat-form-field class="col-md-3">
+                    <input matInput placeholder="{{'member.lastName' | translate }}" type="text"
+                      formControlName="lastName">
+                  </mat-form-field>
+                  <mat-form-field class="col-md-3">
+                    <input matInput placeholder="{{'member.citizenId' | translate }}" type="number"
+                      formControlName="citizenId">
+                  </mat-form-field>
+                  <mat-form-field class="col-md-3">
+                    <input matInput placeholder="{{'member.passportNo' | translate }}" type="text"
+                      formControlName="passportNo">
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="col-md-3">
+                    <input matInput placeholder="{{'member.cardNo' | translate }}" type="text"
+                      formControlName="memberCardNo">
+                  </mat-form-field>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button mat-raised-button type="button" class="btn btn-fill btn-rose"
+                    type="submit">{{'button.search' | translate}}</button>
+                  <button mat-raised-button type="reset" class="btn btn-fill btn-default"
+                    (click)="clear()">{{'button.clear' | translate}}</button>
+                </div>
+              </form>
+              <div class="toolbar">
+                <!--        Here you can write extra buttons/actions for the toolbar              -->
+              </div>
+              <div class="material-datatables">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-responsive"
+                  (matSortChange)="tableControl.onSort($event)" matSort matSortActive="firstName" matSortDirection="asc"
+                  matSortDisableClear>
+                  <ng-container matColumnDef="customerStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+                      {{'member.customerStatus' | translate}}
+                    </th>
+                    <td mat-cell *matCellDef="let element"><span
+                        *ngFor="let item of customerStatusList">{{(element.customerStatus == item.codeId?item.etc1:"") | translate}}</span>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="fullName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'member.firstName' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.customerType?(element.firstName+' '+element.lastName):element.businessName}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="citizenId">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{'member.citizenId' | translate}}/{{'member.passportNo' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.customerType?(element.nationality=="37"?element.citizenId:element.passportNo):element.taxId}}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="memberCardNo">
+                    <th mat-header-cell *matHeaderCellDef> {{'member.cardNo' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.memberCardNo }} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="customerType">
+                    <th mat-header-cell *matHeaderCellDef> {{'member.customerType' | translate}} </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{(element.customerType?"member.individual":"member.corporate") | translate}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="approvedDate">
+                    <th mat-header-cell *matHeaderCellDef> {{'member.approvedDate' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.approvedDate}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="approvedBy">
+                    <th mat-header-cell *matHeaderCellDef> {{'member.approvedBy' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.approvedBy}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectCustomer(row);"
+                    [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+                </table>
+                <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
+                  [length]="tableControl.total" [pageSize]="tableControl.pageSize"
+                  [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+                </mat-paginator>
+              </div>
+            </div>
+            <!-- end content-->
+            <div class="d-flex justify-content-end">
+              <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
+                [mat-dialog-close]="customerInfo">{{ 'button.select' | translate }}</button>
+              <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
+                class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
+            </div>
+          </div> <!--  end card  -->
+        </div> <!-- end col-md-12 -->
+      </div>
+    </div>
+  </div>
+</div>

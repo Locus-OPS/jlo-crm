@@ -1,0 +1,123 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'menu.title' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu-tree mat-elevation-z2" style="min-height: 500px;">
+                  <!-- This is the tree node template for leaf nodes -->
+                  <mat-tree-node *matTreeNodeDef="let node" (click)="selectNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }"
+                    matTreeNodePadding>
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <button mat-icon-button>
+                    <span [ngClass]="{ 'padding' : node.type === '02' && node.parentMenuId === '' }">{{node.name | translate}}</span><span *ngIf="node.activeFlag === 'N'">(inactive)</span>
+                    </button>
+                  </mat-tree-node>
+                  <!-- This is the tree node template for expandable nodes -->
+                  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="selectNode(node)">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                      <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
+                      </mat-icon>
+                    </button>
+                    {{node.name | translate}} <span *ngIf="node.activeFlag === 'N'">(inactive)</span>
+                  </mat-tree-node>
+                </mat-tree>
+              </div>
+              <div class="col-md-9">
+                <div class="card card-detail">
+                  <div class="card-body">
+                    <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
+                      <div class="row">
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'menu.id' | translate" type="text" formControlName="id" readonly>
+                          <mat-error *ngIf="createForm.controls['id'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'menu.name' | translate" type="text" formControlName="name" maxlength="200" />
+                          <mat-error *ngIf="createForm.controls['name'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <mat-select [placeholder]="'menu.type' | translate" formControlName="type">
+                            <mat-option *ngFor="let item of menuTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="createForm.controls['type'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'menu.icon' | translate" type="text" formControlName="icon">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'menu.link' | translate" type="text" formControlName="link" maxlength="200" />
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <mat-select [placeholder]="'menu.activeFlag' | translate" formControlName="activeFlag">
+                            <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input  matInput [placeholder]="'menu.seq' | translate" type="number" formControlName="seq">
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <mat-select [placeholder]="'menu.parentMenuId' | translate" formControlName="parentMenuId">
+                            <mat-option *ngFor="let item of parentMenuList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'menu.apiPath' | translate" type="text" formControlName="apiPath" maxlength="100" />
+                        </mat-form-field>
+                      </div>
+                      <div class="row">
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'common.createdBy' | translate" type="text" formControlName="createdBy" readonly>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'common.createdDate' | translate" type="text" formControlName="createdDate" readonly>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'common.updatedBy' | translate" type="text" formControlName="updatedBy" readonly>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <input matInput [placeholder]="'common.updatedDate' | translate" type="text" formControlName="updatedDate" readonly>
+                        </mat-form-field>
+                      </div>
+                      <app-created-by
+                        [createdBy]="createForm.controls['createdBy'].value"
+                        [createdDate]="createForm.controls['createdDate'].value"
+                        [updatedBy]="createForm.controls['updatedBy'].value"
+                        [updatedDate]="createForm.controls['updatedDate'].value">
+                      </app-created-by>
+                      <div class="pull-left">
+                        <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button"
+                          (click)="create()">{{ 'button.create' | translate }}</button>
+                        <!-- <button mat-raised-button type="button" class="btn btn-fill btn-default"
+                          type="reset">{{ 'button.clear' | translate }}</button> -->
+                      </div>
+                      <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">{{ 'button.save' | translate }}</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

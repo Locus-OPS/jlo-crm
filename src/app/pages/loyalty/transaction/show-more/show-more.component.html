@@ -1,0 +1,19 @@
+<button class="close" mat-button [mat-dialog-close]="true">X</button>
+<div mat-dialog-content class="flex-container">
+<!-- <div class="main-content"> -->
+  <div class="container-fluid">
+    <mat-tab-group>
+      <!-- <mat-tab label="Change Log"> Content 1 </mat-tab> -->
+      <mat-tab [label]="'transaction.earnItems' | translate">
+        <app-earn-item [txnId]="txnId"></app-earn-item>
+      </mat-tab>
+      <mat-tab [label]="'transaction.burnItems' | translate">
+        <app-burn-item [txnId]="txnId"></app-burn-item>
+      </mat-tab>
+      <mat-tab [label]="'transaction.promotionAttributes' | translate">
+        <app-promotion-attr [txnId]="txnId"></app-promotion-attr>
+      </mat-tab>
+      <!-- <mat-tab label="Action Log"> Content 3 </mat-tab> -->
+    </mat-tab-group>
+  </div>
+</div>

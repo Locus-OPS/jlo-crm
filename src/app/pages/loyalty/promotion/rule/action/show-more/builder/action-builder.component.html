@@ -1,0 +1,178 @@
+<br/>
+<div class="container-fluid">
+  <form [formGroup]="createForm" (ngSubmit)="OnSubmit(createForm.value)">
+    <div class="row">
+      <div class="col-md-4">
+        <mat-form-field>
+          <mat-select [placeholder]="'action.type' | translate"  formControlName="actionType" (valueChange)="onChangeActionType($event)" #actType>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let item of actionTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="createForm.controls['actionType'].hasError('required')">
+            {{ 'error.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-8">
+        <mat-form-field>
+          <input matInput [placeholder]="'action.description' | translate" type="text" formControlName="actionDetail">
+          <mat-error *ngIf="createForm.controls['actionDetail'].hasError('required')">
+            {{ 'error.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" *ngIf="selectedActionType === 'Earning' || selectedActionType === 'Burning'">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{ 'action.point' | translate }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.pointType' | translate"  formControlName="pointType" >
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of filteredPointTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['pointType'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.operator' | translate"  formControlName="pointOperator" (valueChange)="onChangePointOperator($event)">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of operatorList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['pointOperator'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput [placeholder]="'action.value' | translate" type="text" formControlName="pointValue">
+                <mat-error *ngIf="createForm.controls['pointValue'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field>
+                    <mat-select [placeholder]="'action.expiryUnit' | translate"  formControlName="pointExpireUnit" (valueChange)="onChangePointExpireUnit($event)" >
+                      <mat-option>--</mat-option>
+                      <mat-option *ngFor="let item of pointExpireUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput [placeholder]="'action.expiryPeriod' | translate" type="text" formControlName="pointExpirePeriod">
+                <mat-error *ngIf="createForm.controls['pointExpirePeriod'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="selectedActionType === 'Update' ">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{ 'action.update' | translate }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.object' | translate"  formControlName="updObj" (valueChange)="onChangeUpdAttrGroup($event)">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of updObjList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['updObj'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.attribute' | translate"  formControlName="updAttr" >
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of tmpUpdAttrList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['updAttr'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.operator' | translate"  formControlName="updOperator">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of updOperatorList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['updOperator'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="selectedActionType != undefined">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{ 'action.with' | translate }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.object' | translate"  formControlName="withObj" (valueChange)="onChangeWithAttrGroup($event)">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of withObjList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['withObj'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.attribute' | translate"  formControlName="withAttr">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of tmpWithAttrList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="createForm.controls['withAttr'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <mat-select [placeholder]="'action.operator' | translate"  formControlName="withOperator" (valueChange)="onChangeWithOperator($event)">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let item of withOperatorList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-2">
+              <mat-form-field>
+                <input matInput [placeholder]="'action.value' | translate" type="text" formControlName="withValue">
+                <mat-error *ngIf="createForm.controls['withValue'].hasError('required')">
+                  {{ 'error.required' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">{{ 'button.save' | translate }}</button>
+    <button mat-raised-button type="button" class="btn btn-fill btn-default pull-right" (click)="onClose()">{{ 'button.close' | translate }}</button>
+  </form>
+</div>

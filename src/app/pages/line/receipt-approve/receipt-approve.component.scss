@@ -1,0 +1,82 @@
+@import "src/assets/scss/core/variables.scss";
+
+.container {
+  background-color: white;
+}
+
+.header {
+  height: 60px;
+  text-align: left;
+  border-bottom: inset;
+  background-color: $brand-locus;
+  color: white;
+}
+
+.page-title {
+  margin-top: 17px;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+}
+
+.body {
+  height: calc(100vh - 120px);
+  text-align: center;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.footer {
+  height: 60px;
+  text-align: center;
+  background-color: white;
+}
+
+.back_button {
+  font-size: 18px;
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-top: 10px;
+}
+
+.back_icon {
+  height: 27px;
+}
+
+.cancel_button {
+  width: 40%;
+  background-color: grey;
+  margin-right: 20px;
+}
+
+.submit_button {
+  width: 40%;
+}
+
+/*****************************************/
+
+.reward-list-item {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.receipt_image {
+  max-width: 80%;
+}
+
+::ng-deep .ngxImageZoomContainer > img {
+  max-width: calc(100vw - 50px) !important;
+}
+
+.line-item {
+  height: 40px;
+  line-height: 40px;
+  border-bottom-style: dashed;
+}
+
+.amount {
+  font-size: 22px;
+  color: $brand-locus;
+}

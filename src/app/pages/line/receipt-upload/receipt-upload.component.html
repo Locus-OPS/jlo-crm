@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row header">
+    <div class="col-2">
+      <button (click)="onBack()" class="back_button" mat-button>
+        <mat-icon class="back_icon">navigate_before</mat-icon>Back
+      </button>
+    </div>
+    <div class="col-8">
+      <div class="page-title">อัพโหลดข้อมูลใบเสร็จ</div>
+    </div>
+    <div class="col-2">
+
+    </div>
+  </div>
+  <div class="row body justify-content-md-center">
+    <div class="col-md-6">
+      <mat-form-field class="mt-2">
+        <mat-label>ยอดซื้อ (รวมภาษีมูลค่าเพิ่ม)</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>เลขที่ใบเสร็จ</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>วันที่ทำรายการตามใบเสร็จ</mat-label>
+        <input matInput [matDatepicker]="receiptDate">
+        <mat-datepicker-toggle matSuffix [for]="receiptDate"></mat-datepicker-toggle>
+        <mat-datepicker #receiptDate></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>ดีลเลอร์</mat-label>
+        <mat-select>
+          <mat-option value="1">ดีลเลอร์ 1</mat-option>
+          <mat-option value="2">ดีลเลอร์ 2</mat-option>
+          <mat-option value="3">ดีลเลอร์ 3</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <input type="file" #fileUpload (change)="selectFile($event)"><br/><br/>
+      <img class="receipt-img" [src]="imageSrc" />
+    </div>
+  </div>
+  <div class="row footer justify-content-md-center">
+    <div class="col-md-6">
+      <button (click)="onScan()" mat-raised-button class="cancel_button">Scan</button>
+      <button (click)="onSubmit()" mat-raised-button color="primary" class="submit_button">ยืนยัน</button>
+    </div>
+  </div>
+</div>

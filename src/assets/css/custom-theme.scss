@@ -1,0 +1,158 @@
+@import "~@angular/material/theming";
+@import "../scss/core/variables";
+
+$custom-typography: mat-typography-config(
+  $font-family: "Sarabun, monospace"
+);
+@include mat-core($custom-typography);
+
+$alternate-primary: mat-palette($mat-blue, 800);
+$alternate-accent: mat-palette($mat-blue, 800);
+$alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+
+@include angular-material-theme($alternate-theme);
+
+.main-tab {
+  padding-top: 70px;
+  height: 100%;
+}
+
+.main-tab > {
+  mat-tab-header {
+
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    // border-bottom: 2px solid #1565c0;
+    border-bottom: 2px solid $brand-locus;
+
+    .mat-tab-label {
+      background-color: blue($color: #000000) !important;
+      border: 0.5px solid rgba(0, 0, 0, 0.12);
+      height: 35px;
+      padding: 0 16px;
+      color: #1e1d1d !important;
+    }
+
+    .mat-tab-label:hover {
+      background-color: ghostwhite;
+      border-bottom: 1px solid $brand-locus !important;
+    }
+
+    .mat-tab-label-active {
+      background-color: ghostwhite;
+      border-bottom: 1px solid $brand-locus !important;
+      opacity: 1;
+    }
+
+    .mat-ink-bar {
+      top: 0;
+      height: 3px !important;
+      background-color: $brand-locus !important;
+    }
+  }
+}
+
+.material-datatables {
+  width: 100%;
+
+  table {
+    // display: block;
+    width: 100%;
+    overflow-x: auto;
+
+    .mat-table {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 1rem;
+      display: table;
+      border-collapse: collapse;
+      margin: 0px;
+    }
+
+    .mat-row,
+    .mat-header-row {
+      display: table-row;
+      height: 40px;
+    }
+
+    .mat-cell,
+    .mat-header-cell {
+      word-wrap: initial;
+      display: table-cell;
+      padding: 0px 15px;
+      line-break: unset;
+      width: 40%;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: middle;
+    }
+
+    .mat-header-cell {
+      font-size: 14px;
+      font-weight: bold;
+      background-color: #f6f6f6;
+    }
+  }
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
+}
+
+.mat-form-field-label {
+  color: black !important;
+}
+
+.mat-form-field {
+  line-height: 1.5;
+}
+
+mat-form-field.mat-form-field-should-float label {
+  font-size: 18px;
+}
+
+.navbar .navbar-brand {
+  font-weight: 600;
+}
+
+.mat-option:hover {
+  background: $brand-locus !important;
+}
+
+.mat-option.mat-selected:not(.mat-option-multiple) {
+  background-color: $brand-locus !important;
+}
+
+input:read-only {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+input.mat-input-element {
+  margin-bottom: 2.4px;
+}
+
+.mat-select-placeholder {
+  line-height: 1;
+}
+
+.selected-row {
+  background-color: lighten($brand-locus, 30%);
+}
+
+.subgroup-header {
+  background-color: $brand-locus !important;
+
+  .card-title {
+    color: white;
+  }
+}
+
+.btn {
+  font-size: 0.8rem !important;
+  padding: 8px 20px !important;
+}
+
+.col-no-label {
+  margin-top: 15px;
+}

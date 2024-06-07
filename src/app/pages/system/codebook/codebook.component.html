@@ -1,0 +1,193 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'codebook.title' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-2">
+                  <mat-select [placeholder]="'codebook.codeType' | translate" formControlName="codeType">
+                    <mat-option *ngFor="let item of codeTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <input matInput [placeholder]="'codebook.codeId' | translate" type="text" formControlName="codeId" maxlength="50" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'codebook.codeName' | translate" type="text" formControlName="codeName" maxlength="200" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-select [placeholder]="'codebook.buId' | translate" formControlName="buId">
+                    <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <mat-select [placeholder]="'codebook.status' | translate" formControlName="activeFlag">
+                    <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="pull-right">
+                <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
+                <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button" (click)="create()">{{ 'button.create' | translate }}</button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset" (click)="clear()">{{ 'button.clear' | translate }}</button>
+              </div>
+            </form>
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div class="material-datatables" width="550px">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="sortData($event)" matSort matSortActive="firstName"
+                matSortDirection="asc" matSortDisableClear>
+                <ng-container matColumnDef="codeId">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky> {{ 'codebook.codeId' | translate }} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.codeId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="codeType">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'codebook.codeType' | translate }} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.codeType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="codeName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'codebook.codeName' | translate }} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.codeName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="parentType">
+                  <th mat-header-cell *matHeaderCellDef> {{ 'codebook.parentType' | translate }} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.parentType}} </td>
+                </ng-container>
+                <ng-container matColumnDef="parentId">
+                  <th mat-header-cell *matHeaderCellDef> {{ 'codebook.parentId' | translate }} </th>
+                  <td mat-cell *matCellDef="let element"> {{element.parentId}} </td>
+                </ng-container>
+                <ng-container matColumnDef="activeFlag">
+                  <th mat-header-cell *matHeaderCellDef class="text-center"> {{ 'codebook.active' | translate }} </th>
+                  <td mat-cell *matCellDef="let element" class="text-center">
+                    <mat-icon matSuffix *ngIf="element.activeFlag === 'Y'">done</mat-icon>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+              </table>
+              <mat-paginator class="mat-paginator-sticky" (page)="onPage($event)" [length]="total" [pageSize]="pageSize"
+                [pageIndex]="pageNo" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+              </mat-paginator>
+            </div>
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+        <div class="card" *ngIf="selectedRow">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">perm_identity</i>
+            </div>
+            <h4 class="card-title">{{ 'codebook.detailTitle' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'codebook.codeType' | translate" type="text" formControlName="codeType" [readonly]="isUpdated" maxlength="50" />
+                  <mat-error *ngIf="createForm.controls['codeType'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <input matInput [placeholder]="'codebook.parentType' | translate" type="text" formControlName="parentType" #parentType
+                    (input)="selectedRow.parentType = parentType.value" maxlength="50" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'codebook.parentId' | translate" type="text" formControlName="parentId" #parentId
+                    (input)="selectedRow.parentId = parentId.value" maxlength="50" />
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <input matInput [placeholder]="'codebook.seq' | translate" type="number" formControlName="seq">
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <mat-select [placeholder]="'codebook.status' | translate" formControlName="activeFlag" #activeFlag
+                    (selectionChange)="selectedRow.activeFlag = activeFlag.value">
+                    <mat-option value=""></mat-option>
+                    <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'codebook.codeId' | translate" type="text" formControlName="codeId" [readonly]="isUpdated" maxlength="50" />
+                  <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-5">
+                  <input matInput [placeholder]="'codebook.codeName' | translate" type="text" formControlName="codeName" #codeName
+                    (input)="selectedRow.codeName = codeName.value" maxlength="200" />
+                    <mat-error *ngIf="createForm.controls['codeName'].hasError('required')">
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <div *ngIf="isUpdated">
+                    <input matInput [placeholder]="'codebook.buId' | translate" type="text" [value]="getBuName(selectedRow.buId)" readonly>
+                  </div>
+                  <div *ngIf="!isUpdated">
+                    <mat-select [placeholder]="'codebook.buId' | translate" formControlName="buId">
+                      <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                    </mat-select>
+                  </div>
+                  <mat-error *ngIf="createForm.controls['buId'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-4">
+                  <input matInput [placeholder]="'codebook.etc1' | translate" type="text" formControlName="etc1" maxlength="200" />
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <input matInput [placeholder]="'codebook.etc2' | translate" type="text" formControlName="etc2" maxlength="200" />
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <input matInput [placeholder]="'codebook.etc3' | translate" type="text" formControlName="etc3" maxlength="200" />
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-4">
+                  <input matInput [placeholder]="'codebook.etc4' | translate" type="text" formControlName="etc4" maxlength="200" />
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <input matInput [placeholder]="'codebook.etc5' | translate" type="text" formControlName="etc5" maxlength="200" />
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-12">
+                  <textarea matInput [placeholder]="'codebook.description' | translate" type="text" formControlName="description" rows="3"></textarea>
+                </mat-form-field>
+              </div>
+              <app-created-by
+                  [createdBy]="createForm.controls['createdBy'].value"
+                  [createdDate]="createForm.controls['createdDate'].value"
+                  [updatedBy]="createForm.controls['updatedBy'].value"
+                  [updatedDate]="createForm.controls['updatedDate'].value">
+              </app-created-by>
+              <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-rose pull-right">{{ 'button.save' | translate }}</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+  </div>
+</div>

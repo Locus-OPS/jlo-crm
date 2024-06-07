@@ -1,0 +1,93 @@
+<div class="wrapper wrapper-full-page">
+  <div class="page-header login-page header-filter" class="login-container">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="div-logo ml-auto mr-auto col">
+          <div class="text-center">
+            <img src="./assets/img/locus_logo.png" style="max-width: 300px;" />            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+          <form class="form" method="" action="">
+            <div class="card card-login">
+              <h5 class="card-title">Loyalty Administrator</h5>
+              <div class="card-body ">
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">face</i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" name="username" required
+                      minlength="5" [(ngModel)]="username" #usernameVal="ngModel" />
+                  </div>
+                </span>
+                <span class="bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="material-icons">lock_outline</i>
+                      </span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" name="password" required
+                      minlength="5" #passwordVal="ngModel" [(ngModel)]="password" (keyup.enter)="onLogin()" />
+                  </div>
+                </span>
+              </div>
+              <div class="card-footer justify-content-center">
+                <a class="btn btn-primary btn-lg" (click)="onLogin()">Login</a>
+              </div>
+              <ng-container *ngIf="usernameVal.errors && usernameVal.errors.required && passwordVal.errors && passwordVal.errors.required && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); then thenTemplate; else elseTemplate"></ng-container>
+              <ng-template #thenTemplate>
+                <div class="alert alert-danger">
+                  <div >
+                    Username password is required.
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #elseTemplate>
+                <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)" class="alert alert-danger">
+                  <div *ngIf="usernameVal.errors.required">
+                    Username is required.
+                  </div>
+                  <div *ngIf="usernameVal.errors.minlength">
+                    Username must be at least 4 characters long.
+                  </div>
+                </div>
+                <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)" class="alert alert-danger">
+                  <div *ngIf="passwordVal.errors.required">
+                    Password is required.
+                  </div>
+                  <div *ngIf="passwordVal.errors.minlength">
+                    Password must be at least 4 characters long.
+                  </div>
+                </div>
+              </ng-template>
+              
+              
+              <div *ngIf="error_description" class="alert alert-danger">
+                {{ error_description }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="footer ">
+      <div class="container">
+        <div class="copyright pull-right">
+          &copy;
+          {{ currentDate | date: "yyyy" }}, made with
+          <i class="material-icons">favorite</i> by
+          <a href="https://www.locus.co.th" target="_blank">Locus Telecommunication Inc., Ltd.</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

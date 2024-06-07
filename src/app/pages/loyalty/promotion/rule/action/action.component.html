@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <div align="end">
+        <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button" (click)="showMore('create')">{{ 'button.add' | translate }}</button>
+        </div>
+        <div class="material-datatables">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-responsive"
+          (matSortChange)="tableControl.onSort($event)" matSort matSortActive="description" matSortDirection="asc"
+            matSortDisableClear>
+            <ng-container matColumnDef="action" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef class="text-center"> {{ 'action.control' | translate }} </th>
+              <td mat-cell *matCellDef="let element" class="text-center"> {{element.action}}
+                <button *ngIf="CAN_WRITE()" mat-mini-fab color="warn" (click)="onDelete(element.actionId)">
+                  <mat-icon>remove</mat-icon>
+                </button>&nbsp;
+                <button mat-mini-fab (click)="showMore('edit', element)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="actionDetail">
+              <th mat-header-cell *matHeaderCellDef> {{ 'action.description' | translate }} </th>
+              <td mat-cell *matCellDef="let element"> {{element.actionDetail}} </td>
+            </ng-container>
+            <ng-container matColumnDef="exp">
+              <th mat-header-cell *matHeaderCellDef style="width: 60%;"> {{ 'action.expression' | translate }} </th>
+              <td mat-cell *matCellDef="let element" style="width: 60%;"> {{element.exp}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
+              [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+          </table>
+          <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
+          [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

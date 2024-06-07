@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{'member.verify.title' | translate}} {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>{{'member.verify.sendto' | translate}} <b>{{data.email}}</b></p>
+  <p>{{'member.verify.reference' | translate}} : <b>{{data.ref}}</b></p>
+  <mat-form-field appearance="outline">
+    <mat-label>Verify Key</mat-label>
+    <input matInput [(ngModel)]="data.key">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="btn btn-default" (click)="onNoClick()">{{'button.close' | translate}}</button>
+  <button mat-button class="btn btn-primary" [mat-dialog-close]="data.key" cdkFocusInitial>{{'member.verify.submit' | translate}}</button>
+</div>

@@ -1,0 +1,38 @@
+.no-label {
+  margin-top: 10px;
+}
+div[matLabel] {
+  font-size: 11px;
+  font-weight: 400;
+  color: #a4a4a4;
+}
+
+.card-header {
+  .header-actions {
+    position: absolute;
+    margin-top: 15px;
+    right: 0px;
+    button {
+      margin-left: 8px;
+    }
+  }
+}
+.mat-step-icon .mat-icon,
+.mat-step-icon-not-touched .mat-icon {
+  height: 40px;
+  width: 40px;
+}
+
+.card-body{
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance:textfield;
+  }
+}

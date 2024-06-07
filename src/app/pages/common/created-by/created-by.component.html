@@ -1,0 +1,25 @@
+<form [formGroup]="createdForm" novalidate>
+    <div class="toolbar">
+        <mat-form-field class="col-md-12" disabled appearance="outline">
+            <div class="row">
+                <mat-form-field class="col-md-3">
+                    <mat-label>{{'common.createdBy' | translate}}</mat-label>
+                    <input matInput type="text" [placeholder]="'common.createdBy' | translate" readonly formControlName="createdBy">
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                    <mat-label>{{'common.createdDate' | translate}}</mat-label>
+                    <input matInput type="text" [placeholder]="'common.createdDate' | translate" readonly formControlName="createdDate">
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                    <mat-label>{{'common.updatedBy' | translate}}</mat-label>
+                    <input matInput type="text" [placeholder]="'common.updatedBy' | translate" readonly formControlName="updatedBy">
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                    <mat-label>{{'common.updatedDate' | translate}}</mat-label>
+                    <input matInput type="text" [placeholder]="'common.updatedDate' | translate" readonly formControlName="updatedDate">
+                </mat-form-field>
+
+            </div>
+        </mat-form-field>
+    </div>
+    </form>

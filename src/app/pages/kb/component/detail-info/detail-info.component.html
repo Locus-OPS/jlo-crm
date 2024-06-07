@@ -1,0 +1,17 @@
+<form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
+    <input formControlName="contentId" type="hidden" />
+    <div class="row">
+        <mat-form-field class="col-md-12">
+            <input formControlName="url" matInput [placeholder]="translatePrefix + '.url' | translate" type="text" maxlength="500" />
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field class="col-md-12">
+            <textarea [disabled]="!kbDetail" formControlName="description" matInput [placeholder]="translatePrefix + '.description' | translate" type="text"
+                rows="5" maxlength="2000"></textarea>
+        </mat-form-field>
+    </div>
+    <div class="row pull-right">
+      <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="kbDetail && CAN_WRITE()">{{ 'button.save' | translate }}</button>
+    </div>
+</form>

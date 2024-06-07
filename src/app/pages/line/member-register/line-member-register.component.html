@@ -1,0 +1,48 @@
+<div class="main">
+  <ng-container *ngIf="step === 'SELECTION'">
+    <app-line-register-selection (selected)="onSelectType($event)"></app-line-register-selection>
+  </ng-container>
+  <ng-container *ngIf="step === 'FORM'">
+    <app-line-register-form [type]="type" (back)="onFormBack()" (next)="onFormNext($event)"></app-line-register-form>
+  </ng-container>
+  <ng-container *ngIf="step === 'OTP'">
+    <app-line-register-otp (back)="onOTPBack()" (next)="onOTPNext()"></app-line-register-otp>
+  </ng-container>
+  <ng-container *ngIf="step === 'TERM'">
+    <app-line-register-term (next)="onTermNext()"></app-line-register-term>
+  </ng-container>
+</div>
+<!-- <div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col col-md-3"></div>
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar src="{{ userProfile?.pictureUrl }}">
+          <mat-card-title>Registration</mat-card-title>
+          <mat-card-subtitle>{{ userProfile?.displayName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="registerForm" novalidate>
+            <div class="form-group row">
+              <label for="inputCardNo" class="col-sm-4 col-form-label">Citizen ID</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputCardNo" formControlName="cardNo">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputMobileNo" class="col-sm-4 col-form-label">Mobile No</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="inputMobileNo" formControlName="mobileNo">
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+        <mat-card-actions class="text-center">
+          <button mat-button (click)="register()">REGISTER</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col col-md-3"></div>
+  </div>
+</div> -->

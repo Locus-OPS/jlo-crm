@@ -1,0 +1,114 @@
+{
+  "menu": {
+    "system": {
+      "user": "ผู้ใช้งาน",
+      "role": "สิทธิ์",
+      "position": "ตำแหน่ง",
+      "codebook": "Codebook",
+      "business-unit": "หน่วยงาน"
+    }
+  },
+  "paging": {
+    "itemsPerPage": "จำนวนรายการต่อหน้า",
+    "nextPage": "ถัดไป",
+    "previousPage": "ก่อนหน้า"
+  },
+  "error": {
+    "required": "กรุณาระบุข้อมูล",
+    "email": "รูปแบบอีเมลไม่ถูกต้อง",
+    "maxLength": "ความยาวเกินกำหนด"
+  },
+  "common": {
+    "createdBy": "ผู้สร้าง",
+    "createdDate": "วันที่สร้าง",
+    "updatedBy": "ผู้แก้ไข",
+    "updatedDate": "วันที่แก้ไข"
+  },
+  "button": {
+    "search": "ค้นหา",
+    "create": "สร้าง",
+    "clear": "เคลียร์",
+    "save": "บันทึก",
+    "cancel": "ยกเลิก"
+  },
+  "user": {
+    "searchTitle": "ค้นหาผู้ใช้งาน",
+    "detailTitle": "ข้อมูลผู้ใช้งาน",
+    "userId": "รหัสผู้ใช้งาน",
+    "firstName": "ชื่อ",
+    "lastName": "นามสกุล",
+    "status": "สถานะ",
+    "businessUnit": "องค์กร",
+    "role": "บทบาท",
+    "division": "หน่วยงาน",
+    "position": "ตำแหน่ง",
+    "active": "ใช้งาน",
+    "inactive": "ไม่ใช้งาน",
+    "email": "อีเมล",
+    "id": "รหัส",
+    "loginType": "วิธีการตรวจสอบ",
+    "nickname": "ชื่อเล่น",
+    "password": "รหัสผ่าน",
+    "section": {
+      "responsibility": "ความรับผิดชอบ",
+      "authentication": "ความปลอดภัย"
+    },
+    "button": {
+      "log": "ประวัติการใช้งาน"
+    }
+  },
+  "loginLog": {
+    "title": "ประวัติการเข้าใช้ระบบ",
+    "userId": "รหัสผู้ใช้",
+    "attemptDate": "วันที่เข้าใช้งาน",
+    "type": "ประเภท",
+    "ipAddress": "IP Address",
+    "statusCode": "สถานะ",
+    "statusMessage": "รายละเอียด",
+    "attemptDateFrom": "วันที่เริ่มต้น",
+    "attemptDateTo": "วันที่สิ้นสุด"
+  },
+  "role": {
+    "title": "สิทธิ์",
+    "detailTitle": "ข้อมูลสิทธิ์",
+    "roleCode": "รหัสสิทธิ์",
+    "roleName": "ชื่อสิทธิ์",
+    "active": "ใช้งาน",
+    "respSetup": "ความรับผิดชอบ"
+  },
+  "position": {
+    "title": "ตำแหน่ง",
+    "detailTitle": "ข้อมูลตำแหน่ง",
+    "posId": "รหัสตำแหน่ง",
+    "posName": "ตำแหน่ง",
+    "parentPosName": "ตำแหน่งหลัก"
+  },
+  "content": {
+    "title": "องค์ความรู้",
+    "contentId": "รหัสองค์ความรู้",
+    "catId": "โฟลเดอร์",
+    "seq": "ลำดับ",
+    "contentTitle": "ชื่อ",
+    "display": "ไอคอน",
+    "contentStatus": "สถานะ",
+    "activeFlag": "ใช้งาน",
+    "sendDocFlag": "ส่งเอกสาร",
+    "startDate": "วันที่เริ่ม",
+    "startTime": "เวลาที่เริ่ม",
+    "endDate": "วันที่สิ้นสุด",
+    "endTime": "เวลาสิ้นสุด"
+  },
+  "document": {
+    "title": "ชื่อเอกสาร",
+    "mainFlag": "เอกสารหลัก",
+    "file": "ไฟล์",
+    "description": "รายละเอียด"
+  },
+  "business-unit": {
+    "title": "หน่วยงาน",
+    "detailTitle": "ข้อมูลหน่วยงาน",
+    "id": "รหัสหน่วยงาน",
+    "buName": "ชื่อหน่วยงาน",
+    "activeYn": "ใช้งาน"
+  }
+}

@@ -1,0 +1,119 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row member-card">
+      <mat-form-field class="col-md-1">
+        <input matInput [placeholder]="'member.memberId' | translate" type="text" [value]="redemptionMemberInfo?.memberId" readonly />
+      </mat-form-field>
+      <mat-form-field class="col-md-2">
+        <input matInput [placeholder]="'program.tier' | translate" type="text" [value]="redemptionMemberInfo?.tierName" readonly />
+      </mat-form-field>
+      <mat-form-field class="col-md-2">
+        <input matInput [placeholder]="'program.name' | translate" type="text" [value]="redemptionMemberInfo?.programName" readonly />
+      </mat-form-field>
+      <mat-form-field class="col-md-2">
+        <input matInput [placeholder]="'member.firstName' | translate" type="text" [value]="redemptionMemberInfo?.firstName" readonly />
+      </mat-form-field>
+      <mat-form-field class="col-md-2">
+        <input matInput [placeholder]="'member.lastName' | translate" type="text" [value]="redemptionMemberInfo?.lastName" readonly />
+      </mat-form-field>
+      <mat-form-field class="col-md-1">
+        <input matInput [placeholder]="'transaction.balancePoint' | translate" type="text" [value]="redemptionMemberInfo?.currentPoint | number" readonly />
+      </mat-form-field>
+      <div class="col-md-2" align="end">
+        <button mat-fab color="primary" [matBadge]="rewardCart.length" matBadgePosition="before" matBadgeColor="warn" (click)="openSummaryDialog()">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <form novalidate [formGroup]="searchForm">
+          <div class="row mt-3">
+            <mat-form-field class="col-md-2">
+              <mat-select [placeholder]="'redeem.displayType' | translate" formControlName="displayType">
+                <mat-option value="A">แสดงทั้งหมด</mat-option>
+                <mat-option value="Y">แสดงเฉพาะที่แลกได้</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="col-md-6">
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'redeem.minPoint' | translate" type="number" value="" formControlName="minPoint" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <input matInput [placeholder]="'redeem.maxPoint' | translate" type="number" value="" formControlName="maxPoint" />
+                </mat-form-field>
+                <mat-form-field class="col-md-6">
+                  <input matInput [placeholder]="'redeem.rewardName' | translate" type="text" value="" formControlName="rewardName" />
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-form-field class="col-md-2">
+              <mat-select [placeholder]="'redeem.method' | translate" formControlName="redeemMethod">
+                <mat-option value="">ทั้งหมด</mat-option>
+                <mat-option *ngFor="let item of redeemMethodList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="col-md-2">
+              <button mat-raised-button type="submit" class="btn btn-fill btn-rose search-btn"
+                (click)="onSearch()">{{ 'button.search' | translate }}</button>
+            </div>
+          </div>
+        </form>
+        <div class="material-datatables">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="tableControl.onSort($event)" matSort
+            matSortActive="productName" matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="productName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 65%;">Product</th>
+              <td mat-cell *matCellDef="let element" style="width: 65%;">
+                <span class="title">{{ element.productName }}</span>
+                <div class="subtitle">{{ element.productDetail }}</div>
+                <div class="detail">
+                  <span class="label">{{ 'redeem.point' | translate }}:</span><span class="val">{{ element.point | number}}</span>
+                  <span class="pipe">|</span><span class="label">{{ 'redeem.unitPerMember' | translate }}:</span><span class="val">{{ element.rewardUnitPerson | number }}</span>
+                  <span class="pipe">|</span><span class="label">{{ 'redeem.baht' | translate }}:</span><span class="val">{{ element.cash | number }}</span>
+                  <span class="pipe">|</span><span class="label">{{ 'redeem.remainBalancePerMember' | translate }}:</span><span class="val">{{ element.displayRedeemCount | number }}</span>
+                  <span class="pipe">|</span><span class="label">{{ 'redeem.inventoryBalance' | translate }}:</span><span class="val">{{ element.displayInventoryBalance | number }}</span>
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="point" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 10%;">{{ 'redeem.point' | translate }}</th>
+              <td mat-cell *matCellDef="let element" class="text-center" style="width: 10%;"> {{ (element.usePoint ? element.usePoint : 0) | number }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="cash" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 10%;">{{ 'redeem.cash' | translate }}</th>
+              <td mat-cell *matCellDef="let element" class="text-center" style="width: 10%;"> {{ (element.useCash ? element.useCash : 0) | number }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="quantity" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 10%;">{{ 'redeem.quantity' | translate }}</th>
+              <td mat-cell *matCellDef="let element" class="text-center" style="width: 10%;">
+                <span class="minus noselect" (click)="minus(element)">-</span>
+                <span class="quantity noselect" #qnt>{{ (element.quantity ? element.quantity : 0) | number }}</span>
+                <span class="plus noselect" (click)="plus(element)">+</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="action" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef class="text-center" style="width: 5%;"></th>
+              <td mat-cell *matCellDef="let element" class="text-center" style="width: 5%;">
+                <button class="btn btn-primary btn-round btn-fab mat-raised-button" (click)="addRewardToCart(element)"
+                  [disabled]="!element.quantity || element.quantity < 1">
+                  <span class="mat-button-wrapper">
+                    <i class="material-icons">add_shopping_cart</i>
+                  </span>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
+            [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

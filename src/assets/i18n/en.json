@@ -1,0 +1,114 @@
+{
+  "menu": {
+    "system": {
+      "user": "User",
+      "role": "Role",
+      "position": "Position",
+      "codebook": "Codebook",
+      "business-unit": "Business Unit"
+    }
+  },
+  "paging": {
+    "itemsPerPage": "Items Per Page",
+    "nextPage": "Next",
+    "previousPage": "Previous"
+  },
+  "error": {
+    "required": "This field is required",
+    "email": "Wrong email format",
+    "maxLength": "Invalid max length"
+  },
+  "common": {
+    "createdBy": "Created By",
+    "createdDate": "Created Date",
+    "updatedBy": "Updated By",
+    "updatedDate": "Updated Date"
+  },
+  "button": {
+    "search": "Search",
+    "create": "Create",
+    "clear": "Clear",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "user": {
+    "searchTitle": "Search User",
+    "detailTitle": "User Info",
+    "userId": "User ID",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "status": "Status",
+    "businessUnit": "Business Unit",
+    "role": "Role",
+    "division": "Division",
+    "position": "Position",
+    "active": "Active",
+    "inactive": "Inactive",
+    "email": "Email",
+    "id": "ID",
+    "loginType": "Login Type",
+    "nickname": "Nickname",
+    "password": "Password",
+    "section": {
+      "responsibility": "Responsibility",
+      "authentication": "Authentication"
+    },
+    "button": {
+      "log": "Log"
+    }
+  },
+  "loginLog": {
+    "title": "Login Log",
+    "userId": "User ID",
+    "attemptDate": "Attempt Date",
+    "type": "Type",
+    "ipAddress": "IP Address",
+    "statusCode": "Status Code",
+    "statusMessage": "Status Message",
+    "attemptDateFrom": "Attempt Start Date",
+    "attemptDateTo": "Attempt End Date"
+  },
+  "role": {
+    "title": "Role",
+    "detailTitle": "Role Detail",
+    "roleCode": "Role Code",
+    "roleName": "Role Name",
+    "active": "Active",
+    "respSetup": "Responsibility"
+  },
+  "position": {
+    "title": "Position",
+    "detailTitle": "Position Detail",
+    "posId": "Position ID",
+    "posName": "Position Name",
+    "parentPosName": "Parent Position"
+  },
+  "content": {
+    "title": "Content",
+    "contentId": "Content ID",
+    "catId": "Folder",
+    "seq": "Sequence",
+    "contentTitle": "Title",
+    "display": "Icon",
+    "contentStatus": "Status",
+    "activeFlag": "Active",
+    "sendDocFlag": "Send Document",
+    "startDate": "Start Date",
+    "startTime": "Start Time",
+    "endDate": "End Date",
+    "endTime": "End Time"
+  },
+  "document": {
+    "title": "Title",
+    "mainFlag": "Main Document",
+    "file": "File",
+    "description": "Description"
+  },
+  "bu": {
+    "title": "Business Unit",
+    "detailTitle": "Business Unit Detail",
+    "id": "Business Unit ID",
+    "buName": "Business Unit Name",
+    "activeYn": "Active"
+  }
+}

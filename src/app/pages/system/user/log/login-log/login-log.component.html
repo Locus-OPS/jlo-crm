@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <br />
+  <form [formGroup]="searchForm" (ngSubmit)="search()" novalidate>
+    <div class="row">
+      <mat-form-field class="col-md-3">
+        <input matInput [matDatepicker]="pickerFrom" (dateChange)="onAttemptDateFromChange($event)" formControlName="attemptDateFrom" [placeholder]="'loginLog.attemptDateFrom' | translate">
+        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFrom></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="col-md-3">
+        <input matInput [matDatepicker]="pickerTo" (dateChange)="onAttemptDateToChange($event)" formControlName="attemptDateTo" [placeholder]="'loginLog.attemptDateTo' | translate">
+        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+        <mat-datepicker #pickerTo></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="col-md-3">
+        <input matInput [placeholder]="'loginLog.statusCode' | translate" type="text" formControlName="statusCode">
+      </mat-form-field>
+      <mat-form-field class="col-md-3">
+        <input matInput [placeholder]="'loginLog.statusMessage' | translate" type="text" formControlName="statusMessage">
+      </mat-form-field>
+    </div>
+    <div align="end">
+      <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
+      <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset">{{ 'button.clear' | translate }}</button>
+    </div>
+  </form>
+  <div class="material-datatables">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="tableControl.onSort($event)" matSort
+      matSortActive="attemptDate" matSortDirection="asc" matSortDisableClear>
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef>{{ 'loginLog.userId' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="attemptDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'loginLog.attemptDate' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.attemptDate}} </td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>{{ 'loginLog.type' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+      <ng-container matColumnDef="ipAddress">
+        <th mat-header-cell *matHeaderCellDef>{{ 'loginLog.ipAddress' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.ipAddress}} </td>
+      </ng-container>
+      <ng-container matColumnDef="statusCode">
+        <th mat-header-cell *matHeaderCellDef>{{ 'loginLog.statusCode' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.statusCode}} </td>
+      </ng-container>
+      <ng-container matColumnDef="statusMessage">
+        <th mat-header-cell *matHeaderCellDef>{{ 'loginLog.statusMessage' | translate }}</th>
+        <td mat-cell *matCellDef="let element"> {{element.statusMessage}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total" [pageSize]="tableControl.pageSize"
+      [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
