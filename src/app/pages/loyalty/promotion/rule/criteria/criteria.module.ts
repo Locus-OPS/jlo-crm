@@ -8,12 +8,11 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 
 
 @NgModule({
-  declarations: [CriteriaComponent, ShowMoreComponent, BuilderComponent],
-  entryComponents: [ShowMoreComponent],
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
-  exports:[CriteriaComponent]
+    declarations: [CriteriaComponent, ShowMoreComponent, BuilderComponent],
+    imports: [
+        CommonModule,
+        SharedModule
+    ],
+    exports: [CriteriaComponent]
 })
 export class CriteriaModule { }

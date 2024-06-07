@@ -8,12 +8,11 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 
 
 @NgModule({
-  declarations: [ActionComponent, ShowActionComponent, ActionBuilderComponent],
-  entryComponents: [ShowActionComponent],
-  imports: [
-    CommonModule,
-    SharedModule
-  ],
-  exports: [ActionComponent]
+    declarations: [ActionComponent, ShowActionComponent, ActionBuilderComponent],
+    imports: [
+        CommonModule,
+        SharedModule
+    ],
+    exports: [ActionComponent]
 })
 export class ActionModule { }
