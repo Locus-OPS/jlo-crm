@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import TokenUtils from '../shared/token-utils';
 import { Globals } from '../shared/globals';
@@ -8,7 +8,7 @@ import Utils from 'src/app/shared/utils';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
 
   constructor(
     private router: Router,
