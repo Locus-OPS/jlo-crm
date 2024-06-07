@@ -1,16 +1,17 @@
-@use '~@angular/material' as mat;
-@import "~@angular/material/theming";
+@use '@angular/material' as mat;
 @import "../scss/core/variables";
 
 $custom-typography: mat.define-typography-config(
   $font-family: "Sarabun, monospace"
 );
-@include mat.core($custom-typography);
+ 
+//@include mat.core($custom-typography);
 
 $alternate-primary: mat.define-palette(mat.$blue-palette, 800);
 $alternate-accent: mat.define-palette(mat.$blue-palette, 800);
 $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
 
+//@include mat.all-legacy-component-themes($alternate-theme);
 @include mat.all-component-themes($alternate-theme);
 
 .main-tab {
@@ -72,7 +73,8 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
     .mat-row,
     .mat-header-row {
       display: table-row;
-      height: 40px;
+      // height: 40px;
+      width: 35%;
     }
 
     .mat-cell,
