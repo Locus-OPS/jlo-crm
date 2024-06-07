@@ -126,24 +126,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "JLOXGFE:build"
+            "buildTarget": "JLOXGFE:build"
           },
           "configurations": {
             "sit": {
-              "browserTarget": "JLOXGFE:build:sit"
+              "buildTarget": "JLOXGFE:build:sit"
             },
             "uat": {
-              "browserTarget": "JLOXGFE:build:uat"
+              "buildTarget": "JLOXGFE:build:uat"
             },
             "production": {
-              "browserTarget": "JLOXGFE:build:production"
+              "buildTarget": "JLOXGFE:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "JLOXGFE:build"
+            "buildTarget": "JLOXGFE:build"
           }
         },
         "test": {
