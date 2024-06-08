@@ -31,12 +31,12 @@
 
 :host
   ::ng-deep
-  .mat-button-toggle-appearance-standard
-  .mat-button-toggle-label-content {
+  .mat-mdc-button-toggle-appearance-standard
+  .mat-mdc-button-toggle-label-content {
   line-height: 30px !important;
 }
 
-:host ::ng-deep .mat-flat-button {
+:host ::ng-deep .mat-mdc-flat-button {
   line-height: 30px !important;
   margin-left: 8px;
   border-radius: 2px;

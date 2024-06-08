@@ -1,14 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-.mat-select-disabled.mat-select .mat-select-value-text span {
+.mat-mdc-select-disabled.mat-mdc-select .mat-mdc-select-value-text span {
     color: #9e9e9e;
 }
 
-/* Start close button style sheet in mat-dialog. */
+/* Start close button style sheet in mat-mdc-dialog. */
 .cdk-overlay-pane.my-dialog {
     position: relative!important;
   }
-  .close.mat-button {
+  .close.mat-mdc-button {
     position: absolute;
     top: 0;
     right: 0;
@@ -18,4 +18,4 @@
     margin-right: 12px;
     margin-top: 12px;
   }
-  /* End close button style in mat-dialog. */
+  /* End close button style in mat-mdc-dialog. */

@@ -5,13 +5,13 @@
   </div>
   <div class="main-panel">
     <app-navbar-cmp></app-navbar-cmp>
-    <mat-tab-group animationDuration="0ms" class="main-tab" [selectedIndex]="selectedTab"
+    <mat-tab-group animationDuration="0ms" class="main-tab" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start"
       (selectedTabChange)="selectedTabChanged($event)">
       <mat-tab *ngFor="let tab of tabsComponents; index as i">
         <ng-template mat-tab-label>
           {{ tab.title | translate:tab.titleParam }}
           <button *ngIf="tab.canClose" mat-icon-button class="close-icon" style="margin-left: 35px;" (click)="closeTab($event,i)">
-            <mat-icon class="close-icon ">
+            <mat-icon class="close-icon">
               close
             </mat-icon>
           </button>

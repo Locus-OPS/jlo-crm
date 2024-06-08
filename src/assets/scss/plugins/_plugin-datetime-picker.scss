@@ -47,7 +47,7 @@
     box-sizing: border-box;
     z-index: 1031;
 }
-.mat-datepicker-content {
+.mat-mdc-datepicker-content {
     background-color: white;
     color: rgba(0, 0, 0, 0.87);
 }
@@ -62,46 +62,46 @@
     text-transform: none;
     width: 1px;
 }
-.mat-calendar {
+.mat-mdc-calendar {
     font-family: Sarabun, "Helvetica Neue", sans-serif;
 }
-.mat-calendar-period-button {
+.mat-mdc-calendar-period-button {
     min-width: 0;
 }
-.mat-calendar-next-button, .mat-calendar-previous-button {
+.mat-mdc-calendar-next-button, .mat-mdc-calendar-previous-button {
     position: relative;
 }
-.mat-ripple {
+.mat-mdc-ripple {
     overflow: hidden;
 }
-.mat-button, .mat-icon-button {
+.mat-mdc-button, .mat-mdc-icon-button {
     background: transparent;
 }
-.mat-calendar-table-header {
+.mat-mdc-calendar-table-header {
     color: rgba(0, 0, 0, 0.38);
 }
-.mat-calendar-table-header th {
+.mat-mdc-calendar-table-header th {
     font-size: 11px;
     font-weight: 400;
 }
-.mat-calendar-body {
+.mat-mdc-calendar-body {
     font-size: 13px;
 }
-.mat-calendar-body-label {
+.mat-mdc-calendar-body-label {
     color: rgba(0, 0, 0, 0.54);
 }
-.mat-calendar-body-label, .mat-calendar-period-button {
+.mat-mdc-calendar-body-label, .mat-mdc-calendar-period-button {
     font-size: 14px;
     font-weight: 500;
 }
-.mat-calendar-body-cell-content {
+.mat-mdc-calendar-body-cell-content {
     color: rgba(0, 0, 0, 0.87);
     border-color: transparent;
 }
-.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+.mat-mdc-calendar-body-today:not(.mat-mdc-calendar-body-selected) {
     border-color: rgba(0, 0, 0, 0.38);
 }
-.mat-calendar-body-selected{
+.mat-mdc-calendar-body-selected{
     &,
     &:hover{
         background-color: $bs-datetimepicker-active-bg;
@@ -120,58 +120,58 @@
 .cdk-overlay-dark-backdrop {
     background: rgba(0, 0, 0, 0.6);
 }
-.mat-dialog-container {
+.mat-mdc-dialog-container {
     background: white;
     border-radius: 2px;
 }
-.mat-dialog-container {
+.mat-mdc-dialog-container {
     background: white;
     color: rgba(0, 0, 0, 0.87);
 }
-.mat-input-placeholder-wrapper {
+.mat-mdc-input-placeholder-wrapper {
     top: -0.84375em;
     padding-top: 0.84375em;
 }
-.mat-input-placeholder {
+.mat-mdc-input-placeholder {
     color: rgba(0, 0, 0, 0.38);
 }
-.mat-input-placeholder.mat-empty {
+.mat-mdc-input-placeholder.mat-mdc-empty {
     top: 1.28125em;
 }
-.mat-input-infix {
+.mat-mdc-input-infix {
     padding: 0.4375em 0;
     border-top: 0.84375em solid transparent;
 }
-.mat-input-wrapper {
+.mat-mdc-input-wrapper {
     padding-bottom: 1.296875em;
 }
-.mat-input-underline {
+.mat-mdc-input-underline {
     background-color: rgba(0, 0, 0, 0.12);
 }
-.mat-input-underline {
+.mat-mdc-input-underline {
     bottom: 1.296875em;
 }
-.mat-input-subscript-wrapper {
+.mat-mdc-input-subscript-wrapper {
     font-size: 75%;
     margin-top: 0.60416667em;
     top: calc(100% - 1.72916667em);
 }
-.mat-input-ripple {
+.mat-mdc-input-ripple {
     background-color: $brand-primary;
 }
-// :focus is applied to the input, but we apply mat-focused to the other elements
+// :focus is applied to the input, but we apply mat-mdc-focused to the other elements
 // that need to listen to it.
-.mat-focused .mat-input-placeholder {
+.mat-mdc-focused .mat-mdc-input-placeholder {
   color: $brand-primary;
 }
 
-.mat-input-element:disabled {
+.mat-mdc-input-element:disabled {
   color: grey;
 }
-.mat-calendar-body-cell-content,
-.mat-icon-button,
-.mat-button-focus-overlay,
-.mat-button{
+.mat-mdc-calendar-body-cell-content,
+.mat-mdc-icon-button,
+.mat-mdc-button-focus-overlay,
+.mat-mdc-button{
     @extend .animation-transition-fast;
 }
 

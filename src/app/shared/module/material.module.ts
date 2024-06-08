@@ -43,6 +43,7 @@ import { MatBadgeModule } from "@angular/material/badge";
 import { NgModule } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { CustomMatPaginatorIntl } from "../../config/custom.paginator";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 @NgModule({
   exports: [
@@ -101,7 +102,7 @@ import { CustomMatPaginatorIntl } from "../../config/custom.paginator";
         },
       },
     },
-    // {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'always'}}
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline', floatLabel: 'always'}}
   ],
 })
 export class MaterialModule {}

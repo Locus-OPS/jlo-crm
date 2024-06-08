@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { NewFolderComponent } from './component/tree/new-folder/new-folder.component';
 import { TreeModalComponent } from './component/detail/tree-modal/tree-modal.component';
-import { ContentComponent } from './content/content.component';
 import { DetailComponent } from './component/detail/detail.component';
 import { DetailInfoComponent } from './component/detail-info/detail-info.component';
 import { KeywordComponent } from './component/keyword/keyword.component';
@@ -13,6 +12,7 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '../common/common.module';
+import { ContentComponent } from './content/content.component';
 
 @NgModule({
   imports: [

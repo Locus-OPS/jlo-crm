@@ -8,14 +8,12 @@ import { CodebookComponent } from './pages/system/codebook/codebook.component';
 import { InternationalizationComponent } from './pages/system/internationalization/internationalization.component';
 import { RoleComponent } from './pages/system/role/role.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { SharedModule } from './shared/module/shared.module';
 import { MenuComponent } from './pages/system/menu/menu.component';
 import { UserComponent } from './pages/system/user/user.component';
 import { BusinessUnitComponent } from './pages/system/business-unit/business-unit.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { CustomerDetailComponent } from './pages/customer/customer-detail/customer-detail.component';
 import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
-import { FormsModule } from '@angular/forms';
 import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
 import { ContentComponent } from './pages/kb/content/content.component';
@@ -23,7 +21,6 @@ import { SystemModule } from './pages/system/system.module';
 import { KbModule } from './pages/kb/kb.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
-import { CommonModule } from './pages/common/common.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
 import { LineModule } from './pages/line/line.module';
 import { LineMemberRedeemComponent } from './pages/line/member-redeem/line-member-redeem.component';
@@ -33,6 +30,7 @@ import { LineReceiptUploadComponent } from './pages/line/receipt-upload/receipt-
 import { LineReceiptApproveComponent } from './pages/line/receipt-approve/receipt-approve.component';
 import { LineXcashDetailComponent } from './pages/line/xcash-detail/xcash-detail.component';
 import { LineRewardAddressComponent } from './pages/line/reward-address/reward-address.component';
+import { CaseModule } from './pages/case/case.module';
 
 const routes: Routes = [
   {
@@ -154,13 +152,11 @@ const routes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forRoot(routes, {}),
-    SharedModule,
-    FormsModule,
-    CommonModule,
     DashboardModule,
     SystemModule,
     CustomerModule,
     KbModule,
+    CaseModule,
     LineModule
   ],
   exports: [RouterModule]

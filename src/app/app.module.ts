@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import {
@@ -22,7 +21,7 @@ import { FixedpluginModule } from "./layouts/template/fixedplugin/fixedplugin.mo
 import { AdminLayoutComponent } from "./layouts/admin/admin-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth/auth-layout.component";
 
-import { JwtModule } from "@auth0/angular-jwt";
+import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import TokenUtils from "./shared/token-utils";
 import { HttpErrorInterceptor } from "./interceptor/httperror.interceptor";
@@ -35,6 +34,16 @@ import { NgxSpinnerModule } from "ngx-spinner";
 
 export function jwtTokenGetter() {
   return TokenUtils.getToken();
+}
+
+export function jwtOptionsFactory() {
+  return {
+    tokenGetter: () => {
+      return TokenUtils.getToken();
+    },
+    allowedDomains: environment.whitelistedDomains,
+    disallowedRoutes: [new RegExp('.+\/auth\/token')]
+  };
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,10 +72,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxSpinnerModule,
     SweetAlert2Module.forRoot(),
     JwtModule.forRoot({
-      config: {
-        tokenGetter: jwtTokenGetter,
-        whitelistedDomains: environment.whitelistedDomains,
-        blacklistedRoutes: [new RegExp(".+/oauth/token")],
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
       },
     }),
     TranslateModule.forRoot({
@@ -87,5 +95,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

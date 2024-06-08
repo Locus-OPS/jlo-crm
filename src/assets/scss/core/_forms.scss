@@ -38,7 +38,7 @@ form {
 
   // The border bottom should be static in all states, the decorator will be animated over this.
   &:focus,
-  .bmd-form-group.mat-focused & {
+  .bmd-form-group.mat-mdc-focused & {
     background-size: $bmd-form-control-bg-size-active;
     //border-bottom: $input-btn-border-width solid $input-border-color;
     transition-duration: 0.3s;
@@ -70,7 +70,7 @@ form {
   font-weight: normal;
   @extend .text-muted;
 
-  .bmd-form-group.mat-focused & {
+  .bmd-form-group.mat-mdc-focused & {
     display: block;
   }
 
@@ -368,30 +368,30 @@ fieldset[disabled] .form-group .form-control{
   background-repeat: no-repeat;
 }
 
-.mat-form-field{
-  &.mat-focused{
-    .mat-form-field-ripple{
+.mat-mdc-form-field{
+  &.mat-mdc-focused{
+    .mat-mdc-form-field-ripple{
       background-color: $brand-primary;
     }
-    .mat-form-field-label{
+    .mat-mdc-form-field-label{
       color: $brand-primary;
     }
   }
 }
 
 
-.mat-form-field{
+.mat-mdc-form-field{
   display: block !important;
 }
 
 .has-success{
-  .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
-  .mat-form-field-empty.mat-form-field-label{
+  .mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-form-field-label,
+  .mat-mdc-form-field-empty.mat-mdc-form-field-label{
     color: #4caf50;
   }
-  &.mat-focused{
-    .mat-input-underline{
-      .mat-input-ripple{
+  &.mat-mdc-focused{
+    .mat-mdc-input-underline{
+      .mat-mdc-input-ripple{
         background-color: #4caf50;
       }
     }
@@ -399,37 +399,37 @@ fieldset[disabled] .form-group .form-control{
 }
 
 .has-danger{
-  .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
-  .mat-form-field-empty.mat-form-field-label{
+  .mat-mdc-form-field-can-float.mat-mdc-form-field-should-float .mat-mdc-form-field-label,
+  .mat-mdc-form-field-empty.mat-mdc-form-field-label{
     color: #f44336;
   }
-  &.mat-focused{
-    .mat-input-underline{
-      .mat-input-ripple{
+  &.mat-mdc-focused{
+    .mat-mdc-input-underline{
+      .mat-mdc-input-ripple{
         background-color: #f44336;
       }
     }
   }
 }
 .ng-invalid{
-  &.mat-focused .mat-form-field-label{
+  &.mat-mdc-focused .mat-mdc-form-field-label{
     color: #f44336;
   }
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   width: 100%;
 }
 
-.mat-form-field.has-success{
-  .mat-input-underline{
+.mat-mdc-form-field.has-success{
+  .mat-mdc-input-underline{
     background-color: #4caf50;
     height: 2px;
-    .mat-input-ripple{
+    .mat-mdc-input-ripple{
       background-color: #4caf50;
     }
   }
-  .mat-form-field-label{
+  .mat-mdc-form-field-label{
     color: #4caf50;
   }
 }
