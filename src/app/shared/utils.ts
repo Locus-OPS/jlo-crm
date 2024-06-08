@@ -1,54 +1,83 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { SweetAlertOptions } from 'sweetalert2';
+import Swal, { SweetAlertOptions } from 'sweetalert2';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import * as moment from 'moment';
 import { ApiResponse } from '../model/api-response.model';
-import { Time } from '@angular/common';
-import { trigger } from '@angular/animations';
 
 export default class Utils {
   static alertSuccess(options: SweetAlertOptions) {
-    return new SwalComponent({
-      type: 'success',
-      confirmButtonClass: 'btn btn-success',
-      buttonsStyling: false,
+    // return new SwalComponent({
+    //   type: 'success',
+    //   confirmButtonClass: 'btn btn-success',
+    //   buttonsStyling: false,
+    //   ...options
+    // }).show();
+
+    return Swal.fire({
+      icon: 'success',
+      customClass: 'btn btn-success',
       ...options
-    }).show();
+    });
   }
 
   static confirmDelete() {
-    return new SwalComponent({
+    // return new SwalComponent({
+    //   title: 'Are you sure?',
+    //   text: 'You won\'t be able to revert this!',
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonClass: 'btn btn-success',
+    //   cancelButtonClass: 'btn btn-danger',
+    //   confirmButtonText: 'Yes, delete it!',
+    //   buttonsStyling: false
+    // }).show();
+
+    return Swal.fire({
+      icon: 'warning',
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
-      type: 'warning',
       showCancelButton: true,
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
       confirmButtonText: 'Yes, delete it!',
-      buttonsStyling: false
-    }).show();
+      didClose: () => {
+        return false;
+      }
+    });
   }
 
-  static confirm(title,content,btnText) {
-    return new SwalComponent({
+  static confirm(title, content, btnText) {
+    // return new SwalComponent({
+    //   title: title,
+    //   text: content,
+    //   type: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonClass: 'btn btn-success',
+    //   cancelButtonClass: 'btn btn-danger',
+    //   confirmButtonText: btnText,
+    //   buttonsStyling: false
+    // }).show();
+
+    return Swal.fire({
+      icon: 'warning',
       title: title,
       text: content,
-      type: 'warning',
       showCancelButton: true,
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
       confirmButtonText: btnText,
-      buttonsStyling: false
-    }).show();
+    });
   }
 
   static alertError(options: SweetAlertOptions) {
-    return new SwalComponent({
-      type: 'error',
-      confirmButtonClass: 'btn btn-info',
-      buttonsStyling: false,
+    // return new SwalComponent({
+    //   type: 'error',
+    //   confirmButtonClass: 'btn btn-info',
+    //   buttonsStyling: false,
+    //   ...options
+    // }).show();
+
+    return Swal.fire({
+      icon: 'error',
+      customClass: 'btn btn-info',
       ...options
-    }).show();
+    });
   }
 
   static assign(target: object, ...sources: object[]) {
@@ -77,8 +106,8 @@ export default class Utils {
     return '';
   }
 
-  /** 
-   * Compares two Date objects and returns e number value that represents 
+  /**
+   * Compares two Date objects and returns e number value that represents
    * the result:
    * 0 if the two dates are equal.
    * 1 if the first date is greater than second.
@@ -103,7 +132,7 @@ export default class Utils {
       let time1Split = startTime.split(":");
       let hours1 = Number(time1Split[0]);
       let minutes1 = Number(time1Split[1]);
-      
+
       let time2Split = endTime.split(":");
       let hours2 = Number(time2Split[0]);
       let minutes2 = Number(time2Split[1]);
@@ -259,7 +288,7 @@ export default class Utils {
   static isValidCitizenId(value: string) {
 	  var fullCitizenId = value.substring(0, 1) + '-' + value.substring(1, 5) + '-' + value.substring(5, 10) + '-' + value.substring(10, 12)
 		  + '-' + value.substring(12);
-    
+
     if (fullCitizenId.length == 17) {
       var k = fullCitizenId.length;
       var r = 0;

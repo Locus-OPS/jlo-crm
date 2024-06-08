@@ -10,7 +10,7 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';

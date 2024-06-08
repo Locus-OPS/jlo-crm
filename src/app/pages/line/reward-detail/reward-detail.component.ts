@@ -3,8 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LineRedemptionReward } from '../line.model';
 import { LineService } from '../line.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { ModalConfirmComponent } from '../../common/modal-confirm/modal-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-line-reward-detail',
@@ -22,7 +21,7 @@ export class LineRewardDetailComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router
   ) {
-    this.reward = lineService.getReward();
+    this.reward = this.lineService.getReward();
   }
 
   ngOnInit() {

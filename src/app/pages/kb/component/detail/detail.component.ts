@@ -8,19 +8,17 @@ import { Subscription } from 'rxjs';
 import { KbDetail } from '../../kb.model';
 import { KbStore } from '../../kb.store';
 import * as moment from 'moment';
-import { of } from 'rxjs';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { TreeModalComponent } from './tree-modal/tree-modal.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'kb-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-
 export class DetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @ViewChild('createFormDirective')

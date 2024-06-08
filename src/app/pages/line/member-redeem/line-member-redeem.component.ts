@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { LineService } from '../line.service';
 import { LineUserProfile } from '../liff.model';
 import { LiffService } from '../liff.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalConfirmComponent } from '../../common/modal-confirm/modal-confirm.component';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LineMemberInfo, LineRedemptionReward } from '../line.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-line-member-redeem',

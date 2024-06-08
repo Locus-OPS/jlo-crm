@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { KbService } from '../../../kb.service';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import Utils from 'src/app/shared/utils';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
@@ -51,7 +50,7 @@ export class NewFolderComponent extends BaseComponent implements OnInit {
 
     this.CHECK_FORM_PERMISSION(this.createForm);
   }
-  
+
   onSave() {
     if (this.createForm.invalid) {
       return;

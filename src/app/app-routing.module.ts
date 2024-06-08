@@ -19,28 +19,13 @@ import { FormsModule } from '@angular/forms';
 import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
 import { ContentComponent } from './pages/kb/content/content.component';
-import { ProgramComponent } from './pages/loyalty/program/program.component';
-import { RewardComponent } from './pages/loyalty/reward/reward.component';
-import { TransactionComponent } from './pages/loyalty/transaction/transaction.component';
-import { CampaignComponent } from './pages/loyalty/campaign/campaign.component';
-import { PartnerComponent } from './pages/loyalty/partner/partner.component';
-import { BulkloadpointComponent } from './pages/loyalty/bulkloadpoint/bulkloadpoint.component';
-import { SaleproductComponent } from './pages/loyalty/saleproduct/saleproduct.component';
-import { SaleproductcategoryComponent } from './pages/loyalty/saleproductcategory/saleproductcategory.component';
-import { ProductComponent } from './pages/loyalty/product/product.component';
-import { ShopComponent } from './pages/loyalty/shop/shop.component';
-import { PromotionComponent } from './pages/loyalty/promotion/promotion.component';
-import { LoyaltyModule } from './pages/loyalty/loyalty.module';
 import { SystemModule } from './pages/system/system.module';
 import { KbModule } from './pages/kb/kb.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
 import { CommonModule } from './pages/common/common.module';
-import { TransactionReceiptComponent } from './pages/loyalty/transaction-receipt/transaction-receipt.component';
-import { TransactionManualPointComponent } from './pages/loyalty/transaction-manualpoint/transaction-manualpoint.component';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
 import { LineModule } from './pages/line/line.module';
-import { LineLiffComponent } from './pages/line/liff.component';
 import { LineMemberRedeemComponent } from './pages/line/member-redeem/line-member-redeem.component';
 import { LineMemberRedeemHistoryComponent } from './pages/line/member-redeem-history/line-member-redeem-history.component';
 import { LineRewardDetailComponent } from './pages/line/reward-detail/reward-detail.component';
@@ -92,71 +77,6 @@ const routes: Routes = [
         path: 'casedetails',
         canActivate: [AuthGuard],
         component: CasedetailsComponent
-      },
-      {
-        path: 'loyalty/program',
-        canActivate: [AuthGuard],
-        component: ProgramComponent
-      },
-      {
-        path: 'loyalty/promotion',
-        canActivate: [AuthGuard],
-        component: PromotionComponent
-      },
-      {
-        path: 'loyalty/product',
-        canActivate: [AuthGuard],
-        component: ProductComponent
-      },
-      {
-        path: 'loyalty/reward',
-        canActivate: [AuthGuard],
-        component: RewardComponent
-      },
-      {
-        path: 'loyalty/campaign',
-        canActivate: [AuthGuard],
-        component: CampaignComponent
-      },
-      {
-        path: 'loyalty/shop',
-        canActivate: [AuthGuard],
-        component: ShopComponent
-      },
-      {
-        path: 'loyalty/partner',
-        canActivate: [AuthGuard],
-        component: PartnerComponent
-      },
-      {
-        path: 'loyalty/bulkloadpoint',
-        canActivate: [AuthGuard],
-        component: BulkloadpointComponent
-      },
-      {
-        path: 'loyalty/sale-product',
-        canActivate: [AuthGuard],
-        component: SaleproductComponent
-      },
-      {
-        path: 'loyalty/sale-product-category',
-        canActivate: [AuthGuard],
-        component: SaleproductcategoryComponent
-      },
-      {
-        path: 'loy-transaction/transaction',
-        canActivate: [AuthGuard],
-        component: TransactionComponent
-      },
-      {
-        path: 'loy-transaction/receipt',
-        canActivate: [AuthGuard],
-        component: TransactionReceiptComponent
-      },
-      {
-        path: 'loy-transaction/manualpoint',
-        canActivate: [AuthGuard],
-        component: TransactionManualPointComponent
       },
       {
         path: 'kb/content/:contentType',
@@ -241,7 +161,6 @@ const routes: Routes = [
     SystemModule,
     CustomerModule,
     KbModule,
-    LoyaltyModule,
     LineModule
   ],
   exports: [RouterModule]

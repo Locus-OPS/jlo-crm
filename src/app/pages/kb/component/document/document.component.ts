@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { KbService } from '../../kb.service';
-import { Subscription, VirtualTimeScheduler } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { KbStore } from '../../kb.store';
 import { KbDetail, KbDocument } from '../../kb.model';
 import Utils from 'src/app/shared/utils';
@@ -10,8 +10,8 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { ModalContentFileComponent } from 'src/app/pages/common/modal-file/modal-file.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'kb-document',
@@ -78,7 +78,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
       updatedBy: [''],
       updatedDate: ['']
     });
-    
+
     this.createForm.disable();
 
     this.CHECK_FORM_PERMISSION(this.createForm);

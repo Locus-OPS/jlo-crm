@@ -14,7 +14,7 @@ import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { ModalUserComponent } from 'src/app/pages/common/modal-user/modal-user.component';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'tab-caseactivity-content',
   templateUrl: './caseactivity.component.html',

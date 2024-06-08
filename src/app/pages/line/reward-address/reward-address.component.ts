@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LineRedemptionReward } from '../line.model';
 import { LineService } from '../line.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalConfirmComponent } from '../../common/modal-confirm/modal-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-line-reward-address',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,9 +19,9 @@ import { BaseComponent } from 'src/app/shared/base.component';
 })
 export class ModalShopComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  
+
   tableControl: TableControl = new TableControl(() => { this.search(); });
-  
+
   selectedRow: ModalShopModel;
   dataSource: ModalShopModel[];
   displayedColumns: string[] = ['shopNo', 'shopName', 'shopTypeName', 'shopLocationName', 'shopFloor'];
@@ -29,7 +29,7 @@ export class ModalShopComponent extends BaseComponent implements OnInit {
   searchForm: UntypedFormGroup;
   shopTypeList: Dropdown[];
   locationList: Dropdown[];
-  
+
   constructor(
       @Inject(MAT_DIALOG_DATA) public shopInfo: any,
       private dialogRef: MatDialogRef<ModalShopComponent>,
@@ -37,7 +37,7 @@ export class ModalShopComponent extends BaseComponent implements OnInit {
       private modalShopService: ModalShopService,
       private formBuilder: UntypedFormBuilder,
       public router: Router,
-      public globals: Globals) { 
+      public globals: Globals) {
         super(router, globals);
         api.getShopType().then(result => { this.shopTypeList = result.data; });
         api.getMultipleCodebookByCodeType({
