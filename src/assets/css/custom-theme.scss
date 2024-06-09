@@ -42,7 +42,7 @@ $my-theme: mat.define-theme((
       height: 35px;
       padding: 0 16px;
       color: #1e1d1d !important;
-      min-width: 180px;
+      min-width: 140px;
     }
 
     .mat-mdc-tab:hover {
@@ -70,6 +70,10 @@ $my-theme: mat.define-theme((
       flex-shrink: 0;
       line-height: 26px;
       border-radius: 50%;
+
+      mat-icon {
+        margin-right: -30px;
+      }
     }
   }
 }

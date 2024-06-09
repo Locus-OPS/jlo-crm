@@ -1,13 +1,13 @@
 <form [formGroup]="createForm" novalidate>
   <mat-form-field>
-    <mat-chip-list formControlName="keyword" #chipList aria-label="Keyword">
+    <mat-chip-grid formControlName="keyword" #chipList aria-label="Keyword">
       <mat-chip *ngFor="let keyword of keywords" (removed)="remove(keyword)">
         {{keyword.keyword}}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
       <input [placeholder]="'content.newKeyword' | translate" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         (matChipInputTokenEnd)="add($event)" maxlength="50" />
-    </mat-chip-list>
+    </mat-chip-grid>
   </mat-form-field>
   <div *ngIf="kbDetail" class="pull-right">
     <button mat-raised-button type="button" *ngIf="CAN_WRITE() && !creatingDocument" (click)="onSave()" class="btn btn-rose">{{ 'button.save' | translate }}</button>
