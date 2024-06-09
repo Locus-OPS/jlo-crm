@@ -10,9 +10,13 @@ $my-theme: mat.define-theme((
   ),
 ));
 
-html {
+:root {
   @include mat.all-component-themes($my-theme);
+  @include mat.color-variants-backwards-compatibility($my-theme);
 }
+
+// @include mat.color-variants-backwards-compatibility($my-theme);
+// @include mat.typography-hierarchy($my-theme);
 
 // $alternate-primary: mat.define-palette(mat.$blue-palette, 800);
 // $alternate-accent: mat.define-palette(mat.$blue-palette, 800);
@@ -156,7 +160,7 @@ input.mat-mdc-input-element {
 }
 
 .selected-row {
-  background-color: lighten($brand-locus, 30%);
+  background-color: lighten($brand-locus, 30%) !important;
 }
 
 .subgroup-header {

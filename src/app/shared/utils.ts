@@ -1,7 +1,6 @@
 import { UntypedFormGroup } from '@angular/forms';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ApiResponse } from '../model/api-response.model';
 
 export default class Utils {

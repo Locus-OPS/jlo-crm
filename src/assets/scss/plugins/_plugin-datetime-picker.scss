@@ -192,7 +192,7 @@
   -ms-transform: translateY(-$infix-margin-top - $infix-padding)
                  scale($font-scale);
 
-  width: 100% / $font-scale;
+  width: calc(100% / $font-scale);
 }
 .mat-input-placeholder {
 
