@@ -21,13 +21,8 @@
     "@angular/compiler": "^18.0.2",
     "@angular/core": "^18.0.2",
     "@angular/forms": "^18.0.2",
-<<<<<<< HEAD
-    "@angular/material": "^17.3.10",
-    "@angular/material-moment-adapter": "^17.3.10",
-=======
     "@angular/material": "^18.0.2",
     "@angular/material-moment-adapter": "^18.0.2",
->>>>>>> 5f6db4d6cb26c1caf1a205a2b60c00f0d2a3ae50
     "@angular/platform-browser": "^18.0.2",
     "@angular/platform-browser-dynamic": "^18.0.2",
     "@angular/router": "^18.0.2",
@@ -50,32 +45,18 @@
     "chartist-plugin-zoom": "^0.4.1",
     "jquery": "^3.5.1",
     "moment": "^2.24.0",
-<<<<<<< HEAD
-    "ng2-pdf-viewer": "^9.1.5",
-    "ngx-spinner": "^8.1.0",
-=======
     "ng2-pdf-viewer": "^10.2.2",
     "ngx-spinner": "^17.0.0",
->>>>>>> 5f6db4d6cb26c1caf1a205a2b60c00f0d2a3ae50
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
-<<<<<<< HEAD
-    "sweetalert2": "^11.6.13",
-    "tslib": "^2.3.1",
-    "zone.js": "~0.14.7"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^18.0.2",
-=======
     "sweetalert2": "^11.11.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.14.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.3",
->>>>>>> 5f6db4d6cb26c1caf1a205a2b60c00f0d2a3ae50
     "@angular/cli": "^18.0.3",
     "@angular/compiler-cli": "^18.0.2",
     "@angular/language-service": "^18.0.2",
