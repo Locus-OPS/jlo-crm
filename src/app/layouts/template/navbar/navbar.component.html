@@ -17,23 +17,50 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
-        <li class="nav-item"> 
-          <button type="button"  class="btn btn-info pull-left">{{ 'Walk In' | translate }}</button>
-        </li>
-        
-        
-        <li class="nav-item">
-          <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
-            <mat-button-toggle value="th" aria-label="ไทย">
-              TH
-            </mat-button-toggle>
-            <mat-button-toggle value="en" aria-label="English">
-              EN
-            </mat-button-toggle>
-          </mat-button-toggle-group>
-          
+        <div class="row">
 
-        </li>
+          <li class="nav-item"> 
+            <mat-button-toggle-group appearance="legacy" [value]="currentWalkInStatusCode" (change)="changeWalkinStatus($event)" #group="matButtonToggleGroup">
+              <mat-button-toggle value="Active" aria-label="{{ 'Active' | translate }} " class="btn-rose">
+                {{ 'Walk in' | translate }}  
+                <mat-icon>co_present</mat-icon>
+               
+              </mat-button-toggle>
+              <mat-button-toggle value="Inactive" aria-label="{{ 'Inactive' | translate }} ">
+                  
+                {{ 'Stop' | translate }}              
+                <mat-icon>cancel</mat-icon>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            
+          </li>
+          <div class="clearfix"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <li class="nav-item">
+            <form class="example-form">  
+              <mat-form-field class="example-full-width">
+                <mat-label>Status : </mat-label>
+                <input matInput disabled [value]="currentWalkInStatusName">
+              </mat-form-field>
+            </form>    
+  
+          </li>
+          <div class="clearfix"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <li class="nav-item">
+            <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
+              <mat-button-toggle value="th" aria-label="ไทย">
+                TH
+              </mat-button-toggle>
+              <mat-button-toggle value="en" aria-label="English">
+                EN
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            
+  
+          </li>
+        </div>
+        
+        
+     
        </ul>
     </div>
   </div>

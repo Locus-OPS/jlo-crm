@@ -41,6 +41,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   currentLang = 'th';
 
+  
+  currentWalkInStatusCode = 'Inactive';
+  currentWalkInStatusName = 'Inactive';
+
   @ViewChild('app-navbar-cmp') button: any;
 
   constructor(
@@ -258,6 +262,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.location.prepareExternalUrl(this.location.path());
   }
 
+  
 
   // loadProfile() {
   //   this.profile = this.globals.profile;
@@ -272,4 +277,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   //     this.spinner.hide();
   //   }, 1000);
   // }
+
+  // Begin Develop CTI Demo
+  changeWalkinStatus(event) {
+    this.currentWalkInStatusCode = event.value;
+    this.currentWalkInStatusName = (event.value == 'Active' ? 'อยู่ระหว่างติดต่อ' : 'ไม่ได้ติดต่อ');
+    this.translate.use(event.value);
+  }
+
+
 }

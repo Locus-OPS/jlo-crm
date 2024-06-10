@@ -8,6 +8,11 @@ html, :root {
     --mat-table-row-item-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mdc-outlined-text-field-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-paginator-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-mdc-select-placeholder-text-font: "Noto Sans Thai",Roboto, sans-serif;
+}
+
+.mat-mdc-select-placeholder {
+    font-family: "Noto Sans Thai", Roboto, sans-serif; 
 }
 .mat-mdc-tab-header{
     --mat-tab-header-label-text-font: "Noto Sans Thai",Roboto, sans-serif;

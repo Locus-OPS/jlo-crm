@@ -151,7 +151,7 @@ mat-form-field.mat-mdc-form-field-should-float label {
 }
 
 .mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-multiple) {
-  background-color: $brand-locus !important;
+  background-color: $brand-locus !important; 
 }
 
 input:read-only {
@@ -164,6 +164,7 @@ input.mat-mdc-input-element {
 
 .mat-mdc-select-placeholder {
   line-height: 1;
+
 }
 
 .selected-row {
