@@ -305,11 +305,11 @@ select {
     margin: 8px 0 0;
 }
 
-textarea{
-    height: auto !important;
-    resize: none;
-    line-height: $bmd-line-height !important;
-}
+// textarea{
+    // height: auto !important;
+    // resize: none;
+    // line-height: $bmd-line-height !important;
+// }
 
 .form-group input[type=file] {
   opacity: 0;

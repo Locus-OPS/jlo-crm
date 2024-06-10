@@ -3,11 +3,13 @@
 
 @include mat.core();
 
+
 $my-theme: mat.define-theme((
  color: (
-    theme-type: light,
+   theme-type: light,
     primary: mat.$azure-palette,
-  ),
+  ), 
+   
 ));
 
 :root {
@@ -46,7 +48,7 @@ $my-theme: mat.define-theme((
     }
 
     .mat-mdc-tab:hover {
-      background-color: ghostwhite;
+      background-color: $brand-second;
       // border-bottom: 1px solid $brand-locus !important;
     }
 
@@ -117,7 +119,7 @@ $my-theme: mat.define-theme((
     .mat-mdc-header-cell {
       font-size: 14px;
       font-weight: bold;
-      background-color: #f6f6f6;
+      background-color: $brand-locus;
     }
   }
 }

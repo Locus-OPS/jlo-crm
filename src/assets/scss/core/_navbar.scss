@@ -101,7 +101,8 @@
         position: absolute;
         width: 100%;
         padding-top: 10px;
-        z-index: 1029;
+        // z-index: 1029;
+        z-index: 999;
     }
 
     .navbar-wrapper{
@@ -176,4 +177,69 @@
 // for demo
 #navbar .navbar{
     border-radius: 0;
+}
+
+
+// for demo 
+.user{
+    padding-bottom: 0px;
+    margin:0px auto 0;
+    position: relative;
+    
+    &:after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 15px;
+        height: 1px;
+        width: calc(100% - 30px);
+        background-color: rgba(180,180,180, .3);
+        opacity: 0;
+    }
+
+    .photo{
+        width: 34px;
+        height: 34px;
+        overflow: hidden;
+        float: left;
+        z-index: 5;
+        margin-right: 0px;
+        border-radius: 50%;
+        margin-left: 10px;
+        margin-right: 10px;
+        @include shadow-big();
+        @extend .animation-transition-general;
+
+        img{
+            width: 100%;
+        }
+    }
+
+    a{
+        color: $black-color;
+        padding: $padding-base-vertical 15px 0px;
+        white-space: nowrap;
+    }
+
+    .user-info{
+        > a{
+           display: block;
+           line-height: 18px;
+           font-size: 14px;
+           
+            > span{
+               @extend .animation-transition-general;
+               display: block;
+               position: relative;
+               opacity: 1;
+               
+            }
+        }
+
+        .caret{
+            position: absolute;
+            top: 8px;
+            right: 15px;
+        }
+    }
 }

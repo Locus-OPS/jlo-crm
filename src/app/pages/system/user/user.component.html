@@ -13,15 +13,19 @@
             <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.userId' | translate}}</mat-label>            
                   <input matInput [placeholder]="'user.userId' | translate" type="text" formControlName="userId">
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.firstName' | translate}}</mat-label>
                   <input matInput [placeholder]="'user.firstName' | translate" type="text" formControlName="firstName">
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.lastName' | translate}}</mat-label>
                   <input matInput [placeholder]="'user.lastName' | translate" type="text" formControlName="lastName">
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.status' | translate}}</mat-label>
                   <mat-select [placeholder]="'user.status' | translate" formControlName="status">
                     <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
                   </mat-select>
@@ -29,21 +33,23 @@
               </div>
               <div class="row">
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.businessUnit' | translate}}</mat-label>
                   <mat-select [placeholder]="'user.businessUnit' | translate" formControlName="buId">
                     <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'user.role' | translate}}</mat-label>
                   <mat-select [placeholder]="'user.role' | translate" formControlName="roleCode">
                     <mat-option *ngFor="let item of roleList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
               <div class="pull-right">
-                <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
-                <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button"
+                <button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
+                <button *ngIf="CAN_WRITE()" type="button" class="btn btn-fill btn-primary" type="button"
                   (click)="create()">{{ 'button.create' | translate }}</button>
-                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset"
+                <button type="button" class="btn btn-fill btn-default" type="reset"
                   (click)="clear()">{{ 'button.clear' | translate }}</button>
               </div>
             </form>
