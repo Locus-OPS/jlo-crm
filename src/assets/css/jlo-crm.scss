@@ -1,6 +1,27 @@
 html, :root {
     --mat-form-field-container-height: 35px;
-    --mat-form-field-container-vertical-padding: 6px
+    --mat-form-field-container-vertical-padding: 6px;
+    --mat-form-field-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-form-field-subscript-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-switch-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-table-header-headline-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-table-row-item-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mdc-outlined-text-field-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
+    --mat-paginator-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
+}
+.mat-mdc-tab-header{
+    --mat-tab-header-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
+}
+.navbar-wrapper .navbar-brand, button.btn, .swal2-title, .swal2-html-container, .swal2-styled, .card-title{
+    font-family: var(--mat-form-field-container-text-font);
+}
+.sidebar-wrapper{
+    .nav-link{
+        font-family: var(--mat-form-field-container-text-font);
+    }
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{
+    --mat-mdc-form-field-label-transform: translateY(calc(calc(9.75px + var(--mat-form-field-container-height) / 2) * -1)) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75)) !important; 
 }
 table.mat-mdc-table{
     thead{
