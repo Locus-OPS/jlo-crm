@@ -24,7 +24,7 @@ export class Globals {
   ) { }
 
   init() {
-    return new Promise<any>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (TokenUtils.getToken()) {
         this.translate.use('th');
         this.profile = <Profile>(this.jwtHelper.decodeToken(TokenUtils.getToken())['profile']);

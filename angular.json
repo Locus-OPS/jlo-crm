@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "outputPath": "dist/JLOXGFE",
             "index": "src/index.html",
@@ -32,8 +32,14 @@
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
-              "src/assets/css/custom-theme.scss"
+              "src/assets/css/custom-theme.scss",
+              "node_modules/ngx-spinner/animations/ball-pulse-sync.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                ""
+              ]
+            },
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.min.js",

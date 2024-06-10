@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ModalConfirmComponent } from '../../common/modal-confirm/modal-confirm.component';
 import { LineUserProfile } from '../liff.model';
 import { LiffService } from '../liff.service';
 import { LineService } from '../line.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-line-receipt-upload',

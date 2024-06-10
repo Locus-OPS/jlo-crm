@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { CustomerService } from 'src/app/pages/customer/customer.service';
 import { MemberService } from 'src/app/pages/customer/member-detail/member.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalUserComponent } from '../../common/modal-user/modal-user.component';
 import { UserData } from '../../common/modal-user/modal-user'
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';

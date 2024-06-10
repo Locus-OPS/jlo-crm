@@ -1,18 +1,28 @@
 @use '@angular/material' as mat;
 @import "../scss/core/variables";
 
-$custom-typography: mat.define-typography-config(
-  $font-family: "Sarabun, monospace"
-);
- 
-//@include mat.core($custom-typography);
+@include mat.core();
 
-$alternate-primary: mat.define-palette(mat.$blue-palette, 800);
-$alternate-accent: mat.define-palette(mat.$blue-palette, 800);
-$alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
+$my-theme: mat.define-theme((
+ color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+  ),
+));
 
-//@include mat.all-legacy-component-themes($alternate-theme);
-@include mat.all-component-themes($alternate-theme);
+:root {
+  @include mat.all-component-themes($my-theme);
+  @include mat.color-variants-backwards-compatibility($my-theme);
+}
+
+// @include mat.color-variants-backwards-compatibility($my-theme);
+// @include mat.typography-hierarchy($my-theme);
+
+// $alternate-primary: mat.define-palette(mat.$blue-palette, 800);
+// $alternate-accent: mat.define-palette(mat.$blue-palette, 800);
+// $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
+
+// @include mat.all-component-themes($alternate-theme);
 
 .main-tab {
   padding-top: 70px;
@@ -26,29 +36,44 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
     // border-bottom: 2px solid #1565c0;
     border-bottom: 2px solid $brand-locus;
 
-    .mat-tab-label {
+    .mat-mdc-tab {
       background-color: blue($color: #000000) !important;
       border: 0.5px solid rgba(0, 0, 0, 0.12);
       height: 35px;
       padding: 0 16px;
       color: #1e1d1d !important;
+      min-width: 140px;
     }
 
-    .mat-tab-label:hover {
+    .mat-mdc-tab:hover {
       background-color: ghostwhite;
-      border-bottom: 1px solid $brand-locus !important;
+      // border-bottom: 1px solid $brand-locus !important;
     }
 
-    .mat-tab-label-active {
+    .mdc-tab--active {
       background-color: ghostwhite;
-      border-bottom: 1px solid $brand-locus !important;
+      // border-bottom: 1px solid $brand-locus !important;
       opacity: 1;
+
+      .mdc-tab-indicator {
+        top: 0;
+        height: 3px !important;
+        background-color: $brand-locus !important;
+      }
     }
 
-    .mat-ink-bar {
-      top: 0;
-      height: 3px !important;
-      background-color: $brand-locus !important;
+    .mat-icon-button {
+      padding: 0;
+      min-width: 0;
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+      line-height: 26px;
+      border-radius: 50%;
+
+      mat-icon {
+        margin-right: -30px;
+      }
     }
   }
 }
@@ -61,7 +86,7 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
     width: 100%;
     overflow-x: auto;
 
-    .mat-table {
+    .mat-mdc-table {
       width: 100%;
       max-width: 100%;
       margin-bottom: 1rem;
@@ -70,15 +95,15 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
       margin: 0px;
     }
 
-    .mat-row,
-    .mat-header-row {
+    .mat-mdc-row,
+    .mat-mdc-header-row {
       display: table-row;
       // height: 40px;
       width: 35%;
     }
 
-    .mat-cell,
-    .mat-header-cell {
+    .mat-mdc-cell,
+    .mat-mdc-header-cell {
       word-wrap: initial;
       display: table-cell;
       padding: 0px 15px;
@@ -89,7 +114,7 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
       vertical-align: middle;
     }
 
-    .mat-header-cell {
+    .mat-mdc-header-cell {
       font-size: 14px;
       font-weight: bold;
       background-color: #f6f6f6;
@@ -97,21 +122,21 @@ $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent);
   }
 }
 
-.mat-paginator-sticky {
+.mat-mdc-paginator-sticky {
   bottom: 0px;
   position: sticky;
   z-index: 10;
 }
 
-.mat-form-field-label {
+.mat-mdc-form-field-label {
   color: black !important;
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   line-height: 1.5;
 }
 
-mat-form-field.mat-form-field-should-float label {
+mat-form-field.mat-mdc-form-field-should-float label {
   font-size: 18px;
 }
 
@@ -119,11 +144,11 @@ mat-form-field.mat-form-field-should-float label {
   font-weight: 600;
 }
 
-.mat-option:hover {
+.mat-mdc-option:hover {
   background: $brand-locus !important;
 }
 
-.mat-option.mat-selected:not(.mat-option-multiple) {
+.mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-multiple) {
   background-color: $brand-locus !important;
 }
 
@@ -131,16 +156,16 @@ input:read-only {
   color: rgba(0, 0, 0, 0.54);
 }
 
-input.mat-input-element {
+input.mat-mdc-input-element {
   margin-bottom: 2.4px;
 }
 
-.mat-select-placeholder {
+.mat-mdc-select-placeholder {
   line-height: 1;
 }
 
 .selected-row {
-  background-color: lighten($brand-locus, 30%);
+  background-color: lighten($brand-locus, 30%) !important;
 }
 
 .subgroup-header {

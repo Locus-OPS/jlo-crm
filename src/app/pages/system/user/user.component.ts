@@ -5,16 +5,14 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } 
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { MatLegacyDialog as MatDialog, MatLegacyDialogRef as MatDialogRef, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { UserLogComponent } from './log/user-log/user-log.component';
-import { TranslateService } from '@ngx-translate/core';
 import { TableControl } from 'src/app/shared/table-control';
 import { UserService } from './user.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { BaseModel } from 'src/app/shared/base.model';
 import { UserData } from './user.model';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user',

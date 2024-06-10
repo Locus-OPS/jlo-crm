@@ -9,8 +9,7 @@ import Utils from 'src/app/shared/utils';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-//import { VerifyCustomerDialogComponent } from './verify-customer-dialog/verify-customer-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { CustomerVerifyData } from './verify-customer-dialog/customer-verify-data';
 import { TabManageService, TabParam } from 'src/app/layouts/admin/tab-manage.service';
 import { Case } from '../../case/case.model';
@@ -397,7 +396,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['phoneArea'].updateValueAndValidity();
     // this.createForm.controls['phoneNo'].clearValidators();
     // this.createForm.controls['phoneNo'].updateValueAndValidity();
-    
+
     let nationality = this.createForm.controls['nationality'].value;
 
     // If this customer type is individual and has Thai nationaility, verify his citizen id.
@@ -431,14 +430,14 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
    * Validate citizen id by check format and verify duplicate value.
    */
   verifyCitizenId() {
-    
+
     // Customer type: true => individual, false => corporate
     let customerType = this.createForm.controls['customerType'].value;
     let nationality = this.createForm.controls['nationality'].value;
 
     let previousCitizenId = this.createForm.value['previousCitizenId'];
     let citizenId = customerType && this.THAI_NATIONALITY == nationality ? this.createForm.controls['citizenId'].value : null;
-    
+
     // Validate citizen id value.
     if (citizenId) {
       if (!Utils.isValidCitizenId(citizenId)) {
@@ -480,14 +479,14 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
    * Verify duplicate of passport no. value.
    */
   verifyPassportNo() {
-    
+
     // Customer type: true => individual, false => corporate
     let customerType = this.createForm.controls['customerType'].value;
     let nationality = this.createForm.controls['nationality'].value;
 
     let previousPassportNo = this.createForm.value['previousPassportNo'];
     let passportNo = customerType && this.THAI_NATIONALITY != nationality ? this.createForm.controls['passportNo'].value : null;
-    
+
     if (!passportNo || previousPassportNo == passportNo) {
       this.saveCustomer();
     } else {
@@ -674,10 +673,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
         data: param
       }).then(result => {
         if (result.status) {
-          this.router.navigate(["/customer/member", 
-          { 
+          this.router.navigate(["/customer/member",
+          {
             memberId: result.data.memberId,
-            memberType: result.data.memberType 
+            memberType: result.data.memberType
           }]);
           // console.log(result.data);
           // this.createForm.patchValue(result.data);
@@ -1065,5 +1064,5 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.createForm.patchValue({ citizenId: null });
     }
   }
-  
+
 }

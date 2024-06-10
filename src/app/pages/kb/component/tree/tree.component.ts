@@ -1,19 +1,18 @@
 import { Component, OnInit, Input, ViewChild, ViewChildren, ElementRef, OnDestroy } from '@angular/core';
 import { KbNode, FlatNode } from '../../kb.model';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { KbService } from '../../kb.service';
 import { KbStore } from '../../kb.store';
 import Utils from 'src/app/shared/utils';
 import { Subscription } from 'rxjs';
-import { TreeModalComponent } from '../detail/tree-modal/tree-modal.component';
 import { NewFolderComponent } from './new-folder/new-folder.component';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'kb-tree',
@@ -167,7 +166,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   private isLastFolder(item: FlatNode) {
-    
+
     if (this.isRootFolder(item)) {
       return true;
     } else if (this.isFolder(item)) {
@@ -206,7 +205,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   private isLastFile(item: FlatNode) {
-    
+
      if (!this.isFolder(item)) {
       for (let i = this.treeControl.dataNodes.length - 1; i >= 0; i--) {
         let dataNode = this.treeControl.dataNodes[i];

@@ -42,6 +42,11 @@ export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy
     public globals: Globals
   ) {
     super(router, globals);
+
+    this.createForm = this.formBuilder.group({
+      keyword: ['']
+    });
+
     this.creatingDocument = false;
     this.kbDetailSubscription = this.kbStore.observeKbDetail().subscribe(detail => {
       if (detail && detail.contentId) {
@@ -67,11 +72,7 @@ export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy
   }
 
   ngOnInit() {
-    this.createForm = this.formBuilder.group({
-      keyword: ['']
-    });
     this.createForm.disable();
-
     this.CHECK_FORM_PERMISSION(this.createForm);
   }
 

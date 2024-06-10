@@ -1,12 +1,12 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
- 
+
 
 @Component({
   selector: 'modal-file.component',
@@ -57,7 +57,7 @@ export class ModalContentFileComponent extends BaseComponent implements OnInit {
       this.fileType = res.type;
       console.log(resFileURL);
       if (this.isFileCanDisplay(this.fileType)) {
-        
+
         this.fileTempUrl = resFileURL;
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.fileTempUrl);
 

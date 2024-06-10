@@ -6,7 +6,7 @@ mat-form-field[appearance=outline]{
         font-size: 30px;
         font-family: fantasy;
     }
-    .mat-form-field-outline {
+    .mat-mdc-form-field-outline {
         color: red;
       }
 }
@@ -20,7 +20,7 @@ mat-form-field[appearance=outline]{
     box-shadow: none;
     border: 1px solid #e0e0e0;
 }
-.card .card, .card mat-card.mat-card {
+.card .card, .card mat-card.mat-mdc-card {
     border: 1px solid #dfdfdf;
     margin-bottom: 10px;
     box-shadow: none;

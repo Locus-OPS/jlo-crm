@@ -18,14 +18,11 @@ import { Case } from '../../case/case.model';
 import { CaseStore } from '../../case/case.store';
 import { TabParam, TabManageService } from 'src/app/layouts/admin/tab-manage.service';
 import { ReIssuesCardComponent } from './re-issues-card/re-issues-card.component';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { BlockCardComponent } from './block-card/block-card.component';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
-import { TransactionData } from '../../loyalty/transaction/transaction-data';
-import { ShowMoreComponent } from '../../loyalty/transaction/show-more/show-more.component';
 import { Dropdown } from 'src/app/model/dropdown.model';
-import { TransactionService } from '../../loyalty/transaction/transaction.service';
 import { MemberRedeemService } from '../member-redeem/member-redeem.service';
 import { CustomerService } from '../customer.service';
 
@@ -77,11 +74,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate','closedDate', 'subTypeName', 'priorityName','action'];
   caseTableControl: TableControl = new TableControl(() => { this.searchCase() });
 
-  /* Transaction */
-  transactionSelectedRow: TransactionData;
-  transactionDS: TransactionData;
-  transactionColumns: string[] = ['txnId', 'createdDate', 'program', 'cardNumber', 'txnType', 'txnSubType', 'txnStatus', 'product', 'processedDate', 'channel', 'storeShopId', 'receiptId', 'receiptDate'];
-  transactionTableControl: TableControl = new TableControl(() => { this.searchTransaction() });
   canCancelled:boolean;
   /* change log table */
   chSelectedRow: ChangeLog;
@@ -130,7 +122,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     public tabParam:TabParam,
     private dialog:MatDialog,
     private appStore: AppStore,
-    private txnApi: TransactionService
   ) {
     super(router,globals);
     this.api.getMultipleCodebookByCodeType({
@@ -165,7 +156,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
         let memberId = this.memberForm.controls['memberId'].value;
         if (redeemMemberId == memberId) {
           this.reloadPoint();
-          this.searchTransaction();
         }
       }
     });
@@ -342,7 +332,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
         this.searchCard();
         this.searchAtt();
         this.searchCase();
-        this.searchTransaction();
         this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.member', { name: result.data.firstName || result.data.businessName });
       }, error => {
         Utils.alertError({
@@ -391,8 +380,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*------------------------------------------------------- Member ---------------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  
-  
+
+
   /**
    * Validate mandatory fields before save member.
    * If this mandatory validation is passed, it will verify citizen id, verify passport no., and then save member.
@@ -429,7 +418,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
         return;
       }
     }
-    
+
     if (!citizenId || previousCitizenId == citizenId) {
       this.verifyPassportNo();
     } else {
@@ -466,7 +455,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   verifyPassportNo() {
     let previousPassportNo = this.memberForm.value['previousPassportNo'];
     let passportNo = this.memberForm.controls['passportNo'].value;
-    
+
     if (!passportNo || previousPassportNo == passportNo) {
       this.saveMember();
     } else {
@@ -1044,69 +1033,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.caseSelectedRow = row;
     this.caseForm.patchValue(row);
     this.caseForm.disable();
-  }
-  /*------------------------------------------------------------------------------------------------------------------------------*/
-  /*------------------------------------------------------- Transaction ----------------------------------------------------------*/
-  /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchTransaction(){
-    this.memberService.getMemberTransactionList({
-      pageSize: this.transactionTableControl.pageSize,
-      pageNo: this.transactionTableControl.pageNo,
-      data: { memberId:this.memberForm.controls['memberId'].value, sortColumn: this.transactionTableControl.sortColumn, sortDirection: this.transactionTableControl.sortDirection }
-    }).then(result => {
-      this.transactionDS = result.data;
-      this.transactionTableControl.total = result.total;
-      this.transactionSelectedRow = null;
-      this.transactionForm.disable();
-    }, error => {
-      Utils.alertError({
-        text: 'Please try again later.',
-      });
-    });
-
-  }
-
-  onSelectTransactionRow(row){
-    this.transactionSelectedRow = row;
-    this.transactionForm.patchValue(row);
-    this.transactionForm.disable();
-
-    this.canCancelled = (this.transactionSelectedRow.txnStatusId == 'PROCESSED' && this.transactionSelectedRow.txnSubTypeId != 'CANCELLATION')?true:false;
-  }
-
-  showMoreTransaction(){
-    const dialogRef = this.dialog.open(ShowMoreComponent, {
-      height: '80%',
-      width: '80%',
-      panelClass: 'my-dialog',
-      data: { txnId: this.transactionSelectedRow.txnId }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  cancelTransaction(){
-    const param = {
-      txnId : this.transactionForm.value.txnId
-    };
-    this.txnApi.cancelTransaction({
-      data: param
-    }).then(result => {
-      if (result.status) {
-        Utils.assign(this.transactionForm, result.data);
-        this.transactionForm.patchValue(result.data);
-        this.canCancelled = (result.data.txnStatusId == 'PROCESSED' && result.data.txnSubTypeId != 'CANCELLATION')?true:false;;
-        Utils.alertSuccess({
-          title: 'Cancelled!',
-          text: 'Transaction has been cancelled.!' ,
-        });
-      }
-    }, error => {
-      Utils.alertError({
-        text: 'Please, try again later',
-      });
-    });
   }
 
   /*------------------------------------------------------------------------------------------------------------------------------*/

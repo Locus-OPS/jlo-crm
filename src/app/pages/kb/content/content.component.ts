@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { KbNode, FlatNode } from '../kb.model';
-import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { KbStore } from '../kb.store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
