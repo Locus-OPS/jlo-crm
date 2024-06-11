@@ -31,6 +31,7 @@ import { SharedModule } from "./shared/module/shared.module";
 import { BaseComponent } from "./shared/base.component";
 import { Globals } from "./shared/globals";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { SoftphoneModule } from "./layouts/template/softphone/softphone.module";
 
 export function jwtTokenGetter() {
   return TokenUtils.getToken();
@@ -89,6 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavbarModule,
     FooterModule,
     FixedpluginModule,
+    SoftphoneModule
   ],
   providers: [
     Globals,
