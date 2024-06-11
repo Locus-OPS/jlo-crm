@@ -18,8 +18,12 @@
                     matTreeNodePadding>
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <button mat-icon-button>
-                    <span [ngClass]="{ 'padding' : node.type === '02' && node.parentMenuId === '' }">{{node.name | translate}}</span><span *ngIf="node.activeFlag === 'N'">(inactive)</span>
-                    </button>
+                      <mat-icon>article_shortcut</mat-icon>
+                    </button>                    
+                    <!-- <span [ngClass]="{ 'padding' : node.type === '02' && node.parentMenuId === '' }"> -->
+                      {{node.name | translate}}
+                    <!-- </span> -->
+                    <span *ngIf="node.activeFlag === 'N'">(inactive)</span>
                   </mat-tree-node>
                   <!-- This is the tree node template for expandable nodes -->
                   <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="selectNode(node)">
