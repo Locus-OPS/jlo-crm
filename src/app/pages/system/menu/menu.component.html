@@ -42,18 +42,21 @@
                     <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
                       <div class="row">
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.id' | translate}}</mat-label>
                           <input matInput [placeholder]="'menu.id' | translate" type="text" formControlName="id" readonly>
                           <mat-error *ngIf="createForm.controls['id'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.name' | translate}}</mat-label>
                           <input matInput [placeholder]="'menu.name' | translate" type="text" formControlName="name" maxlength="200" />
                           <mat-error *ngIf="createForm.controls['name'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.type' | translate}}</mat-label>
                           <mat-select [placeholder]="'menu.type' | translate" formControlName="type">
                             <mat-option *ngFor="let item of menuTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
@@ -62,12 +65,15 @@
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.icon' | translate}}</mat-label>
                           <input matInput [placeholder]="'menu.icon' | translate" type="text" formControlName="icon">
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.link' | translate}}</mat-label>
                           <input matInput [placeholder]="'menu.link' | translate" type="text" formControlName="link" maxlength="200" />
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.activeFlag' | translate}}</mat-label>
                           <mat-select [placeholder]="'menu.activeFlag' | translate" formControlName="activeFlag">
                             <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
                           </mat-select>
@@ -76,29 +82,18 @@
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.seq' | translate}}</mat-label>
                           <input  matInput [placeholder]="'menu.seq' | translate" type="number" formControlName="seq">
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.parentMenuId' | translate}}</mat-label>
                           <mat-select [placeholder]="'menu.parentMenuId' | translate" formControlName="parentMenuId">
                             <mat-option *ngFor="let item of parentMenuList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
+                          <mat-label>{{'menu.apiPath' | translate}}</mat-label>
                           <input matInput [placeholder]="'menu.apiPath' | translate" type="text" formControlName="apiPath" maxlength="100" />
-                        </mat-form-field>
-                      </div>
-                      <div class="row">
-                        <mat-form-field class="col-md-3">
-                          <input matInput [placeholder]="'common.createdBy' | translate" type="text" formControlName="createdBy" readonly>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-3">
-                          <input matInput [placeholder]="'common.createdDate' | translate" type="text" formControlName="createdDate" readonly>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-3">
-                          <input matInput [placeholder]="'common.updatedBy' | translate" type="text" formControlName="updatedBy" readonly>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-3">
-                          <input matInput [placeholder]="'common.updatedDate' | translate" type="text" formControlName="updatedDate" readonly>
                         </mat-form-field>
                       </div>
                       <app-created-by

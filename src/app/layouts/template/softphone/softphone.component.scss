@@ -1,0 +1,52 @@
+/* Button used to open the chat form - fixed at the bottom of the page */
+.container {
+  // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.open-button {
+  background-color: #37b824;
+  color: white;
+  padding: 8px 8px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  width: 320px;
+  z-index: 1000000;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.phone-icon {
+  font-size: 18px;
+  vertical-align: text-bottom;
+}
+
+.form-container {
+  visibility: hidden;
+  position: fixed;
+  bottom: 48px;
+  left: 8px;
+  z-index: 1000000;
+  width: 320px;
+  height: 564px;
+  padding: 0px;
+  background-color: white;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.genesys-frame {
+  height: 100%;
+  width: 100%;
+  border: 0;
+}
+
+.show {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}

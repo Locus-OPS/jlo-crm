@@ -15,9 +15,11 @@
                 <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
                   <div class="row">
                     <mat-form-field class="col-md-6">
+                      <mat-label>{{'i18n.msgCode' | translate}}</mat-label>
                       <input matInput [placeholder]="'i18n.msgCode' | translate" type="text" formControlName="msgCode">
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
+                      <mat-label>{{'i18n.msgValue' | translate}}</mat-label>
                       <input matInput [placeholder]="'i18n.msgValue' | translate" type="text" formControlName="msgValue">
                     </mat-form-field>
                   </div>
@@ -32,8 +34,8 @@
             </div>
             <div class="row">
               <div class="col-md-7">
-                <div class="material-datatables">
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-responsive" (matSortChange)="tableControl.onSort($event)" matSort
+                <div class="material-datatables table-responsive">
+                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="tableControl.onSort($event)" matSort
                     matSortDirection="asc" matSortDisableClear>
                     <ng-container matColumnDef="action" stickyEnd>
                       <th mat-header-cell *matHeaderCellDef class="text-center"></th>
@@ -57,10 +59,10 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
                       [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
                   </table>
-                  <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
-                    [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
-                  </mat-paginator>
                 </div>
+                <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
+                  [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+                </mat-paginator>
               </div>
               <div class="col-md-5">
                 <div class="card card-detail">
@@ -68,6 +70,7 @@
                     <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
                       <div class="row">
                         <mat-form-field class="col-md-12">
+                          <mat-label>{{'i18n.msgCode' | translate}}</mat-label>
                           <input matInput [placeholder]="'i18n.msgCode' | translate" type="text" formControlName="msgCode">
                           <mat-error *ngIf="createForm.controls['msgCode'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -75,6 +78,7 @@
                         </mat-form-field>
                         <ng-container formArrayName="langs">
                           <mat-form-field class="col-md-12" *ngFor="let lang of formArray.controls; let i=index;">
+                            <mat-label>{{tmpList[i]}}</mat-label>
                             <input matInput [placeholder]="tmpList[i]" [formControlName]="i">
                             <mat-error *ngIf="formArray.controls[i].hasError('required')">
                               {{ 'error.required' | translate }}

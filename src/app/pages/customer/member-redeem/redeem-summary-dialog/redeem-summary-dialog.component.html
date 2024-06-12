@@ -6,13 +6,13 @@
     <div class="col-md-4 text-center">{{ 'redeem.remainPoint' | translate }}</div>
   </div>
   <div class="row">
-    <div class="col-md-4 text-center">{{ redemptionMemberInfo.currentPoint | number }}</div>
+    <div class="col-md-4 text-center">{{ redemptionMemberInfo?.currentPoint | number }}</div>
     <div class="col-md-4 text-center">{{ calSumUsePoint | number }}</div>
-    <div class="col-md-4 text-center">{{ (redemptionMemberInfo.currentPoint - calSumUsePoint) | number }}</div>
+    <div class="col-md-4 text-center">{{ (redemptionMemberInfo?.currentPoint - calSumUsePoint) | number }}</div>
   </div>
 </div>
 <br/>
-<div class="material-datatables" *ngIf="rewardCart.length > 0">
+<div class="material-datatables table-responsive" *ngIf="rewardCart.length > 0">
   <table mat-table [dataSource]="rewardCart" class="mat-elevation-z8">
     <ng-container matColumnDef="productName">
       <th mat-header-cell *matHeaderCellDef style="width: 65%;">{{ 'redeem.product' | translate }}</th>
@@ -70,10 +70,10 @@
 <div *ngIf="rewardCart.length <= 0" class="no-data-found">
   No Record found
 </div>
-<div *ngIf="(redemptionMemberInfo.currentPoint - calSumUsePoint) < 0" class="point-not-enough">
+<div *ngIf="(redemptionMemberInfo?.currentPoint - calSumUsePoint) < 0" class="point-not-enough">
   {{ 'redeem.pointNotEnough' | translate }}
 </div>
-<div class="float-right">
+<div mat-dialog-actions>
   <button mat-raised-button type="button" class="btn btn-fill" (click)="closeDialog(false)">{{ 'button.close' | translate }}</button>
-  <button *ngIf="rewardCart.length > 0 && (redemptionMemberInfo.currentPoint - calSumUsePoint) >= 0" mat-raised-button type="button" class="btn btn-fill btn-rose search-btn" (click)="submitRedeem()">{{ 'button.submit' | translate }}</button>
+  <button *ngIf="rewardCart.length > 0 && (redemptionMemberInfo?.currentPoint - calSumUsePoint) >= 0" mat-raised-button type="button" class="btn btn-fill btn-rose search-btn" (click)="submitRedeem()">{{ 'button.submit' | translate }}</button>
 </div>

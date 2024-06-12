@@ -1,0 +1,8 @@
+<div class="container">
+  <button class="open-button" (click)="toggle()">
+    <i class="material-icons phone-icon">phone</i>&nbsp;&nbsp;{{ status ? getDisplayAgentStatus(status) : "Phone" }}
+  </button>
+  <div class="form-container" [ngClass]="{'show': isOpen, 'hidden': !isOpen}">
+    <iframe class="genesys-frame" allow="camera *; microphone *" src="https://apps.mypurecloud.jp/crm/embeddableFramework.html"></iframe>
+  </div>
+</div>

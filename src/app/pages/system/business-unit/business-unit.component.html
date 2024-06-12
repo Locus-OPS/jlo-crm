@@ -13,9 +13,11 @@
               <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
                 <div class="row">
                   <mat-form-field class="col-md-3">
+                    <mat-label>{{'business-unit.buName' | translate}}</mat-label>
                     <input matInput [placeholder]="'business-unit.buName' | translate" rows="2" formControlName="buName">
                   </mat-form-field>
                   <mat-form-field class="col-md-2">
+                    <mat-label>{{'business-unit.activeYn' | translate}}</mat-label>
                     <mat-select [placeholder]="'business-unit.activeYn' | translate" formControlName="activeYn">
                       <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                     </mat-select>
@@ -27,7 +29,7 @@
                   <button mat-raised-button type="reset" class="btn btn-fill btn-default">{{ 'button.clear' | translate }}</button>
                 </div>
               </form>
-              <div class="material-datatables">
+              <div class="material-datatables table-responsive">
                 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="tableControl.onSort($event)" matSort
                   matSortDirection="asc" matSortDisableClear>
                   <ng-container matColumnDef="action">
@@ -58,10 +60,10 @@
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
                     [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
                 </table>
-                <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
-                  [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
-                </mat-paginator>
               </div>
+              <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
+                [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+              </mat-paginator>
             </div>
           </div>
           <div class="card" *ngIf="selectedRow">
@@ -75,9 +77,11 @@
               <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
                 <div class="row">
                   <mat-form-field class="col-md-3">
+                    <mat-label>{{'business-unit.id' | translate}}</mat-label>
                     <input matInput [placeholder]="'business-unit.id' | translate" type="text" formControlName="id" readonly />
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
+                    <mat-label>{{'business-unit.buName' | translate}}</mat-label>
                     <input matInput [placeholder]="'business-unit.buName' | translate" rows="2" formControlName="buName" maxlength="100">
                     <mat-error *ngIf="createForm.controls['buName'].hasError('required')">
                       {{ 'error.required' | translate }}
