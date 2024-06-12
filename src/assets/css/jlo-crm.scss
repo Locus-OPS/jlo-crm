@@ -148,25 +148,36 @@ app-created-by{
 
 .mat-mdc-form-field{
     &:has(.mat-mdc-form-field-infix  input:read-only){
+        &:not(.mat-mdc-form-field-has-icon-suffix){
+            .mat-mdc-text-field-wrapper{
+                .mat-mdc-form-field-flex{
+                    .mdc-notched-outline__leading{
+                        border-top-style: dashed;
+                        border-left-style: dashed;
+                        border-bottom-style: dashed;
+                    }
+                    .mdc-notched-outline__notch{
+                        border-bottom-style: dashed;
+                    }
+                    .mdc-notched-outline__trailing{
+                        border-top-style: dashed;
+                        border-right-style: dashed;
+                        border-bottom-style: dashed;
+                    }
+                }                
+                
+            }
+        }
         .mat-mdc-text-field-wrapper{
             cursor: not-allowed;
-            .mdc-notched-outline__leading{
-                border-top-style: dashed;
-                border-left-style: dashed;
-                border-bottom-style: dashed;
-            }
-            .mdc-notched-outline__notch{
-                border-bottom-style: dashed;
-            }
-            .mdc-notched-outline__trailing{
-                border-top-style: dashed;
-                border-right-style: dashed;
-                border-bottom-style: dashed;
-            }
             input{
                 cursor: not-allowed;
             }
+            .mat-icon{
+                cursor: context-menu;
+            }
         }
+        
     }
     .mdc-text-field--outlined{
         .mat-mdc-form-field-flex{
