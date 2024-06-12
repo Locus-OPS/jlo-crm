@@ -147,6 +147,23 @@ app-created-by{
 }
 
 .mat-mdc-form-field{
+    &:has(.mat-mdc-form-field-infix  input:read-only){
+        .mat-mdc-text-field-wrapper{
+            .mdc-notched-outline__leading{
+                border-top-style: dashed;
+                border-left-style: dashed;
+                border-bottom-style: dashed;
+            }
+            .mdc-notched-outline__notch{
+                border-bottom-style: dashed;
+            }
+            .mdc-notched-outline__trailing{
+                border-top-style: dashed;
+                border-right-style: dashed;
+                border-bottom-style: dashed;
+            }
+        }
+    }
     .mdc-text-field--outlined{
         .mat-mdc-form-field-flex{
             .mat-mdc-form-field-icon-suffix{

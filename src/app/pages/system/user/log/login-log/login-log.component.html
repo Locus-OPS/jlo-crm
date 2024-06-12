@@ -3,19 +3,23 @@
   <form [formGroup]="searchForm" (ngSubmit)="search()" novalidate>
     <div class="row">
       <mat-form-field class="col-md-3">
+        <mat-label>{{'loginLog.attemptDateFrom' | translate}}</mat-label>
         <input matInput [matDatepicker]="pickerFrom" (dateChange)="onAttemptDateFromChange($event)" formControlName="attemptDateFrom" [placeholder]="'loginLog.attemptDateFrom' | translate">
         <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
         <mat-datepicker #pickerFrom></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="col-md-3">
+        <mat-label>{{'loginLog.attemptDateTo' | translate}}</mat-label>
         <input matInput [matDatepicker]="pickerTo" (dateChange)="onAttemptDateToChange($event)" formControlName="attemptDateTo" [placeholder]="'loginLog.attemptDateTo' | translate">
         <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
         <mat-datepicker #pickerTo></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="col-md-3">
+        <mat-label>{{'loginLog.statusCode' | translate}}</mat-label>
         <input matInput [placeholder]="'loginLog.statusCode' | translate" type="text" formControlName="statusCode">
       </mat-form-field>
       <mat-form-field class="col-md-3">
+        <mat-label>{{'loginLog.statusMessage' | translate}}</mat-label>
         <input matInput [placeholder]="'loginLog.statusMessage' | translate" type="text" formControlName="statusMessage">
       </mat-form-field>
     </div>

@@ -13,6 +13,7 @@
                 *ngIf="respForm.controls[module.formName].value && (respForm.controls[module.formName].value).length > 0">
                 <mat-form-field class="col-md-3"
                   *ngFor="let value of respForm.controls[module.formName].value; let formIndex = index; trackBy: trackByFn;">
+                  <mat-label>{{module.subModuleList[formIndex].name | translate}}</mat-label>
                   <mat-select [placeholder]="module.subModuleList[formIndex].name | translate" [formControlName]="formIndex">
                     <mat-option *ngFor="let item of accessList" [value]="item.codeId + ':' + module.subModuleList[formIndex].menuId">{{ item.codeName }}
                     </mat-option>

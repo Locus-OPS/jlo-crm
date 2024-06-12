@@ -13,22 +13,27 @@
             <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.codeType' | translate}}</mat-label>
                   <mat-select [placeholder]="'codebook.codeType' | translate" formControlName="codeType">
                     <mat-option *ngFor="let item of codeTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.codeId' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.codeId' | translate" type="text" formControlName="codeId" maxlength="50" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'codebook.codeName' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.codeName' | translate" type="text" formControlName="codeName" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'codebook.buId' | translate}}</mat-label>
                   <mat-select [placeholder]="'codebook.buId' | translate" formControlName="buId">
                     <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.status' | translate}}</mat-label>
                   <mat-select [placeholder]="'codebook.status' | translate" formControlName="activeFlag">
                     <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
@@ -95,23 +100,28 @@
             <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'codebook.codeType' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.codeType' | translate" type="text" formControlName="codeType" [readonly]="isUpdated" maxlength="50" />
                   <mat-error *ngIf="createForm.controls['codeType'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.parentType' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.parentType' | translate" type="text" formControlName="parentType" #parentType
                     (input)="selectedRow.parentType = parentType.value" maxlength="50" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'codebook.parentId' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.parentId' | translate" type="text" formControlName="parentId" #parentId
                     (input)="selectedRow.parentId = parentId.value" maxlength="50" />
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.seq' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.seq' | translate" type="number" formControlName="seq">
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
+                  <mat-label>{{'codebook.status' | translate}}</mat-label>
                   <mat-select [placeholder]="'codebook.status' | translate" formControlName="activeFlag" #activeFlag
                     (selectionChange)="selectedRow.activeFlag = activeFlag.value">
                     <mat-option value=""></mat-option>
@@ -124,12 +134,14 @@
               </div>
               <div class="row">
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{'codebook.codeId' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.codeId' | translate" type="text" formControlName="codeId" [readonly]="isUpdated" maxlength="50" />
                   <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-5">
+                  <mat-label>{{'codebook.codeName' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.codeName' | translate" type="text" formControlName="codeName" #codeName
                     (input)="selectedRow.codeName = codeName.value" maxlength="200" />
                     <mat-error *ngIf="createForm.controls['codeName'].hasError('required')">
@@ -137,6 +149,7 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.buId' | translate}}</mat-label>
                   <div *ngIf="isUpdated">
                     <input matInput [placeholder]="'codebook.buId' | translate" type="text" [value]="getBuName(selectedRow.buId)" readonly>
                   </div>
@@ -152,25 +165,31 @@
               </div>
               <div class="row">
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.etc1' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.etc1' | translate" type="text" formControlName="etc1" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.etc2' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.etc2' | translate" type="text" formControlName="etc2" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.etc3' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.etc3' | translate" type="text" formControlName="etc3" maxlength="200" />
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.etc4' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.etc4' | translate" type="text" formControlName="etc4" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
+                  <mat-label>{{'codebook.etc5' | translate}}</mat-label>
                   <input matInput [placeholder]="'codebook.etc5' | translate" type="text" formControlName="etc5" maxlength="200" />
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-12">
+                  <mat-label>{{'codebook.description' | translate}}</mat-label>
                   <textarea matInput [placeholder]="'codebook.description' | translate" type="text" formControlName="description" rows="3"></textarea>
                 </mat-form-field>
               </div>
