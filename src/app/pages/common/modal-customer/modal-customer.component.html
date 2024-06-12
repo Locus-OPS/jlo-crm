@@ -99,16 +99,17 @@
                 [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
               </mat-paginator>
             </div>
-            <!-- end content-->
-            <div class="d-flex justify-content-end">
-              <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
-                [mat-dialog-close]="customerInfo">{{ 'button.select' | translate }}</button>
-              <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
-                class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
-            </div>
+            
           </div> <!--  end card  -->
         </div> <!-- end col-md-12 -->
       </div>
     </div>
   </div>
+</div>
+<!-- end content-->
+<div class="d-flex justify-content-end">
+  <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
+    [mat-dialog-close]="customerInfo">{{ 'button.select' | translate }}</button>
+  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
+    class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
 </div>
