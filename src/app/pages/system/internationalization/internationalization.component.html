@@ -32,8 +32,8 @@
             </div>
             <div class="row">
               <div class="col-md-7">
-                <div class="material-datatables">
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-responsive" (matSortChange)="tableControl.onSort($event)" matSort
+                <div class="material-datatables table-responsive">
+                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="tableControl.onSort($event)" matSort
                     matSortDirection="asc" matSortDisableClear>
                     <ng-container matColumnDef="action" stickyEnd>
                       <th mat-header-cell *matHeaderCellDef class="text-center"></th>
@@ -57,10 +57,10 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
                       [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
                   </table>
-                  <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
-                    [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
-                  </mat-paginator>
                 </div>
+                <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
+                  [pageIndex]="tableControl.pageNo" [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+                </mat-paginator>
               </div>
               <div class="col-md-5">
                 <div class="card card-detail">

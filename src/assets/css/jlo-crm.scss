@@ -12,6 +12,7 @@ html, :root {
     --mat-tree-node-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-expansion-header-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mdc-icon-button-icon-size: 16px;
+    --mat-dialog-container-max-width: 80vw;
 }
 
 .mat-mdc-select-placeholder {
@@ -55,5 +56,28 @@ app-created-by{
     .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,
     .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing{
         border-color: #dddddd;
+    }
+}
+.mat-mdc-dialog-inner-container{
+    .mat-mdc-dialog-component-host{
+        display: flex;
+        flex-direction: column;
+        height: 100% !important;
+        justify-content: space-between;
+        button.close{
+            min-width: 45px;
+            margin-left: auto;
+            margin-top: 5px;
+            .mdc-button__ripple{
+                width: initial;
+            }
+        }
+        .mat-mdc-dialog-content{
+            max-height:max-content;
+        }
+        .pull-right{
+            margin-left: auto;
+            padding-right: 10px;
+        }
     }
 }

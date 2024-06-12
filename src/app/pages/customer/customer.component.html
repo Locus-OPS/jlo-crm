@@ -66,11 +66,11 @@
             <div class="toolbar">
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
-            <div class="material-datatables">
+            <div class="material-datatables table-responsive">
               <table
                 mat-table
                 [dataSource]="dataSource"
-                class="mat-elevation-z8 table-responsive"
+                class="mat-elevation-z8"
                 (matSortChange)="tableControl.onSort($event)"
                 matSort
                 matSortActive="firstName"
@@ -165,16 +165,16 @@
                   [ngClass]="{ 'selected-row': selectedRow == row }"
                 ></tr>
               </table>
-              <mat-paginator
-                class="mat-paginator-sticky"
-                (page)="tableControl.onPage($event)"
-                [length]="tableControl.total"
-                [pageSize]="tableControl.pageSize"
-                [pageSizeOptions]="tableControl.pageSizeOptions"
-                showFirstLastButtons
-              >
-              </mat-paginator>
             </div>
+            <mat-paginator
+              class="mat-paginator-sticky"
+              (page)="tableControl.onPage($event)"
+              [length]="tableControl.total"
+              [pageSize]="tableControl.pageSize"
+              [pageSizeOptions]="tableControl.pageSizeOptions"
+              showFirstLastButtons
+            >
+            </mat-paginator>
           </div>
           <!-- end content-->
         </div>
