@@ -21,14 +21,14 @@
 
           <li class="nav-item"> 
             <mat-button-toggle-group appearance="legacy" [value]="currentWalkInStatusCode" (change)="changeWalkinStatus($event)" #group="matButtonToggleGroup">
-              <mat-button-toggle value="Active" aria-label="{{ 'Active' | translate }} " class="btn-rose">
+              <mat-button-toggle value="CONSULTING_START" aria-label="{{ 'Active' | translate }} " class="btn-rose">
                 {{ 'Walk in' | translate }}  
                 <mat-icon>co_present</mat-icon>
                
               </mat-button-toggle>
-              <mat-button-toggle value="Inactive" aria-label="{{ 'Inactive' | translate }} ">
+              <mat-button-toggle value="CONSULTING_STOP" aria-label="{{ 'Inactive' | translate }} ">
                   
-                {{ 'Stop' | translate }}              
+                {{ 'WRAP-UP' | translate }}              
                 <mat-icon>cancel</mat-icon>
               </mat-button-toggle>
             </mat-button-toggle-group>

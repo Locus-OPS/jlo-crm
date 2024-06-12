@@ -21,12 +21,13 @@
               </div>
             </div>
           </div>
-          <div class="pull-right">
-            <button *ngIf="CAN_WRITE()" mat-raised-button (click)="onSave()" type="button" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
-            <button mat-raised-button mat-dialog-close type="button" class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
-          </div>
+         
         </form>
       </div>
     </div>
   </div>
+</div>
+<div class="pull-right fix-bottom-action">
+  <button *ngIf="CAN_WRITE()" mat-raised-button (click)="onSave()" type="button" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+  <button mat-raised-button mat-dialog-close type="button" class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
 </div>

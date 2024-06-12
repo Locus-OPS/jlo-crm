@@ -31,6 +31,8 @@ import { LineReceiptApproveComponent } from './pages/line/receipt-approve/receip
 import { LineXcashDetailComponent } from './pages/line/xcash-detail/xcash-detail.component';
 import { LineRewardAddressComponent } from './pages/line/reward-address/reward-address.component';
 import { CaseModule } from './pages/case/case.module';
+import { ConsultingComponent } from './pages/consulting/consulting.component';
+import { ConsultingModule } from './pages/consulting/consulting.module';
 
 const routes: Routes = [
   {
@@ -116,6 +118,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: BusinessUnitComponent
       },
+      {
+        path: 'consulting/consultingList',
+        canActivate: [AuthGuard],
+        component: ConsultingComponent
+      },
     ]
   }, {
     path: '',
@@ -157,6 +164,7 @@ const routes: Routes = [
     CustomerModule,
     KbModule,
     CaseModule,
+    ConsultingModule,
     LineModule
   ],
   exports: [RouterModule]

@@ -8,6 +8,10 @@ import { TabManageService } from '../../admin/tab-manage.service';
 import { Profile } from 'src/app/model/profile.model';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
+import Utils from 'src/app/shared/utils';
+import { CustomerService } from 'src/app/pages/customer/customer.service';
+import ConsultingUtils from 'src/app/shared/consultingStore';
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -42,8 +46,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentLang = 'th';
 
   
-  currentWalkInStatusCode = 'Inactive';
-  currentWalkInStatusName = 'Inactive';
+  currentWalkInStatusCode = 'STOP';
+  currentWalkInStatusName = '';
 
   @ViewChild('app-navbar-cmp') button: any;
 
@@ -55,7 +59,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private globals: Globals,
     private tabManageService: TabManageService,
     public api: ApiService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private consulting : ConsultingService,
+    private customerService: CustomerService,
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
@@ -281,8 +287,121 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // Begin Develop CTI Demo
   changeWalkinStatus(event) {
     this.currentWalkInStatusCode = event.value;
-    this.currentWalkInStatusName = (event.value == 'Active' ? 'อยู่ระหว่างติดต่อ' : 'ไม่ได้ติดต่อ');
-    this.translate.use(event.value);
+    this.currentWalkInStatusName = (event.value == 'CONSULTING_START' ? 'อยู่ระหว่างติดต่อ' : 'ไม่ได้ติดต่อ'); 
+
+   this.processWalkinConsulting();
+   
+  }
+
+  processWalkinConsulting(){ 
+      this.spinner.show("approve_process_spinner");
+      const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
+      console.log(contData);
+      let conts;
+     
+      if(contData == null){
+        conts ={consultingAction: this.currentWalkInStatusCode};
+      } 
+      const params   = {data: contData!= null ?contData : conts};   
+
+          
+      this.consulting.processWalkinConsulting(params).then((result: any) => {
+      
+          this.spinner.hide("approve_process_spinner");
+                   
+          if (result.status) {
+
+            if(result.data.statusCd == '01'){
+              ConsultingUtils.setConsultingData(result.data);
+
+              Utils.alertSuccess({
+                title: "บันทึก",
+                text: "สร้างการติดต่อข้อมูลสำเร็จ",
+              });
+              setTimeout(() => {
+                this.router.navigate(["customer"]);
+              }, 10);
+
+
+            }else{
+              console.log(ConsultingUtils.getConsultingData());
+
+               let elm: any = document.querySelector(
+                 ".mat-tab-label-active .close-icon"
+              );
+              Utils.alertSuccess({
+                title: "บันทึก",
+                text: "บันทึกข้อมูลการติดต่อสำเร็จ",
+              });
+              console.log("elm "+elm);
+
+              setTimeout(() => {
+                this.router.navigate(["dashboard"]);
+              }, 10);
+
+              ConsultingUtils.removeConsultingData();
+            }
+            
+           
+            //elm.click();
+          
+          } else {
+            setTimeout(() => {
+              this.spinner.hide("approve_process_spinner");
+            }, 1000);
+
+            if(result.message!=""){
+              Utils.alertError({
+                text: result.message,
+              });
+            }else{
+              Utils.alertError({
+                text: "Please try again later.",
+              });
+            }
+          }
+        },
+        (err: any) => {
+          Utils.alertError({
+            text: err.message,
+          });
+        }
+      );
+
+    
+  }
+
+
+  saveCustomer() {
+     
+   
+
+    const param = {
+      
+        businessType:  null
+    };
+
+    
+
+    this.customerService.saveCustomer({
+      data: param
+    }).then(result => {
+
+      if (result.status) {
+        
+
+        
+      } else {
+        Utils.alertError({
+          text: 'Please, try again later',
+        });
+      }
+      //this.customerComp.search();
+    }, error => {
+      Utils.alertError({
+        text: 'Please, try again later',
+      });
+    });
   }
 
 

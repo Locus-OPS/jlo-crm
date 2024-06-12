@@ -149,7 +149,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     const dialogRef = this.dialog.open(ResponsibilityComponent, {
       height: '85%',
       width: '80%',
-      panelClass: 'my-dialog',
+     // panelClass: 'my-dialog',
       data: { roleCode: roleCode }
     });
 

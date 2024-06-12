@@ -1,0 +1,13 @@
+.fix-bottom-action{
+    position: absolute;
+    bottom: 3px;
+    width: calc(100% - 50px);
+    text-align: right;
+    background-color: white;
+}
+.flex-container{
+    margin-top: 20px;
+    height: calc(100% - 60px);
+    overflow-y: scroll;
+    margin-bottom: 40px;
+}

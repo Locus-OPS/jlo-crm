@@ -60,12 +60,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.authService.login(this.username, this.password).then(result => {
+      
       this.tabManageService.removeTabs();
       this.translate.use('th').subscribe(() => {
         this.redirectToMainPage();
       });
     }, error => {
-      this.error_description = 'Wrong username or password';
+      this.error_description = 'Wrong username or password-x';
     });
   }
 
@@ -76,6 +77,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   redirectToMainPage() {
+    console.log("redirectToMainPage");
     this.router.navigate(['dashboard']);
   }
 }

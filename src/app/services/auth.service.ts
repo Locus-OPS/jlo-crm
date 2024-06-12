@@ -37,6 +37,7 @@ export class AuthService {
           resolve(response);
         });
       }, (error) => {
+        console.log(error);
         reject(error);
       });
     });
