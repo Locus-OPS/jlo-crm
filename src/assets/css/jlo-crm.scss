@@ -180,7 +180,23 @@ app-created-by{
     .mdc-label{
         padding-top: 6px;
         font-family: var(--mat-form-field-container-text-font);
-        color: var(--mat-app-text-color)
+        color: var(--mat-app-text-color);
+        font-size: var(--mat-form-field-container-text-size);
+    }
+}
+.mat-mdc-radio-button{
+    .mdc-label{
+        padding-top: 6px;
+        font-family: var(--mat-form-field-container-text-font);
+        color: var(--mat-app-text-color);
+        font-size: var(--mat-form-field-container-text-size);
+    }
+}
+.mat-mdc-slide-toggle{
+    .mdc-form-field{
+        label{
+            transform: translateY(4px);
+        }
     }
 }
 .cdk-overlay-pane{
