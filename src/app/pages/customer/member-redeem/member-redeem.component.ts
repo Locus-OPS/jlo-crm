@@ -93,7 +93,7 @@ export class MemberRedeemComponent extends BaseComponent implements OnInit {
       pageNo: this.tableControl.pageNo,
       data: {
         memberId: this.memberId
-        , programId: this.redemptionMemberInfo.programId
+        , programId: this.redemptionMemberInfo?.programId
         , ...this.searchForm.value
       }
     }).then(result => {
