@@ -149,6 +149,7 @@ app-created-by{
 .mat-mdc-form-field{
     &:has(.mat-mdc-form-field-infix  input:read-only){
         .mat-mdc-text-field-wrapper{
+            cursor: not-allowed;
             .mdc-notched-outline__leading{
                 border-top-style: dashed;
                 border-left-style: dashed;
@@ -161,6 +162,9 @@ app-created-by{
                 border-top-style: dashed;
                 border-right-style: dashed;
                 border-bottom-style: dashed;
+            }
+            input{
+                cursor: not-allowed;
             }
         }
     }
