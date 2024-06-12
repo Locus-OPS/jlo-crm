@@ -79,13 +79,7 @@
               </mat-paginator>
             </div>
           </div>
-          <!-- end content-->
-          <div class="pull-right">
-              <button mat-raised-button type="button" class="btn btn-fill btn-primary"
-              [mat-dialog-close]="memberInfo">{{ 'button.select' | translate }}</button>
-            <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
-              class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
-          </div>
+          
         </div>
         <!--  end card  -->
       </div>
@@ -93,3 +87,10 @@
     </div>
     <!-- end row -->
   </div>
+<!-- end content-->
+<div class="pull-right">
+  <button mat-raised-button type="button" class="btn btn-fill btn-primary"
+  [mat-dialog-close]="memberInfo">{{ 'button.select' | translate }}</button>
+<button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
+  class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
+</div>
