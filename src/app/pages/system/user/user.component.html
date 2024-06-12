@@ -141,9 +141,11 @@
                 <div class="col-md-9">
                   <div class="row">
                     <mat-form-field class="col-md-4">
+                      <mat-label>{{'user.id' | translate}}</mat-label>
                       <input matInput type="text" [placeholder]="'user.id' | translate" formControlName="id" readonly>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
+                      <mat-label>{{'user.firstName' | translate}}</mat-label>
                       <input matInput type="text" [placeholder]="'user.firstName' | translate" formControlName="firstName" #firstName
                         (input)="selectedRow.firstName = firstName.value">
                       <mat-error *ngIf="submitted && createForm.controls['firstName'].hasError('required')">
@@ -151,6 +153,7 @@
                       </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
+                      <mat-label>{{'user.lastName' | translate}}</mat-label>
                       <input matInput type="text" [placeholder]="'user.lastName' | translate" formControlName="lastName" #lastName
                         (input)="selectedRow.lastName = lastName.value">
                       <mat-error *ngIf="submitted && createForm.controls['lastName'].hasError('required')">
@@ -164,6 +167,7 @@
                       <mat-radio-button value="N" (input)="selectedRow.useYn = 'N'">{{ 'user.inactive' | translate }}</mat-radio-button>
                     </mat-radio-group>
                     <mat-form-field class="col-md-4">
+                      <mat-label>{{'user.email' | translate}}</mat-label>
                       <input matInput [placeholder]="'user.email' | translate" type="email" formControlName="email">
                       <mat-error *ngIf="submitted && createForm.controls['email'].hasError('required')">
                         {{ 'error.required' | translate }}
@@ -173,6 +177,7 @@
                       </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
+                      <mat-label>{{'user.nickname' | translate}}</mat-label>
                       <input matInput [placeholder]="'user.nickname' | translate" type="text" formControlName="nickname" #nickname
                         (input)="selectedRow.nickname = nickname.value">
                     </mat-form-field>
@@ -188,6 +193,7 @@
                     <div class="card-body">
                       <div class="row">
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{'user.loginType' | translate}}</mat-label>
                           <mat-select [placeholder]="'user.loginType' | translate" formControlName="loginType">
                             <mat-option *ngFor="let type of loginTypes" [value]="type.codeId">{{ type.codeName }}</mat-option>
                           </mat-select>
@@ -196,6 +202,7 @@
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{'user.userId' | translate}}</mat-label>
                           <input matInput [placeholder]="'user.userId' | translate" type="text" formControlName="userId" #userId
                             (input)="selectedRow.userId = nickname.userId">
                           <mat-error *ngIf="submitted && createForm.controls['userId'].hasError('required')">
@@ -205,6 +212,7 @@
                       </div>
                       <div class="row">
                         <mat-form-field class="col-md-12">
+                          <mat-label>{{'user.password' | translate}}</mat-label>
                           <input matInput [placeholder]="'user.password' | translate" type="password" formControlName="password">
                           <mat-error *ngIf="submitted && createForm.controls['password'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -222,6 +230,7 @@
                     <div class="card-body">
                       <div class="row">
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{'user.businessUnit' | translate}}</mat-label>
                           <mat-select [placeholder]="'user.businessUnit' | translate" formControlName="buId">
                             <mat-option *ngFor="let type of businessUnitList" [value]="type.codeId">{{ type.codeName }}</mat-option>
                           </mat-select>
@@ -230,6 +239,7 @@
                           </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{'user.role' | translate}}</mat-label>
                           <mat-select [placeholder]="'user.role' | translate" formControlName="roleCode">
                             <mat-option *ngFor="let type of roleList" [value]="type.codeId">{{ type.codeName }}</mat-option>
                           </mat-select>
@@ -240,6 +250,7 @@
                       </div>
                       <div class="row">
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{'user.position' | translate}}</mat-label>
                           <mat-select [placeholder]="'user.position' | translate" formControlName="posId">
                             <mat-option *ngFor="let type of posList" [value]="type.codeId">{{ type.codeName }}</mat-option>
                           </mat-select>
