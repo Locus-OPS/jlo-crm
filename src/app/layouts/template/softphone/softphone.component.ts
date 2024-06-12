@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { SoftphoneService } from "./softphone.service";
 import { AgentStatus } from "./softphone.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-softphone-cmp",
@@ -11,7 +12,7 @@ export class SoftphoneComponent implements OnInit {
   isOpen = false;
   status: AgentStatus = { status: "", subStatus: "" };
 
-  constructor(private softphoneService: SoftphoneService) {}
+  constructor(private softphoneService: SoftphoneService, private router: Router) {}
 
   ngOnInit(): void {
     this.softphoneService.getAgentStatus().subscribe((status) => {
@@ -37,6 +38,11 @@ export class SoftphoneComponent implements OnInit {
     }
   }
 
+  handleScreenPop(message) {
+    this.isOpen = true;
+    this.router.navigate(["/customer/member", { memberId: 103 }]);
+  }
+
   initEventListener() {
     window.addEventListener("message", (event) => {
       if (event.origin !== "https://apps.mypurecloud.jp") {
@@ -45,7 +51,10 @@ export class SoftphoneComponent implements OnInit {
       var message = JSON.parse(event.data);
       console.log(message);
       if (message) {
-        if (message.type == "userActionSubscription") {
+        if (message.type == "screenPop") {
+          this.handleScreenPop(message);
+        }
+        else if (message.type == "userActionSubscription") {
           this.handleUserActionSubscription(message);
         }
         // if(message.type == "screenPop"){
@@ -68,3 +77,83 @@ export class SoftphoneComponent implements OnInit {
     });
   }
 }
+
+
+/*
+
+Example of message from PureCloud:
+{
+    "type": "screenPop",
+    "data": {
+        "searchString": "+66819994972",
+        "interactionId": {
+            "id": "cd66ba23-5490-4510-8f9e-d67393d44feb",
+            "phone": "tel:+66819994972",
+            "name": "0819994972",
+            "isConnected": false,
+            "isDisconnected": false,
+            "isDone": false,
+            "state": "ALERTING",
+            "isCallback": false,
+            "isDialer": false,
+            "isChat": false,
+            "isEmail": false,
+            "isMessage": false,
+            "isVoicemail": false,
+            "remoteName": "0819994972",
+            "recordingState": "paused",
+            "securePause": false,
+            "displayAddress": "+66819994972",
+            "queueName": "10-ACC",
+            "ani": "+66819994972",
+            "calledNumber": "+6624300023",
+            "totalIvrDurationSeconds": 2,
+            "direction": "Inbound",
+            "isInternal": false
+        }
+    }
+}
+
+{
+    "type": "interactionSubscription",
+    "data": {
+        "category": "add",
+        "interaction": {
+            "id": "cd66ba23-5490-4510-8f9e-d67393d44feb",
+            "phone": "tel:+66819994972",
+            "name": "0819994972",
+            "isConnected": false,
+            "isDisconnected": false,
+            "isDone": false,
+            "state": "ALERTING",
+            "isCallback": false,
+            "isDialer": false,
+            "isChat": false,
+            "isEmail": false,
+            "isMessage": false,
+            "isVoicemail": false,
+            "remoteName": "0819994972",
+            "recordingState": "paused",
+            "securePause": false,
+            "displayAddress": "+66819994972",
+            "queueName": "10-ACC",
+            "ani": "+66819994972",
+            "calledNumber": "+6624300023",
+            "totalIvrDurationSeconds": 2,
+            "direction": "Inbound",
+            "isInternal": false
+        }
+    }
+}
+
+{
+    "type": "notificationSubscription",
+    "data": {
+        "category": "interactionSelection",
+        "data": {
+            "interactionId": "cd66ba23-5490-4510-8f9e-d67393d44feb"
+        }
+    }
+}
+
+*/
