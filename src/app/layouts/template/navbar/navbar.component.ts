@@ -319,7 +319,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
                 text: "สร้างการติดต่อข้อมูลสำเร็จ",
               });
               setTimeout(() => {
-                this.router.navigate(["customer"]);
+                this.router.navigate(["/consulting/consultingList"]);
               }, 10);
 
 
@@ -371,38 +371,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     
   }
 
-
-  saveCustomer() {
-     
-   
-
-    const param = {
-      
-        businessType:  null
-    };
-
-    
-
-    this.customerService.saveCustomer({
-      data: param
-    }).then(result => {
-
-      if (result.status) {
-        
-
-        
-      } else {
-        Utils.alertError({
-          text: 'Please, try again later',
-        });
-      }
-      //this.customerComp.search();
-    }, error => {
-      Utils.alertError({
-        text: 'Please, try again later',
-      });
-    });
-  }
+ 
 
 
 }
