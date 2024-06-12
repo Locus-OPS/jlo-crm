@@ -3,9 +3,11 @@
   <input formControlName="contentIdTemp" type="hidden" />
   <div class="row">
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.contentId' | translate}}</mat-label>
       <input formControlName="contentId" matInput [placeholder]="translatePrefix + '.contentId' | translate" type="text" readonly />
     </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.catId' | translate}}</mat-label>
       <input formControlName="catName" matInput [placeholder]="translatePrefix + '.catId' | translate" type="text" readonly />
       <button mat-button type="button" matSuffix *ngIf="CAN_WRITE()" (click)="openTreeModal()">
           <mat-icon>folder_open</mat-icon>
@@ -15,6 +17,7 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field class="col-md-6">
+      <mat-label>{{translatePrefix + '.contentTitle' | translate}}</mat-label>
       <input formControlName="title" matInput [placeholder]="translatePrefix + '.contentTitle' | translate" type="text" maxlength="500" />
       <mat-error *ngIf="createForm.controls['title'].hasError('required')">
         {{ 'error.required' | translate }}
@@ -23,9 +26,11 @@
   </div>
   <div class="row">
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.seq' | translate}}</mat-label>
       <input formControlName="seq" matInput [placeholder]="translatePrefix + '.seq' | translate" type="number" readonly />
     </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.display' | translate}}</mat-label>
       <mat-select [placeholder]="translatePrefix + '.display' | translate" formControlName="display">
         <mat-option *ngFor="let status of contentIconList" [value]="status.codeId">{{ status.codeName }}</mat-option>
       </mat-select>
@@ -34,6 +39,7 @@
       </mat-error>
   </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.contentStatus' | translate}}</mat-label>
       <mat-select [placeholder]="translatePrefix + '.contentStatus' | translate" formControlName="contentStatus">
         <mat-option *ngFor="let status of contentStatusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
       </mat-select>
@@ -47,19 +53,23 @@
   </div>
   <div class="row">
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.startDate' | translate}}</mat-label>
       <input matInput [matDatepicker]="startDateFrom" formControlName="startDate" [placeholder]="translatePrefix + '.startDate' | translate">
       <mat-datepicker-toggle matSuffix [for]="startDateFrom"></mat-datepicker-toggle>
       <mat-datepicker #startDateFrom></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.startTime' | translate}}</mat-label>
       <input matInput  formControlName="startTime" [placeholder]="translatePrefix + '.startTime' | translate" type="time">
     </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.endDate' | translate}}</mat-label>
       <input matInput [matDatepicker]="endDateFrom" formControlName="endDate" [placeholder]="translatePrefix + '.endDate' | translate">
       <mat-datepicker-toggle matSuffix [for]="endDateFrom"></mat-datepicker-toggle>
       <mat-datepicker #endDateFrom></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="col-md-3">
+      <mat-label>{{translatePrefix + '.endTime' | translate}}</mat-label>
       <input  formControlName="endTime" matInput [placeholder]="translatePrefix + '.endTime' | translate" type="time">
     </mat-form-field>
   </div>
