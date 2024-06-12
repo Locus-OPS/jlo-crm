@@ -47,7 +47,11 @@ html, :root {
 }
 .main-panel.ps{
     width: calc(100% - calc(var(--jlo-crm-sidebar-width,260px) + 1px));
+    .main-content {
+        min-height: calc(100vh - 125px);
+    }
 }
+
 .sidebar-mini{
     .logo{
         .logo-mini{
