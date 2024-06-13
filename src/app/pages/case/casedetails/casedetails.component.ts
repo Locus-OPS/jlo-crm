@@ -34,6 +34,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   selectedTab: number;
   createForm: UntypedFormGroup;
   customerForm: UntypedFormGroup;
+  ccntactForm: UntypedFormGroup;
 
   typeList: Dropdown[];
   subTypeList: Dropdown[];

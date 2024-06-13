@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -8,11 +8,11 @@ import { Globals } from 'src/app/shared/globals';
 import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
+import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.component';
 
 @Component({
   selector: 'app-consulting',
-  standalone: false,
-  //imports: [],
+  standalone: false, 
   templateUrl: './consulting.component.html',
   styleUrl: './consulting.component.scss'
 })
@@ -24,11 +24,14 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
 
+  selectedRow: any[];
+  dataSourceSr: any[];
+  displayedColumnsSr: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
 
   channelList: Dropdown[];
 
 
-  constructor(
+  constructor(   
     public api: ApiService,     
     public dialog: MatDialog,
     public router: Router,
@@ -46,6 +49,7 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
+      id: [""], 
       consultingNumber: [""], 
       channelCd: [""],
       statusCd: [""],
@@ -62,9 +66,11 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       agentState: [""],
       reasonCode: [""],
       consultingAction: [""],
-      custId:[""],
-      custName:[""]
+      customerId:[""],
+      custNameDisplay:[""]
     });
+
+    
 
     //CONSULTING_CHANNEL
   }
@@ -93,6 +99,28 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
 
   removeOwner() {
     this.searchForm.patchValue({ ownerId: '', ownerDisplay: '' });
+  }
+
+
+  searchCustomer() {
+    const dialogRef = this.dialog.open(ModalCustomerComponent, {
+      height: '85%',
+      width: '90%',
+      panelClass: 'my-dialog',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        let custNameDisplay = result.firstName +' '+result.lastName;
+        this.searchForm.patchValue({ customerId: result.customerId, custNameDisplay:custNameDisplay});
+      }
+    });
+  }
+
+  removeCustomer() {
+    this.searchForm.patchValue({ customerId: '', custNameDisplay: '' });
   }
 
   onConsultingCreate(){

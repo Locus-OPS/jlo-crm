@@ -12,6 +12,9 @@ import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
 import Utils from 'src/app/shared/utils';
 import { CustomerService } from 'src/app/pages/customer/customer.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
+
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -29,6 +32,9 @@ export interface NavTitle {
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+ 
+  isCollapsed = false;
+
 
   private listTitles: any[];
   location: Location;
@@ -61,7 +67,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     public api: ApiService,
     private spinner: NgxSpinnerService,
     private consulting : ConsultingService,
-    private customerService: CustomerService,
+    public dialog: MatDialog,
+    
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
@@ -304,40 +311,46 @@ export class NavbarComponent implements OnInit, OnDestroy {
       } 
       const params   = {data: contData!= null ?contData : conts};   
 
-          
+      // this.showConsultingDialog();
+      
+      
       this.consulting.processWalkinConsulting(params).then((result: any) => {
       
           this.spinner.hide("approve_process_spinner");
                    
           if (result.status) {
-
+            console.log("Status : "+result.data.statusCd);
             if(result.data.statusCd == '01'){
               ConsultingUtils.setConsultingData(result.data);
 
-              Utils.alertSuccess({
-                title: "บันทึก",
-                text: "สร้างการติดต่อข้อมูลสำเร็จ",
-              });
-              setTimeout(() => {
-                this.router.navigate(["/consulting/consultingList"]);
-              }, 10);
+              this.showConsultingDialog(result.data.id);
+
+              // Utils.alertSuccess({
+              //   title: "บันทึก",
+              //   text: "สร้างการติดต่อข้อมูลสำเร็จ",
+              // });
+              // setTimeout(() => {
+              //   this.router.navigate(["/consulting/consultingList"]);
+              // }, 10);
 
 
             }else{
               console.log(ConsultingUtils.getConsultingData());
+              //this.showConsultingDialog(result.data.id);
 
-               let elm: any = document.querySelector(
-                 ".mat-tab-label-active .close-icon"
-              );
-              Utils.alertSuccess({
-                title: "บันทึก",
-                text: "บันทึกข้อมูลการติดต่อสำเร็จ",
-              });
-              console.log("elm "+elm);
 
-              setTimeout(() => {
-                this.router.navigate(["dashboard"]);
-              }, 10);
+              //  let elm: any = document.querySelector(
+              //    ".mat-tab-label-active .close-icon"
+              // );
+              // Utils.alertSuccess({
+              //   title: "บันทึก",
+              //   text: "บันทึกข้อมูลการติดต่อสำเร็จ",
+              // });
+              // console.log("elm "+elm);
+
+              // setTimeout(() => {
+              //   this.router.navigate(["dashboard"]);
+              // }, 10);
 
               ConsultingUtils.removeConsultingData();
             }
@@ -369,6 +382,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
       );
 
     
+  }
+
+  showConsultingDialog(id:string) {
+    const dialogRef = this.dialog.open(ModalConsultingComponent, {
+      height: '85%',
+      width: '80%',
+     // panelClass: 'my-dialog',
+      data: {id:id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
   }
 
  
