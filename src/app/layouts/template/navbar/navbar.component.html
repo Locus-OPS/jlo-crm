@@ -20,41 +20,10 @@
         <div class="row">           
           <li class="nav-item">
 
-           <!-- <app-consulting-info> </app-consulting-info>   -->
+           <app-consulting-info> </app-consulting-info>   
      
 
-            <div class="btn-group">
-              <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                <i class="material-icons">contact_page</i>
-                {{'consulting.header.text'|translate}}
-      
-              </button>
-              <div class="dropdown-menu">                 
-                <form class="px-4 py-3" [formGroup]="consultingForm" novalidate>
-                    <div class="form-group">
-                      <label for="txtStatus">{{'consulting.header.status'|translate}}</label>
-                      <input type="status" class="form-control" id="txtStatus" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtClient">{{'consulting.header.client'|translate}}</label>
-                      <input type="client" class="form-control" id="txtClient" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="ddChannel">{{'consulting.header.channel'|translate}}</label>
-                      <input type="channel" class="form-control" id="txtChannel" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="txtContact">{{'consulting.header.contact'|translate}}</label>
-                      <input type="contact" class="form-control" id="txtContact" readonly>
-                    </div>                 
-                    <div class="pull-right">
-                      <button mat-raised-button type="submit" class="btn btn-primary">{{ 'consulting.header.start' | translate }}</button>
-                      <button mat-raised-button type="reset"  class="btn btn-fill btn-rose">{{ 'consulting.header.wrapup' | translate }}</button>
-                    </div>
-                 
-                </form>
-              </div>
-            </div> 
+            
           </li>
         
 

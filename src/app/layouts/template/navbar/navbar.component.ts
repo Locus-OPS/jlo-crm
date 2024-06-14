@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentWalkInStatusCode = 'STOP';
   currentWalkInStatusName = '';
 
-  consultingForm : FormGroup;
+  
 
   @ViewChild('app-navbar-cmp') button: any;
 
@@ -99,10 +99,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
 
 
-      this.consultingForm = this.formBuilder.group({
-        consultingNumber: [""],  
-        status: [""], 
-      });  
+      
 
 
 
