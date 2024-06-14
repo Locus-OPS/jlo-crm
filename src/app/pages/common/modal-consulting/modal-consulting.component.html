@@ -20,15 +20,15 @@
                       </mat-form-field>
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.customer' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="custNameDisplay"
-                          (click)="searchCustomer()" readonly>
+                        <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="custNameDisplay" readonly
+                          (click)="searchCustomer()">
                         <mat-icon matSuffix (click)="searchCustomer()">search</mat-icon>
                         <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
                       </mat-form-field>
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.owner' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerDisplay"
-                          (click)="showOwner()" readonly>
+                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerDisplay" readonly
+                          (click)="showOwner()">
                         <mat-icon matSuffix (click)="showOwner()">search</mat-icon>
                         <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
                       </mat-form-field>

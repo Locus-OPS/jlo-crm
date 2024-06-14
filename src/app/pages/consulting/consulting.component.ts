@@ -9,6 +9,9 @@ import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
 import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.component';
+import { ConsultingService } from './consulting.service';
+import Utils from 'src/app/shared/utils';
+import { ModalConsultingComponent } from '../common/modal-consulting/modal-consulting.component';
 
 @Component({
   selector: 'app-consulting',
@@ -20,16 +23,18 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
   
   searchForm: FormGroup;
 
+
   displayedColumns: string[] = ["consultingNumber","channelName","customerName","title","statusName","startDate","endDate","ownerName","action"];
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
 
+  searchFormSr: FormGroup;
   selectedRow: any[];
   dataSourceSr: any[];
   displayedColumnsSr: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
 
   channelList: Dropdown[];
-
+  statusList: Dropdown[];
 
   constructor(   
     public api: ApiService,     
@@ -37,13 +42,15 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     public router: Router,
     public globals: Globals,
     public formBuilder: FormBuilder,
+    private consulting : ConsultingService,
   ) {
     super(router, globals);
      
     api.getMultipleCodebookByCodeType(
-      { data: ['CONSULTING_CHANNEL'] }
+      { data: ['CONSULTING_CHANNEL','CONSULTING_STATUS'] }
     ).then(result => {
       this.channelList = result.data['CONSULTING_CHANNEL'];
+      this.statusList == result.data['CONSULTING_STATUS'];
       
     });
   }
@@ -69,17 +76,49 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       customerId:[""],
       custNameDisplay:[""]
     });
-
+    this.searchFormSr = this.formBuilder.group({       
+      consultingNumber: [""],       
+    });
     
 
-    //CONSULTING_CHANNEL
+    this.onSearch();
+
   }
 
   onSearch() {
 
+    this.tableControl.resetPage();
+    this.search();
+    
   }
-  search(){
 
+   search() {
+    const param = {
+      ...this.searchForm.getRawValue(),
+      sortColumn: this.tableControl.sortColumn,
+      sortDirection: this.tableControl.sortDirection,
+    };
+
+    this.consulting.getConsultingDataList({
+        pageSize: this.tableControl.pageSize,
+        pageNo: this.tableControl.pageNo,
+        data: param,
+      })
+      .then(
+        (result) => {
+          this.dataSource = result.data;
+          this.tableControl.total = result.total;
+        },
+        (error) => {
+          Utils.alertError({
+            text: error.message,
+          });
+        }
+      );
+  }
+  clear() {
+    this.searchForm.reset();
+    this.onSearch();
   }
 
   showOwner() {
@@ -126,4 +165,27 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
   onConsultingCreate(){
 
   }
+
+  onConsultingEdit(element){
+    this.showConsultingDialog(element.id);
+  }
+
+  showConsultingDialog(id:string) {
+    const dialogRef = this.dialog.open(ModalConsultingComponent, {
+      height: '85%',
+      width: '80%',
+     // panelClass: 'my-dialog',
+      data: {id:id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+  onSelectRow(row) {
+    this.selectedRow = row;
+     
+  }
+
 }
