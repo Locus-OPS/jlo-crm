@@ -14,7 +14,7 @@ import { CustomerService } from 'src/app/pages/customer/customer.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
-
+ 
 
 const misc: any = {
   navbar_menu_visible: 0,

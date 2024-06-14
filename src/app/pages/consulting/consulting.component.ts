@@ -50,7 +50,7 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       { data: ['CONSULTING_CHANNEL','CONSULTING_STATUS'] }
     ).then(result => {
       this.channelList = result.data['CONSULTING_CHANNEL'];
-      this.statusList == result.data['CONSULTING_STATUS'];
+      this.statusList = result.data['CONSULTING_STATUS'];
       
     });
   }

@@ -16,11 +16,11 @@
                         <div class="row">
                           <mat-form-field class="col-md-3">
                             <mat-label>{{'consulting.number' | translate}}</mat-label>    
-                            <input matInput [placeholder]="'consulting.number' | translate" type="text" formControlName="consultingNumber">
+                            <input matInput type="text" formControlName="consultingNumber">
                           </mat-form-field>
                           <mat-form-field class="col-md-3">
                             <mat-label>{{'consulting.channel' | translate}}</mat-label> 
-                            <mat-select [placeholder]="'consulting.channel' | translate" formControlName="channelCd">
+                            <mat-select formControlName="channelCd">
                                
                                 <mat-option *ngFor="let type of channelList" [value]="type.codeId">
                                     {{type.codeName}}
@@ -31,7 +31,7 @@
 
                           <mat-form-field class="col-md-3">
                             <mat-label>{{'consulting.owner' | translate}}</mat-label> 
-                            <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerDisplay"
+                            <input matInput type="text" formControlName="ownerDisplay"
                               (click)="showOwner()" readonly>
                             <mat-icon matSuffix (click)="showOwner()">search</mat-icon>
                             <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
@@ -39,7 +39,7 @@
 
                           <mat-form-field class="col-md-3">
                             <mat-label>{{'consulting.customer' | translate}}</mat-label> 
-                            <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="custNameDisplay"
+                            <input matInput type="text" formControlName="custNameDisplay"
                               (click)="searchCustomer()" readonly>
                             <mat-icon matSuffix (click)="searchCustomer()">search</mat-icon>
                             <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
@@ -49,7 +49,7 @@
                          <div class="row">                          
                           <mat-form-field class="col-md-3">
                             <mat-label>{{'consulting.status' | translate}}</mat-label> 
-                            <mat-select [placeholder]="'consulting.status' | translate" formControlName="statusCd">                           
+                            <mat-select  formControlName="statusCd">                           
                             <mat-option *ngFor="let type of statusList" [value]="type.codeId">
                                 {{type.codeName}}
                             </mat-option>  
@@ -57,13 +57,13 @@
                           </mat-form-field>
                             <mat-form-field class="col-md-3">
                                 <mat-label>{{'consulting.startDate' | translate}}</mat-label> 
-                                <input matInput [placeholder]="'consulting.startDate' | translate"  formControlName="startDate" [matDatepicker]="startDate" />
+                                <input matInput formControlName="startDate" [matDatepicker]="startDate" />
                                 <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
                                 <mat-datepicker #startDate></mat-datepicker>
                             </mat-form-field>
                              <mat-form-field class="col-md-3">
                                <mat-label>{{'consulting.endDate' | translate}}</mat-label> 
-                                <input matInput [placeholder]="'consulting.endDate' | translate" formControlName="endDate"  [matDatepicker]="endDate" />
+                                <input matInput formControlName="endDate"  [matDatepicker]="endDate" />
                                 <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
                                 <mat-datepicker #endDate></mat-datepicker>
                             </mat-form-field> 
@@ -103,7 +103,7 @@
                   <ng-container matColumnDef="customerName">
                     <th mat-header-cell *matHeaderCellDef> {{'consulting.customer' | translate}} </th>
                     <td mat-cell *matCellDef="let element">
-                      {{element.businessName?element.businessName:(element.customerName+' '+element.lastName)}} </td>
+                      {{element.customerName}} </td>
                   </ng-container>
                   <ng-container matColumnDef="title">
                     <th mat-header-cell *matHeaderCellDef>{{ 'consulting.title' | translate }}</th>
