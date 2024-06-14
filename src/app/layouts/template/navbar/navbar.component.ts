@@ -14,7 +14,7 @@ import { CustomerService } from 'src/app/pages/customer/customer.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
- 
+import { FormBuilder, FormGroup } from '@angular/forms'; 
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -55,6 +55,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentWalkInStatusCode = 'STOP';
   currentWalkInStatusName = '';
 
+  consultingForm : FormGroup;
+
   @ViewChild('app-navbar-cmp') button: any;
 
   constructor(
@@ -68,6 +70,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     private consulting : ConsultingService,
     public dialog: MatDialog,
+    private formBuilder: FormBuilder, 
     
   ) {
     this.location = location;
@@ -94,6 +97,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if ($layer) {
         $layer.remove();
       }
+
+
+      this.consultingForm = this.formBuilder.group({
+        consultingNumber: [""],  
+        status: [""], 
+      });  
+
+
+
     });
 
     this.navTitleSubscription = this.tabManageService.getNavTitle().subscribe(title => {

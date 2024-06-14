@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedModule } from 'src/app/shared/module/shared.module';
+import { SharedModule } from 'src/app/shared/module/shared.module'; 
 @NgModule({
-    imports: [ RouterModule, CommonModule, MatButtonModule, TranslateModule, SharedModule ],
-    declarations: [ NavbarComponent ],
-    exports: [ NavbarComponent ]
+    declarations: [NavbarComponent],
+    exports: [NavbarComponent],
+    imports: [RouterModule, CommonModule, MatButtonModule, TranslateModule, SharedModule]
 })
 
 export class NavbarModule {}

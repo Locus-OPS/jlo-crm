@@ -17,42 +17,46 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
-        <div class="row">
-          <!-- <li class="nav-item"> 
+        <div class="row">           
+          <li class="nav-item">
+
+           <!-- <app-consulting-info> </app-consulting-info>   -->
+     
+
             <div class="btn-group">
               <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                Small button
+                {{'consulting.header.text'|translate}}
               </button>
-              <div class="dropdown-menu">
-                <div class="dropdown-menu">
-                  <form class="px-4 py-3">
+              <div class="dropdown-menu">                 
+                <form class="px-4 py-3" [formGroup]="consultingForm" novalidate>
                     <div class="form-group">
-                      <label for="exampleDropdownFormEmail1">Email address</label>
-                      <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                      <label for="txtStatus">{{'consulting.header.status'|translate}}</label>
+                      <input type="status" class="form-control" id="txtStatus" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleDropdownFormPassword1">Password</label>
-                      <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                      <label for="txtClient">{{'consulting.header.client'|translate}}</label>
+                      <input type="client" class="form-control" id="txtClient" readonly>
                     </div>
                     <div class="form-group">
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                        <label class="form-check-label" for="dropdownCheck">
-                          Remember me
-                        </label>
-                      </div>
+                      <label for="ddChannel">{{'consulting.header.channel'|translate}}</label>
+                      <input type="channel" class="form-control" id="txtChannel" readonly>
                     </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                  </form>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">New around here? Sign up</a>
-                  <a class="dropdown-item" href="#">Forgot password?</a>
-                </div>
+                    <div class="form-group">
+                      <label for="txtContact">{{'consulting.header.contact'|translate}}</label>
+                      <input type="contact" class="form-control" id="txtContact" readonly>
+                    </div>                 
+                    <div class="pull-right">
+                      <button mat-raised-button type="submit" class="btn btn-primary">{{ 'consulting.header.start' | translate }}</button>
+                      <button mat-raised-button type="reset"  class="btn btn-fill btn-rose">{{ 'consulting.header.wrapup' | translate }}</button>
+                    </div>
+                 
+                </form>
               </div>
-            </div>
-          </li> -->
+            </div> 
+          </li>
+        
 
-          <li class="nav-item"> 
+          <!-- <li class="nav-item"> 
             <mat-button-toggle-group appearance="legacy" [value]="currentWalkInStatusCode" (change)="changeWalkinStatus($event)" #group="matButtonToggleGroup">
               <mat-button-toggle value="CONSULTING_START" aria-label="{{ 'Active' | translate }} " class="btn-rose">
                 {{ 'Walk in' | translate }}  
@@ -65,11 +69,8 @@
                 <mat-icon>cancel</mat-icon>
               </mat-button-toggle>
             </mat-button-toggle-group>
+          </li> 
 
-            
-
-
-          </li>
           <div class="clearfix"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
           <li class="nav-item">
             <form class="example-form">  
@@ -80,6 +81,8 @@
             </form>    
   
           </li>
+          -->
+
           <div class="clearfix"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
           <li class="nav-item">
             <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">

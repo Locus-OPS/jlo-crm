@@ -9,6 +9,7 @@ import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCustomerComponent } from './modal-customer/modal-customer.component';
 import { CreatedByComponent } from './created-by/created-by.component';
 import { ModalConsultingComponent } from './modal-consulting/modal-consulting.component';
+import { ConsultingInfoComponent } from './consulting-info/consulting-info.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ModalConsultingComponent } from './modal-consulting/modal-consulting.co
     , ModalConfirmComponent
     , ModalCustomerComponent
     , CreatedByComponent
-    ,ModalConsultingComponent
+    , ModalConsultingComponent
+    , ConsultingInfoComponent
   ],
   exports: [
     ModalUserComponent
@@ -31,7 +33,8 @@ import { ModalConsultingComponent } from './modal-consulting/modal-consulting.co
     , ModalConfirmComponent
     , ModalCustomerComponent
     , CreatedByComponent
-    ,ModalConsultingComponent
+    , ModalConsultingComponent
+    , ConsultingInfoComponent
   ],
   imports: [
     SharedModule
