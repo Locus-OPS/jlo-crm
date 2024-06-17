@@ -179,7 +179,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       this.spinner.hide("approve_process_spinner");             
         if (result.status) {    
         
-          this.gotoMemberCustomerPage(customerType)
+          this.gotoMemberCustomerPage(customerType);
 
         }else{
          
