@@ -1,32 +1,51 @@
 <div class="btn-group">
-    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+    <!-- <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false" 
+    (click)="onInitConsultInfo();">
       <i class="material-icons">contact_page</i>
       {{'consulting.header.text'|translate}}
-
+      <mat-label *ngIf="this.constInfoModel != null && this.constInfoModel.statusCd=='01'"> In Progress</mat-label>
+    </button> -->
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-expanded="false"
+      (click)="onInitConsultInfo();">
+      <i class="material-icons">contact_phone</i>
+      {{'consulting.header.text'|translate}} : 
+      <mat-label *ngIf="this.constInfoModel != null && this.constInfoModel.statusCd == '01'">{{'consulting.header.inprogress'|translate}} </mat-label>
+      <mat-label *ngIf="this.constInfoModel == null">{{'consulting.header.available'|translate}} </mat-label>
     </button>
-    <div class="dropdown-menu">                 
-      <form class="px-4 py-3" [formGroup]="consultingForm" novalidate>
-          <div class="form-group">
-            <label for="txtStatus">{{'consulting.header.status'|translate}}</label>
-            <input type="status" class="form-control" id="txtStatus" readonly>
-          </div>
-          <div class="form-group">
-            <label for="txtClient">{{'consulting.header.client'|translate}}</label>
-            <input type="client" class="form-control" id="txtClient" readonly>
-          </div>
-          <div class="form-group">
-            <label for="ddChannel">{{'consulting.header.channel'|translate}}</label>
-            <input type="channel" class="form-control" id="txtChannel" readonly>
-          </div>
-          <div class="form-group">
-            <label for="txtContact">{{'consulting.header.contact'|translate}}</label>
-            <input type="contact" class="form-control" id="txtContact" readonly>
-          </div>                 
-          <div class="pull-right">
-            <button mat-raised-button type="submit" class="btn btn-primary">{{ 'consulting.header.start' | translate }}</button>
-            <button mat-raised-button type="reset"  class="btn btn-fill btn-rose">{{ 'consulting.header.wrapup' | translate }}</button>
-          </div>
-       
+   
+    <div class="dropdown-menu">    
+      <!-- {{ this.constInfoModel|json}}  -->
+
+      <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
+          <mat-form-field class="form-group">
+            <mat-label for="txtConsultingNumber">{{'consulting.header.number'|translate}}</mat-label>
+            <input matInput formControlName="consultingNumber" class="form-control" id="txtConsultingNumber" type="text">
+          </mat-form-field>
+
+          <mat-form-field class="form-group">
+                <mat-label for="txtStatus">{{'consulting.header.status'|translate}}</mat-label>
+            <input matInput formControlName="status" class="form-control" id="txtStatus" type="text" readonly>
+          </mat-form-field>
+
+          <mat-form-field class="form-group">
+            <mat-label for="txtClient">{{'consulting.header.client'|translate}}</mat-label>
+            <input matInput formControlName="client" class="form-control" id="txtClient" type="text" readonly>
+          </mat-form-field>
+
+          <mat-form-field class="form-group">
+            <mat-label for="ddChannel">{{'consulting.header.channel'|translate}}</mat-label>
+            <input matInput formControlName="channel" class="form-control" id="txtChannel" type="text" readonly>
+          </mat-form-field>
+         
+          <mat-form-field class="form-group">
+            <mat-label for="txtContact">{{'consulting.header.contact'|translate}}</mat-label>
+            <input matInput formControlName="contact" class="form-control" id="txtContact" type="text" readonly>
+          </mat-form-field>  
+
+          <div class="pull-center">
+            <button mat-raised-button type="button" class="btn btn-primary" (click)="onStartConsulting()" *ngIf="this.constInfoModel == null">{{ 'consulting.header.start' | translate }}</button>
+            <button mat-raised-button type="button"  class="btn btn-fill btn-rose" (click)="onStopConsulting()" *ngIf="this.constInfoModel != null">{{ 'consulting.header.wrapup' | translate }}</button>
+          </div>       
       </form>
     </div>
   </div> 

@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-header card-header-primary card-header-icon">
               <div class="card-icon">
-                <i class="material-icons">assignment</i>
+                <i class="material-icons">support_agent</i>
               </div>
               <h4 class="card-title">{{'consulting.save.history' | translate}}</h4>
             </div>
@@ -20,16 +20,16 @@
                       </mat-form-field>
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.customer' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="custNameDisplay" readonly
+                        <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="customerName" readonly
                           (click)="searchCustomer()">
-                        <mat-icon matSuffix (click)="searchCustomer()">search</mat-icon>
+                        <mat-icon matSuffix (click)="searchCustomer()">person</mat-icon>
                         <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
                       </mat-form-field>
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.owner' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerDisplay" readonly
+                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerName" readonly
                           (click)="showOwner()">
-                        <mat-icon matSuffix (click)="showOwner()">search</mat-icon>
+                        <mat-icon matSuffix (click)="showOwner()">person</mat-icon>
                         <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
                       </mat-form-field>
 

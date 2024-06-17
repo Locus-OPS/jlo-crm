@@ -12,9 +12,11 @@ export interface ConsultingModel {
     note?: string;
     consultingTypeCd?: string;
     contactId?: string;
-    agentState?: string;
-    reasonCode?: string;
+     
     consultingAction?:string;
 
+    customerName?:string;
+    statusName?: string;
     channelName?: string;
+    contactName?:string;
 }

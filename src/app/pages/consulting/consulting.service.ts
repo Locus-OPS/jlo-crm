@@ -14,11 +14,7 @@ export class ConsultingService {
     private api: ApiService
   ) { 
 
-  }
-
-  processWalkinConsulting(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/consulting/processWalkinConsulting', param);
-  }
+  } 
 
   getConsultingDataList(param?: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/consulting/getConsultingDataList', param);

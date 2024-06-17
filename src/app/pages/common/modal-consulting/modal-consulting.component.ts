@@ -9,10 +9,11 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { ModalUserComponent } from '../modal-user/modal-user.component';
 import { Dropdown } from 'src/app/model/dropdown.model';
-import { ConsultingService } from './consulting.service';
+import { ModalConsultingService } from './modal-consulting.service';
 
 import Utils from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
+import ConsultingUtils from 'src/app/shared/consultingStore';
 
 @Component({
   selector: 'app-modal-consulting',
@@ -34,7 +35,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
     private el: ElementRef,
     public router: Router,
     public dialog: MatDialog,
-    private consulting : ConsultingService,
+    private modalConsulting : ModalConsultingService,
     private spinner: NgxSpinnerService,
     public globals: Globals) {
     super(router, globals);
@@ -57,7 +58,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
         title: [""],
         callingNumber: [""],
         callObjectId: [""],
-        ownerDisplay:[""],
+        ownerName:[""],
         ownerId: [""],
         note: [""],
         consultingTypeCd: [""],
@@ -66,7 +67,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
         reasonCode: [""],
         consultingAction: [""],
         customerId:[""],
-        custNameDisplay:[""],
+        customerName:[""],
         createdBy: [''],
         createdDate: [''],
         updatedBy: [''],
@@ -74,23 +75,43 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
       });
 
+      
+
       this.getConsultingData();
 
+     
+    }
+
+    setDefaultConsulting(){
+
+      if(this.consultingInfo.action == "CONSULTING_START"){
+        
+
+      }
+
+      if(this.consultingInfo.action == "CONSULTING_WRAPUP"){        
+        this.createForm.patchValue({ statusCd: '02', channelCd: '01' });
+      }
+
+      if(this.consultingInfo.action == "CONSULTING_EDIT"){
+        
+
+      }
     }
 
     getConsultingData(){
 
       console.log(this.consultingInfo.id);
       let id =  this.consultingInfo.id;
-      const params = {data:{id:id}}
-
+      const params = {data:{id:id}};
       
-      this.consulting.getConsultingData(params).then((result: any) => {
+      this.modalConsulting.getConsultingData(params).then((result: any) => {
         this.spinner.hide("approve_process_spinner");
         if (result.status) {
           this.createForm.reset();
           let data = result.data;
           this.createForm.patchValue(data);
+          this.setDefaultConsulting();
 
         }else{
 
@@ -121,13 +142,13 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createForm.patchValue({ ownerId: result.id, ownerDisplay: result.displayName });
+        this.createForm.patchValue({ ownerId: result.id, ownerName: result.displayName });
       }
     });
   }
 
   removeOwner() {
-    this.createForm.patchValue({ ownerId: '', ownerDisplay: '' });
+    this.createForm.patchValue({ ownerId: '', ownerName: '' });
   }
 
 
@@ -142,25 +163,39 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        let custNameDisplay = result.firstName +' '+result.lastName;
-        this.createForm.patchValue({ customerId: result.customerId, custNameDisplay:custNameDisplay});
+        let customerName = result.firstName +' '+result.lastName;
+        this.createForm.patchValue({ customerId: result.customerId, customerName:customerName});
       }
     });
   }
 
   removeCustomer() {
-    this.createForm.patchValue({ customerId: '', custNameDisplay: '' });
+    this.createForm.patchValue({ customerId: '', customerName: '' });
   }
   
 
 onSaveConsulting(){ 
-  let data = this.createForm.getRawValue();
+  let data = this.createForm.getRawValue(); 
 
-  this.consulting.updateConsulting({ data }).then((result: any) => {      
+  this.modalConsulting.updateConsulting({ data }).then((result: any) => {      
       this.spinner.hide("approve_process_spinner");             
-        if (result.status) {         
+        if (result.status) {     
+           let statusCd = result.data.statusCd;
 
+           Utils.alertSuccess({
+            title: "บันทึก",
+            text: "บันทึกข้อมูลการติดต่อสำเร็จ",
+          });
 
+            // Finished
+           if(statusCd != "01"){
+            //Remove data from sesstion storage
+            ConsultingUtils.removeConsultingData();           
+            this.dialogRef.close(result.data);
+
+           }
+
+           
 
 
         }else{
