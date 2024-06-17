@@ -196,14 +196,18 @@
             <ng-container
               *ngIf="createForm.value.memberId != null; else elseCustomer"
             >
-              <button
+              <button (click)="selectCustomerConsulting('member')"
                 mat-raised-button
-                class="btn btn-fill btn-default"
-                [routerLink]="[
-                  '/customer/member',
-                  { memberId: createForm.value.memberId }
-                ]"
-              >
+                class="btn btn-fill btn-default">
+
+              <!-- <button 
+              mat-raised-button
+              class="btn btn-fill btn-default"
+              [routerLink]="[
+                '/customer/member',
+                { memberId: createForm.value.memberId }
+              ]"
+            > -->
                 View Member Detail
               </button>
               <button
@@ -218,14 +222,18 @@
               </button>
             </ng-container>
             <ng-template #elseCustomer>
-              <button
+              <button  (click)="selectCustomerConsulting('customer')"
+              mat-raised-button
+              class="btn btn-fill btn-default">
+
+              <!-- <button  (click)="selectCustomerConsulting()"
                 mat-raised-button
                 class="btn btn-fill btn-default"
                 [routerLink]="[
                   '/customer/customer',
                   { customerId: createForm.value.customerId }
                 ]"
-              >
+              > -->
                 View Customer Detail
               </button>
             </ng-template>

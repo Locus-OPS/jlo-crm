@@ -16,4 +16,5 @@ export class ModalConsultingService {
   updateConsulting(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/consulting/updateConsulting', param);
   }
+  
 }

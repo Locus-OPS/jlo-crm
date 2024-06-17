@@ -195,9 +195,6 @@ onSaveConsulting(){
 
            }
 
-           
-
-
         }else{
           setTimeout(() => {
             this.spinner.hide("approve_process_spinner");

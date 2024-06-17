@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { MatSort } from '@angular/material/sort';
+import { ModalConsultingService } from '../common/modal-consulting/modal-consulting.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ConsultingService } from '../consulting/consulting.service';
+import ConsultingUtils from 'src/app/shared/consultingStore';
 
 @Component({
   selector: 'app-customer',
@@ -40,7 +44,16 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   titleNameList=[];
   nationalityList=[];
 
-  constructor(private api: ApiService,private formBuilder: UntypedFormBuilder, private customerService:CustomerService, private el:ElementRef, public router:Router,public globals:Globals  ) { 
+  constructor(
+      private api: ApiService,
+      private formBuilder: UntypedFormBuilder,
+      private customerService:CustomerService, 
+      private el:ElementRef,
+      public router:Router,
+      public globals:Globals,
+      private consultingService : ConsultingService,
+      private spinner: NgxSpinnerService,
+     ) { 
     super(router,globals);
     this.api.getMultipleCodebookByCodeType({
       data: ['CUSTOMER_STATUS','TITLE_NAME','NATIONALITY']
@@ -149,5 +162,78 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   clearSort() {
     this.sort.sort({ id: '', start: 'asc', disableClear: false });
   }
-  
+
+  selectCustomerConsulting(customerType:string){
+    
+    if(ConsultingUtils.getConsultingData() != null){
+      const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
+      const params = {
+        data:{
+          consultingNumber:contData.consultingNumber,
+          customerId : this.createForm.controls['customerId'].value,
+          contactId : this.createForm.controls['customerId'].value
+        }
+      };
+
+      this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {      
+      this.spinner.hide("approve_process_spinner");             
+        if (result.status) {    
+        
+          this.gotoMemberCustomerPage(customerType)
+
+        }else{
+         
+         
+
+          setTimeout(() => {
+            this.spinner.hide("approve_process_spinner");
+          }, 1000);
+
+
+          if(result.message!=""){
+            Utils.alertError({
+              text: result.message,
+            });
+          }else{
+            Utils.alertError({
+              text: "Please try again later.",
+            });
+          }
+        }
+      },(err: any) => {
+        Utils.alertError({
+          text: err.message,
+        });
+      }
+
+    );
+    }
+    
+  }
+  // this.router.navigate(['/customer/member'], { memberId:  this.createForm.controls['memberId'].value });
+
+  gotoMemberCustomerPage(customerType:string) {
+
+    if(customerType == "member"){
+      this.router.navigate([
+        "/customer/member",
+        {
+          memberId:  this.createForm.controls['memberId'].value, 
+        },
+      ]);
+    }
+    
+    if(customerType == "customer"){
+      this.router.navigate([
+        "/customer/customer",
+        {
+          memberId:  this.createForm.controls['memberId'].value, 
+        },
+      ]);
+    }
+    
+  }
+
+    
+
 }
