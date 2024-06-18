@@ -44,6 +44,7 @@ html, :root {
         }
         .sidebar-wrapper{
             width: var(--jlo-crm-sidebar-width,260px);
+            height: calc(100vh - 110px);
             .nav-link{
                 font-family: var(--mat-form-field-container-text-font);
             }
