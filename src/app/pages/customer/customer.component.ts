@@ -207,6 +207,8 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       }
 
     );
+    }else{
+      this.gotoMemberCustomerPage(customerType);
     }
     
   }

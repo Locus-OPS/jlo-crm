@@ -1,49 +1,73 @@
  
   
-    <div class="btn-group">   
+    <div class="btn-group">  
+
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-expanded="false"
         (click)="onInitConsultInfo();">
-        <i class="material-icons">contact_phone</i>
+        <i class="material-icons">support_agent</i>
         {{'consulting.header.text'|translate}} : 
-        <mat-label *ngIf="this.constInfoModel != null && this.constInfoModel.statusCd == '01'">{{'consulting.header.inprogress'|translate}} </mat-label>
+
+        <mat-label style="font-size: medium;" *ngIf="this.constInfoModel != null && this.constInfoModel.statusCd == '01'">{{'consulting.header.inprogress'|translate}} </mat-label>
         <mat-label *ngIf="this.constInfoModel == null">{{'consulting.header.available'|translate}} </mat-label>
+      
       </button>
      
       <div class="dropdown-menu dropdown-menu-right" width="200">    
-  
-        <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
-            <mat-form-field class="form-group">
-              <mat-label for="txtConsultingNumber">{{'consulting.header.number'|translate}}</mat-label>
-              <input matInput formControlName="consultingNumber" class="form-control" id="txtConsultingNumber" type="text" style="color: blue;">
-            </mat-form-field>
-  
-            <mat-form-field class="form-group">
-                  <mat-label for="txtStatus">{{'consulting.header.status'|translate}}</mat-label>
-              <input matInput formControlName="status" class="form-control" id="txtStatus" type="text" readonly  style="color: blue;">
-            </mat-form-field>
-  
-            <mat-form-field class="form-group">
-              <mat-label for="txtClient">{{'consulting.header.client'|translate}}</mat-label>
-              <input matInput formControlName="client" class="form-control" id="txtClient" type="text" readonly  style="color: blue;">
-            </mat-form-field>
-  
-            <mat-form-field class="form-group">
-              <mat-label for="ddChannel">{{'consulting.header.channel'|translate}}</mat-label>
-              <input matInput formControlName="channel" class="form-control" id="txtChannel" type="text" readonly style="color: blue;">
-            </mat-form-field>
-           
-            <mat-form-field class="form-group">
-              <mat-label for="txtContact">{{'consulting.header.contact'|translate}}</mat-label>
-              <input matInput formControlName="contact" class="form-control" id="txtContact" type="text" readonly style="color: blue;">
-            </mat-form-field>  
-  
-            <div class="pull-center">
-              <button mat-raised-button type="button" class="btn btn-primary" (click)="onStartConsulting()" *ngIf="this.constInfoModel == null">{{ 'consulting.header.start' | translate }}</button>
-              <button mat-raised-button type="button"  class="btn btn-fill btn-rose" (click)="onStopConsulting()" *ngIf="this.constInfoModel != null">{{ 'consulting.header.wrapup' | translate }}</button>
-            </div>       
-        </form>
-      </div>
-    </div>
+        <div mat-dialog-content class="flex-container">
+          <div class="main-content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">support_agent</i>
+                      </div>
+                      <h4 class="card-title">{{'consulting.header.info' | translate}}</h4>
+                    </div>
+                    <div class="card-body">
+                      <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
+                        <mat-form-field class="form-group">
+                          <mat-label for="txtConsultingNumber">{{'consulting.header.number'|translate}}</mat-label>
+                          <input matInput formControlName="consultingNumber" class="form-control" id="txtConsultingNumber" type="text" style="color: blue; font-size: medium;">
+                        </mat-form-field>
+              
+                        <mat-form-field class="form-group">
+                              <mat-label for="txtStatus">{{'consulting.header.status'|translate}}</mat-label>
+                          <input matInput formControlName="status" class="form-control" id="txtStatus" type="text" readonly  style="color: blue; font-size: medium;">
+                        </mat-form-field>
+              
+                        <mat-form-field class="form-group">
+                          <mat-label for="txtClient">{{'consulting.header.client'|translate}}</mat-label>
+                          <input matInput formControlName="client" class="form-control" id="txtClient" type="text" readonly  style="color: blue; font-size: medium;">
+                        </mat-form-field>
+              
+                        <mat-form-field class="form-group">
+                          <mat-label for="ddChannel">{{'consulting.header.channel'|translate}}</mat-label>
+                          <input matInput formControlName="channel" class="form-control" id="txtChannel" type="text" readonly style="color: blue; font-size: medium;">
+                        </mat-form-field>
+                       
+                        <mat-form-field class="form-group">
+                          <mat-label for="txtContact">{{'consulting.header.contact'|translate}}</mat-label>
+                          <input matInput formControlName="contact" class="form-control" id="txtContact" type="text" readonly style="color: blue; font-size: medium;">
+                        </mat-form-field>  
+              
+                        <div class="pull-center">
+                          <button mat-raised-button type="button" class="btn btn-primary" (click)="onStartConsulting()" *ngIf="this.constInfoModel == null">{{ 'consulting.header.start' | translate }}</button>
+                          <button mat-raised-button type="button"  class="btn btn-fill btn-rose" (click)="onStopConsulting()" *ngIf="this.constInfoModel != null">{{ 'consulting.header.wrapup' | translate }}</button>
+                        </div>       
+                    </form>
+                     </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>       
+        </div>
+      </div> 
+
+        
+    </div> 
   
   
      

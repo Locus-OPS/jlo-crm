@@ -12,6 +12,8 @@ import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.
 import { ConsultingService } from './consulting.service';
 import Utils from 'src/app/shared/utils';
 import { ModalConsultingComponent } from '../common/modal-consulting/modal-consulting.component';
+import { ConsultingModel } from './consulting.model';
+import { CaseStore } from '../case/case.store';
 
 @Component({
   selector: 'app-consulting',
@@ -24,15 +26,20 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
   searchForm: FormGroup;
 
 
-  displayedColumns: string[] = ["consultingNumber","channelName","customerName","title","statusName","startDate","endDate","ownerName","action"];
+  displayedColumns: string[] = ["consultingNumber","channelName","customerName","title"
+    ,"statusName"
+    ,"startDate"
+    ,"endDate"
+    ,"ownerName"
+    ,"action"];
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
 
-  searchFormSr: FormGroup;
-  selectedRow: any[];
+  searchFormCase: FormGroup;
+  selectedRow:  ConsultingModel;
   dataSourceSr: any[];
-  displayedColumnsSr: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
-
+  displayedColumnsCase: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
+  tableControlCase: TableControl = new TableControl(() => { this.searchCase(); });
   channelList: Dropdown[];
   statusList: Dropdown[];
 
@@ -43,6 +50,7 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     public globals: Globals,
     public formBuilder: FormBuilder,
     private consulting : ConsultingService,
+    private caseStore: CaseStore,
   ) {
     super(router, globals);
      
@@ -55,6 +63,7 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+
     this.searchForm = this.formBuilder.group({
       id: [""], 
       consultingNumber: [""], 
@@ -76,7 +85,8 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       customerId:[""],
       custNameDisplay:[""]
     });
-    this.searchFormSr = this.formBuilder.group({       
+
+    this.searchFormCase = this.formBuilder.group({   
       consultingNumber: [""],       
     });
     
@@ -183,9 +193,49 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       // this.animal = result;
     });
   }
-  onSelectRow(row) {
+
+  onSelectRow(row : ConsultingModel) {
     this.selectedRow = row;
-     
+
+    this.onSearchCase(row);     
+  }
+
+
+  onSearchCase(row?:any) {
+    this.selectedRow = row;
+   // this.tableControlCase.resetPage(); 
+    this.searchFormCase.patchValue({consultingNumber:this.selectedRow?.consultingNumber});
+    this.searchCase();   
+  }
+ 
+
+  searchCase() {     
+    const param = {
+      ...this.searchFormCase.getRawValue(),
+      sortColumn: this.tableControlCase.sortColumn,
+      sortDirection: this.tableControlCase.sortDirection,
+    };
+
+    this.consulting.getCaseUnderConsultingList({
+        pageSize: this.tableControlCase.pageSize,
+        pageNo: this.tableControlCase.pageNo,
+        data: param,
+      })
+      .then(
+        (result) => {
+          this.dataSourceSr = result.data;
+          this.tableControlCase.total = result.total;
+        },
+        (error) => {
+          Utils.alertError({
+            text: error.message,
+          });
+        }
+      );
+  }
+
+  onCaseEdit(e) {
+    this.caseStore.updateCaseDetail(e.caseNumber);
   }
 
 }

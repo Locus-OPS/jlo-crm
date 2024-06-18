@@ -24,4 +24,11 @@ export class ConsultingService {
   updateConsultingBindingCustomer(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/consulting/updateConsultingBindingCustomer', param);
   }
+
+  getCaseUnderConsultingList(param?: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/consulting/getCaseUnderConsultingList', param);
+  }
+
+ 
+
 }
