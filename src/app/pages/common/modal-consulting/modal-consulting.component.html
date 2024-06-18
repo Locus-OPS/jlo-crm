@@ -21,16 +21,24 @@
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.customer' | translate}}</mat-label> 
                         <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="customerName" readonly
-                          (click)="searchCustomer()">
+                          (click)="searchCustomer()" required>
                         <mat-icon matSuffix (click)="searchCustomer()">person</mat-icon>
-                        <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
+                        <mat-icon matSuffix (click)="removeCustomer()">remove_circle_outline</mat-icon>
+                        <mat-error *ngIf="createForm.controls['customerName'].hasError('required') && createForm.controls['customerId'].hasError('required')">
+                          {{ 'error.required' | translate }}
+                        </mat-error>
                       </mat-form-field>
+
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.owner' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="ownerName" readonly
-                          (click)="showOwner()">
+                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="consOwnerName" readonly
+                          (click)="showOwner()" required>
                         <mat-icon matSuffix (click)="showOwner()">person</mat-icon>
                         <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
+                        <mat-error *ngIf="createForm.controls['consOwnerName'].hasError('required') && createForm.controls['consOwnerId'].hasError('required')">
+                          {{ 'error.required' | translate }}
+                        </mat-error>
+
                       </mat-form-field>
 
                       <mat-form-field class="col-md-4">
@@ -45,6 +53,9 @@
                       <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.title' | translate}}</mat-label>    
                         <input matInput [placeholder]="'consulting.title' | translate" type="text" formControlName="title">
+                        <mat-error *ngIf="createForm.controls['title'].hasError('required')">
+                          {{ 'error.required' | translate }}
+                        </mat-error>
                       </mat-form-field>
                         <mat-form-field class="col-md-4">
                         <mat-label>{{'consulting.status' | translate}}</mat-label> 
@@ -76,10 +87,10 @@
                         </mat-form-field>
                     </div>
                     <app-created-by
-                    [createdBy]="createForm.controls['createdBy'].value"
-                    [createdDate]="createForm.controls['createdDate'].value"
-                    [updatedBy]="createForm.controls['updatedBy'].value"
-                    [updatedDate]="createForm.controls['updatedDate'].value">
+                      [createdBy]="createForm.controls['createdBy'].value"
+                      [createdDate]="createForm.controls['createdDate'].value"
+                      [updatedBy]="createForm.controls['updatedBy'].value"
+                      [updatedDate]="createForm.controls['updatedDate'].value">
                 </app-created-by>
                 </form> 
 

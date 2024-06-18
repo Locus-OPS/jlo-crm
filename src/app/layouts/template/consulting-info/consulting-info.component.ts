@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
@@ -37,7 +37,7 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
     private consultingInfo : ConsultingInfoService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,    
-    
+ 
     public globals: Globals) {
     super(router, globals);
   
@@ -120,15 +120,7 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
            this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData()) ; 
           // console.log(result.data);
            console.log(this.constInfoModel );
-           this.setValueConsultingInfo(this.constInfoModel);
-          //  this.consultingForm.patchValue({
-          //     status:this.constInfoModel.statusName
-          //    ,client:this.constInfoModel.customerName
-          //    ,channel:this.constInfoModel.channelName
-          //    ,contact:this.constInfoModel.contactName
-          // });
-
-          //this.consultingForm.patchValue({ customerId: result.customerId, customerDisplay: fullname });
+           this.setValueConsultingInfo(this.constInfoModel);       
         }
 
       },(err: any) => {
@@ -153,13 +145,11 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalConsultingComponent, {
       height: '85%',
       width: '80%',
-     // panelClass: 'my-dialog',
+      disableClose: true,
       data: {id:id,action:action }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
+      dialogRef.afterClosed().subscribe(result => {  
       if(result != undefined){
         if(result.statusCd != "01"){
           this.constInfoModel = null;

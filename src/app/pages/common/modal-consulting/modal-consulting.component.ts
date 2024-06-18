@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, OnInit } from '@angular/core';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
 import { CustomerModalService } from '../modal-customer/customer-modal-service.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalCustomerComponent } from '../modal-customer/modal-customer.component';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -55,19 +55,20 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
         statusCd: [""],
         startDate: [""],
         endDate: [""],
-        title: [""],
+        title:  new FormControl('',Validators.required),
         callingNumber: [""],
         callObjectId: [""],
-        ownerName:[""],
-        ownerId: [""],
         note: [""],
         consultingTypeCd: [""],
         contactId: [""],
-        agentState: [""],
-        reasonCode: [""],
+        
         consultingAction: [""],
-        customerId:[""],
-        customerName:[""],
+
+        consOwnerName: new FormControl(null,Validators.required),
+        consOwnerId: new FormControl(null,Validators.required),        
+        customerId: new FormControl('',Validators.required),
+        customerName: new FormControl('',Validators.required),  
+
         createdBy: [''],
         createdDate: [''],
         updatedBy: [''],
@@ -142,13 +143,13 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createForm.patchValue({ ownerId: result.id, ownerName: result.displayName });
+        this.createForm.patchValue({ consOwnerId: result.id, consOwnerName: result.displayName });
       }
     });
   }
 
   removeOwner() {
-    this.createForm.patchValue({ ownerId: '', ownerName: '' });
+    this.createForm.patchValue({ ownerId: null, consOwnerName: null });
   }
 
 
@@ -170,11 +171,16 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
   }
 
   removeCustomer() {
-    this.createForm.patchValue({ customerId: '', customerName: '' });
+    this.createForm.patchValue({ customerId: null, customerName: null});
   }
   
 
 onSaveConsulting(){ 
+  if(!this.createForm.valid){
+    this.createForm.markAllAsTouched();
+    return;
+  }
+
   let data = this.createForm.getRawValue(); 
 
   this.modalConsulting.updateConsulting({ data }).then((result: any) => {      
@@ -191,9 +197,12 @@ onSaveConsulting(){
            if(statusCd != "01"){
             //Remove data from sesstion storage
             ConsultingUtils.removeConsultingData();           
-            this.dialogRef.close(result.data);
-
+            // this.dialogRef.close(result.data);      
+           }else{
+            // this.dialogRef.close();
            }
+
+           this.dialogRef.close(result.data);   
 
         }else{
           setTimeout(() => {
