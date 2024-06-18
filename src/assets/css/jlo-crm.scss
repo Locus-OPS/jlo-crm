@@ -26,46 +26,10 @@ html, :root {
 .navbar-wrapper .navbar-brand, button.btn, .swal2-title, .swal2-html-container, .swal2-styled, .card-title{
     font-family: var(--mat-form-field-container-text-font);
 }
-.sidebar{
-    width: var(--jlo-crm-sidebar-width,260px);
-    .logo{
-        .logo-mini{
-            .logo-img{
-                img{
-                    width: 125px;
-                    top: 5px;
-                    left: 105px;
-                }
-            }
-        }
-    }
-    .sidebar-wrapper{
-        width: var(--jlo-crm-sidebar-width,260px);
-        .nav-link{
-            font-family: var(--mat-form-field-container-text-font);
-        }
-    }
-}
-.main-panel.ps{
-    width: calc(100% - calc(var(--jlo-crm-sidebar-width,260px) + 1px));
-    .main-content {
-        min-height: calc(100vh - 125px);
-    }
-}
 
-.sidebar-mini{
-    .logo{
-        .logo-mini{
-            .logo-img{
-                img{
-                    left: 2px;
-                    width: 76px;
-                    top: auto;
-                }
-            }
-        }
-    }
-    .sidebar:hover{
+@media (min-width: 992px){
+
+    .sidebar{
         width: var(--jlo-crm-sidebar-width,260px);
         .logo{
             .logo-mini{
@@ -85,8 +49,49 @@ html, :root {
             }
         }
     }
+    
     .main-panel.ps{
-        width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width,80px) + 1px));
+        width: calc(100% - calc(var(--jlo-crm-sidebar-width,260px) + 1px));
+        .main-content {
+            min-height: calc(100vh - 125px);
+        }
+    }
+
+    .sidebar-mini{
+        .logo{
+            .logo-mini{
+                .logo-img{
+                    img{
+                        left: 2px;
+                        width: 76px;
+                        top: auto;
+                    }
+                }
+            }
+        }
+        .sidebar:hover{
+            width: var(--jlo-crm-sidebar-width,260px);
+            .logo{
+                .logo-mini{
+                    .logo-img{
+                        img{
+                            width: 125px;
+                            top: 5px;
+                            left: 105px;
+                        }
+                    }
+                }
+            }
+            .sidebar-wrapper{
+                width: var(--jlo-crm-sidebar-width,260px);
+                .nav-link{
+                    font-family: var(--mat-form-field-container-text-font);
+                }
+            }
+        }
+        .main-panel.ps{
+            width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width,80px) + 1px));
+        }
     }
 }
 

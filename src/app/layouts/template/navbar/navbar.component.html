@@ -9,6 +9,9 @@
       </div>
       <a class="navbar-brand" href="{{getPath()}}">{{ navTitle?.title | translate:navTitle?.param }}</a>
     </div>
+    <div class="d-block d-lg-none mode-mobile">
+      <app-consulting-info> </app-consulting-info>
+    </div>
     <button mat-button class="navbar-toggler btn-no-ripple" type="button" (click)="sidebarToggle()">
       <span class="sr-only">Toggle navigation</span>
       <span class="navbar-toggler-icon icon-bar"></span>
