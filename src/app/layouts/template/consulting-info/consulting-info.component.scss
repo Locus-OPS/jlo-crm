@@ -1,4 +1,18 @@
 .pull-center {
-    float: center !important;
+  float: center !important;
+}
+
+.btn-group {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  button{    
+    margin-top: 1px;
+    margin-bottom: 0px;
   }
-  
+  .dropdown-menu{
+    form{
+      width: 400px;
+      max-width: 95vw;
+    }
+  }
+}
