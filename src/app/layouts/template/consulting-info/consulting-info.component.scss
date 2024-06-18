@@ -12,7 +12,22 @@
   .dropdown-menu{
     form{
       width: 400px;
-      max-width: 95vw;
+      max-width: 300px;
+    }
+  }
+}
+@media (max-width: 991px){
+  .btn-group{
+    .dropdown-menu-right{  
+      transform: translateX(-100px);
+      right: 0px !important;
+      left: 0px !important;
+      width: 80vw;
+      max-width: 300px;
+      form{
+        width: 80vw;
+        max-width: 300px;
+      }
     }
   }
 }
