@@ -44,13 +44,14 @@ html, :root {
         }
         .sidebar-wrapper{
             width: var(--jlo-crm-sidebar-width,260px);
+            height: calc(100vh - 110px);
             .nav-link{
                 font-family: var(--mat-form-field-container-text-font);
             }
         }
     }
     
-    .main-panel.ps{
+    .main-panel{
         width: calc(100% - calc(var(--jlo-crm-sidebar-width,260px) + 1px));
         .main-content {
             min-height: calc(100vh - 125px);
@@ -89,7 +90,7 @@ html, :root {
                 }
             }
         }
-        .main-panel.ps{
+        .main-panel{
             width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width,80px) + 1px));
         }
     }
