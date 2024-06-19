@@ -109,7 +109,7 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
     onStartConsulting(){
 
        this.spinner.show("approve_process_spinner");
-      const params   = {data:{'customerId':''}} 
+      const params   = {data:{'channelCd':'04'}} 
       this.consultingInfo.startWalkinConsulting(params).then((result:any)=>{
         this.spinner.hide("approve_process_spinner");
                    
