@@ -212,7 +212,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     }
     
   }
-  // this.router.navigate(['/customer/member'], { memberId:  this.createForm.controls['memberId'].value });
+  
 
   gotoMemberCustomerPage(customerType:string) {
 

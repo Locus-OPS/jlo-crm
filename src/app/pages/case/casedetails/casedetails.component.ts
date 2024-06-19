@@ -20,6 +20,9 @@ import { UserData } from '../../common/modal-user/modal-user'
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 import { AppStore } from 'src/app/shared/app.store';
 import { ModalCustomerComponent } from '../../common/modal-customer/modal-customer.component';
+import ConsultingUtils from 'src/app/shared/consultingStore';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ConsultingService } from '../../consulting/consulting.service';
 
 
 
@@ -75,7 +78,9 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private memberService: MemberService,
     public dialog: MatDialog,
     private tabParam: TabParam,
-    private appStore: AppStore
+    private appStore: AppStore,
+    private spinner: NgxSpinnerService,
+    private consultingService : ConsultingService,
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
@@ -99,6 +104,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   ngOnInit() {
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
+      consultingNumber:[''],
       type: ['', Validators.required],
       subType: ['', Validators.required],
       subject: ['', Validators.required],
@@ -162,6 +168,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   }
 
+ setConsultingCase(){
+  if(ConsultingUtils.getConsultingData() != null && ConsultingUtils.getConsultingData() != undefined){
+    const contData = JSON.parse(ConsultingUtils.getConsultingData());  
+    this.createForm.patchValue({ consultingNumber:contData.consultingNumber });    
+  }
+
+ }
+
+
   updateFormValue(detail: Case) {
     this.created = false;
     this.customerForm.patchValue(detail);
@@ -178,6 +193,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.submitted = false;
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
+    this.setConsultingCase();
+
   }
 
   getCaseDetailsTypeId(caseTypeId) {
@@ -314,10 +331,63 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       if (result) {
         this.custParam['customerId'] = result.customerId;
         this.getCustomerInfo(this.custParam);
+         let customerId = result.customerId;
+        //Binding Customer into Consulting
+        this.selectCustomerConsulting(customerId);
       }
     });
   }
 
+  selectCustomerConsulting(customerId:string){
+     
+    if(ConsultingUtils.getConsultingData() != null){
+     
+      const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
+      const params = {
+        data:{
+          consultingNumber:contData.consultingNumber,
+          customerId : customerId  ,
+          contactId : customerId 
+        }
+      };
+
+      this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {      
+      this.spinner.hide("approve_process_spinner");             
+        if (result.status) {         
+          console.log("Binding consulting into case")
+
+        }else{
+         
+         
+
+          setTimeout(() => {
+            this.spinner.hide("approve_process_spinner");
+          }, 1000);
+
+
+          if(result.message!=""){
+            Utils.alertError({
+              text: result.message,
+            });
+          }else{
+            Utils.alertError({
+              text: "Please try again later.",
+            });
+          }
+        }
+      },(err: any) => {
+        Utils.alertError({
+          text: err.message,
+        });
+      }
+
+    );
+    }else{
+        console.log("No Consulting ")
+    }   
+    
+  }
+  
   resetCustomer() {
     this.customerForm.reset();
     this.createForm.reset();

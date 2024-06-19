@@ -1,6 +1,9 @@
 html, :root {
-    --mat-form-field-container-height: 40px;
+    --mat-form-field-container-text-size:14px;
+    --mat-form-field-container-height: 30px;
     --mat-form-field-container-vertical-padding: 6px;
+    --mat-option-label-text-font: "Noto Sans Thai",Roboto, sans-serif;   
+    --mat-select-trigger-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-form-field-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-form-field-subscript-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-switch-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
@@ -14,7 +17,8 @@ html, :root {
     --mdc-icon-button-icon-size: 16px;
     --mat-dialog-container-max-width: 80vw;
     --mat-text-button-with-icon-horizontal-padding: 8px;
-    --jlo-crm-sidebar-width: 340px;
+    --jlo-crm-sidebar-width: 340px; 
+
 }
 
 .mat-mdc-select-placeholder {
