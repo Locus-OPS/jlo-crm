@@ -165,7 +165,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
 
   selectCustomerConsulting(customerType:string){
     
-    if(ConsultingUtils.getConsultingData() != null){
+    if(ConsultingUtils.isConsulting()){
       const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
       const params = {
         data:{

@@ -14,4 +14,12 @@ export default class ConsultingUtils {
   static removeConsultingData() {
     sessionStorage.removeItem(CONSULTING_KEY);
   }
+
+  public static  isConsulting(){
+    if(ConsultingUtils.getConsultingData() != null && ConsultingUtils.getConsultingData() != undefined){
+        return true;
+    }else{
+      return false;
+    }
+  }
 }

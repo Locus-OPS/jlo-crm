@@ -136,25 +136,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
     this.create();
 
-    if (this.tabParam.params.customerId) {
-      sessionStorage.removeItem('caseNumber');
-      this.getCustomerInfo(this.tabParam.params);
-      this.caseStore.clearCaseDetail();
-    } else {
-      if (sessionStorage.getItem('caseNumber')) {
-        this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
-      }
-      else {
-        this.caseStore.clearCaseDetail();
-      }
-      console.log('sessionStorage.getItem', sessionStorage.getItem('caseNumber'));
-      // this.route.params.subscribe(params => {
-      //   if (Object.entries(params).length != 0 && params.constructor === Object) {
-      //     this.getCustomerInfo(params);
-      //   }
-      // });
-    }
-
     this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
       if (detail) {
         sessionStorage.setItem('caseNumber', detail.caseNumber);
@@ -165,11 +146,61 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         this.create();
       }
     });
+    
 
+    if(ConsultingUtils.isConsulting()){
+
+      if (this.tabParam.params.customerId) {         
+          sessionStorage.removeItem('caseNumber');
+          this.getCustomerInfo(this.tabParam.params);
+          this.caseStore.clearCaseDetail();    
+      }else{  
+
+        console.log(this.caseStore.getCaseDetail());
+         
+        
+       
+        if (sessionStorage.getItem('caseNumber')) {
+          this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+        }else{
+          const contData = JSON.parse(ConsultingUtils.getConsultingData()) ;
+          this.custParam['customerId'] = contData.customerId;
+          this.getCustomerInfo(this.custParam); 
+          this.caseStore.clearCaseDetail();
+        }
+
+      }
+
+
+    }else{
+
+
+      if (this.tabParam.params.customerId) {
+          sessionStorage.removeItem('caseNumber');
+          this.getCustomerInfo(this.tabParam.params);
+          this.caseStore.clearCaseDetail();
+        //"from customer page"
+      } else {    
+          if (sessionStorage.getItem('caseNumber')) {
+            this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+            //"Case edit "
+          } else {
+            //"clearCaseDetail"
+            this.caseStore.clearCaseDetail();
+          }
+        console.log('sessionStorage.getItem', sessionStorage.getItem('caseNumber'));
+      }
   }
 
+
+
+      // alert("ConsultingUtils : "+ConsultingUtils.isConsulting());
+  }
+
+
+
  setConsultingCase(){
-  if(ConsultingUtils.getConsultingData() != null && ConsultingUtils.getConsultingData() != undefined){
+  if(ConsultingUtils.isConsulting()){
     const contData = JSON.parse(ConsultingUtils.getConsultingData());  
     this.createForm.patchValue({ consultingNumber:contData.consultingNumber });    
   }
@@ -340,7 +371,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   selectCustomerConsulting(customerId:string){
      
-    if(ConsultingUtils.getConsultingData() != null){
+    if(ConsultingUtils.isConsulting()){
      
       const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
       const params = {
