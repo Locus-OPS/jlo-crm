@@ -207,7 +207,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     const contData = JSON.parse(ConsultingUtils.getConsultingData());  
     this.createForm.patchValue({ consultingNumber:contData.consultingNumber });    
     this.createForm.patchValue({ channel:contData.channelCd});    
-    alert(contData.channelCd);
+    //alert(contData.channelCd);
   }
 
  }
