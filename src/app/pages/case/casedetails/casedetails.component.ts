@@ -146,27 +146,30 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         this.create();
       }
     });
-    
+
 
     if(ConsultingUtils.isConsulting()){
 
       if (this.tabParam.params.customerId) {         
           sessionStorage.removeItem('caseNumber');
           this.getCustomerInfo(this.tabParam.params);
-          this.caseStore.clearCaseDetail();    
-      }else{  
+          this.caseStore.clearCaseDetail();   
 
-        console.log(this.caseStore.getCaseDetail());
-         
-        
+      }else{  
        
         if (sessionStorage.getItem('caseNumber')) {
           this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
         }else{
           const contData = JSON.parse(ConsultingUtils.getConsultingData()) ;
-          this.custParam['customerId'] = contData.customerId;
-          this.getCustomerInfo(this.custParam); 
+          if(contData.customerId != null && contData.customerId != undefined){
+
+            this.custParam['customerId'] = contData.customerId;
+            this.getCustomerInfo(this.custParam); 
+          }
+ 
           this.caseStore.clearCaseDetail();
+          this.setConsultingCase();
+
         }
 
       }
@@ -203,6 +206,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   if(ConsultingUtils.isConsulting()){
     const contData = JSON.parse(ConsultingUtils.getConsultingData());  
     this.createForm.patchValue({ consultingNumber:contData.consultingNumber });    
+    this.createForm.patchValue({ channel:contData.channelCd });    
   }
 
  }
@@ -224,7 +228,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.submitted = false;
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
-    this.setConsultingCase();
+    
 
   }
 
