@@ -229,7 +229,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       this.router.navigate([
         "/customer/customer",
         {
-          memberId:  this.createForm.controls['memberId'].value, 
+          customerId:  this.createForm.controls['customerId'].value, 
         },
       ]);
     }

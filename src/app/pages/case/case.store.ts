@@ -23,12 +23,22 @@ export class CaseStore {
       data: caseNumber
     }).then(result => {
       if (result.status) {
+        console.log("updateCaseDetail1")
+       
+       // console.log("result.data.caseNumber"+result.data.caseNumber)
+       // console.log("updateCaseDetail2")
+       if(result.data != undefined){
+        sessionStorage.setItem('caseNumber',result.data.caseNumber);
         this.caseDetailSubject.next(result.data);
+       }
+      
+
       }
     });
   }
 
   clearCaseDetail() {
+    sessionStorage.removeItem('caseNumber'); 
     this.caseDetailSubject.next(null);
   }
 }

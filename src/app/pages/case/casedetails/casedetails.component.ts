@@ -65,6 +65,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   caseDetailSubscription: Subscription;
 
+  mode : string = '';
+
   constructor(
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
@@ -97,11 +99,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   }
 
   ngOnDestroy() {
+    console.log("ngOnDestroy");
     this.caseDetailSubscription.unsubscribe();
     sessionStorage.removeItem('caseNumber');
   }
 
   ngOnInit() {
+
+  
+    
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
       consultingNumber:[''],
@@ -134,32 +140,47 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       email: [''],
     });
 
+  
+     
+    
+
+
     this.create();
 
     this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
+      console.log("caseDetailSubscription");
+      console.log(detail);
       if (detail) {
+        
         sessionStorage.setItem('caseNumber', detail.caseNumber);
         this.updateFormValue(detail);
-      }
-      else {
+        console.log("update from value session caseNumber"+sessionStorage.getItem('caseNumber'));
+      } else {
+        console.log("resetCustomer")
         this.resetCustomer();
         this.create();
       }
     });
 
 
-    if(ConsultingUtils.isConsulting()){
+    if(ConsultingUtils.isConsulting()){      
 
       if (this.tabParam.params.customerId) {         
           sessionStorage.removeItem('caseNumber');
           this.getCustomerInfo(this.tabParam.params);
           this.caseStore.clearCaseDetail();   
-
+          this.setConsultingCase();
       }else{  
-       
-        if (sessionStorage.getItem('caseNumber')) {
-          this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+
+        console.log("Session Casenumber : "+sessionStorage.getItem('caseNumber'));
+        if (sessionStorage.getItem('caseNumber') != null ) {
+      
+          //this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+          console.log("ngOnInit updateCaseDetail");
+         
         }else{
+
+          //alert("new from case");
           const contData = JSON.parse(ConsultingUtils.getConsultingData()) ;
           if(contData.customerId != null && contData.customerId != undefined){
 
@@ -184,14 +205,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
           this.caseStore.clearCaseDetail();
         //"from customer page"
       } else {    
+          console.log("195 else sessionStorage.getItem('caseNumber') "+sessionStorage.getItem('caseNumber'))
           if (sessionStorage.getItem('caseNumber')) {
+
             this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
             //"Case edit "
           } else {
             //"clearCaseDetail"
             this.caseStore.clearCaseDetail();
-          }
-        console.log('sessionStorage.getItem', sessionStorage.getItem('caseNumber'));
+          }        
       }
   }
 
@@ -200,7 +222,20 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       // alert("ConsultingUtils : "+ConsultingUtils.isConsulting());
   }
 
+//  isCaseModeCreateUpdate(){
 
+//   const params = this.route.firstChild.snapshot.params;
+//   if(params != undefined && params != null){
+//       if(params.mode == 'create'){
+//             return true;
+//       }else{
+//           return false;
+//       }
+//   }else{
+//     return true;
+//   }
+
+//  }
 
  setConsultingCase(){
   if(ConsultingUtils.isConsulting()){
@@ -214,6 +249,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
   updateFormValue(detail: Case) {
+    console.log("227 updateFormValue");
+    console.log(detail);
     this.created = false;
     this.customerForm.patchValue(detail);
     this.createForm.patchValue(detail);
@@ -239,6 +276,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   }
 
   resetForm() {
+    console.log("resetForm ")
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
     if (sessionStorage.getItem('caseNumber')) {

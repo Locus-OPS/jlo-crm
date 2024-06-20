@@ -195,15 +195,17 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       registrationChannel:new UntypedFormControl({value: '', disabled: true}),
       registrationStore:new UntypedFormControl({value: '', disabled: true}),
       remark:[''],
-      createdBy:[''],
-      createdDate:[''],
-      updatedBy:[''],
-      updatedDate:[''],
+     
       programId:[''],
       programName:new UntypedFormControl({value: '', disabled: true}),
       currentPoint:[''],
       pointExpireThisYear:[''],
       lastCalculatedDate:new UntypedFormControl({value: '', disabled: true}),
+
+      createdBy:new UntypedFormControl({value: '', disabled: true}),
+      createdDate:new UntypedFormControl({value: '', disabled: true}),
+      updatedBy:new UntypedFormControl({value: '', disabled: true}),
+      updatedDate:new UntypedFormControl({value: '', disabled: true}),
     });
 
     this.cardForm = this.formBuilder.group({
@@ -322,7 +324,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
         this.memberForm.patchValue(result.data.memberCardNoData);
         this.memberForm.patchValue({ 'updatedBy':  result.data.updatedBy});
         this.memberForm.patchValue({ 'updatedDate':  result.data.updatedDate});
-
+        this.memberForm.patchValue({ 'createdBy':  result.data.createdBy});
+        this.memberForm.patchValue({ 'createdDate':  result.data.createdDate});
         this.changeMemberType(this.memberForm.controls['memberType'].value);
 
         if(result.data.memberPointData){
