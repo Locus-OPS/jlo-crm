@@ -1,6 +1,11 @@
 <div class="row pull-right">
-  <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.expandAll()"><fa-icon [icon]="['fas', 'plus-circle']" size="lg"></fa-icon></a>
-  <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.collapseAll()"><fa-icon [icon]="['fas', 'minus-circle']" size="lg"></fa-icon></a>
+  <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.expandAll()">
+    <fa-icon [icon]="['fas', 'plus-circle']" size="lg"></fa-icon>
+
+  </a>
+  <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.collapseAll()">
+    <fa-icon [icon]="['fas', 'minus-circle']" size="lg"></fa-icon>
+  </a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
 <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="mat-elevation-z2" style="min-height: 500px;">
@@ -20,9 +25,9 @@
   <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
       (contextmenu)="onContextMenu($event, node)">
-      <mat-icon class="mat-icon-rtl-mirror">
+      <mat-icon class="mat-icon-rtl-mirror yellow-icon">
         {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
-      </mat-icon>
+      </mat-icon>      
       {{node.name}}
     </button>
   </mat-tree-node>

@@ -14,10 +14,15 @@ html, :root {
     --mat-mdc-select-placeholder-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-tree-node-text-font: "Noto Sans Thai",Roboto, sans-serif;
     --mat-expansion-header-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mdc-icon-button-icon-size: 16px;
+    --mdc-icon-button-icon-size: 14px;
     --mat-dialog-container-max-width: 80vw;
     --mat-text-button-with-icon-horizontal-padding: 8px;
-    --jlo-crm-sidebar-width: 340px; 
+    --jlo-crm-sidebar-width:340px; 
+
+    --mat-toolbar-title-text-font : "Noto Sans Thai",Roboto, sans-serif;
+    --mat-tree-node-text-size: 12px;
+    --mat-tree-node-text-weight: 400;
+    --mat-tree-node-min-height: 48px;
 
 }
 
