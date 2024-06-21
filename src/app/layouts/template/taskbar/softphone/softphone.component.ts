@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import { SoftphoneService } from "./softphone.service";
 import { AgentStatus } from "./softphone.model";
 import { Router } from "@angular/router";
+import Utils from "src/app/shared/utils";
+import { CustomerService } from "src/app/pages/customer/customer.service";
 
 @Component({
   selector: "app-softphone-cmp",
@@ -15,6 +17,7 @@ export class SoftphoneComponent implements OnInit {
   status: AgentStatus = { status: "", subStatus: "" };
 
   constructor(
+    private customerService : CustomerService,
     private softphoneService: SoftphoneService,
     private router: Router
   ) {}
@@ -30,10 +33,78 @@ export class SoftphoneComponent implements OnInit {
     return status.status + (status.subStatus ? ` - ${status.subStatus}` : "");
   }
 
+  /**
+   * 
+   * @param message 
+   */
   handleScreenPop(message) {
     this.isOpen = true;
-    this.router.navigate(["/customer/member", { memberId: 103 }]);
+    // TODO Call Customer service search by phone no
+    console.log("Begin handleScreenPop");
+    console.log(message);
+    console.log("End handleScreenPop");
+    if(message.data.interactionId.ani != null && message.data.interactionId.ani != undefined){
+      let ani = message.data.interactionId.ani;
+      let phoneNo = Utils.replaceThCodePhoneNo(ani);
+      console.log("ANI PHONE NO :"+phoneNo);
+      this.getCustomerByPhoneNo(phoneNo);
+    }else{
+      this.router.navigate(["/customer"]);
+    }
+    
+    //this.router.navigate(["/customer/member", { memberId: 103 }]);
+
   }
+
+ 
+  /**
+   * 1.เจอ คนเดียวจังๆ ให้ไปหน้า customer detail / member detail 
+      2.เจอหลายคน ให้มาที่หน้า customer list 
+      3 ถ้าไม่เจอ ให้มาที่หน้า customer list 
+    * @param phoneNo 
+    */
+  getCustomerByPhoneNo(phoneNo:string){
+    const param = {
+      phoneNo : phoneNo
+    };
+    this.customerService.getCustomerByPhoneNo({
+      data: param
+    }).then(result => {
+      if (result.status) {
+        if (result.data.length == 0 || result.data.length > 1) {
+          this.router.navigate(["/customer"]);
+        } else {
+            this.gotoMemberCustomerPage(result.data.isMemberFlag,result.data.memberId,result.data.customerId,phoneNo);  
+        }
+      } else {
+        Utils.alertError({
+          text: 'Please, try again later',
+        });
+      }
+    }, error => {
+      Utils.alertError({
+        text: 'Please, try again later',
+      });
+    });
+  }
+  /**
+   * 
+   * @param isMemberFlag 
+   * @param memberId 
+   * @param customerId 
+   */
+  gotoMemberCustomerPage(isMemberFlag:boolean,memberId:string,customerId:string,phoneNo:string) {
+    if(isMemberFlag){
+      this.router.navigate([
+         "/customer/member", {memberId:memberId,phoneNo:phoneNo},
+      ]);
+    }else{     
+      this.router.navigate([
+        "/customer/customer", {customerId:customerId,phoneNo:phoneNo},
+      ]);
+    }    
+  }
+
 
   handleUserActionSubscription(message) {
     if (message.data.category == "status") {
@@ -50,6 +121,14 @@ export class SoftphoneComponent implements OnInit {
         state: message.data.interaction.state,
         interaction: message.data.interaction,
       });
+  // TOD Check message.data.interaction.state == 'CONNECTED'
+      /**
+       * if(CONNECTED)
+       * 1. Insert consulting 
+       * 2. open modal consulting
+       * 
+       */
+
     }
   }
 

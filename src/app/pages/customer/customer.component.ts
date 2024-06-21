@@ -13,6 +13,7 @@ import { ModalConsultingService } from '../common/modal-consulting/modal-consult
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConsultingService } from '../consulting/consulting.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
+import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 
 @Component({
   selector: 'app-customer',
@@ -53,6 +54,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       public globals:Globals,
       private consultingService : ConsultingService,
       private spinner: NgxSpinnerService,
+      private tabParam: TabParam,
      ) { 
     super(router,globals);
     this.api.getMultipleCodebookByCodeType({
@@ -75,7 +77,9 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       citizenId: [''],
       passportNo: [''],
       memberCardNo: [''],
+      phoneNo: [''],
     });
+    this.defaultCriteriaSearchFromOtherPage();
 
     this.createForm = this.formBuilder.group({
       memberId:[''],
@@ -113,6 +117,14 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     this.onSearch();
 
     this.CHECK_FORM_PERMISSION(this.createForm);
+    
+  }
+
+  defaultCriteriaSearchFromOtherPage(){
+    if(this.tabParam.params.phoneNo != null && this.tabParam.params.phoneNo != undefined){ 
+      this.searchForm.patchValue({ phoneNo:this.tabParam.params.phoneNo});    
+    }
+  
   }
 
   onSearch() {

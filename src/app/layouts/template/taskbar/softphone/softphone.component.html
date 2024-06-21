@@ -1,5 +1,9 @@
 <div class="container">
+  
   <div class="form-container" [ngClass]="{'show': isOpen, 'hidden': !isOpen}">
-    <iframe class="genesys-frame" allow="camera *; microphone *" src="https://apps.mypurecloud.jp/crm/embeddableFramework.html"></iframe>
+    <!-- <button (click)="getCustomerByPhoneNo('+66800052636')"
+    mat-raised-button class="btn btn-fill btn-default"> getCustomerByPhoneNo </button> -->
+     <iframe class="genesys-frame" allow="camera *; microphone *" src="https://apps.mypurecloud.jp/crm/embeddableFramework.html"></iframe>
   </div>
+   
 </div>

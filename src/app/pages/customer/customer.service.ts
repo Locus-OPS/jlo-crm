@@ -70,4 +70,8 @@ export class CustomerService {
   getCustomerCaseList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/customer/getCustomerCaseList', param);
   }
+
+  getCustomerByPhoneNo(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/customer/getCustomerByPhoneNo', param);
+  }
 }

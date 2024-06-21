@@ -320,4 +320,9 @@ export default class Utils {
     }
 }
 
+
+  static replaceThCodePhoneNo(ani:string){    
+    return ani.replace("+66","0");
+  } 
+
 }
