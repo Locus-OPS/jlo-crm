@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { SoftphoneComponent } from './softphone.component';
+import { TaskbarComponent } from './taskbar.component';
+import { SoftphoneComponent } from './softphone/softphone.component';
 
 @NgModule({
   imports: [
@@ -10,8 +11,8 @@ import { SoftphoneComponent } from './softphone.component';
     CommonModule,
     TranslateModule
   ],
-  declarations: [SoftphoneComponent],
-  exports: [SoftphoneComponent]
+  declarations: [TaskbarComponent, SoftphoneComponent],
+  exports: [TaskbarComponent, SoftphoneComponent]
 })
 
-export class SoftphoneModule { }
+export class TaskbarModule { }

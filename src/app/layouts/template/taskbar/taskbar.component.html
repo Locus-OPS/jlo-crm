@@ -1,0 +1,10 @@
+<div class="taskbar">
+  <div class="items">
+    <div class="item-left">
+      <a href="javascript:void(0)" (click)="toggleSoftphone()" [ngClass]="{'open' : isSoftphoneOpen}"><i class="material-icons phone-icon">phone</i>&nbsp;&nbsp;Phone</a>
+    </div>
+  </div>
+</div>
+
+
+<app-softphone-cmp [isOpen]="isSoftphoneOpen"></app-softphone-cmp>

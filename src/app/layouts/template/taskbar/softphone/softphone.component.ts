@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { SoftphoneService } from "./softphone.service";
 import { AgentStatus } from "./softphone.model";
 import { Router } from "@angular/router";
@@ -9,10 +9,15 @@ import { Router } from "@angular/router";
   styleUrls: ["./softphone.component.scss"],
 })
 export class SoftphoneComponent implements OnInit {
+  @Input()
   isOpen = false;
+
   status: AgentStatus = { status: "", subStatus: "" };
 
-  constructor(private softphoneService: SoftphoneService, private router: Router) {}
+  constructor(
+    private softphoneService: SoftphoneService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.softphoneService.getAgentStatus().subscribe((status) => {
@@ -21,12 +26,13 @@ export class SoftphoneComponent implements OnInit {
     this.initEventListener();
   }
 
-  toggle() {
-    this.isOpen = !this.isOpen;
-  }
-
   getDisplayAgentStatus(status: AgentStatus) {
     return status.status + (status.subStatus ? ` - ${status.subStatus}` : "");
+  }
+
+  handleScreenPop(message) {
+    this.isOpen = true;
+    this.router.navigate(["/customer/member", { memberId: 103 }]);
   }
 
   handleUserActionSubscription(message) {
@@ -38,9 +44,13 @@ export class SoftphoneComponent implements OnInit {
     }
   }
 
-  handleScreenPop(message) {
-    this.isOpen = true;
-    this.router.navigate(["/customer/member", { memberId: 103 }]);
+  handleInteractionSubscription(message) {
+    if (["connect", "disconnect"].includes(message.data.category)) {
+      this.softphoneService.setInteractionStatus({
+        state: message.data.interaction.state,
+        interaction: message.data.interaction,
+      });
+    }
   }
 
   initEventListener() {
@@ -53,9 +63,10 @@ export class SoftphoneComponent implements OnInit {
       if (message) {
         if (message.type == "screenPop") {
           this.handleScreenPop(message);
-        }
-        else if (message.type == "userActionSubscription") {
+        } else if (message.type == "userActionSubscription") {
           this.handleUserActionSubscription(message);
+        } else if (message.type == "interactionSubscription") {
+          this.handleInteractionSubscription(message);
         }
         // if(message.type == "screenPop"){
         //     document.getElementById("screenPopPayload").value = event.data;
@@ -77,7 +88,6 @@ export class SoftphoneComponent implements OnInit {
     });
   }
 }
-
 
 /*
 
@@ -147,13 +157,74 @@ Example of message from PureCloud:
 }
 
 {
-    "type": "notificationSubscription",
-    "data": {
-        "category": "interactionSelection",
-        "data": {
-            "interactionId": "cd66ba23-5490-4510-8f9e-d67393d44feb"
-        }
-    }
+  "type": "interactionSubscription",
+  "data": {
+      "category": "connect",
+      "interaction": {
+          "id": "d79419ab-91e8-4feb-ab98-58fe4b1127dd",
+          "connectedTime": "2024-06-21T04:08:39.708Z",
+          "phone": "tel:+66819994972",
+          "name": "0819994972",
+          "isConnected": true,
+          "isDisconnected": false,
+          "isDone": false,
+          "state": "CONNECTED",
+          "isCallback": false,
+          "isDialer": false,
+          "isChat": false,
+          "isEmail": false,
+          "isMessage": false,
+          "isVoicemail": false,
+          "remoteName": "0819994972",
+          "recordingState": "active",
+          "securePause": false,
+          "displayAddress": "+66819994972",
+          "queueName": "1-CX-DEMO",
+          "ani": "+66819994972",
+          "calledNumber": "+6624300023",
+          "totalIvrDurationSeconds": 3,
+          "direction": "Inbound",
+          "isInternal": false,
+          "startTime": "2024-06-21T04:08:26.092Z"
+      }
+  }
+}
+
+{
+  "type": "interactionSubscription",
+  "data": {
+      "category": "disconnect",
+      "interaction": {
+          "id": "d79419ab-91e8-4feb-ab98-58fe4b1127dd",
+          "connectedTime": "2024-06-21T04:08:39.708Z",
+          "endTime": "2024-06-21T04:08:43.413Z",
+          "phone": "tel:+66819994972",
+          "name": "0819994972",
+          "isConnected": false,
+          "isDisconnected": true,
+          "isDone": false,
+          "state": "DISCONNECTED",
+          "isCallback": false,
+          "isDialer": false,
+          "isChat": false,
+          "isEmail": false,
+          "isMessage": false,
+          "isVoicemail": false,
+          "remoteName": "0819994972",
+          "recordingState": "none",
+          "securePause": false,
+          "displayAddress": "+66819994972",
+          "queueName": "1-CX-DEMO",
+          "ani": "+66819994972",
+          "calledNumber": "+6624300023",
+          "interactionDurationSeconds": 4,
+          "totalIvrDurationSeconds": 3,
+          "totalAcdDurationSeconds": 11,
+          "direction": "Inbound",
+          "isInternal": false,
+          "startTime": "2024-06-21T04:08:26.092Z"
+      }
+  }
 }
 
 */
