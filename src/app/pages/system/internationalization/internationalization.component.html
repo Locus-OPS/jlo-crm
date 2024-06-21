@@ -16,11 +16,11 @@
                   <div class="row">
                     <mat-form-field class="col-md-6">
                       <mat-label>{{'i18n.msgCode' | translate}}</mat-label>
-                      <input matInput [placeholder]="'i18n.msgCode' | translate" type="text" formControlName="msgCode">
+                      <input matInput type="text" formControlName="msgCode">
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                       <mat-label>{{'i18n.msgValue' | translate}}</mat-label>
-                      <input matInput [placeholder]="'i18n.msgValue' | translate" type="text" formControlName="msgValue">
+                      <input matInput type="text" formControlName="msgValue">
                     </mat-form-field>
                   </div>
                   <div class="pull-right">
@@ -71,7 +71,7 @@
                       <div class="row">
                         <mat-form-field class="col-md-12">
                           <mat-label>{{'i18n.msgCode' | translate}}</mat-label>
-                          <input matInput [placeholder]="'i18n.msgCode' | translate" type="text" formControlName="msgCode">
+                          <input matInput type="text" formControlName="msgCode">
                           <mat-error *ngIf="createForm.controls['msgCode'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
@@ -79,7 +79,7 @@
                         <ng-container formArrayName="langs">
                           <mat-form-field class="col-md-12" *ngFor="let lang of formArray.controls; let i=index;">
                             <mat-label>{{tmpList[i]}}</mat-label>
-                            <input matInput [placeholder]="tmpList[i]" [formControlName]="i">
+                            <input matInput [formControlName]="i">
                             <mat-error *ngIf="formArray.controls[i].hasError('required')">
                               {{ 'error.required' | translate }}
                             </mat-error>
