@@ -12,10 +12,12 @@ a.treeControlBtn {
 }
 
 mat-tree-node {
-  white-space: nowrap;
-
   .mat-mdc-icon-button {
     // font-size: 14px;
+    width: 100%;
+    text-align: left;
+    height: fit-content;
+    border-radius: 0%;
 
     mat-icon {
       padding-top: 4px;
@@ -26,4 +28,7 @@ mat-tree-node {
 .yellow-icon {
   color: rgb(182, 247, 79);
 }
- 
+
+::ng-deep.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+  border-radius: 0%;
+}

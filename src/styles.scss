@@ -213,6 +213,10 @@ mat-tooltip-component::after {
   }
 }
 
+// adjust form field style
+.mat-mdc-form-field {
+  margin-top: 12px;
+}
 
 /* input ia cg style */
 mat-form-field.mat-form-field-appearance-legacy{
