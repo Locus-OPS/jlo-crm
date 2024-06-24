@@ -30,5 +30,5 @@ mat-tree-node {
 }
 
 ::ng-deep.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
-  border-radius: 0%;
+  border-radius: 0% !important;
 }

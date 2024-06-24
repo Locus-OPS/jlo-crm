@@ -3,13 +3,13 @@
     <div class="row">
         <mat-form-field class="col-md-12">
             <mat-label>{{translatePrefix + '.url' | translate}}</mat-label>
-            <input formControlName="url" matInput [placeholder]="translatePrefix + '.url' | translate" type="text" maxlength="500" />
+            <input formControlName="url" matInput type="text" maxlength="500" />
         </mat-form-field>
     </div>
     <div class="row">
         <mat-form-field class="col-md-12">
             <mat-label>{{translatePrefix + '.description' | translate}}</mat-label>
-            <textarea [disabled]="!kbDetail" formControlName="description" matInput [placeholder]="translatePrefix + '.description' | translate" type="text"
+            <textarea [disabled]="!kbDetail" formControlName="description" matInput type="text"
                 rows="5" maxlength="2000"></textarea>
         </mat-form-field>
     </div>

@@ -43,7 +43,7 @@
         <mat-form-field class="col-md-12">
           <mat-label>{{'document.file' | translate}}</mat-label>
           <input type="file" hidden #fileUpload (change)="selectFile($event)">
-          <input disabled formControlName="fileName" matInput [placeholder]="'document.file' | translate" type="text" maxlength="200" readonly />
+          <input disabled formControlName="fileName" matInput type="text" maxlength="200" readonly />
           <button type="button" *ngIf="kbDetail" matSuffix mat-button (click)="fileUpload.click()" class="file-icon">
             <mat-icon>attachment</mat-icon>
           </button>
@@ -56,7 +56,7 @@
         </mat-form-field>
         <mat-form-field class="col-md-12">
           <mat-label>{{'document.description' | translate}}</mat-label>
-          <textarea [disabled]="!kbDetail" formControlName="descp" matInput [placeholder]="'document.description' | translate" type="text"
+          <textarea [disabled]="!kbDetail" formControlName="descp" matInput type="text"
             rows="5" maxlength="2000"></textarea>
         </mat-form-field>
       </div>
