@@ -218,6 +218,10 @@ mat-tooltip-component::after {
   margin-top: 12px;
 }
 
+.mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper {
+  padding: 0px !important;
+}
+
 /* input ia cg style */
 mat-form-field.mat-form-field-appearance-legacy{
   &.required-white{
