@@ -1,51 +1,52 @@
-<div class="row pull-right">
+<div class="treeControl">
   <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.expandAll()">
     <fa-icon [icon]="['fas', 'plus-circle']" size="lg"></fa-icon>
-
   </a>
   <a class="treeControlBtn" href="Javascript:void();" (click)="tree.treeControl.collapseAll()">
     <fa-icon [icon]="['fas', 'minus-circle']" size="lg"></fa-icon>
   </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="mat-elevation-z2" style="min-height: 500px;">
+<mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="mat-elevation-z2" style="min-height: 500px">
   <!-- This is the tree node template for leaf nodes -->
-  <mat-tree-node *matTreeNodeDef="let node" [ngClass]="{ 'background-highlight': activeNode === node }"
-     matTreeNodePadding>
+  <mat-tree-node *matTreeNodeDef="let node" [ngClass]="{ 'background-highlight': activeNode === node }" matTreeNodePadding>
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button (click)="selectNode(node)" (contextmenu)="onContextMenu($event, node)">
       <fa-icon class="fa-icon" *ngIf="node.icon == 'file'" [icon]="['far', 'file']" size="lg"></fa-icon>
       <fa-icon class="fa-icon" *ngIf="node.icon == 'file-excel'" [icon]="['far', 'file-excel']" size="lg"></fa-icon>
       <fa-icon class="fa-icon" *ngIf="node.icon == 'file-image'" [icon]="['far', 'file-image']" size="lg"></fa-icon>
       &nbsp;
-      {{node.name}}
+      {{ node.name }}
     </button>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
-      (contextmenu)="onContextMenu($event, node)">
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (contextmenu)="onContextMenu($event, node)">
       <mat-icon class="mat-icon-rtl-mirror yellow-icon">
-        {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
-      </mat-icon>      
-      {{node.name}}
+        {{ treeControl.isExpanded(node) ? 'folder_open' : 'folder' }}
+      </mat-icon>
+      {{ node.name }}
     </button>
   </mat-tree-node>
 </mat-tree>
-<div style="visibility: hidden; position: fixed"
-    [style.left]="contextMenuPosition.x"
-    [style.top]="contextMenuPosition.y"
-    [matMenuTriggerFor]="contextMenu">
-</div>
+<div
+  style="visibility: hidden; position: fixed"
+  [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y"
+  [matMenuTriggerFor]="contextMenu"
+></div>
 <mat-menu #contextMenu="matMenu">
-	<ng-template matMenuContent let-item="item">
-		<button mat-menu-item *ngIf="folder" (click)="createFolder(item)">{{ translatePrefix + '.createFolder' | translate }}</button>
-		<button mat-menu-item *ngIf="!rootFolder && folder" (click)="updateFolder(item)">{{ translatePrefix + '.updateFolder' | translate }}</button>
-		<button *ngIf="!rootFolder && folder" mat-menu-item (click)="removeFolder(item)">{{ translatePrefix + '.removeFolder' | translate }}</button>
-		<button mat-menu-item *ngIf="folder && !rootFolder && !firstFolder" (click)="moveUpFolder(item)">{{ translatePrefix + '.moveUpFolder' | translate }}</button>
-		<button mat-menu-item *ngIf="folder && !rootFolder && !lastFolder" (click)="moveDownFolder(item)">{{ translatePrefix + '.moveDownFolder' | translate }}</button>
-		<button mat-menu-item *ngIf="!folder" (click)="removeFile(item)">{{ translatePrefix + '.removeFile' | translate }}</button>
-		<button mat-menu-item *ngIf="!folder && !firstFile" (click)="moveUpFile(item)">{{ translatePrefix + '.moveUpFolder' | translate }}</button>
-		<button mat-menu-item *ngIf="!folder && !lastFile" (click)="moveDownFile(item)">{{ translatePrefix + '.moveDownFolder' | translate }}</button>
+  <ng-template matMenuContent let-item="item">
+    <button mat-menu-item *ngIf="folder" (click)="createFolder(item)">{{ translatePrefix + '.createFolder' | translate }}</button>
+    <button mat-menu-item *ngIf="!rootFolder && folder" (click)="updateFolder(item)">{{ translatePrefix + '.updateFolder' | translate }}</button>
+    <button *ngIf="!rootFolder && folder" mat-menu-item (click)="removeFolder(item)">{{ translatePrefix + '.removeFolder' | translate }}</button>
+    <button mat-menu-item *ngIf="folder && !rootFolder && !firstFolder" (click)="moveUpFolder(item)">
+      {{ translatePrefix + '.moveUpFolder' | translate }}
+    </button>
+    <button mat-menu-item *ngIf="folder && !rootFolder && !lastFolder" (click)="moveDownFolder(item)">
+      {{ translatePrefix + '.moveDownFolder' | translate }}
+    </button>
+    <button mat-menu-item *ngIf="!folder" (click)="removeFile(item)">{{ translatePrefix + '.removeFile' | translate }}</button>
+    <button mat-menu-item *ngIf="!folder && !firstFile" (click)="moveUpFile(item)">{{ translatePrefix + '.moveUpFolder' | translate }}</button>
+    <button mat-menu-item *ngIf="!folder && !lastFile" (click)="moveDownFile(item)">{{ translatePrefix + '.moveDownFolder' | translate }}</button>
   </ng-template>
 </mat-menu>
