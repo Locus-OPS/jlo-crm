@@ -68,14 +68,16 @@
             <form #searchFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-4">
-                  <input matInput type="text" [placeholder]="'role.roleCode' | translate" formControlName="roleCode"
+                  <mat-label>{{'role.roleCode' | translate}}</mat-label>
+                  <input matInput type="text" formControlName="roleCode"
                     [readonly]="selectedRow.id != null" oninput="this.value = this.value.toUpperCase()" >
                   <mat-error *ngIf="createForm.controls['roleCode'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                  <input matInput type="text" [placeholder]="'role.roleName' | translate" formControlName="roleName">
+                  <mat-label>{{'role.roleName' | translate}}</mat-label>
+                  <input matInput type="text" formControlName="roleName">
                   <mat-error *ngIf="createForm.controls['roleName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>

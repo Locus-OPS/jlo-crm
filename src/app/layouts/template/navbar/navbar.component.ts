@@ -14,7 +14,8 @@ import { CustomerService } from 'src/app/pages/customer/customer.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
-import { FormBuilder, FormGroup } from '@angular/forms'; 
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { filter, tap } from 'rxjs/operators';
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -32,7 +33,7 @@ export interface NavTitle {
   templateUrl: 'navbar.component.html'
 })
 export class NavbarComponent implements OnInit, OnDestroy {
- 
+
   isCollapsed = false;
 
 
@@ -51,7 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   currentLang = 'th';
 
-    
+
 
   @ViewChild('app-navbar-cmp') button: any;
 
@@ -63,10 +64,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private globals: Globals,
     private tabManageService: TabManageService,
     public api: ApiService,
-    private spinner: NgxSpinnerService, 
+    private spinner: NgxSpinnerService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder, 
-    
+    private formBuilder: FormBuilder,
+
   ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
@@ -85,20 +86,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (body.classList.contains('hide-sidebar')) {
       misc.hide_sidebar_active = true;
     }
-    this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-      this.sidebarClose();
 
-      const $layer = document.getElementsByClassName('close-layer')[0];
-      if ($layer) {
-        $layer.remove();
-      }
-
-
-      
-
-
-
-    });
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      tap((event: NavigationEnd) => {
+        this.sidebarClose();
+        const $layer = document.getElementsByClassName('close-layer')[0];
+        if ($layer) {
+          $layer.remove();
+        }
+      })
+    );
+    // this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+    //   this.sidebarClose();
+    //   const $layer = document.getElementsByClassName('close-layer')[0];
+    //   if ($layer) {
+    //     $layer.remove();
+    //   }
+    // });
 
     this.navTitleSubscription = this.tabManageService.getNavTitle().subscribe(title => {
       this.navTitle = title;
@@ -279,7 +284,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.location.prepareExternalUrl(this.location.path());
   }
 
-  
+
 
   // loadProfile() {
   //   this.profile = this.globals.profile;
@@ -295,9 +300,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   //   }, 1000);
   // }
 
-  
 
- 
+
+
 
 
 }
