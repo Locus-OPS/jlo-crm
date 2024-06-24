@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Location, PopStateEvent } from '@angular/common';
 import { NavbarComponent } from '../../layouts/template/navbar/navbar.component';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -94,9 +94,15 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       html.classList.add('perfect-scrollbar-off');
     }
-    this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-      this.navbar.sidebarClose();
-    });
+    // this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+    //   this.navbar.sidebarClose();
+    // });
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      tap((event: NavigationEnd) => {
+        this.navbar.sidebarClose();
+      })
+    );
 
     this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((routeChange: NavigationEnd) => {
