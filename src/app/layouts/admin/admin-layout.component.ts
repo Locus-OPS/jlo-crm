@@ -3,7 +3,6 @@ import { Router, NavigationEnd, NavigationStart, ActivatedRoute, Params, RouteCo
 import { NavItem } from '../../md/md.module';
 import { Subscription } from 'rxjs/Subscription';
 import { Location, PopStateEvent } from '@angular/common';
-import 'rxjs/add/operator/filter';
 import { NavbarComponent } from '../../layouts/template/navbar/navbar.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { filter } from 'rxjs/operators';
