@@ -85,18 +85,17 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
     setDefaultConsulting(){
 
-      if(this.consultingInfo.action == "CONSULTING_START"){
-        
+      if(this.consultingInfo.action == "CONSULTING_START"){        
 
       }
 
       if(this.consultingInfo.action == "CONSULTING_STOP"){        
         this.createForm.patchValue({ statusCd: '02', channelCd: '01' });
+
       }
 
       if(this.consultingInfo.action == "CONSULTING_EDIT"){
         
-
       }
     }
 

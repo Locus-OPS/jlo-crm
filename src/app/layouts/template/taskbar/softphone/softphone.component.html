@@ -1,14 +1,9 @@
 <div class="container">
   <div class="form-container" [ngClass]="{'show': isOpen, 'hidden': !isOpen}">
-<!-- 
-      <button (click)="getCustomerByPhoneNo('Internal')"
-      mat-raised-button class="btn btn-fill btn-default"> getCustomerByPhoneNo </button>   
--->
-    
-<!-- 
-  <button (click)="test()"
-    mat-raised-button class="btn btn-fill btn-default"> onStartPhoneConsulting </button>  
--->
-       <iframe class="genesys-frame" allow="camera *; microphone *" src="https://apps.mypurecloud.jp/crm/embeddableFramework.html"></iframe>  
-    </div>   
-</div>
+    <iframe class="genesys-frame" allow="camera *; microphone *"
+      src="https://apps.mypurecloud.jp/crm/embeddableFramework.html"></iframe>
+
+    <!-- <button (click)="getCustomerByPhoneNo('Internal')"
+       mat-raised-button class="btn btn-fill btn-default"> getCustomerByPhoneNo </button>   
+      </div>    -->
+  </div>

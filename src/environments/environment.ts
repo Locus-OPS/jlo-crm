@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  // endpoint: 'http://localhost:8080/JLOXG',
-  // whitelistedDomains: ['localhost:8080']
+  endpoint: 'http://localhost:8080/JLOXG',
+  whitelistedDomains: ['localhost:8080']
   // endpoint: 'http://192.168.10.177:8080/JLOXG',
   // whitelistedDomains: ['192.168.10.177:8080']
- endpoint: 'https://jlo.locus.co.th/JLOXG',
- whitelistedDomains: ['jlo.locus.co.th']
+//  endpoint: 'https://jlo.locus.co.th/JLOXG',
+//  whitelistedDomains: ['jlo.locus.co.th']
 };
 
 /*
