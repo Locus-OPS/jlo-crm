@@ -9,10 +9,12 @@
   }
 }
 
-// .no-label {
-//   margin-top: 15px;
-// }
-.card .card, .card mat-card.mat-mdc-card {
+.mat-mdc-card-title,
+.mat-mdc-card-subtitle {
+  margin: 8px;
+}
+.card .card,
+.card mat-card.mat-mdc-card {
   border: 1px solid #dfdfdf;
   margin-bottom: 10px;
   box-shadow: none;
@@ -43,7 +45,7 @@
     background-color: #ddd;
   }
   .progressbar li:after {
-    content: "";
+    content: '';
     position: absolute;
     width: 100%;
     height: 6px;
