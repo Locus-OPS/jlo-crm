@@ -14,11 +14,11 @@
               <div class="row">
                 <mat-form-field class="col-md-3">
                   <mat-label>{{'position.posName' | translate}}</mat-label>
-                  <input matInput [placeholder]="'position.posName' | translate" type="text" formControlName="posName">
+                  <input matInput type="text" formControlName="posName">
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
                   <mat-label>{{'position.parentPosName' | translate}}</mat-label>
-                  <input matInput [placeholder]="'position.parentPosName' | translate" type="text" formControlName="parentPosName">
+                  <input matInput type="text" formControlName="parentPosName">
                 </mat-form-field>
               </div>
               <div class="pull-right">
@@ -74,18 +74,18 @@
               <div class="row">
                 <mat-form-field class="col-md-2">
                   <mat-label>{{'position.posId' | translate}}</mat-label>
-                  <input matInput type="text" [placeholder]="'position.posId' | translate" formControlName="posId" readonly>
+                  <input matInput type="text" formControlName="posId" readonly>
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
                   <mat-label>{{'position.posName' | translate}}</mat-label>
-                  <input matInput type="text" [placeholder]="'position.posName' | translate" formControlName="posName">
+                  <input matInput type="text" formControlName="posName">
                   <mat-error *ngIf="createForm.controls['posName'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
                   <mat-label>{{'position.parentPosName' | translate}}</mat-label>
-                  <mat-select [placeholder]="'position.parentPosName' | translate" formControlName="parentPosId">
+                  <mat-select formControlName="parentPosId">
                     <mat-option *ngFor="let type of posList" [value]="type.codeId">{{ type.codeName }}</mat-option>
                   </mat-select>
                   <mat-error *ngIf="createForm.controls['parentPosId'].hasError('required')">

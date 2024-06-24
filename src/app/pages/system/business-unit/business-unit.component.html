@@ -14,11 +14,11 @@
                 <div class="row">
                   <mat-form-field class="col-md-3">
                     <mat-label>{{'business-unit.buName' | translate}}</mat-label>
-                    <input matInput [placeholder]="'business-unit.buName' | translate" rows="2" formControlName="buName">
+                    <input matInput rows="2" formControlName="buName">
                   </mat-form-field>
                   <mat-form-field class="col-md-2">
                     <mat-label>{{'business-unit.activeYn' | translate}}</mat-label>
-                    <mat-select [placeholder]="'business-unit.activeYn' | translate" formControlName="activeYn">
+                    <mat-select formControlName="activeYn">
                       <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -78,11 +78,11 @@
                 <div class="row">
                   <mat-form-field class="col-md-3">
                     <mat-label>{{'business-unit.id' | translate}}</mat-label>
-                    <input matInput [placeholder]="'business-unit.id' | translate" type="text" formControlName="id" readonly />
+                    <input matInput type="text" formControlName="id" readonly />
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{'business-unit.buName' | translate}}</mat-label>
-                    <input matInput [placeholder]="'business-unit.buName' | translate" rows="2" formControlName="buName" maxlength="100">
+                    <input matInput rows="2" formControlName="buName" maxlength="100">
                     <mat-error *ngIf="createForm.controls['buName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
