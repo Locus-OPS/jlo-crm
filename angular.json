@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "JLOXGFE": {
+    "jlo-crm": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
-            "outputPath": "dist/JLOXGFE",
+            "outputPath": "dist/jlo-crm",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -138,24 +138,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "JLOXGFE:build"
+            "buildTarget": "jlo-crm:build"
           },
           "configurations": {
             "sit": {
-              "buildTarget": "JLOXGFE:build:sit"
+              "buildTarget": "jlo-crm:build:sit"
             },
             "uat": {
-              "buildTarget": "JLOXGFE:build:uat"
+              "buildTarget": "jlo-crm:build:uat"
             },
             "production": {
-              "buildTarget": "JLOXGFE:build:production"
+              "buildTarget": "jlo-crm:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "JLOXGFE:build"
+            "buildTarget": "jlo-crm:build"
           }
         },
         "test": {
@@ -179,11 +179,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "JLOXGFE:serve"
+            "devServerTarget": "jlo-crm:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "JLOXGFE:serve:production"
+              "devServerTarget": "jlo-crm:serve:production"
             }
           }
         }
