@@ -1,16 +1,19 @@
 @use '@angular/material' as mat;
-@import "../scss/core/variables";
+@import '../scss/core/variables';
 
 @include mat.core();
 
-
-$my-theme: mat.define-theme((
- color: (
-   theme-type: light,
-    primary: mat.$azure-palette,
-  ),
-
-));
+$my-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    ),
+    typography: (
+      plain-family: "'Noto Sans Thai', Roboto, sans-serif",
+    ),
+  )
+);
 
 :root {
   @include mat.all-component-themes($my-theme);
@@ -33,7 +36,6 @@ $my-theme: mat.define-theme((
 
 .main-tab > {
   mat-tab-header {
-
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     // border-bottom: 2px solid #1565c0;
     border-bottom: 2px solid $brand-locus;
@@ -161,7 +163,6 @@ input.mat-mdc-input-element {
 
 .mat-mdc-select-placeholder {
   line-height: 1;
-
 }
 
 .selected-row {
