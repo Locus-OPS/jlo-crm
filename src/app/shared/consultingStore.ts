@@ -8,7 +8,7 @@ export default class ConsultingUtils {
   static setConsultingData(constModel: ConsultingModel) {
     sessionStorage.setItem(CONSULTING_KEY, JSON.stringify(constModel));
   }
-  static getConsultingData(): string {
+  static getConsultingData(): string {    
     return sessionStorage.getItem(CONSULTING_KEY);
   }
   static removeConsultingData() {
@@ -22,4 +22,6 @@ export default class ConsultingUtils {
       return false;
     }
   }
+
+  
 }

@@ -13,6 +13,7 @@ import Utils from 'src/app/shared/utils';
 import { ConsultingInfoService } from './consulting-info.service';
 import { ConsultingModel } from 'src/app/pages/consulting/consulting.model';
 import { ModalConsultingService } from 'src/app/pages/common/modal-consulting/modal-consulting.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-consulting-info',
@@ -29,6 +30,8 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
 
   constInfoModel: ConsultingModel;
 
+  private consultingInfoSubject = new BehaviorSubject<ConsultingModel>(null);
+  
   constructor( 
     private api: ApiService,
     private formBuilder: FormBuilder,  
@@ -57,6 +60,17 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
      
 
       this.onInitConsultInfo();
+
+           
+      this.consultingInfo.getValueConsultingInfo().subscribe(constInfoModel => {
+        if(constInfoModel != null && constInfoModel != undefined){
+          console.log(constInfoModel);    
+        this.onInitConsultInfo();
+        }
+
+       
+
+    }); 
      
       
     }
@@ -106,10 +120,10 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
 
     }
 
-    onStartConsulting(){
+    onStartConsulting(channelCd:string){
 
        this.spinner.show("approve_process_spinner");
-      const params   = {data:{'channelCd':'04'}} 
+      const params   = {data:{'channelCd':channelCd}} 
       this.consultingInfo.startWalkinConsulting(params).then((result:any)=>{
         this.spinner.hide("approve_process_spinner");
                    
@@ -136,7 +150,7 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
     onStopConsulting(){
      
       const contIdData = JSON.parse(ConsultingUtils.getConsultingData()).id ;  
-      this.showConsultingDialog(contIdData,"CONSULTING_WRAPUP");
+      this.showConsultingDialog(contIdData,"CONSULTING_STOP");
       
     }
 
@@ -160,4 +174,34 @@ export class ConsultingInfoComponent  extends BaseComponent implements OnInit {
      
     });
   }
+
+
+//   onStartPhoneConsulting(channelCd:string){
+//     //alert("onStartPhoneConsulting");
+//    this.spinner.show("approve_process_spinner");
+//   const params   = {data:{'channelCd':channelCd}} 
+//   this.consultingInfo.startPhoneConsulting(params).then((result:any)=>{
+//     this.spinner.hide("approve_process_spinner");
+                
+//     if (result.status) {
+//       ConsultingUtils.setConsultingData(result.data);
+//       this.showConsultingDialog(result.data.id,"CONSULTING_START");
+
+//         this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData()) ; 
+        
+//         console.log(this.constInfoModel );
+//         this.setValueConsultingInfo(this.constInfoModel);       
+//     }
+
+//   },(err: any) => {
+//     Utils.alertError({
+//       text: err.message,
+//     });
+//   }
+
+// );
+
+// }
+
+  
 }
