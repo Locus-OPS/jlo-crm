@@ -7,7 +7,7 @@
           <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
         </button>
       </div>
-      <a class="navbar-brand" href="{{getPath()}}">{{ navTitle?.title | translate:navTitle?.param }}</a>
+      <a class="navbar-brand" href="{{ getPath() }}">{{ navTitle?.title | translate : navTitle?.param }}</a>
     </div>
     <div class="d-block d-lg-none mode-mobile">
       <app-consulting-info> </app-consulting-info>
@@ -20,13 +20,13 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
-        <div class="row">           
+        <div class="row">
           <li class="nav-item">
-             <app-consulting-info> </app-consulting-info>            
-          </li>         
+            <app-consulting-info> </app-consulting-info>
+          </li>
 
-          <div class="clearfix"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-          <li class="nav-item">
+          <div class="clearfix">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <!-- <li class="nav-item">
             <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
               <mat-button-toggle value="th" aria-label="ไทย">
                 TH
@@ -35,14 +35,9 @@
                 EN
               </mat-button-toggle>
             </mat-button-toggle-group>
-            
-  
-          </li>
+          </li> -->
         </div>
-        
-        
-     
-       </ul>
+      </ul>
     </div>
   </div>
 </nav>
