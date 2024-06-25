@@ -150,13 +150,11 @@ export class SoftphoneComponent implements OnInit {
           console.log("msg.state : " + msg.state);
           if (msg.state == "CONNECTED") {
             // Insert Consulting  
-
-            console.log("CONNECTED-001")
             this.consultingInfoService.onStartPhoneConsulting(this.customerId);
 
 
           } else if (msg.state == "DISCONNECTED") {
-            this.consultingInfoService.onStopPhoneConsulting('01');
+            this.consultingInfoService.onStopPhoneConsulting();
 
           }
           console.log("msg.interaction : " + msg.interaction);

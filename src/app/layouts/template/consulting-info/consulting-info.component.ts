@@ -37,7 +37,7 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     private modalConsulting: ModalConsultingService,
-    private consultingInfo: ConsultingInfoService,
+    private consultingInfoService: ConsultingInfoService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
 
@@ -62,10 +62,11 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
     this.onInitConsultInfo();
 
 
-    this.consultingInfo.getValueConsultingInfo().subscribe(constInfoModel => {
+    this.consultingInfoService.getValueConsultingInfo().subscribe(constInfoModel => {
       if (constInfoModel != null && constInfoModel != undefined) {
         console.log(constInfoModel);
         this.onInitConsultInfo();
+        // this.setValueConsultingInfo(this.constInfoModel);
       }
 
 
@@ -92,7 +93,10 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
     this.modalConsulting.getConsultingData(params).then((result: any) => {
       this.spinner.hide("approve_process_spinner");
       if (result.status) {
-        ConsultingUtils.setConsultingData(result.data);
+        if (ConsultingUtils.isConsulting()) {
+          ConsultingUtils.setConsultingData(result.data);
+        }
+
         this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
         this.setValueConsultingInfo(this.constInfoModel);
       } else {
@@ -104,12 +108,9 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
       });
     });
 
-
-
   }
 
   setValueConsultingInfo(constInfoModel: ConsultingModel) {
-
     this.consultingForm.patchValue({
       consultingNumber: this.constInfoModel.consultingNumber
       , status: this.constInfoModel.statusName
@@ -120,11 +121,11 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
 
   }
 
-  onStartConsulting(channelCd: string) {
+  onStartWalkinConsulting(channelCd: string) {
 
     this.spinner.show("approve_process_spinner");
     const params = { data: { 'channelCd': channelCd } }
-    this.consultingInfo.startWalkinConsulting(params).then((result: any) => {
+    this.consultingInfoService.startWalkinConsulting(params).then((result: any) => {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
@@ -174,34 +175,4 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
 
     });
   }
-
-
-  //   onStartPhoneConsulting(channelCd:string){
-  //     //alert("onStartPhoneConsulting");
-  //    this.spinner.show("approve_process_spinner");
-  //   const params   = {data:{'channelCd':channelCd}} 
-  //   this.consultingInfo.startPhoneConsulting(params).then((result:any)=>{
-  //     this.spinner.hide("approve_process_spinner");
-
-  //     if (result.status) {
-  //       ConsultingUtils.setConsultingData(result.data);
-  //       this.showConsultingDialog(result.data.id,"CONSULTING_START");
-
-  //         this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData()) ; 
-
-  //         console.log(this.constInfoModel );
-  //         this.setValueConsultingInfo(this.constInfoModel);       
-  //     }
-
-  //   },(err: any) => {
-  //     Utils.alertError({
-  //       text: err.message,
-  //     });
-  //   }
-
-  // );
-
-  // }
-
-
 }

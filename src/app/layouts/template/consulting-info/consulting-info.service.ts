@@ -47,6 +47,7 @@ export class ConsultingInfoService {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
+
         ConsultingUtils.setConsultingData(result.data);
         this.showConsultingDialog(result.data.id, "CONSULTING_START");
 
@@ -70,7 +71,7 @@ export class ConsultingInfoService {
   }
 
 
-  onStopPhoneConsulting(channelCd: string) {
+  onStopPhoneConsulting() {
 
 
     this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
@@ -84,14 +85,13 @@ export class ConsultingInfoService {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
-        //ConsultingUtils.setConsultingData(result.data);
-        ConsultingUtils.removeConsultingData();
 
         this.showConsultingDialog(result.data.id, "CONSULTING_STOP");
-
         this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
         console.log(this.constInfoModel);
         this.setValueConsultingInfo(this.constInfoModel);
+
+        ConsultingUtils.removeConsultingData();
       }
 
     }, (err: any) => {
@@ -128,7 +128,7 @@ export class ConsultingInfoService {
         // if (result.statusCd != "01") {
 
         this.constInfoModel = null;
-        this.setValueConsultingInfo(this.constInfoModel);
+        //this.setValueConsultingInfo(this.constInfoModel);
 
         //this.consultingForm.reset();
 
