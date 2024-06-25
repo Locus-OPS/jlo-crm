@@ -83,6 +83,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private appStore: AppStore,
     private spinner: NgxSpinnerService,
     private consultingService: ConsultingService,
+
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
@@ -181,7 +182,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         } else {
 
           //alert("new from case");
-          const contData = JSON.parse(JSON.parse(ConsultingUtils.getConsultingData()));
+          const contData = JSON.parse(ConsultingUtils.getConsultingData());
           if (contData.customerId != null && contData.customerId != undefined) {
 
             this.custParam['customerId'] = contData.customerId;

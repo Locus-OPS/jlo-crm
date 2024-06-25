@@ -68,23 +68,19 @@ export class ConsultingInfoService {
   }
 
 
-  stopPhoneConsulting(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/consulting/stopPhoneConsulting', param);
+  updateStopConsulting(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/consulting/updateStopConsulting', param);
   }
 
 
-  onStopPhoneConsulting() {
-
+  onStopConsulting() {
 
     this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
 
-
     this.spinner.show("approve_process_spinner");
+    const params = { data: { ...this.constInfoModel } };
 
-    // const params   = {data:{...this.constInfoModel}} 
-    const params = { data: { ...this.constInfoModel } }
-
-    this.stopPhoneConsulting(params).then((result: any) => {
+    this.updateStopConsulting(params).then((result: any) => {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
@@ -93,8 +89,8 @@ export class ConsultingInfoService {
         this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
         console.log(this.constInfoModel);
         this.setValueConsultingInfo(this.constInfoModel);
-
         ConsultingUtils.removeConsultingData();
+
       }
 
     }, (err: any) => {

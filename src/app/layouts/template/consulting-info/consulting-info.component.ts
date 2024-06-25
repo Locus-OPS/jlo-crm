@@ -67,6 +67,7 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
         console.log(constInfoModel);
         this.onInitConsultInfo();
         // this.setValueConsultingInfo(this.constInfoModel);
+
       }
 
 
@@ -80,6 +81,9 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
     if (ConsultingUtils.isConsulting()) {
       this.constInfoModel = this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
       this.getConsultingInfoData();
+    } else {
+      this.constInfoModel = null;
+      this.consultingForm.reset();
     }
   }
 
@@ -148,11 +152,8 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
 
   }
 
-  onStopConsulting() {
-
-    const contIdData = JSON.parse(ConsultingUtils.getConsultingData()).id;
-    this.showConsultingDialog(contIdData, "CONSULTING_STOP");
-
+  onStopWalkinConsulting() {
+    this.consultingInfoService.onStopConsulting();
   }
 
 

@@ -14,6 +14,7 @@ import { ModalConsultingService } from './modal-consulting.service';
 import Utils from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import ConsultingUtils from 'src/app/shared/consultingStore';
+import { ConsultingInfoService } from 'src/app/layouts/template/consulting-info/consulting-info.service';
 
 @Component({
   selector: 'app-modal-consulting',
@@ -37,6 +38,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog,
     private modalConsulting: ModalConsultingService,
     private spinner: NgxSpinnerService,
+    private consultingInfoService: ConsultingInfoService,
     public globals: Globals) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
@@ -189,19 +191,23 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
         Utils.alertSuccess({
           title: "บันทึก",
-          text: "บันทึกข้อมูลการติดต่อสำเร็จ",
+          text: "บันทึกข้อมูลการติดต่อสำเร็จ statusCd ",
         });
 
         // Finished
-        if (statusCd != "01") {
+        if (statusCd == "02") {
           //Remove data from sesstion storage
-          ConsultingUtils.removeConsultingData();
+          if (ConsultingUtils.isConsulting()) {
 
+            this.consultingInfoService.onStopConsulting();
+          }
+          //alert(statusCd);
+          this.dialogRef.close();
         } else {
-          // this.dialogRef.close();
+          this.dialogRef.close(result.data);
         }
 
-        this.dialogRef.close(result.data);
+
 
       } else {
         setTimeout(() => {

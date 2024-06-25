@@ -61,8 +61,9 @@
                       <button mat-raised-button type="button" class="btn btn-primary"
                         (click)="onStartWalkinConsulting('04')" *ngIf="this.constInfoModel == null">{{
                         'consulting.header.start' | translate }}</button>
-                      <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="onStopConsulting()"
-                        *ngIf="this.constInfoModel != null">{{ 'consulting.header.wrapup' | translate }}</button>
+                      <button mat-raised-button type="button" class="btn btn-fill btn-rose"
+                        (click)="onStopWalkinConsulting()" *ngIf="this.constInfoModel != null">{{
+                        'consulting.header.wrapup' | translate }}</button>
                     </div>
                   </form>
                 </div>
