@@ -78,7 +78,7 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
 
   onInitConsultInfo() {
     if (ConsultingUtils.isConsulting()) {
-      this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
+      this.constInfoModel = this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
       this.getConsultingInfoData();
     }
   }

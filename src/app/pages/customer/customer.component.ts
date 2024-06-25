@@ -21,11 +21,11 @@ import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent extends BaseComponent implements OnInit {
-  
+
   THAI_NATIONALITY: string = "37";
 
   /* customer table */
-  
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild('createFormDirective')
@@ -37,28 +37,28 @@ export class CustomerComponent extends BaseComponent implements OnInit {
 
   searchForm: UntypedFormGroup;
 
-  
+
   selectedRow: CustomerData;
   createForm: UntypedFormGroup;
-  
-  customerStatusList=[];
-  titleNameList=[];
-  nationalityList=[];
+
+  customerStatusList = [];
+  titleNameList = [];
+  nationalityList = [];
 
   constructor(
-      private api: ApiService,
-      private formBuilder: UntypedFormBuilder,
-      private customerService:CustomerService, 
-      private el:ElementRef,
-      public router:Router,
-      public globals:Globals,
-      private consultingService : ConsultingService,
-      private spinner: NgxSpinnerService,
-      private tabParam: TabParam,
-     ) { 
-    super(router,globals);
+    private api: ApiService,
+    private formBuilder: UntypedFormBuilder,
+    private customerService: CustomerService,
+    private el: ElementRef,
+    public router: Router,
+    public globals: Globals,
+    private consultingService: ConsultingService,
+    private spinner: NgxSpinnerService,
+    private tabParam: TabParam,
+  ) {
+    super(router, globals);
     this.api.getMultipleCodebookByCodeType({
-      data: ['CUSTOMER_STATUS','TITLE_NAME','NATIONALITY']
+      data: ['CUSTOMER_STATUS', 'TITLE_NAME', 'NATIONALITY']
     }).then(
       result => {
         this.customerStatusList = result.data['CUSTOMER_STATUS'];
@@ -82,56 +82,56 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     this.defaultCriteriaSearchFromOtherPage();
 
     this.createForm = this.formBuilder.group({
-      memberId:[''],
-      customerId:[''],
-      customerType:[true],
-      customerStatus:['1'],
-      title:new UntypedFormControl({ value: '', disabled: true }),
-      firstName:new UntypedFormControl({ value: '', disabled: true }),
-      lastName:new UntypedFormControl({ value: '', disabled: true }),
-      nationality:new UntypedFormControl({ value: this.THAI_NATIONALITY, disabled: true }),
-      citizenId:new UntypedFormControl({ value: '', disabled: true }),
-      passportNo:new UntypedFormControl({ value: '', disabled: true }),
-      birthDate:[''],
-      gender:[''],
-      maritalStatus:[''],
-      occupation:[''],
-      businessName:new UntypedFormControl({ value: '', disabled: true }),
-      taxId:new UntypedFormControl({ value: '', disabled: true }),
-      businessType:[''],
-      phoneArea:[''],
-      phoneNo:[''],
-      email:[''],
-      registrationChannel:[''],
-      registrationStore:[''],
-      remark:[''],
-      createdBy:[''],
-      createdDate:[''],
-      updatedBy:[''],
-      updatedDate:[''],
-      address:[],
-      changeLog:[]
+      memberId: [''],
+      customerId: [''],
+      customerType: [true],
+      customerStatus: ['1'],
+      title: new UntypedFormControl({ value: '', disabled: true }),
+      firstName: new UntypedFormControl({ value: '', disabled: true }),
+      lastName: new UntypedFormControl({ value: '', disabled: true }),
+      nationality: new UntypedFormControl({ value: this.THAI_NATIONALITY, disabled: true }),
+      citizenId: new UntypedFormControl({ value: '', disabled: true }),
+      passportNo: new UntypedFormControl({ value: '', disabled: true }),
+      birthDate: [''],
+      gender: [''],
+      maritalStatus: [''],
+      occupation: [''],
+      businessName: new UntypedFormControl({ value: '', disabled: true }),
+      taxId: new UntypedFormControl({ value: '', disabled: true }),
+      businessType: [''],
+      phoneArea: [''],
+      phoneNo: [''],
+      email: [''],
+      registrationChannel: [''],
+      registrationStore: [''],
+      remark: [''],
+      createdBy: [''],
+      createdDate: [''],
+      updatedBy: [''],
+      updatedDate: [''],
+      address: [],
+      changeLog: []
     });
     this.tableControl.sortColumn = 'fullName';
     this.tableControl.sortDirection = 'asc';
     this.onSearch();
 
     this.CHECK_FORM_PERMISSION(this.createForm);
-    
+
   }
 
-  defaultCriteriaSearchFromOtherPage(){
-    if(this.tabParam.params.phoneNo != null && this.tabParam.params.phoneNo != undefined){ 
-      this.searchForm.patchValue({ phoneNo:this.tabParam.params.phoneNo});    
+  defaultCriteriaSearchFromOtherPage() {
+    if (this.tabParam.params.phoneNo != null && this.tabParam.params.phoneNo != undefined) {
+      this.searchForm.patchValue({ phoneNo: this.tabParam.params.phoneNo });
     }
-  
+
   }
 
   onSearch() {
     /*  if (this.searchForm.invalid) {
        return;
      } */
-    
+
     this.selectedRow = null;
     this.search();
   }
@@ -139,9 +139,9 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   search() {
     const param = {
       ...this.searchForm.value,
-        memberCardNo: this.searchForm.value['memberCardNo'] != null ? this.searchForm.value['memberCardNo'].replace(/\s/g, "") : this.searchForm.value['memberCardNo'], // Remove white space
-        sortColumn: this.tableControl.sortColumn,
-        sortDirection: this.tableControl.sortDirection
+      memberCardNo: this.searchForm.value['memberCardNo'] != null ? this.searchForm.value['memberCardNo'].replace(/\s/g, "") : this.searchForm.value['memberCardNo'], // Remove white space
+      sortColumn: this.tableControl.sortColumn,
+      sortDirection: this.tableControl.sortDirection
     }
     this.customerService.getCustomerList({
       pageSize: this.tableControl.pageSize,
@@ -157,14 +157,14 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     });
   }
 
-  
 
-  selectCustomer(row){
+
+  selectCustomer(row) {
     this.selectedRow = row;
     this.createForm.patchValue(row);
   }
 
-  
+
   clear() {
     this.searchForm.reset();
     //this.clearSort();
@@ -175,79 +175,79 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     this.sort.sort({ id: '', start: 'asc', disableClear: false });
   }
 
-  selectCustomerConsulting(customerType:string){
-    
-    if(ConsultingUtils.isConsulting()){
-      const contData = JSON.parse(ConsultingUtils.getConsultingData()) ; 
+  selectCustomerConsulting(customerType: string) {
+
+    if (ConsultingUtils.isConsulting()) {
+      const contData = JSON.parse(ConsultingUtils.getConsultingData());
       const params = {
-        data:{
-          consultingNumber:contData.consultingNumber,
-          customerId : this.createForm.controls['customerId'].value,
-          contactId : this.createForm.controls['customerId'].value
+        data: {
+          consultingNumber: contData.consultingNumber,
+          customerId: this.createForm.controls['customerId'].value,
+          contactId: this.createForm.controls['customerId'].value
         }
       };
 
-      this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {      
-      this.spinner.hide("approve_process_spinner");             
-        if (result.status) {    
-        
+      this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {
+        this.spinner.hide("approve_process_spinner");
+        if (result.status) {
+
           this.gotoMemberCustomerPage(customerType);
 
-        }else{
-         
-         
+        } else {
+
+
 
           setTimeout(() => {
             this.spinner.hide("approve_process_spinner");
           }, 1000);
 
 
-          if(result.message!=""){
+          if (result.message != "") {
             Utils.alertError({
               text: result.message,
             });
-          }else{
+          } else {
             Utils.alertError({
               text: "Please try again later.",
             });
           }
         }
-      },(err: any) => {
+      }, (err: any) => {
         Utils.alertError({
           text: err.message,
         });
       }
 
-    );
-    }else{
+      );
+    } else {
       this.gotoMemberCustomerPage(customerType);
     }
-    
+
   }
-  
 
-  gotoMemberCustomerPage(customerType:string) {
 
-    if(customerType == "member"){
+  gotoMemberCustomerPage(customerType: string) {
+
+    if (customerType == "member") {
       this.router.navigate([
         "/customer/member",
         {
-          memberId:  this.createForm.controls['memberId'].value, 
+          memberId: this.createForm.controls['memberId'].value,
         },
       ]);
     }
-    
-    if(customerType == "customer"){
+
+    if (customerType == "customer") {
       this.router.navigate([
         "/customer/customer",
         {
-          customerId:  this.createForm.controls['customerId'].value, 
+          customerId: this.createForm.controls['customerId'].value,
         },
       ]);
     }
-    
+
   }
 
-    
+
 
 }

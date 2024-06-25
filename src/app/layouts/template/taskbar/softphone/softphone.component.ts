@@ -163,16 +163,6 @@ export class SoftphoneComponent implements OnInit {
 
       });
 
-
-
-      // TODO Check message.data.interaction.state == 'CONNECTED'
-      /**
-       * if(CONNECTED)
-       * 1. Insert consulting 
-       * 2. open modal consulting
-       * 
-       */
-
     }
   }
 
