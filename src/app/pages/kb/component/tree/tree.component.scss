@@ -3,11 +3,15 @@
 }
 
 .fa-icon {
-  color:steelblue;
+  color: steelblue;
+}
+
+.treeControl {
+  text-align: right;
 }
 
 a.treeControlBtn {
-  color: rgb(113, 101, 244);
+  color: #292929;
   padding: 2px;
 }
 
@@ -26,7 +30,7 @@ mat-tree-node {
 }
 
 .yellow-icon {
-  color: rgb(182, 247, 79);
+  color: #f8d775;
 }
 
 ::ng-deep.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
