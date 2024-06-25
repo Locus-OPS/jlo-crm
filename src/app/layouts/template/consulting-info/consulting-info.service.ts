@@ -127,7 +127,7 @@ export class ConsultingInfoService {
       if (result != undefined) {
         // if (result.statusCd != "01") {
 
-        this.constInfoModel = null;
+        //this.constInfoModel = null;
         //this.setValueConsultingInfo(this.constInfoModel);
 
         //this.consultingForm.reset();
