@@ -1,261 +1,267 @@
-html, :root {
-    --mat-form-field-container-text-size:14px;
-    --mat-form-field-container-height: 30px;
-    --mat-form-field-container-vertical-padding: 6px;
-    --mat-option-label-text-font: "Noto Sans Thai",Roboto, sans-serif;   
-    --mat-select-trigger-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-form-field-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-form-field-subscript-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-switch-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-table-header-headline-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-table-row-item-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mdc-outlined-text-field-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-paginator-container-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-mdc-select-placeholder-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-tree-node-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mat-expansion-header-text-font: "Noto Sans Thai",Roboto, sans-serif;
-    --mdc-icon-button-icon-size: 14px;
-    --mat-dialog-container-max-width: 80vw;
-    --mat-text-button-with-icon-horizontal-padding: 8px;
-    --jlo-crm-sidebar-width:340px; 
+html,
+:root {
+  --mat-form-field-container-text-size: 14px;
+  --mat-form-field-container-height: 30px;
+  --mat-form-field-container-vertical-padding: 6px;
+  --mat-option-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-select-trigger-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-form-field-container-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-form-field-subscript-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-switch-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-table-header-headline-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-table-row-item-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mdc-outlined-text-field-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-paginator-container-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-mdc-select-placeholder-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-tree-node-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-expansion-header-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mdc-icon-button-icon-size: 14px;
+  --mat-dialog-container-max-width: 80vw;
+  --mat-text-button-with-icon-horizontal-padding: 8px;
+  --jlo-crm-sidebar-width: 260px;
 
-    --mat-toolbar-title-text-font : "Noto Sans Thai",Roboto, sans-serif;
-    --mat-tree-node-text-size: 12px;
-    --mat-tree-node-text-weight: 400;
-    --mat-tree-node-min-height: 48px;
-
+  --mat-toolbar-title-text-font: 'Noto Sans Thai', Roboto, sans-serif;
+  --mat-tree-node-text-size: 12px;
+  --mat-tree-node-text-weight: 400;
+  --mat-tree-node-min-height: 48px;
 }
 
 .mat-mdc-select-placeholder {
-    font-family: "Noto Sans Thai", Roboto, sans-serif; 
+  font-family: 'Noto Sans Thai', Roboto, sans-serif;
 }
-.mat-mdc-tab-header{
-    --mat-tab-header-label-text-font: "Noto Sans Thai",Roboto, sans-serif;
+.mat-mdc-tab-header {
+  --mat-tab-header-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
 }
-.navbar-wrapper .navbar-brand, button.btn, .swal2-title, .swal2-html-container, .swal2-styled, .card-title{
-    font-family: var(--mat-form-field-container-text-font);
-}
-
-@media (min-width: 992px){
-
-    .sidebar{
-        width: var(--jlo-crm-sidebar-width,260px);
-        .logo{
-            .logo-mini{
-                .logo-img{
-                    img{
-                        width: 125px;
-                        top: 5px;
-                        left: 105px;
-                    }
-                }
-            }
-        }
-        .sidebar-wrapper{
-            width: var(--jlo-crm-sidebar-width,260px);
-            height: calc(100vh - 110px);
-            .nav-link{
-                font-family: var(--mat-form-field-container-text-font);
-            }
-        }
-    }
-    
-    .main-panel{
-        width: calc(100% - calc(var(--jlo-crm-sidebar-width,260px) + 1px));
-        .main-content {
-            min-height: calc(100vh - 125px);
-        }
-    }
-
-    .sidebar-mini{
-        .logo{
-            .logo-mini{
-                .logo-img{
-                    img{
-                        left: 2px;
-                        width: 76px;
-                        top: auto;
-                    }
-                }
-            }
-        }
-        .sidebar:hover{
-            width: var(--jlo-crm-sidebar-width,260px);
-            .logo{
-                .logo-mini{
-                    .logo-img{
-                        img{
-                            width: 125px;
-                            top: 5px;
-                            left: 105px;
-                        }
-                    }
-                }
-            }
-            .sidebar-wrapper{
-                width: var(--jlo-crm-sidebar-width,260px);
-                .nav-link{
-                    font-family: var(--mat-form-field-container-text-font);
-                }
-            }
-        }
-        .main-panel{
-            width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width,80px) + 1px));
-        }
-    }
+.navbar-wrapper .navbar-brand,
+button.btn,
+.swal2-title,
+.swal2-html-container,
+.swal2-styled,
+.card-title {
+  font-family: var(--mat-form-field-container-text-font);
 }
 
-.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above{
-    --mat-mdc-form-field-label-transform: translateY(calc(calc(9.75px + var(--mat-form-field-container-height) / 2) * -1)) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75)) !important; 
-}
-table.mat-mdc-table{
-    thead{
-        background-color: var(--primary);
-        tr{
-            th{
-                color: var(--light);
-                .mat-sort-header-container{                    
-                    .mat-sort-header-arrow{
-                        color: var(--light);
-                    }
-                }
-                .mat-sort-header-sorted{
-                    color: var(--light);
-                }
+@media (min-width: 992px) {
+  .sidebar {
+    width: var(--jlo-crm-sidebar-width, 260px);
+    .logo {
+      .logo-mini {
+        .logo-img {
+          img {
+            width: 125px;
+            top: 5px;
+            left: 105px;
+          }
+        }
+      }
+    }
+    .sidebar-wrapper {
+      width: var(--jlo-crm-sidebar-width, 260px);
+      height: calc(100vh - 110px);
+      .nav-link {
+        font-family: var(--mat-form-field-container-text-font);
+      }
+    }
+  }
+
+  .main-panel {
+    width: calc(100% - calc(var(--jlo-crm-sidebar-width, 260px) + 1px));
+    .main-content {
+      min-height: calc(100vh - 125px);
+    }
+  }
+
+  .sidebar-mini {
+    .logo {
+      .logo-mini {
+        .logo-img {
+          img {
+            left: 2px;
+            width: 76px;
+            top: auto;
+          }
+        }
+      }
+    }
+    .sidebar:hover {
+      width: var(--jlo-crm-sidebar-width, 260px);
+      .logo {
+        .logo-mini {
+          .logo-img {
+            img {
+              width: 125px;
+              top: 5px;
+              left: 105px;
             }
+          }
         }
-        
+      }
+      .sidebar-wrapper {
+        width: var(--jlo-crm-sidebar-width, 260px);
+        .nav-link {
+          font-family: var(--mat-form-field-container-text-font);
+        }
+      }
     }
+    .main-panel {
+      width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width, 80px) + 1px));
+    }
+  }
 }
-app-created-by{
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,
-    .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing{
-        border-color: #dddddd;
-    }
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+  --mat-mdc-form-field-label-transform: translateY(calc(calc(9.75px + var(--mat-form-field-container-height) / 2) * -1))
+    scale(var(--mat-mdc-form-field-floating-label-scale, 0.75)) !important;
 }
-.mat-mdc-dialog-inner-container{
-    .mat-mdc-dialog-component-host{
-        display: flex;
-        flex-direction: column;
-        height: 100% !important;
-        justify-content: space-between;
-        button.close{
-            min-width: 45px;
-            margin-left: auto;
-            margin-top: 5px;
-            .mdc-button__ripple{
-                width: initial;
-            }
+table.mat-mdc-table {
+  thead {
+    background-color: var(--primary);
+    tr {
+      th {
+        color: var(--light);
+        .mat-sort-header-container {
+          .mat-sort-header-arrow {
+            color: var(--light);
+          }
         }
-        .mat-mdc-dialog-content{
-            max-height:max-content;
+        .mat-sort-header-sorted {
+          color: var(--light);
         }
-        .pull-right{
-            margin-left: auto;
-            padding-right: 10px;
-        }
-        .justify-content-end{
-            padding-right: 10px;
-        }
-        .mat-mdc-dialog-actions{
-            padding-top: 2px;
-            padding-bottom: 5px;
-            padding-right: 10px;
-        }
+      }
     }
+  }
+}
+app-created-by {
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__notch,
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__trailing {
+    border-color: #dddddd;
+  }
+}
+.mat-mdc-dialog-inner-container {
+  .mat-mdc-dialog-component-host {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+    justify-content: space-between;
+    button.close {
+      min-width: 45px;
+      margin-left: auto;
+      margin-top: 5px;
+      .mdc-button__ripple {
+        width: initial;
+      }
+    }
+    .mat-mdc-dialog-content {
+      max-height: max-content;
+    }
+    .pull-right {
+      margin-left: auto;
+      padding-right: 10px;
+    }
+    .justify-content-end {
+      padding-right: 10px;
+    }
+    .mat-mdc-dialog-actions {
+      padding-top: 2px;
+      padding-bottom: 5px;
+      padding-right: 10px;
+    }
+  }
 }
 
 .mat-mdc-form-field {
-    &:not(.mat-form-field-disabled){
-        &:has(.mat-mdc-form-field-infix  input:read-only){
-            &:not(.mat-mdc-form-field-has-icon-suffix){
-                .mat-mdc-text-field-wrapper{
-                    .mat-mdc-form-field-flex{
-                        .mdc-notched-outline__leading{
-                            border-top-style: dashed;
-                            border-left-style: dashed;
-                            border-bottom-style: dashed;
-                        }
-                        .mdc-notched-outline__notch{
-                            border-bottom-style: dashed;
-                        }
-                        .mdc-notched-outline__trailing{
-                            border-top-style: dashed;
-                            border-right-style: dashed;
-                            border-bottom-style: dashed;
-                        }
-                    }                
-                    
-                }
+  &:not(.mat-form-field-disabled) {
+    &:has(.mat-mdc-form-field-infix input:read-only) {
+      &:not(.mat-mdc-form-field-has-icon-suffix) {
+        .mat-mdc-text-field-wrapper {
+          .mat-mdc-form-field-flex {
+            .mdc-notched-outline__leading {
+              border-top-style: dashed;
+              border-left-style: dashed;
+              border-bottom-style: dashed;
             }
-            .mat-mdc-text-field-wrapper{
-                cursor: not-allowed;
-                input{
-                    cursor: not-allowed;
-                }
-                .mat-icon{
-                    cursor: context-menu;
-                }
+            .mdc-notched-outline__notch {
+              border-bottom-style: dashed;
             }
-            
-        }
-    }    
-    .mdc-text-field--outlined{
-        .mat-mdc-form-field-flex{
-            .mat-mdc-form-field-icon-suffix{
-                .mat-datepicker-toggle{
-                    .mat-mdc-icon-button.mat-mdc-button-base{
-                        --mdc-icon-button-state-layer-size: 30px;
-                        width: var(--mdc-icon-button-state-layer-size);
-                        height: var(--mdc-icon-button-state-layer-size);
-                        padding-top: 17px;
-                        padding-left: 14px;
-                    }
-                }
-                .mat-mdc-button{
-                    min-width: 30px;
-                    .mat-icon{
-                        transform: translateX(6px);
-                        padding-top: 0;
-                    }
-                }
-                .mat-icon{
-                    padding-left: 0px;
-                    padding-right: 2px;
-                    font-size: 18px;
-                    padding-top: 5px;
-                }
+            .mdc-notched-outline__trailing {
+              border-top-style: dashed;
+              border-right-style: dashed;
+              border-bottom-style: dashed;
             }
+          }
         }
-    }
-}
-.mat-mdc-checkbox{
-    .mdc-label{
-        padding-top: 6px;
-        font-family: var(--mat-form-field-container-text-font);
-        color: var(--mat-app-text-color);
-        font-size: var(--mat-form-field-container-text-size);
-    }
-}
-.mat-mdc-radio-button{
-    .mdc-label{
-        padding-top: 6px;
-        font-family: var(--mat-form-field-container-text-font);
-        color: var(--mat-app-text-color);
-        font-size: var(--mat-form-field-container-text-size);
-    }
-}
-.mat-mdc-slide-toggle{
-    .mdc-form-field{
-        label{
-            transform: translateY(4px);
+      }
+      .mat-mdc-text-field-wrapper {
+        cursor: not-allowed;
+        input {
+          cursor: not-allowed;
         }
+        .mat-icon {
+          cursor: context-menu;
+        }
+      }
     }
+  }
+  .mdc-text-field--outlined {
+    .mat-mdc-form-field-flex {
+      .mat-mdc-form-field-icon-suffix {
+        .mat-datepicker-toggle {
+          .mat-mdc-icon-button.mat-mdc-button-base {
+            --mdc-icon-button-state-layer-size: 30px;
+            width: var(--mdc-icon-button-state-layer-size);
+            height: var(--mdc-icon-button-state-layer-size);
+            padding-top: 17px;
+            padding-left: 14px;
+          }
+        }
+        .mat-mdc-button {
+          min-width: 30px;
+          .mat-icon {
+            transform: translateX(6px);
+            padding-top: 0;
+          }
+        }
+        .mat-icon {
+          padding-left: 0px;
+          padding-right: 2px;
+          font-size: 18px;
+          padding-top: 5px;
+        }
+      }
+    }
+  }
 }
-.cdk-overlay-pane{
-    .mat-mdc-select-panel{
-        min-width: max-content;
-        max-width: 80vw;
+.mat-mdc-checkbox {
+  .mdc-label {
+    padding-top: 6px;
+    font-family: var(--mat-form-field-container-text-font);
+    color: var(--mat-app-text-color);
+    font-size: var(--mat-form-field-container-text-size);
+  }
+}
+.mat-mdc-radio-button {
+  .mdc-label {
+    padding-top: 6px;
+    font-family: var(--mat-form-field-container-text-font);
+    color: var(--mat-app-text-color);
+    font-size: var(--mat-form-field-container-text-size);
+  }
+}
+.mat-mdc-slide-toggle {
+  .mdc-form-field {
+    label {
+      transform: translateY(4px);
     }
+  }
+}
+.cdk-overlay-pane {
+  .mat-mdc-select-panel {
+    min-width: max-content;
+    max-width: 80vw;
+  }
 }
