@@ -191,7 +191,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
         Utils.alertSuccess({
           title: "บันทึก",
-          text: "บันทึกข้อมูลการติดต่อสำเร็จ statusCd ",
+          text: "บันทึกข้อมูลการติดต่อสำเร็จ",
         });
 
         // Finished

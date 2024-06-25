@@ -148,16 +148,17 @@ export class SoftphoneComponent implements OnInit {
       this.softphoneService.getInteractionStatus().subscribe(msg => {
         if (msg != null && msg != undefined) {
           console.log("msg.state : " + msg.state);
+          console.log("msg.interaction : " + msg.interaction);
           if (msg.state == "CONNECTED") {
             // Insert Consulting  
             this.consultingInfoService.onStartPhoneConsulting(this.customerId);
 
 
           } else if (msg.state == "DISCONNECTED") {
-            this.consultingInfoService.onStopPhoneConsulting();
-
+            this.consultingInfoService.onStopConsulting();
           }
-          console.log("msg.interaction : " + msg.interaction);
+
+
         }
 
 
