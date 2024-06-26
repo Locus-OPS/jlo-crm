@@ -17,56 +17,56 @@ import { CaseStore } from '../case/case.store';
 
 @Component({
   selector: 'app-consulting',
-  standalone: false, 
+  standalone: false,
   templateUrl: './consulting.component.html',
   styleUrl: './consulting.component.scss'
 })
-export class ConsultingComponent  extends BaseComponent implements OnInit {
-  
+export class ConsultingComponent extends BaseComponent implements OnInit {
+
   searchForm: FormGroup;
 
 
-  displayedColumns: string[] = ["consultingNumber","channelName","customerName","title"
-    ,"statusName"
-    ,"startDate"
-    ,"endDate"
-    ,"ownerName"
-    ,"action"];
+  displayedColumns: string[] = ["consultingNumber", "channelName", "customerName", "title"
+    , "statusName"
+    , "startDate"
+    , "endDate"
+    , "consOwnerName"
+    , "action"];
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
 
   searchFormCase: FormGroup;
-  selectedRow:  ConsultingModel;
+  selectedRow: ConsultingModel;
   dataSourceSr: any[];
   displayedColumnsCase: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
   tableControlCase: TableControl = new TableControl(() => { this.searchCase(); });
   channelList: Dropdown[];
   statusList: Dropdown[];
 
-  constructor(   
-    public api: ApiService,     
+  constructor(
+    public api: ApiService,
     public dialog: MatDialog,
     public router: Router,
     public globals: Globals,
     public formBuilder: FormBuilder,
-    private consulting : ConsultingService,
+    private consulting: ConsultingService,
     private caseStore: CaseStore,
   ) {
     super(router, globals);
-     
+
     api.getMultipleCodebookByCodeType(
-      { data: ['CONSULTING_CHANNEL','CONSULTING_STATUS'] }
+      { data: ['CONSULTING_CHANNEL', 'CONSULTING_STATUS'] }
     ).then(result => {
       this.channelList = result.data['CONSULTING_CHANNEL'];
       this.statusList = result.data['CONSULTING_STATUS'];
-      
+
     });
   }
   ngOnInit(): void {
 
     this.searchForm = this.formBuilder.group({
-      id: [""], 
-      consultingNumber: [""], 
+      id: [""],
+      consultingNumber: [""],
       channelCd: [""],
       statusCd: [""],
       startDate: [""],
@@ -74,7 +74,7 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       title: [""],
       callingNumber: [""],
       callObjectId: [""],
-      ownerDisplay:[""],
+      ownerDisplay: [""],
       ownerId: [""],
       note: [""],
       consultingTypeCd: [""],
@@ -82,14 +82,14 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
       agentState: [""],
       reasonCode: [""],
       consultingAction: [""],
-      customerId:[""],
-      custNameDisplay:[""]
+      customerId: [""],
+      custNameDisplay: [""]
     });
 
-    this.searchFormCase = this.formBuilder.group({   
-      consultingNumber: [""],       
+    this.searchFormCase = this.formBuilder.group({
+      consultingNumber: [""],
     });
-    
+
 
     this.onSearch();
 
@@ -99,10 +99,10 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
 
     this.tableControl.resetPage();
     this.search();
-    
+
   }
 
-   search() {
+  search() {
     const param = {
       ...this.searchForm.getRawValue(),
       sortColumn: this.tableControl.sortColumn,
@@ -110,10 +110,10 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     };
 
     this.consulting.getConsultingDataList({
-        pageSize: this.tableControl.pageSize,
-        pageNo: this.tableControl.pageNo,
-        data: param,
-      })
+      pageSize: this.tableControl.pageSize,
+      pageNo: this.tableControl.pageNo,
+      data: param,
+    })
       .then(
         (result) => {
           this.dataSource = result.data;
@@ -162,8 +162,8 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
-        let custNameDisplay = result.firstName +' '+result.lastName;
-        this.searchForm.patchValue({ customerId: result.customerId, custNameDisplay:custNameDisplay});
+        let custNameDisplay = result.firstName + ' ' + result.lastName;
+        this.searchForm.patchValue({ customerId: result.customerId, custNameDisplay: custNameDisplay });
       }
     });
   }
@@ -172,20 +172,20 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     this.searchForm.patchValue({ customerId: '', custNameDisplay: '' });
   }
 
-  onConsultingCreate(){
+  onConsultingCreate() {
 
   }
 
-  onConsultingEdit(element){
+  onConsultingEdit(element) {
     this.showConsultingDialog(element.id);
   }
 
-  showConsultingDialog(id:string) {
+  showConsultingDialog(id: string) {
     const dialogRef = this.dialog.open(ModalConsultingComponent, {
       height: '85%',
       width: '80%',
-     // panelClass: 'my-dialog',
-      data: {id:id }
+      // panelClass: 'my-dialog',
+      data: { id: id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -194,22 +194,22 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     });
   }
 
-  onSelectRow(row : ConsultingModel) {
+  onSelectRow(row: ConsultingModel) {
     this.selectedRow = row;
 
-    this.onSearchCase(row);     
+    this.onSearchCase(row);
   }
 
 
-  onSearchCase(row?:any) {
+  onSearchCase(row?: any) {
     this.selectedRow = row;
-   // this.tableControlCase.resetPage(); 
-    this.searchFormCase.patchValue({consultingNumber:this.selectedRow?.consultingNumber});
-    this.searchCase();   
+    // this.tableControlCase.resetPage(); 
+    this.searchFormCase.patchValue({ consultingNumber: this.selectedRow?.consultingNumber });
+    this.searchCase();
   }
- 
 
-  searchCase() {     
+
+  searchCase() {
     const param = {
       ...this.searchFormCase.getRawValue(),
       sortColumn: this.tableControlCase.sortColumn,
@@ -217,10 +217,10 @@ export class ConsultingComponent  extends BaseComponent implements OnInit {
     };
 
     this.consulting.getCaseUnderConsultingList({
-        pageSize: this.tableControlCase.pageSize,
-        pageNo: this.tableControlCase.pageNo,
-        data: param,
-      })
+      pageSize: this.tableControlCase.pageSize,
+      pageNo: this.tableControlCase.pageNo,
+      data: param,
+    })
       .then(
         (result) => {
           this.dataSourceSr = result.data;
