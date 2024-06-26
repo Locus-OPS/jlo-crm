@@ -102,6 +102,7 @@ export class ConsultingInfoService {
         //  this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
         console.log(this.constInfoModel);
 
+        this.closeAllTab();
 
 
 
@@ -154,10 +155,10 @@ export class ConsultingInfoService {
     });
   }
 
-  closeAll() {
+  closeAllTab() {
     console.log("remove tab all");
     this.tabManageService.removeTabs();
-    window.location.href = "/";
+    // window.location.href = "/";
   }
 
 }
