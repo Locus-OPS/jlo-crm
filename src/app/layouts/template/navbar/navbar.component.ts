@@ -261,14 +261,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (path.indexOf('#') === 0) {
       path = path.substr(1);
     }
-    if(path.indexOf(";")>0){
+    if (path.indexOf(";") > 0) {
       path = path.split(";")[0];
     }
     let index = this.listTitles.findIndex(item => item.link === path);
     if (index !== -1) {
       return this.listTitles[index].name;
     } else {
-      for (let i = 0 ; i < this.listTitles.length ; i++) {
+      for (let i = 0; i < this.listTitles.length; i++) {
         const item = this.listTitles[i];
         if (item.children && item.children.length > 0) {
           index = item.children.findIndex(child => child.link === path);
@@ -301,7 +301,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   // }
 
 
-
+  closeAll() {
+    console.log("remove tab all");
+    this.tabManageService.removeTabs();
+    window.location.href = "/";
+  }
 
 
 

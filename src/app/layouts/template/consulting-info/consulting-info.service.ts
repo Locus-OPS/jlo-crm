@@ -11,6 +11,7 @@ import ConsultingUtils from 'src/app/shared/consultingStore';
 import Utils from 'src/app/shared/utils';
 import { ConsultingInfoComponent } from './consulting-info.component';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TabManageService } from '../../admin/tab-manage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class ConsultingInfoService {
     private api: ApiService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
+    private tabManageService: TabManageService,
   ) { }
 
 
@@ -85,11 +87,17 @@ export class ConsultingInfoService {
 
       if (result.status) {
 
-        this.showConsultingDialog(result.data.id, "CONSULTING_STOP");
-        this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
-        console.log(this.constInfoModel);
-        this.setValueConsultingInfo(this.constInfoModel);
         ConsultingUtils.removeConsultingData();
+        this.setValueConsultingInfo(result.data);
+        this.showConsultingDialog(result.data.id, "CONSULTING_STOP");
+        this.constInfoModel = null;
+
+        //  this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
+        console.log(this.constInfoModel);
+
+
+
+
 
       }
 
@@ -124,6 +132,7 @@ export class ConsultingInfoService {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
+        //alert("afterclosed");
         // if (result.statusCd != "01") {
 
         //this.constInfoModel = null;
@@ -138,5 +147,10 @@ export class ConsultingInfoService {
     });
   }
 
+  closeAll() {
+    console.log("remove tab all");
+    this.tabManageService.removeTabs();
+    window.location.href = "/";
+  }
 
 }

@@ -66,11 +66,8 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
       if (constInfoModel != null && constInfoModel != undefined) {
         console.log(constInfoModel);
         this.onInitConsultInfo();
-        // this.setValueConsultingInfo(this.constInfoModel);
 
       }
-
-
 
     });
 
@@ -79,7 +76,7 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
 
   onInitConsultInfo() {
     if (ConsultingUtils.isConsulting()) {
-      this.constInfoModel = this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
+      this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
       this.getConsultingInfoData();
     } else {
       this.constInfoModel = null;
@@ -87,25 +84,28 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
     }
   }
 
+
   getConsultingInfoData() {
+    let consultingId = this.constInfoModel.id;
+    const params = { data: { id: consultingId } };
 
-    // console.log(this.consultingInfo.id);
-    let id = this.constInfoModel.id;
-    const params = { data: { id: id } };
-
+    this.spinner.show("approve_process_spinner");
 
     this.modalConsulting.getConsultingData(params).then((result: any) => {
       this.spinner.hide("approve_process_spinner");
       if (result.status) {
+        // Update session storage data
         if (ConsultingUtils.isConsulting()) {
           ConsultingUtils.setConsultingData(result.data);
         }
+        this.constInfoModel = result.data;
+        this.setValueConsultingInfo(result.data);
 
-        this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
-        this.setValueConsultingInfo(this.constInfoModel);
       } else {
 
       }
+
+
     }, (err: any) => {
       Utils.alertError({
         text: err.message,
@@ -115,13 +115,20 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
   }
 
   setValueConsultingInfo(constInfoModel: ConsultingModel) {
-    this.consultingForm.patchValue({
-      consultingNumber: this.constInfoModel.consultingNumber
-      , status: this.constInfoModel.statusName
-      , client: this.constInfoModel.customerName
-      , channel: this.constInfoModel.channelName
-      , contact: this.constInfoModel.contactName
-    });
+    console.log(" Begin setValueConsultingInfo");
+    console.log(constInfoModel);
+    if (constInfoModel != null && constInfoModel != undefined) {
+
+      this.consultingForm.patchValue({
+        consultingNumber: this.constInfoModel.consultingNumber
+        , status: this.constInfoModel.statusName
+        , client: this.constInfoModel.customerName
+        , channel: this.constInfoModel.channelName
+        , contact: this.constInfoModel.contactName
+      });
+      console.log(" End setValueConsultingInfo");
+    }
+
 
   }
 
@@ -133,13 +140,18 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
-        ConsultingUtils.setConsultingData(result.data);
+        //1.Set data from server into Session Storage 
+        this.constInfoModel = null;
+        this.constInfoModel = result.data;
+        ConsultingUtils.setConsultingData(this.constInfoModel);
+        //2. SetValue into form 
+        //  this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());    
+        this.setValueConsultingInfo(this.constInfoModel);
+
+        //3.Open Consulting Dialog
         this.showConsultingDialog(result.data.id, "CONSULTING_START");
 
-        this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
-        // console.log(result.data);
-        console.log(this.constInfoModel);
-        this.setValueConsultingInfo(this.constInfoModel);
+
       }
 
     }, (err: any) => {

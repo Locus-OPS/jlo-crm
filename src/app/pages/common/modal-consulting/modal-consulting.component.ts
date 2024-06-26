@@ -188,24 +188,34 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
       this.spinner.hide("approve_process_spinner");
       if (result.status) {
         let statusCd = result.data.statusCd;
+        let channelCd = result.data.channelCd;
 
         Utils.alertSuccess({
           title: "บันทึก",
           text: "บันทึกข้อมูลการติดต่อสำเร็จ",
         });
 
-        // Finished
-        if (statusCd == "02") {
+        // update session store data 
+        if (ConsultingUtils.isConsulting()) {
+          ConsultingUtils.setConsultingData(result.data);
+        }
+
+        // Finished && Walkin
+        if (statusCd == "02" && channelCd == "04") {
           //Remove data from sesstion storage
           if (ConsultingUtils.isConsulting()) {
-
             this.consultingInfoService.onStopConsulting();
           }
-          //alert(statusCd);
-          this.dialogRef.close();
+
+          this.dialogRef.close(result.data);
+
         } else {
+          console.log("after save phone channel ");
+          console.log(result.data);
+
           this.dialogRef.close(result.data);
         }
+
 
 
 
