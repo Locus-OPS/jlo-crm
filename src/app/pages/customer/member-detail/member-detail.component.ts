@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { MemberService } from './member.service';
@@ -25,6 +25,7 @@ import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { MemberRedeemService } from '../member-redeem/member-redeem.service';
 import { CustomerService } from '../customer.service';
+import { ContactHistoryComponent } from '../contact-history/contact-history.component';
 
 @Component({
   selector: 'app-member-detail',
@@ -33,99 +34,103 @@ import { CustomerService } from '../customer.service';
 })
 export class MemberDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
+  @ViewChild("contactHistoryConponent", { static: false })
+  contactHistoryConponent: ContactHistoryComponent;
+  customerId: string;
+
   THAI_NATIONALITY: string = "37";
   THAI_COUNTRY_CODE: string = "66";
 
   newCaseSubscription: Subscription;
   redeemSubscription: Subscription;
 
-  servicePath:string;
+  servicePath: string;
 
-  memberForm:UntypedFormGroup;
-  cardForm:UntypedFormGroup;
-  addressForm:UntypedFormGroup;
-  attForm:UntypedFormGroup;
-  caseForm:UntypedFormGroup;
-  transactionForm:UntypedFormGroup;
+  memberForm: UntypedFormGroup;
+  cardForm: UntypedFormGroup;
+  addressForm: UntypedFormGroup;
+  attForm: UntypedFormGroup;
+  caseForm: UntypedFormGroup;
+  transactionForm: UntypedFormGroup;
 
   /* card table */
   cardSelectedRow: MemberCardData;
-  cardDS:MemberCardData[];
-  cardColumn:string[]=['primary','memberCardNo','cardStatus','cardTierId','cardActiveDate','cardExpiryDate'];
+  cardDS: MemberCardData[];
+  cardColumn: string[] = ['primary', 'memberCardNo', 'cardStatus', 'cardTierId', 'cardActiveDate', 'cardExpiryDate'];
   cardTableControl: TableControl = new TableControl(() => { this.searchCard() });
 
   /* address table */
   addrSelectedRow: CustomerAddressData;
-  addressDS:CustomerAddressData[];
-  addressColumn:string[]=['primary','addressType','address','actionDelAdd'];
+  addressDS: CustomerAddressData[];
+  addressColumn: string[] = ['primary', 'addressType', 'address', 'actionDelAdd'];
   addrTableControl: TableControl = new TableControl(() => { this.searchAddress() });
   deleted = false;
 
   /* attachment table */
   attSelectedRow: MemberAttData;
   attDS: MemberAttData[];
-  attColumn: string[] = ['memberAttId', 'title','fileName', 'createdBy', 'updatedBy', 'action'];
+  attColumn: string[] = ['memberAttId', 'title', 'fileName', 'createdBy', 'updatedBy', 'action'];
   attTableControl: TableControl = new TableControl(() => { this.searchAtt() });
   file: File;
 
   /* Case table */
   caseSelectedRow: Case;
   caseDS: Case[];
-  caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate','closedDate', 'subTypeName', 'priorityName','action'];
+  caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate', 'closedDate', 'subTypeName', 'priorityName', 'action'];
   caseTableControl: TableControl = new TableControl(() => { this.searchCase() });
 
-  canCancelled:boolean;
+  canCancelled: boolean;
   /* change log table */
   chSelectedRow: ChangeLog;
-  changeLogDS:ChangeLog[];
-  changeLogColumn:string[]=['changedBy','changedDetail','changedDate'];
+  changeLogDS: ChangeLog[];
+  changeLogColumn: string[] = ['changedBy', 'changedDetail', 'changedDate'];
   changeLogTableControl: TableControl = new TableControl(() => { this.searchChangeLog() });
 
-  titleNameList=[];
-  nationalityList=[];
-  occupationList=[];
-  businessTypeList=[];
-  genderList=[];
-  maritalList=[];
-  sourceChannelList=[];
-  phonePrefixList=[];
-  regisStoreList=[{
-    codeId:"000",
-    codeName:"Head Office"
+  titleNameList = [];
+  nationalityList = [];
+  occupationList = [];
+  businessTypeList = [];
+  genderList = [];
+  maritalList = [];
+  sourceChannelList = [];
+  phonePrefixList = [];
+  regisStoreList = [{
+    codeId: "000",
+    codeName: "Head Office"
   }];
-  countryList=[];
-  addressTypeList=[];
-  customerStatusList=[];
-  provinceList=[];
-  districtList=[];
-  subDistrictList=[];
-  postCodeList=[];
-  cardStatusList=[];
-  promotionCalculateRuleList=[];
+  countryList = [];
+  addressTypeList = [];
+  customerStatusList = [];
+  provinceList = [];
+  districtList = [];
+  subDistrictList = [];
+  postCodeList = [];
+  cardStatusList = [];
+  promotionCalculateRuleList = [];
   programList: Dropdown[];
   txnTypeList: Dropdown[];
   txnStatusList: Dropdown[];
   txnChannelList: Dropdown[];
   txnSubTypeList: Dropdown[];
   constructor(
-    private tabManageService:TabManageService,
+    private tabManageService: TabManageService,
     private memberRedeemService: MemberRedeemService,
     private api: ApiService,
     private formBuilder: UntypedFormBuilder,
-    private customerService : CustomerService,
-    private memberService:MemberService,
-    private caseStore:CaseStore,
-    private el:ElementRef,
+    private customerService: CustomerService,
+    private memberService: MemberService,
+    private caseStore: CaseStore,
+    private el: ElementRef,
     private route: ActivatedRoute,
-    public router:Router,
-    public globals:Globals,
-    public tabParam:TabParam,
-    private dialog:MatDialog,
+    public router: Router,
+    public globals: Globals,
+    public tabParam: TabParam,
+    private dialog: MatDialog,
     private appStore: AppStore,
   ) {
-    super(router,globals);
+    super(router, globals);
     this.api.getMultipleCodebookByCodeType({
-      data: ['TXN_TYPE','TXN_STATUS','TXN_CHANNEL','TXN_SUB_TYPE','GENDER','MARITAL_STATUS','OCCUPATION','TITLE_NAME','NATIONALITY','SOURCE_CHANNEL','PHONE_PREFIX','COUNTRY','ADDRESS_TYPE','CUSTOMER_STATUS','CARD_STATUS','BUSINESS_TYPE']
+      data: ['TXN_TYPE', 'TXN_STATUS', 'TXN_CHANNEL', 'TXN_SUB_TYPE', 'GENDER', 'MARITAL_STATUS', 'OCCUPATION', 'TITLE_NAME', 'NATIONALITY', 'SOURCE_CHANNEL', 'PHONE_PREFIX', 'COUNTRY', 'ADDRESS_TYPE', 'CUSTOMER_STATUS', 'CARD_STATUS', 'BUSINESS_TYPE']
     }).then(
       result => {
         this.txnTypeList = result.data['TXN_TYPE'];
@@ -163,108 +168,108 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
 
   ngOnInit() {
     this.memberForm = this.formBuilder.group({
-      memberCardNo:[''],
-      cardTierId:[''],
-      tierName:new UntypedFormControl({value: '', disabled: true}),
-      cardStatus:new UntypedFormControl({value: '', disabled: true}),
-      cardActiveDate:new UntypedFormControl({value: '', disabled: true}),
-      cardExpiryDate:new UntypedFormControl({value: '', disabled: true}),
-      memberId:[''],
-      customerId:[''],
+      memberCardNo: [''],
+      cardTierId: [''],
+      tierName: new UntypedFormControl({ value: '', disabled: true }),
+      cardStatus: new UntypedFormControl({ value: '', disabled: true }),
+      cardActiveDate: new UntypedFormControl({ value: '', disabled: true }),
+      cardExpiryDate: new UntypedFormControl({ value: '', disabled: true }),
+      memberId: [''],
+      customerId: [''],
       // customerType:[true],
-      memberType:[''],
-      customerStatus:['1'],
-      title:[''],
-      firstName:[''],
-      lastName:[''],
-      nationality:[this.THAI_NATIONALITY],
-      citizenId:[''],
-      previousCitizenId:[''],
-      passportNo:[''],
-      previousPassportNo:[''],
-      birthDate:[''],
-      gender:[''],
-      maritalStatus:[''],
-      occupation:[''],
-      businessName:[''],
-      taxId:[''],
-      businessType:[''],
-      phoneArea:[''],
-      phoneNo:[''],
-      email:[''],
-      registrationChannel:new UntypedFormControl({value: '', disabled: true}),
-      registrationStore:new UntypedFormControl({value: '', disabled: true}),
-      remark:[''],
-     
-      programId:[''],
-      programName:new UntypedFormControl({value: '', disabled: true}),
-      currentPoint:[''],
-      pointExpireThisYear:[''],
-      lastCalculatedDate:new UntypedFormControl({value: '', disabled: true}),
+      memberType: [''],
+      customerStatus: ['1'],
+      title: [''],
+      firstName: [''],
+      lastName: [''],
+      nationality: [this.THAI_NATIONALITY],
+      citizenId: [''],
+      previousCitizenId: [''],
+      passportNo: [''],
+      previousPassportNo: [''],
+      birthDate: [''],
+      gender: [''],
+      maritalStatus: [''],
+      occupation: [''],
+      businessName: [''],
+      taxId: [''],
+      businessType: [''],
+      phoneArea: [''],
+      phoneNo: [''],
+      email: [''],
+      registrationChannel: new UntypedFormControl({ value: '', disabled: true }),
+      registrationStore: new UntypedFormControl({ value: '', disabled: true }),
+      remark: [''],
 
-      createdBy:new UntypedFormControl({value: '', disabled: true}),
-      createdDate:new UntypedFormControl({value: '', disabled: true}),
-      updatedBy:new UntypedFormControl({value: '', disabled: true}),
-      updatedDate:new UntypedFormControl({value: '', disabled: true}),
+      programId: [''],
+      programName: new UntypedFormControl({ value: '', disabled: true }),
+      currentPoint: [''],
+      pointExpireThisYear: [''],
+      lastCalculatedDate: new UntypedFormControl({ value: '', disabled: true }),
+
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true }),
     });
 
     this.cardForm = this.formBuilder.group({
-      memberCardNo:[''],
-      primaryYn:[],
-      primary:[],
-      cardType:[''],
-      cardTierId:[''],
-      cardExpiryDate:[''],
-      cardStatus:[''],
-      cardIssueDate:[''],
-      cardActiveDate:[''],
-      cardInactiveDate:[''],
-      cardLastBlockDate:[''],
-      reIssueReason:[''],
-      reIssueCardNo:[''],
-      createdBy:new UntypedFormControl({value: '', disabled: true}),
-      createdDate:new UntypedFormControl({value: '', disabled: true}),
-      updatedBy:new UntypedFormControl({value: '', disabled: true}),
-      updatedDate:new UntypedFormControl({value: '', disabled: true}),
+      memberCardNo: [''],
+      primaryYn: [],
+      primary: [],
+      cardType: [''],
+      cardTierId: [''],
+      cardExpiryDate: [''],
+      cardStatus: [''],
+      cardIssueDate: [''],
+      cardActiveDate: [''],
+      cardInactiveDate: [''],
+      cardLastBlockDate: [''],
+      reIssueReason: [''],
+      reIssueCardNo: [''],
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true }),
     });
 
     this.addressForm = this.formBuilder.group({
-      addressId:[],
-      memberId:[],
-      primary:[''],
+      addressId: [],
+      memberId: [],
+      primary: [''],
       previousPrimaryYn: [''],
-      addressType:[''],
-      address:[''],
-      postCode:[''],
-      subDistrict:[''],
-      district:[''],
-      province:[''],
-      country:[''],
-      createdBy:new UntypedFormControl({value: '', disabled: true}),
-      createdDate:new UntypedFormControl({value: '', disabled: true}),
-      updatedBy:new UntypedFormControl({value: '', disabled: true}),
-      updatedDate:new UntypedFormControl({value: '', disabled: true}),
+      addressType: [''],
+      address: [''],
+      postCode: [''],
+      subDistrict: [''],
+      district: [''],
+      province: [''],
+      country: [''],
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true }),
     });
 
     this.attForm = this.formBuilder.group({
-      memberAttId:[],
-      memberId:[],
-      attId:[],
-      fileName:new UntypedFormControl({value: '', disabled: true}),
-      filePath:new UntypedFormControl({value: '', disabled: true}),
+      memberAttId: [],
+      memberId: [],
+      attId: [],
+      fileName: new UntypedFormControl({ value: '', disabled: true }),
+      filePath: new UntypedFormControl({ value: '', disabled: true }),
       title: [''],
-      descp:[''],
-      createdBy: new UntypedFormControl({value: '', disabled: true}),
-      createdDate:new UntypedFormControl({value: '', disabled: true}),
-      updatedBy:new UntypedFormControl({value: '', disabled: true}),
-      updatedDate:new UntypedFormControl({value: '', disabled: true}),
+      descp: [''],
+      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdDate: new UntypedFormControl({ value: '', disabled: true }),
+      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedDate: new UntypedFormControl({ value: '', disabled: true }),
     });
 
     this.caseForm = this.formBuilder.group({
       caseNumber: [''],
-      typeName:[''],
-      subTypeName:[''],
-      priorityName:[''],
+      typeName: [''],
+      subTypeName: [''],
+      priorityName: [''],
       subject: [''],
       detail: [''],
       channelName: [''],
@@ -313,36 +318,36 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       updatedDate: ['']
     });
 
-    if(this.tabParam.params['memberId']!=null){
-      this.memberService.getMemberById({data:{memberId:this.tabParam.params['memberId']}})
-      .then(result => {
-        this.memberForm.controls['memberType'].disable();
-        this.memberForm.patchValue(result.data);
-        this.memberForm.patchValue({ 'previousCitizenId':  this.memberForm.value['citizenId']});
-        this.memberForm.patchValue({ 'previousPassportNo':  this.memberForm.value['passportNo']});
-        Utils.setBirthDatePicker(this.memberForm);
-        this.memberForm.patchValue(result.data.memberCardNoData);
-        this.memberForm.patchValue({ 'updatedBy':  result.data.updatedBy});
-        this.memberForm.patchValue({ 'updatedDate':  result.data.updatedDate});
-        this.memberForm.patchValue({ 'createdBy':  result.data.createdBy});
-        this.memberForm.patchValue({ 'createdDate':  result.data.createdDate});
-        this.changeMemberType(this.memberForm.controls['memberType'].value);
+    if (this.tabParam.params['memberId'] != null) {
+      this.memberService.getMemberById({ data: { memberId: this.tabParam.params['memberId'] } })
+        .then(result => {
+          this.memberForm.controls['memberType'].disable();
+          this.memberForm.patchValue(result.data);
+          this.memberForm.patchValue({ 'previousCitizenId': this.memberForm.value['citizenId'] });
+          this.memberForm.patchValue({ 'previousPassportNo': this.memberForm.value['passportNo'] });
+          Utils.setBirthDatePicker(this.memberForm);
+          this.memberForm.patchValue(result.data.memberCardNoData);
+          this.memberForm.patchValue({ 'updatedBy': result.data.updatedBy });
+          this.memberForm.patchValue({ 'updatedDate': result.data.updatedDate });
+          this.memberForm.patchValue({ 'createdBy': result.data.createdBy });
+          this.memberForm.patchValue({ 'createdDate': result.data.createdDate });
+          this.changeMemberType(this.memberForm.controls['memberType'].value);
 
-        if(result.data.memberPointData){
-          this.memberForm.patchValue(result.data.memberPointData);
-        }
-        this.searchAddress();
-        this.searchCard();
-        this.searchAtt();
-        this.searchCase();
-        this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.member', { name: result.data.firstName || result.data.businessName });
-      }, error => {
-        Utils.alertError({
-          text: 'Please try again later.',
+          if (result.data.memberPointData) {
+            this.memberForm.patchValue(result.data.memberPointData);
+          }
+          this.searchAddress();
+          this.searchCard();
+          this.searchAtt();
+          this.searchCase();
+          this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.member', { name: result.data.firstName || result.data.businessName });
+        }, error => {
+          Utils.alertError({
+            text: 'Please try again later.',
+          });
+          this.router.navigate(["/customer"]);
         });
-        this.router.navigate(["/customer"]);
-      });
-    }else{
+    } else {
       this.router.navigate(["/customer"]);
     }
 
@@ -357,8 +362,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.newCaseSubscription.unsubscribe();
   }
 
-  changeMemberType(val){
-    if(val){
+  changeMemberType(val) {
+    if (val) {
       this.memberForm.controls['firstName'].setValidators([Validators.required, Validators.maxLength(255)]);
       this.memberForm.controls['firstName'].updateValueAndValidity();
       this.memberForm.controls['lastName'].setValidators([Validators.required, Validators.maxLength(255)]);
@@ -368,7 +373,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       this.onChangeNationality(this.memberForm.controls['nationality'].value);
       this.memberForm.controls['businessName'].clearValidators();
       this.memberForm.controls['businessName'].updateValueAndValidity();
-    }else{
+    } else {
       this.memberForm.controls['firstName'].clearValidators();
       this.memberForm.controls['firstName'].updateValueAndValidity();
       this.memberForm.controls['lastName'].clearValidators();
@@ -390,10 +395,10 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
    * If this mandatory validation is passed, it will verify citizen id, verify passport no., and then save member.
    */
   onSave() {
-    if(this.memberForm.controls['memberType'].value && this.THAI_NATIONALITY == this.memberForm.controls['nationality'].value){
+    if (this.memberForm.controls['memberType'].value && this.THAI_NATIONALITY == this.memberForm.controls['nationality'].value) {
       this.memberForm.controls['citizenId'].setValidators([Validators.required, Validators.maxLength(13)]);
       this.memberForm.controls['citizenId'].updateValueAndValidity();
-    }else{
+    } else {
       this.memberForm.controls['citizenId'].clearValidators();
       this.memberForm.controls['citizenId'].updateValueAndValidity();
     }
@@ -426,7 +431,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       this.verifyPassportNo();
     } else {
       const param = {
-        citizenId : citizenId
+        citizenId: citizenId
       };
       this.customerService.getCustomerByCitizenIdOrPassportNo({
         data: param
@@ -463,7 +468,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       this.saveMember();
     } else {
       const param = {
-        passportNo : passportNo
+        passportNo: passportNo
       };
       this.customerService.getCustomerByCitizenIdOrPassportNo({
         data: param
@@ -500,8 +505,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     }).then(result => {
       if (result.status) {
         this.memberForm.patchValue(result.data);
-        this.memberForm.patchValue({ 'previousCitizenId':  this.memberForm.value['citizenId']});
-        this.memberForm.patchValue({ 'previousPassportNo':  this.memberForm.value['passportNo']});
+        this.memberForm.patchValue({ 'previousCitizenId': this.memberForm.value['citizenId'] });
+        this.memberForm.patchValue({ 'previousPassportNo': this.memberForm.value['passportNo'] });
 
         Utils.setBirthDatePicker(this.memberForm);
         Utils.alertSuccess({
@@ -509,7 +514,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
           text: "Member has been updated.",
         });
         this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.member', { name: result.data.firstName || result.data.businessName });
-      }else{
+      } else {
         Utils.alertError({
           text: 'Please, try again later',
         });
@@ -527,14 +532,14 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       programId: this.memberForm.controls['programId'].value
     }
 
-    this.memberService.getMemberPoint({data: param})
-    .then(result => {
-      this.memberForm.patchValue(result.data);
-    }, error => {
-      Utils.alertError({
-        text: 'Please try again later.',
+    this.memberService.getMemberPoint({ data: param })
+      .then(result => {
+        this.memberForm.patchValue(result.data);
+      }, error => {
+        Utils.alertError({
+          text: 'Please try again later.',
+        });
       });
-    });
   }
 
   /*------------------------------------------------------------------------------------------------------------------------------*/
@@ -544,7 +549,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.memberService.getMemberAddressList({
       pageSize: this.addrTableControl.pageSize,
       pageNo: this.addrTableControl.pageNo,
-      data: { memberId:this.memberForm.controls['memberId'].value, sortColumn: this.addrTableControl.sortColumn, sortDirection: this.addrTableControl.sortDirection }
+      data: { memberId: this.memberForm.controls['memberId'].value, sortColumn: this.addrTableControl.sortColumn, sortDirection: this.addrTableControl.sortDirection }
     }).then(result => {
       this.addressDS = result.data;
       this.addrTableControl.total = result.total;
@@ -555,22 +560,22 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     });
   }
 
-  selectAddress(row){
+  selectAddress(row) {
     this.addrSelectedRow = row;
     this.addressForm.patchValue(row);
-    this.addressForm.patchValue({primary:row.primaryYn=="Y"});
-    this.addressForm.patchValue({ previousPrimaryYn:  this.addressForm.value['primary']});
+    this.addressForm.patchValue({ primary: row.primaryYn == "Y" });
+    this.addressForm.patchValue({ previousPrimaryYn: this.addressForm.value['primary'] });
     this.setComboAddress(row.subDistrict);
   }
 
-  addressAdd(){
+  addressAdd() {
     this.addrSelectedRow = {};
     this.addressForm.reset();
-    this.addressForm.patchValue({memberId:this.memberForm.value.memberId});
-    if(this.addressDS==null){
-      this.addressForm.patchValue({primary:true,addressType:'02',country: this.THAI_COUNTRY_CODE,previousPrimaryYn:  false});
-    }else{
-      this.addressForm.patchValue({country: this.THAI_COUNTRY_CODE,previousPrimaryYn:  false});
+    this.addressForm.patchValue({ memberId: this.memberForm.value.memberId });
+    if (this.addressDS == null) {
+      this.addressForm.patchValue({ primary: true, addressType: '02', country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
+    } else {
+      this.addressForm.patchValue({ country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
     }
     setTimeout(() => {
       document.querySelector("#divAddressEditMode").scrollIntoView(true);
@@ -578,13 +583,13 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.changeCountry();
   }
 
-  onCancelAddress(){
-    this.addrSelectedRow=null;
+  onCancelAddress() {
+    this.addrSelectedRow = null;
     this.addressForm.reset();
   }
-  changeCountry(){
-    this.addressForm.patchValue({province:null,district:null,subDistrict:null,postCode:''});
-    if(this.addressForm.controls['country'].value == this.THAI_COUNTRY_CODE){
+  changeCountry() {
+    this.addressForm.patchValue({ province: null, district: null, subDistrict: null, postCode: '' });
+    if (this.addressForm.controls['country'].value == this.THAI_COUNTRY_CODE) {
       this.addressForm.controls['province'].setValidators([Validators.required]);
       this.addressForm.controls['province'].updateValueAndValidity();
       this.addressForm.controls['district'].setValidators([Validators.required]);
@@ -593,7 +598,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       this.addressForm.controls['subDistrict'].updateValueAndValidity();
       this.addressForm.controls['postCode'].setValidators([Validators.required]);
       this.addressForm.controls['postCode'].updateValueAndValidity();
-    }else{
+    } else {
       this.addressForm.controls['province'].clearValidators();
       this.addressForm.controls['province'].updateValueAndValidity();
       this.addressForm.controls['district'].clearValidators();
@@ -607,7 +612,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       this.subDistrictList = [];
       this.postCodeList = [];
     }
-    this.api.getProvince({data:this.addressForm.controls['country'].value}).then(
+    this.api.getProvince({ data: this.addressForm.controls['country'].value }).then(
       result => {
         this.provinceList = result.data;
         this.districtList = [];
@@ -617,31 +622,31 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     );
   }
 
-  setComboAddress(subDistrict){
-    if(subDistrict!=null){
-      this.api.getProvince({data:this.addressForm.controls['country'].value}).then(
+  setComboAddress(subDistrict) {
+    if (subDistrict != null) {
+      this.api.getProvince({ data: this.addressForm.controls['country'].value }).then(
         result => {
           this.provinceList = result.data;
-          this.api.getDistrict({data:subDistrict.substring(0,2)}).then(
+          this.api.getDistrict({ data: subDistrict.substring(0, 2) }).then(
             result => {
               this.districtList = result.data;
-              this.api.getSubDistrict({data:subDistrict.substring(0,4)}).then(
+              this.api.getSubDistrict({ data: subDistrict.substring(0, 4) }).then(
                 result => {
                   this.subDistrictList = result.data;
-                  this.addressForm.patchValue({province:subDistrict.substring(0,2),district:subDistrict.substring(0,4),subDistrict:subDistrict});
+                  this.addressForm.patchValue({ province: subDistrict.substring(0, 2), district: subDistrict.substring(0, 4), subDistrict: subDistrict });
                 }
               );
             }
           );
         }
       );
-    }else{
+    } else {
       this.changeCountry();
     }
   }
 
-  changeProvince(){
-    this.api.getDistrict({data:this.addressForm.controls['province'].value}).then(
+  changeProvince() {
+    this.api.getDistrict({ data: this.addressForm.controls['province'].value }).then(
       result => {
         this.districtList = result.data;
         this.subDistrictList = [];
@@ -650,8 +655,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     );
   }
 
-  changeDistrict(){
-    this.api.getSubDistrict({data:this.addressForm.controls['district'].value}).then(
+  changeDistrict() {
+    this.api.getSubDistrict({ data: this.addressForm.controls['district'].value }).then(
       result => {
         this.subDistrictList = result.data;
         this.postCodeList = [];
@@ -659,32 +664,32 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     );
   }
 
-  changeSubDistrict(){
-    this.api.getPostCode({data:this.addressForm.controls['subDistrict'].value}).then(
+  changeSubDistrict() {
+    this.api.getPostCode({ data: this.addressForm.controls['subDistrict'].value }).then(
       result => {
         this.postCodeList = result.data;
-        if(result.data.length==1){
-          this.addressForm.patchValue({postCode:this.postCodeList[0].codeId});
+        if (result.data.length == 1) {
+          this.addressForm.patchValue({ postCode: this.postCodeList[0].codeId });
         }
       }
     );
   }
 
-  keypressPostCode(){
-    if(this.addressForm.controls['postCode'].value.length==5){
-      this.api.getPostCodeDetail({data:this.addressForm.controls['postCode'].value}).then(
+  keypressPostCode() {
+    if (this.addressForm.controls['postCode'].value.length == 5) {
+      this.api.getPostCodeDetail({ data: this.addressForm.controls['postCode'].value }).then(
         result => {
           this.postCodeList = result.data;
         }
       );
     }
   }
-  selectPostCode(subDistrict){
-    if(this.addressForm.controls['country'].value != this.THAI_COUNTRY_CODE){
+  selectPostCode(subDistrict) {
+    if (this.addressForm.controls['country'].value != this.THAI_COUNTRY_CODE) {
       return false;
     }
 
-    if(subDistrict!=this.addressForm.controls['subDistrict'].value){
+    if (subDistrict != this.addressForm.controls['subDistrict'].value) {
       this.setComboAddress(subDistrict);
     }
   }
@@ -695,7 +700,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     //   primaryYn: Utils.convertToYN(this.addressForm.value['primary']),
     // };
 
-   if (this.addressForm.invalid) {
+    if (this.addressForm.invalid) {
       console.log("invalid addressForm");
       Object.keys(this.addressForm.controls).forEach(element => {
         this.addressForm.controls[element].markAsTouched({ onlySelf: true });
@@ -836,11 +841,11 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*---------------------------------------------------------- Card --------------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchCard(){
+  searchCard() {
     this.memberService.getMemberCardList({
       pageSize: this.cardTableControl.pageSize,
       pageNo: this.cardTableControl.pageNo,
-      data: { memberId:this.memberForm.controls['memberId'].value, sortColumn: this.cardTableControl.sortColumn, sortDirection: this.cardTableControl.sortDirection }
+      data: { memberId: this.memberForm.controls['memberId'].value, sortColumn: this.cardTableControl.sortColumn, sortDirection: this.cardTableControl.sortDirection }
     }).then(result => {
       this.cardDS = result.data;
       this.cardTableControl.total = result.total;
@@ -851,25 +856,25 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     });
   }
 
-  selectCard(row){
+  selectCard(row) {
     this.cardSelectedRow = row;
     this.cardForm.patchValue(row);
-    this.cardForm.patchValue({primary:row.primaryYn=="Y"});
+    this.cardForm.patchValue({ primary: row.primaryYn == "Y" });
     this.cardForm.disable();
   }
 
-  onCancelCard(){
-    this.cardSelectedRow=null;
+  onCancelCard() {
+    this.cardSelectedRow = null;
     this.cardForm.reset();
   }
 
-  reissueCard(){
-    let membercard:MemberCardData = {
-      memberId:this.memberForm.controls['memberId'].value,
-      programId:this.memberForm.controls['programId'].value,
-      programName:this.memberForm.controls['programName'].value,
-      memberCardNo:this.memberForm.controls['memberCardNo'].value,
-      cardTierId:this.memberForm.controls['cardTierId'].value
+  reissueCard() {
+    let membercard: MemberCardData = {
+      memberId: this.memberForm.controls['memberId'].value,
+      programId: this.memberForm.controls['programId'].value,
+      programName: this.memberForm.controls['programName'].value,
+      memberCardNo: this.memberForm.controls['memberCardNo'].value,
+      cardTierId: this.memberForm.controls['cardTierId'].value
     };
     const dialogRef = this.dialog.open(ReIssuesCardComponent, {
       width: '400px',
@@ -877,20 +882,20 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       panelClass: 'my-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.memberForm.patchValue({memberCardNo:result.memberCardNo,cardStatus:'01',cardTierId:result.cardTierId,tierName:result.tierName});
+      if (result) {
+        this.memberForm.patchValue({ memberCardNo: result.memberCardNo, cardStatus: '01', cardTierId: result.cardTierId, tierName: result.tierName });
         this.searchCard();
       }
     });
   }
 
-  blockCard(){
-    let membercard:MemberCardData = {
-      memberId:this.memberForm.controls['memberId'].value,
-      programId:this.memberForm.controls['programId'].value,
-      programName:this.memberForm.controls['programName'].value,
-      memberCardNo:this.memberForm.controls['memberCardNo'].value,
-      cardTierId:this.memberForm.controls['cardTierId'].value
+  blockCard() {
+    let membercard: MemberCardData = {
+      memberId: this.memberForm.controls['memberId'].value,
+      programId: this.memberForm.controls['programId'].value,
+      programName: this.memberForm.controls['programName'].value,
+      memberCardNo: this.memberForm.controls['memberCardNo'].value,
+      cardTierId: this.memberForm.controls['cardTierId'].value
     };
     const dialogRef = this.dialog.open(BlockCardComponent, {
       width: '400px',
@@ -898,8 +903,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       panelClass: 'my-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.memberForm.patchValue({cardStatus:'04'});
+      if (result) {
+        this.memberForm.patchValue({ cardStatus: '04' });
         this.searchCard();
       }
     });
@@ -908,11 +913,11 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*------------------------------------------------------- Attachment -----------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchAtt(){
+  searchAtt() {
     this.memberService.getMemberAttachmentList({
       pageSize: this.attTableControl.pageSize,
       pageNo: this.attTableControl.pageNo,
-      data: { memberId:this.memberForm.controls['memberId'].value, sortColumn: this.addrTableControl.sortColumn, sortDirection: this.addrTableControl.sortDirection }
+      data: { memberId: this.memberForm.controls['memberId'].value, sortColumn: this.addrTableControl.sortColumn, sortDirection: this.addrTableControl.sortDirection }
     }).then(result => {
       this.attDS = result.data;
       this.attTableControl.total = result.total;
@@ -923,16 +928,16 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     });
   }
 
-  onSelectAttRow(row){
+  onSelectAttRow(row) {
     this.attSelectedRow = row;
     this.attForm.patchValue(row);
   }
 
-  onAttCreate(){
+  onAttCreate() {
     this.attSelectedRow = {};
     this.file = null;
     this.attForm.reset();
-    this.attForm.patchValue({memberId:this.memberForm.controls['memberId'].value});
+    this.attForm.patchValue({ memberId: this.memberForm.controls['memberId'].value });
   }
 
   selectFile(event) {
@@ -944,27 +949,27 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     }
   }
 
-  onAttCancel(){
+  onAttCancel() {
     this.attSelectedRow = null;
     this.attForm.reset();
   }
 
-  onAttDelete(row){
+  onAttDelete(row) {
     Utils.confirmDelete().then(confirm => {
       if (confirm.value) {
-        this.memberService.deleteMemberAttachment({data:row})
-        .then(result => {
-          this.searchAtt();
-        }, error => {
-          Utils.alertError({
-            text: 'Please try again later.',
+        this.memberService.deleteMemberAttachment({ data: row })
+          .then(result => {
+            this.searchAtt();
+          }, error => {
+            Utils.alertError({
+              text: 'Please try again later.',
+            });
           });
-        });
       }
     });
   }
 
-  onAttSave(){
+  onAttSave() {
     if (this.attForm.invalid) {
       return;
     }
@@ -972,25 +977,25 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
       ...this.attForm.value
     };
 
-    const msgTitle = this.attForm.controls['memberAttId'].value==null ? 'Created!' : 'Updated!';
-    const msgText = this.attForm.controls['memberAttId'].value==null ? 'Attachment has been created.!' : 'Attachment has been updated.';
+    const msgTitle = this.attForm.controls['memberAttId'].value == null ? 'Created!' : 'Updated!';
+    const msgText = this.attForm.controls['memberAttId'].value == null ? 'Attachment has been created.!' : 'Attachment has been updated.';
 
     this.memberService.createAttachment(this.file, param).subscribe(event => {
       if (event instanceof HttpResponse) {
         if (event.status === 200) {
           const response: ApiResponse<MemberAttData> = <ApiResponse<MemberAttData>>JSON.parse(<string>event.body);
-          if(response.status){
+          if (response.status) {
             Utils.alertSuccess({
               title: msgTitle,
               text: msgText
             });
             this.searchAtt();
 
-            Utils.assign(this.addrSelectedRow, {...response.data});
+            Utils.assign(this.addrSelectedRow, { ...response.data });
             this.attForm.patchValue({
               ...response.data
             });
-          }else{
+          } else {
             Utils.alertError({
               text: 'Please, try again later',
             });
@@ -1011,11 +1016,11 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*---------------------------------------------------------- Case --------------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchCase(){
+  searchCase() {
     this.memberService.getMemberCaseList({
       pageSize: this.caseTableControl.pageSize,
       pageNo: this.caseTableControl.pageNo,
-      data: { customerId:this.memberForm.controls['customerId'].value, sortColumn: this.caseTableControl.sortColumn, sortDirection: this.caseTableControl.sortDirection }
+      data: { customerId: this.memberForm.controls['customerId'].value, sortColumn: this.caseTableControl.sortColumn, sortDirection: this.caseTableControl.sortDirection }
     }).then(result => {
       this.caseDS = result.data;
       this.caseTableControl.total = result.total;
@@ -1032,7 +1037,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     this.caseStore.updateCaseDetail(e.caseNumber);
   }
 
-  onSelectCaseRow(row){
+  onSelectCaseRow(row) {
     this.caseSelectedRow = row;
     this.caseForm.patchValue(row);
     this.caseForm.disable();
@@ -1041,7 +1046,7 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*------------------------------------------------------- Change Log -----------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchChangeLog(){
+  searchChangeLog() {
 
   }
 

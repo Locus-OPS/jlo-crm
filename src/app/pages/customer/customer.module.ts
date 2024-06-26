@@ -12,14 +12,9 @@ import { BlockCardComponent } from './member-detail/block-card/block-card.compon
 import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 import { RedeemSummaryDialogComponent } from './member-redeem/redeem-summary-dialog/redeem-summary-dialog.component';
 import { CommonModule } from '../common/common.module';
+import { ContactHistoryComponent } from './contact-history/contact-history.component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    FormsModule,
-    RouterModule,
-    CommonModule
-  ],
   declarations: [
     CustomerComponent,
     CustomerDetailComponent,
@@ -29,7 +24,8 @@ import { CommonModule } from '../common/common.module';
     ReIssuesCardComponent,
     BlockCardComponent,
     MemberRedeemComponent,
-    RedeemSummaryDialogComponent
+    RedeemSummaryDialogComponent,
+    ContactHistoryComponent
   ],
   exports: [
     CustomerComponent,
@@ -40,7 +36,14 @@ import { CommonModule } from '../common/common.module';
     ReIssuesCardComponent,
     BlockCardComponent,
     MemberRedeemComponent,
-    RedeemSummaryDialogComponent
+    RedeemSummaryDialogComponent,
+    ContactHistoryComponent
   ],
+  imports: [
+    SharedModule,
+    FormsModule,
+    RouterModule,
+    CommonModule,
+  ]
 })
 export class CustomerModule { }
