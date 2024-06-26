@@ -53,7 +53,7 @@ export class SoftphoneComponent implements OnInit {
           // Insert Consulting
           this.consultingInfoService.onStartPhoneConsulting(this.customerId);
         } else if (msg.state == "DISCONNECTED") {
-          this.consultingInfoService.onStopPhoneConsulting();
+          this.consultingInfoService.onStopConsulting();
         }
         console.log("msg.interaction : " + msg.interaction);
       }
