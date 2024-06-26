@@ -49,15 +49,23 @@ export class ConsultingInfoService {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
-        //1.Set data from server into Session Storage 
-        ConsultingUtils.setConsultingData(result.data);
 
-        //2.Open Consulting Dialog
+        if (ConsultingUtils.isConsulting()) {
+          ConsultingUtils.removeConsultingData();
+        }
+
+
+        //1.Set data from server into Session Storage 
+        this.constInfoModel = null;
+        this.constInfoModel = result.data;
+        ConsultingUtils.setConsultingData(this.constInfoModel);
+
+        //2. SetValue into form
+        this.setValueConsultingInfo(this.constInfoModel);
+
+        //3.Open Consulting Dialog
         this.showConsultingDialog(result.data.id, "CONSULTING_START");
 
-        this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
-        console.log(this.constInfoModel);
-        this.setValueConsultingInfo(this.constInfoModel);
       }
 
     }, (err: any) => {
@@ -76,7 +84,6 @@ export class ConsultingInfoService {
 
 
   onStopConsulting() {
-
     this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
 
     this.spinner.show("approve_process_spinner");

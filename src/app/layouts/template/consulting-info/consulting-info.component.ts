@@ -140,6 +140,11 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
       this.spinner.hide("approve_process_spinner");
 
       if (result.status) {
+
+        if (ConsultingUtils.isConsulting()) {
+          ConsultingUtils.removeConsultingData();
+        }
+
         //1.Set data from server into Session Storage 
         this.constInfoModel = null;
         this.constInfoModel = result.data;

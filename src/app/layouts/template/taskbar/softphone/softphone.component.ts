@@ -151,11 +151,16 @@ export class SoftphoneComponent implements OnInit {
           console.log("msg.interaction : " + msg.interaction);
           if (msg.state == "CONNECTED") {
             // Insert Consulting  
-            this.consultingInfoService.onStartPhoneConsulting(this.customerId);
-
+            if (!ConsultingUtils.isConsulting()) {
+              this.consultingInfoService.onStartPhoneConsulting(this.customerId);
+            }
 
           } else if (msg.state == "DISCONNECTED") {
-            this.consultingInfoService.onStopConsulting();
+            // alert("msg.state " + msg.state);
+            if (ConsultingUtils.isConsulting()) {
+              this.consultingInfoService.onStopConsulting();
+            }
+
           }
 
 
@@ -203,9 +208,6 @@ export class SoftphoneComponent implements OnInit {
       }
     });
   }
-
-
-
 
 }
 

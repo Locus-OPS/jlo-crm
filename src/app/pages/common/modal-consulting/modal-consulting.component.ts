@@ -82,6 +82,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
     this.getConsultingData();
 
+    //alert("Initial");
 
   }
 
