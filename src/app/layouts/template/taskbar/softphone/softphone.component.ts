@@ -39,10 +39,33 @@ export class SoftphoneComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initEventListener();
+    this.initSendEvent();
+
     this.softphoneService.getAgentStatus().subscribe((status) => {
       this.status = status;
     });
-    this.initEventListener();
+
+    this.softphoneService.getInteractionStatus().subscribe(msg => {
+      if (msg != null && msg != undefined) {
+        console.log("msg.state : " + msg.state);
+        if (msg.state == "CONNECTED") {
+          // Insert Consulting
+          this.consultingInfoService.onStartPhoneConsulting(this.customerId);
+        } else if (msg.state == "DISCONNECTED") {
+          this.consultingInfoService.onStopPhoneConsulting();
+        }
+        console.log("msg.interaction : " + msg.interaction);
+      }
+
+      // TODO Check message.data.interaction.state == 'CONNECTED'
+      /**
+       * if(CONNECTED)
+       * 1. Insert consulting
+       * 2. open modal consulting
+       *
+       */
+    });
   }
 
   getDisplayAgentStatus(status: AgentStatus) {
@@ -50,8 +73,8 @@ export class SoftphoneComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param message 
+   *
+   * @param message
    */
   handleScreenPop(message) {
     this.isOpen = true;
@@ -74,10 +97,10 @@ export class SoftphoneComponent implements OnInit {
 
 
   /**
-   * 1.เจอ คนเดียวจังๆ ให้ไปหน้า customer detail / member detail 
-      2.เจอหลายคน ให้มาที่หน้า customer list 
-      3 ถ้าไม่เจอ ให้มาที่หน้า customer list 
-    * @param phoneNo 
+   * 1.เจอ คนเดียวจังๆ ให้ไปหน้า customer detail / member detail
+      2.เจอหลายคน ให้มาที่หน้า customer list
+      3 ถ้าไม่เจอ ให้มาที่หน้า customer list
+    * @param phoneNo
     */
   getCustomerByPhoneNo(phoneNo: string) {
     const param = {
@@ -107,10 +130,10 @@ export class SoftphoneComponent implements OnInit {
     });
   }
   /**
-   * 
-   * @param isMemberFlag 
-   * @param memberId 
-   * @param customerId 
+   *
+   * @param isMemberFlag
+   * @param memberId
+   * @param customerId
    */
   gotoMemberCustomerPage(isMemberFlag: boolean, memberId: string, customerId: string, phoneNo: string) {
     if (isMemberFlag) {
@@ -139,40 +162,11 @@ export class SoftphoneComponent implements OnInit {
   }
 
   handleInteractionSubscription(message) {
-    if (["connect", "disconnect"].includes(message.data.category)) {
-      this.softphoneService.setInteractionStatus({
-        state: message.data.interaction.state,
-        interaction: message.data.interaction,
-      });
-
-      this.softphoneService.getInteractionStatus().subscribe(msg => {
-        if (msg != null && msg != undefined) {
-          console.log("msg.state : " + msg.state);
-          console.log("msg.interaction : " + msg.interaction);
-          if (msg.state == "CONNECTED") {
-            // Insert Consulting  
-            if (!ConsultingUtils.isConsulting()) {
-              this.consultingInfoService.onStartPhoneConsulting(this.customerId);
-            }
-
-          } else if (msg.state == "DISCONNECTED") {
-            // alert("msg.state " + msg.state);
-            if (ConsultingUtils.isConsulting()) {
-              this.consultingInfoService.onStopConsulting();
-            }
-
-          }
-
-
-        }
-
-
-      });
-
-    }
+    this.softphoneService.setInteractionStatus({
+      state: message.data.interaction.state,
+      interaction: message.data.interaction,
+    });
   }
-
-
 
   initEventListener() {
     window.addEventListener("message", (event) => {
@@ -207,6 +201,43 @@ export class SoftphoneComponent implements OnInit {
         // }
       }
     });
+  }
+
+  initSendEvent() {
+    this.softphoneService.getSendAgentStatus().subscribe((status) => {
+      this.updateUserStatus(status.status);
+    });
+    this.softphoneService.getSendInteractionStatus().subscribe((state) => {
+      if (state) {
+        this.updateInteractionState(state);
+      }
+    });
+  }
+
+  updateUserStatus(status: string) {
+    const iframe = document.getElementById('embedded-softphone') as HTMLIFrameElement;
+    iframe.contentWindow.postMessage(JSON.stringify({
+      type: 'updateUserStatus',
+      data: { id: status }
+    }), "*");
+  }
+
+  updateInteractionState(state: string) {
+    const lastInteraction = this.softphoneService.getLastInteraction();
+    var interactionId;
+    if (lastInteraction.old) {
+      interactionId = lastInteraction.old.id;
+    } else {
+      interactionId = lastInteraction.id;
+    }
+    const iframe = document.getElementById('embedded-softphone') as HTMLIFrameElement;
+    iframe.contentWindow.postMessage(JSON.stringify({
+      type: 'updateInteractionState',
+      data: {
+        action: state,
+        id: interactionId
+      }
+    }), "*");
   }
 
 }
@@ -347,6 +378,45 @@ Example of message from PureCloud:
           "startTime": "2024-06-21T04:08:26.092Z"
       }
   }
+}
+
+{
+    "type": "interactionSubscription",
+    "data": {
+        "category": "acw",
+        "interaction": {
+            "id": "29e82a01-8e07-44a9-8e54-6647131663cc",
+            "connectedTime": "2024-06-25T10:02:12.367Z",
+            "endTime": "2024-06-25T10:02:18.268Z",
+            "phone": "tel:+66819994972",
+            "name": "0819994972",
+            "isConnected": false,
+            "isDisconnected": true,
+            "isDone": true,
+            "state": "DISCONNECTED",
+            "isCallback": false,
+            "isDialer": false,
+            "isChat": false,
+            "isEmail": false,
+            "isMessage": false,
+            "isVoicemail": false,
+            "remoteName": "0819994972",
+            "recordingState": "none",
+            "securePause": false,
+            "displayAddress": "+66819994972",
+            "queueName": "1-CX-DEMO",
+            "ani": "+66819994972",
+            "calledNumber": "+6624300023",
+            "interactionDurationSeconds": 6,
+            "totalIvrDurationSeconds": 3,
+            "totalAcdDurationSeconds": 3,
+            "disposition": "Default Wrap-up Code",
+            "dispositionDurationSeconds": 17,
+            "direction": "Inbound",
+            "isInternal": false,
+            "startTime": "2024-06-25T10:02:05.620Z"
+        }
+    }
 }
 
 */
