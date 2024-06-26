@@ -43,4 +43,5 @@ export interface Interaction {
   direction: string;
   isInternal: boolean;
   startTime: string;
+  old: Interaction;
 }
