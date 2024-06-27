@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableControl } from 'src/app/shared/table-control';
 import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
 import Utils from 'src/app/shared/utils';
+import { ModalConsultingComponent } from '../../common/modal-consulting/modal-consulting.component';
 
 @Component({
   selector: 'app-contact-history',
@@ -22,7 +23,7 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
 
   @Input() customerIdParam: any;
 
-  displayedColumns: string[] = ["consultingNumber", "channelName", "customerName", "title"
+  displayedColumns: string[] = ["consultingNumber", "channelCd", "customerName", "title"
     , "statusName"
     , "startDate"
     , "endDate"
@@ -88,5 +89,23 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
       );
   }
 
+
+  onConsultingEdit(element) {
+    this.showConsultingDialog(element.id);
+  }
+
+  showConsultingDialog(id: string) {
+    const dialogRef = this.dialog.open(ModalConsultingComponent, {
+      height: '85%',
+      width: '80%',
+      // panelClass: 'my-dialog',
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
 
 }  
