@@ -7,6 +7,10 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
 import { ConsultingService } from '../consulting/consulting.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
+import { TableControl } from 'src/app/shared/table-control';
+import { CaseStore } from '../case/case.store';
+import Utils from 'src/app/shared/utils';
+import { CaseactivityService } from '../case/caseactivity/caseactivity.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +20,17 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   searchForm: FormGroup;
+  searchFormCase: FormGroup;
+  dataSourceSr: any[];
+  displayedColumnsCase: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
+  tableControlCase: TableControl = new TableControl(() => { this.searchCase(); });
+
+
+  tableControlAct: TableControl = new TableControl(() => { this.searchAct(); });
+  dataSourceAct: any[];
+
+  selectedRow: any[];
+  displayedColumnsAct: string[] = ['activityNumber', 'typeName', 'statusName', 'createdBy', 'updatedBy', 'action'];
 
   summaryCaseStatusData = [
     {
@@ -55,11 +70,11 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     },
     {
       "name": "Line",
-      "value": 8,
+      "value": 1,
     },
     {
       "name": "Facebook",
-      "value": 5,
+      "value": 4,
     },
   ];
 
@@ -82,6 +97,9 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     public router: Router,
     public globals: Globals,
     public formBuilder: FormBuilder,
+    private caseactivityService: CaseactivityService,
+    private consulting: ConsultingService,
+    private caseStore: CaseStore,
   ) {
     super(router, globals);
 
@@ -107,5 +125,60 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   ngAfterViewInit(): void {
 
   }
+
+
+
+  searchCase() {
+    const param = {
+      ...this.searchFormCase.getRawValue(),
+      sortColumn: this.tableControlCase.sortColumn,
+      sortDirection: this.tableControlCase.sortDirection,
+    };
+
+    this.consulting.getCaseUnderConsultingList({
+      pageSize: this.tableControlCase.pageSize,
+      pageNo: this.tableControlCase.pageNo,
+      data: param,
+    })
+      .then(
+        (result) => {
+          this.dataSourceSr = result.data;
+          this.tableControlCase.total = result.total;
+        },
+        (error) => {
+          Utils.alertError({
+            text: error.message,
+          });
+        }
+      );
+  }
+
+  onCaseEdit(e) {
+    this.caseStore.updateCaseDetail(e.caseNumber);
+  }
+
+  searchAct() {
+    //this.selectedRow = null;
+    const param = {
+      ...this.searchForm.value
+      , sortColumn: this.tableControlAct.sortColumn
+      , sortDirection: this.tableControlAct.sortDirection
+    };
+
+    this.caseactivityService.getCaseActivityListByCaseNumber({
+      pageSize: this.tableControlAct.pageSize,
+      pageNo: this.tableControlAct.pageNo,
+      data: param
+    }).then(result => {
+      // console.log(result.data);
+      this.dataSourceAct = result.data;
+      this.tableControlAct.total = result.total;
+    }, error => {
+      Utils.alertError({
+        text: 'Please try again later.',
+      });
+    });
+  }
+
 
 }

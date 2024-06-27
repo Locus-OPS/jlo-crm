@@ -200,8 +200,11 @@
                 </tr>
 
               </table>
-
             </div>
+            <mat-paginator class="mat-paginator-sticky" (page)="tableControlCase.onPage($event)"
+              [length]="tableControlCase.total" [pageSize]="tableControlCase.pageSize"
+              [pageSizeOptions]="tableControlCase.pageSizeOptions" showFirstLastButtons>
+            </mat-paginator>
           </form>
         </div>
       </div>
