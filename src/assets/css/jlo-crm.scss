@@ -78,7 +78,7 @@ button.btn,
         .logo-img {
           img {
             left: 2px;
-            width: 76px;
+            width: 55px;
             top: auto;
           }
         }
@@ -86,17 +86,7 @@ button.btn,
     }
     .sidebar:hover {
       width: var(--jlo-crm-sidebar-width, 260px);
-      .logo {
-        .logo-mini {
-          .logo-img {
-            img {
-              width: 125px;
-              top: 5px;
-              left: 105px;
-            }
-          }
-        }
-      }
+
       .sidebar-wrapper {
         width: var(--jlo-crm-sidebar-width, 260px);
         .nav-link {
