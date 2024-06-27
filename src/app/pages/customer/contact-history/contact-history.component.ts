@@ -12,6 +12,8 @@ import { TableControl } from 'src/app/shared/table-control';
 import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
 import Utils from 'src/app/shared/utils';
 import { ModalConsultingComponent } from '../../common/modal-consulting/modal-consulting.component';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-contact-history',
@@ -23,7 +25,7 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
 
   @Input() customerIdParam: any;
 
-  displayedColumns: string[] = ["consultingNumber", "channelCd", "customerName", "title"
+  displayedColumns: string[] = ["consultingNumber", "channelCd", "title"
     , "statusName"
     , "startDate"
     , "endDate"
@@ -42,8 +44,29 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
     public globals: Globals,
     public tabParam: TabParam,
     private dialog: MatDialog,
+    public iconRegistry: MatIconRegistry,
+    public sanitizer: DomSanitizer,
   ) {
     super(router, globals);
+    /*https://github.com/seanyeh/fontawesome-svgs */
+    /**
+ 01 Voice
+02 Email
+03 Web Chat
+04 Walk in
+05 Line
+06 Facebook
+-->
+     */
+    iconRegistry.addSvgIcon('voice-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/phone-square-light.svg'));
+    iconRegistry.addSvgIcon('email-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/email.svg'));
+    iconRegistry.addSvgIcon('webchat-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/chat.svg'));
+    iconRegistry.addSvgIcon('walkin-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/walking-light.svg'));
+    iconRegistry.addSvgIcon('line-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/line-brands.svg'));
+    iconRegistry.addSvgIcon('fb-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/facebook-brands.svg'));
+
+
+
 
   }
   ngOnInit(): void {

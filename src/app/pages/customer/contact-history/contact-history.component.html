@@ -33,35 +33,35 @@
                                     <th mat-header-cell *matHeaderCellDef>{{ 'consulting.number' | translate }}</th>
                                     <td mat-cell *matCellDef="let element"> {{element.consultingNumber}} </td>
                                 </ng-container>
-                                <!--
-01 Voice
-02 Email
-03 Web Chat
-04 Walk in
-05 Line
-06 Facebook
--->
+
 
                                 <ng-container matColumnDef="channelCd">
-                                    <th mat-header-cell *matHeaderCellDef>{{ 'consulting.channel' | translate }}</th>
+                                    <th mat-header-cell *matHeaderCellDef>{{ 'consulting.communication.channel' |
+                                        translate }}</th>
                                     <td mat-cell *matCellDef="let element">
                                         <span class="mat-button-wrapper">
+                                            <!-- 
                                             <i class="material-icons" *ngIf="element.channelCd==01">call</i>
                                             <i class="material-icons" *ngIf="element.channelCd==02">mail</i>
                                             <i class="material-icons" *ngIf="element.channelCd==03">chat</i>
                                             <i class="material-icons" *ngIf="element.channelCd==04">directions_walk</i>
                                             <i class="material-icons" *ngIf="element.channelCd==05">smartphone</i>
-                                            <i class="material-icons" *ngIf="element.channelCd==06">import_contacts</i>
+                                            <i class="material-icons" *ngIf="element.channelCd==06">import_contacts</i> 
+                                            -->
+                                            <mat-icon *ngIf="element.channelCd == '01'">call</mat-icon>
+                                            <mat-icon *ngIf="element.channelCd == '02'">mail</mat-icon>
+                                            <mat-icon *ngIf="element.channelCd == '03'">chat</mat-icon>
+                                            <mat-icon *ngIf="element.channelCd == '04'"
+                                                svgIcon="walkin-icon"></mat-icon>
+                                            <mat-icon *ngIf="element.channelCd == '05'" svgIcon="line-icon"></mat-icon>
+                                            <mat-icon *ngIf="element.channelCd == '06'" svgIcon="fb-icon"></mat-icon>
                                         </span>
-                                        {{element.channelName}}
+                                        &nbsp;
+                                        {{'consulting.contact.center.text'|translate}}&nbsp;{{element.channelName}}
 
                                     </td>
                                 </ng-container>
-                                <ng-container matColumnDef="customerName">
-                                    <th mat-header-cell *matHeaderCellDef> {{'consulting.customer' | translate}} </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        {{element.customerName}} </td>
-                                </ng-container>
+
                                 <ng-container matColumnDef="title">
                                     <th mat-header-cell *matHeaderCellDef>{{ 'consulting.title' | translate }}</th>
                                     <td mat-cell *matCellDef="let element"> {{element.title}} </td>
