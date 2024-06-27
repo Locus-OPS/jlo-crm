@@ -1,10 +1,24 @@
 <div class="taskbar">
   <div class="items">
     <div class="item-left">
-      <a href="javascript:void(0)" (click)="toggleSoftphone()" [ngClass]="{'open' : isSoftphoneOpen}"><i class="material-icons phone-icon">phone</i>&nbsp;&nbsp;Phone</a>
+      <a href="javascript:void(0)" (click)="toggleSoftphone()" [ngClass]="{ open: isSoftphoneOpen }"
+        ><i class="material-icons phone-icon">phone</i>&nbsp;&nbsp;Phone</a
+      >
     </div>
+
+    <!-- <div class="item-left">
+      <a href="javascript:void(0)" (click)="pickup()">Pickup</a>
+    </div>
+    <div class="item-left">
+      <a href="javascript:void(0)" (click)="disconnect()">Disconnect</a>
+    </div>
+    <div class="item-left">
+      <a href="javascript:void(0)" (click)="hold()">Hold</a>
+    </div>
+    <div class="item-left">
+      <a href="javascript:void(0)" (click)="mute()">Mute</a>
+    </div> -->
   </div>
 </div>
-
 
 <app-softphone-cmp [isOpen]="isSoftphoneOpen"></app-softphone-cmp>

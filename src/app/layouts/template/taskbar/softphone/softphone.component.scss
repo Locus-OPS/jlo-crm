@@ -1,22 +1,8 @@
-/* Button used to open the chat form - fixed at the bottom of the page */
+$taskbar-open-color: #005ea5;
+
 .container {
   // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-}
-
-.open-button {
-  background-color: #37b824;
-  color: white;
-  padding: 8px 8px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 8px;
-  left: 8px;
-  width: 320px;
-  z-index: 1000000;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .phone-icon {
@@ -31,14 +17,32 @@
   left: 0px;
   z-index: 1000000;
   width: 320px;
-  height: 564px;
+  height: 604px;
   padding: 0px;
   background-color: white;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border: 3px solid $taskbar-open-color;
+}
+
+.form-title {
+  background-color: $taskbar-open-color;
+  color: white;
+  padding-left: 16px;
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 500;
+}
+
+.close-icon {
+  float: right;
+  margin-top: 6px;
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 .genesys-frame {
-  height: 100%;
+  height: calc(100% - 40px);
   width: 100%;
   border: 0;
 }
