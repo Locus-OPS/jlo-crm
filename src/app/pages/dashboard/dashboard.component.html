@@ -1,50 +1,144 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-6">
-        <mat-card class="chart-card">
-          <mat-card-title class="chart-title">Summary Case Status</mat-card-title>
-          <mat-card-content class="chart-container">
-            <ngx-charts-bar-vertical
-              class="chart-card"
-              [results]="summaryCaseStatusData"
-              [animations]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [yScaleMax]="10"
-            ></ngx-charts-bar-vertical>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-6">
-        <mat-card class="chart-card">
-          <mat-card-title class="chart-title">Summary Case Channel</mat-card-title>
-          <mat-card-content class="chart-container">
-            <ngx-charts-bar-horizontal
-              class="chart-card"
-              [results]="summaryCaseChannelData"
-              [animations]="true"
-              [xAxis]="true"
-              [yAxis]="true"
-              [xScaleMax]="10"
-            ></ngx-charts-bar-horizontal>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-lg-6 col-md-6 col-sm-6">
-        <mat-card class="chart-card">
-          <mat-card-title class="chart-title">Summary Case Type</mat-card-title>
-          <mat-card-content class="chart-container">
-            <ngx-charts-pie-chart
-              class="chart-card"
-              [results]="summaryCaseTypeData"
-              [animations]="true"
-              [labels]="true"
-              [maxLabelLength]="20"
-            ></ngx-charts-pie-chart>
-          </mat-card-content>
-        </mat-card>
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">fact_check</i>
+            </div>
+            <h4 class="card-title">{{ 'My Task' | translate }}</h4>
+          </div>
+          <div class="card-body">
+
+            <form [formGroup]="searchForm" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{'mytask.viewby' | translate}}</mat-label>
+                  <mat-select formControlName="viewBy">
+                    <mat-option *ngFor="let type of ViewByList" [value]="type.codeId">
+                      {{type.codeName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="row">
+
+                <div class="col-md-3" style="display:flex">
+                  <mat-card style="width:100%">
+                    <mat-card-title style="padding:10px;">New</mat-card-title>
+                    <mat-card-content>
+                      <div class="row">
+                        <div class="col-md-9" style="display:flex">
+                          <h4 class="card-title">19</h4>
+                        </div>
+                        <div class="col-md-3" style="display:flex">
+                          <div class="card-icon">
+                            <i class="material-icons-dashboard">assignment_add</i>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+                <div class="col-md-3" style="display:flex">
+                  <mat-card style="width:100%">
+                    <mat-card-title style="padding:10px;">Working</mat-card-title>
+                    <mat-card-content>
+                      <div class="row">
+                        <div class="col-md-9" style="display:flex">
+                          <h4 class="card-title">19</h4>
+                        </div>
+                        <div class="col-md-3" style="display:flex">
+                          <div class="card-icon">
+                            <i class="material-icons-dashboard">assignment_add</i>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+                <div class="col-md-3" style="display:flex">
+                  <mat-card style="width:100%">
+                    <mat-card-title style="padding:10px;">Escalated</mat-card-title>
+                    <mat-card-content>
+                      <div class="row">
+                        <div class="col-md-9" style="display:flex">
+                          <h4 class="card-title">19</h4>
+                        </div>
+                        <div class="col-md-3" style="display:flex">
+                          <div class="card-icon">
+                            <i class="material-icons-dashboard">assignment_add</i>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
+
+                <div class="col-md-3" style="display:flex">
+                  <mat-card style="width:100%">
+                    <mat-card-title style="padding:10px;">Closed</mat-card-title>
+                    <mat-card-content>
+                      <div class="row">
+                        <div class="col-md-9" style="display:flex">
+                          <h4 class="card-title">19</h4>
+                        </div>
+                        <div class="col-md-3" style="display:flex">
+                          <div class="card-icon">
+                            <i class="material-icons-dashboard">assignment_add</i>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <mat-card class="chart-card">
+                  <mat-card-title class="chart-title">Summary Case Channel</mat-card-title>
+                  <mat-card-content class="chart-container">
+                    <ngx-charts-bar-horizontal class="chart-card" [results]="summaryCaseChannelData" [animations]="true"
+                      [xAxis]="true" [yAxis]="true" [xScaleMax]="10"></ngx-charts-bar-horizontal>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <mat-card class="chart-card">
+                  <mat-card-title class="chart-title">Summary Case Type</mat-card-title>
+                  <mat-card-content class="chart-container">
+                    <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [animations]="true"
+                      [labels]="true" [maxLabelLength]="20"></ngx-charts-pie-chart>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+
+              <!-- <div class="col-lg-6 col-md-6 col-sm-6">
+                <mat-card class="chart-card">
+                  <mat-card-title class="chart-title">Summary Case Status</mat-card-title>
+                  <mat-card-content class="chart-container">
+                    <ngx-charts-bar-vertical class="chart-card" [results]="summaryCaseStatusData" [animations]="true"
+                      [xAxis]="true" [yAxis]="true" [yScaleMax]="10"></ngx-charts-bar-vertical>
+                  </mat-card-content>
+                </mat-card>
+              </div> -->
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
+
+
+
+
   </div>
 </div>

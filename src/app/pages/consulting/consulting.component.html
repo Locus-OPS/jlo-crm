@@ -20,7 +20,6 @@
                 <mat-form-field class="col-md-3">
                   <mat-label>{{'consulting.channel' | translate}}</mat-label>
                   <mat-select formControlName="channelCd">
-
                     <mat-option *ngFor="let type of channelList" [value]="type.codeId">
                       {{type.codeName}}
                     </mat-option>

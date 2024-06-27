@@ -1,11 +1,21 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { Globals } from 'src/app/shared/globals';
+import { ConsultingService } from '../consulting/consulting.service';
+import { Dropdown } from 'src/app/model/dropdown.model';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
+
+  searchForm: FormGroup;
 
   summaryCaseStatusData = [
     {
@@ -43,6 +53,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       "name": "Walk In",
       "value": 5,
     },
+    {
+      "name": "Line",
+      "value": 8,
+    },
+    {
+      "name": "Facebook",
+      "value": 5,
+    },
   ];
 
   summaryCaseTypeData = [
@@ -56,7 +74,33 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     },
   ];
 
+  ViewByList: Dropdown[];
+
+  constructor(
+    public api: ApiService,
+    public dialog: MatDialog,
+    public router: Router,
+    public globals: Globals,
+    public formBuilder: FormBuilder,
+  ) {
+    super(router, globals);
+
+    api.getMultipleCodebookByCodeType(
+      { data: ['VIEW_BY'] }
+    ).then(result => {
+      this.ViewByList = result.data['VIEW_BY'];
+
+    });
+
+  }
+
   ngOnInit() {
+
+    this.searchForm = this.formBuilder.group({
+      viewBy: [""],
+      consultingNumber: [""]
+    });
+
 
   }
 
