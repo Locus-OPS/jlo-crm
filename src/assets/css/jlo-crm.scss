@@ -45,12 +45,13 @@ button.btn,
   .sidebar {
     width: var(--jlo-crm-sidebar-width, 260px);
     .logo {
+      padding: 0px;
+      background: white;
       .logo-mini {
         .logo-img {
           img {
             width: 125px;
             top: 5px;
-            left: 105px;
           }
         }
       }

@@ -1,12 +1,10 @@
 <div class="logo">
   <a class="simple-text logo-mini">
     <div class="logo-img">
+      <img class="logo-mini" [src]="'./assets/img/ntt_logo.png'" />
       <img [src]="'./assets/img/locus_logo.png'" />
     </div>
   </a>
-  <!-- <a href="#" class="simple-text logo-normal">
-      INSEE
-  </a>  -->
 </div>
 <div class="sidebar-wrapper">
   <div class="user">
@@ -37,22 +35,35 @@
     <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
       <!--If is a single link-->
       <a [routerLink]="[menuitem.link]" *ngIf="menuitem.type === 'link'" class="nav-link">
-        <i class="material-icons">{{menuitem.icon}}</i>
+        <i class="material-icons">{{ menuitem.icon }}</i>
         <p>{{ menuitem.name | translate }}</p>
       </a>
       <!--If it have a submenu-->
-      <a data-toggle="collapse" [attr.aria-expanded]="this.router.url.startsWith(menuitem.link)" href="#{{menuitem.collapse}}" *ngIf="menuitem.type === 'sub'" (click)="updatePS()" class="nav-link">
-        <i class="material-icons">{{menuitem.icon}}</i>
+      <a
+        data-toggle="collapse"
+        [attr.aria-expanded]="this.router.url.startsWith(menuitem.link)"
+        href="#{{ menuitem.collapse }}"
+        *ngIf="menuitem.type === 'sub'"
+        (click)="updatePS()"
+        class="nav-link"
+      >
+        <i class="material-icons">{{ menuitem.icon }}</i>
         <p>{{ menuitem.name | translate }}<b class="caret"></b></p>
       </a>
 
       <!--Display the submenu items-->
-      <div id="{{menuitem.collapse}}" [class]="this.router.url.startsWith(menuitem.link) ? 'collapse show' : 'collapse'" *ngIf="menuitem.type === 'sub'">
+      <div
+        id="{{ menuitem.collapse }}"
+        [class]="this.router.url.startsWith(menuitem.link) ? 'collapse show' : 'collapse'"
+        *ngIf="menuitem.type === 'sub'"
+      >
         <ul class="nav">
           <li routerLinkActive="active" *ngFor="let childitem of menuitem.children" class="nav-item">
             <a [routerLink]="[childitem.link]" class="nav-link">
-              <i class="material-icons" *ngIf="childitem.icon">{{childitem.icon}}</i>
-              <span class="sidebar-mini" *ngIf="!childitem.icon"><small>{{ (childitem.name | translate).toUpperCase().substr(0, 2) }}</small></span>
+              <i class="material-icons" *ngIf="childitem.icon">{{ childitem.icon }}</i>
+              <span class="sidebar-mini" *ngIf="!childitem.icon"
+                ><small>{{ (childitem.name | translate).toUpperCase().substr(0, 2) }}</small></span
+              >
               <span class="sidebar-normal">{{ childitem.name | translate }}</span>
             </a>
           </li>
