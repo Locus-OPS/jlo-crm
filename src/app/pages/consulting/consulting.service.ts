@@ -12,15 +12,19 @@ export class ConsultingService {
 
   constructor(
     private api: ApiService
-  ) { 
+  ) {
 
-  } 
+  }
 
   getConsultingDataList(param?: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/consulting/getConsultingDataList', param);
   }
-     
-  
+
+  getConsultingDataListByCustomerId(param?: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/consulting/getConsultingDataListByCustomerId', param);
+  }
+
+
   updateConsultingBindingCustomer(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/consulting/updateConsultingBindingCustomer', param);
   }
@@ -29,6 +33,6 @@ export class ConsultingService {
     return this.api.call('/api/consulting/getCaseUnderConsultingList', param);
   }
 
- 
+
 
 }

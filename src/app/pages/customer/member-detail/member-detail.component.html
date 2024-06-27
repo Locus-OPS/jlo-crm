@@ -762,7 +762,7 @@
                 </div>
               </mat-tab>
               <mat-tab [label]=" 'contact.history'| translate">
-                <app-contact-history #contactHistoryConponent
+                <app-contact-history #contactHistoryConponent *ngIf="this.customerId != null"
                   [customerIdParam]="this.memberForm.controls['customerId'].value">
 
                 </app-contact-history>

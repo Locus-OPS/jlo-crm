@@ -48,9 +48,11 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
 
     this.searchForm = this.formBuilder.group({
-      customerId: [""]
+      customerId: [this.customerIdParam]
     });
+    //alert("Init custID" + this.customerIdParam);
 
+    this.onSearch();
   }
 
   onSearch() {
@@ -61,13 +63,14 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
   }
 
   search() {
+    //alert("custId : " + this.customerIdParam)
     const param = {
       ...this.searchForm.getRawValue(),
       sortColumn: this.tableControl.sortColumn,
       sortDirection: this.tableControl.sortDirection,
     };
 
-    this.consulting.getConsultingDataList({
+    this.consulting.getConsultingDataListByCustomerId({
       pageSize: this.tableControl.pageSize,
       pageNo: this.tableControl.pageNo,
       data: param,

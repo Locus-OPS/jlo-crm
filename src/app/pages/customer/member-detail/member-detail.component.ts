@@ -321,6 +321,8 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     if (this.tabParam.params['memberId'] != null) {
       this.memberService.getMemberById({ data: { memberId: this.tabParam.params['memberId'] } })
         .then(result => {
+          this.customerId = this.memberForm.controls['customerId'].value;
+
           this.memberForm.controls['memberType'].disable();
           this.memberForm.patchValue(result.data);
           this.memberForm.patchValue({ 'previousCitizenId': this.memberForm.value['citizenId'] });

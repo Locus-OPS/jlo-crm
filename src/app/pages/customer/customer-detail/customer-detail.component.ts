@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { CustomerAddressData } from '../customer-address-data';
 import { TableControl } from 'src/app/shared/table-control';
 import { ChangeLog } from 'src/app/model/change-log.model';
@@ -17,6 +17,7 @@ import { CaseStore } from '../../case/case.store';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
+import { ContactHistoryComponent } from '../contact-history/contact-history.component';
 
 @Component({
   selector: 'app-customer-detail',
@@ -24,6 +25,10 @@ import { Dropdown } from 'src/app/model/dropdown.model';
   styleUrls: ['./customer-detail.component.scss']
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
+
+  @ViewChild("contactHistoryConponent", { static: false })
+  contactHistoryConponent: ContactHistoryComponent;
+  customerId: string;
 
   THAI_NATIONALITY: string = "37";
   THAI_COUNTRY_CODE: string = "66";
@@ -40,7 +45,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   /* Case table */
   caseSelectedRow: Case;
   caseDS: Case[];
-  caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate','closedDate', 'subTypeName', 'priorityName','action'];
+  caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate', 'closedDate', 'subTypeName', 'priorityName', 'action'];
   caseTableControl: TableControl = new TableControl(() => { this.searchCase() });
 
 
@@ -52,7 +57,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
   createForm: UntypedFormGroup;
   addressForm: UntypedFormGroup;
-  caseForm:UntypedFormGroup;
+  caseForm: UntypedFormGroup;
 
   createDisabled: Boolean;
   addressDisabled: Boolean;
@@ -83,7 +88,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   get c() { return this.createForm.controls; }
 
   constructor(
-    private caseStore:CaseStore,
+    private caseStore: CaseStore,
     private tabManageService: TabManageService,
     private tabParam: TabParam,
     private api: ApiService,
@@ -98,7 +103,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   ) {
     super(router, globals);
     this.api.getMultipleCodebookByCodeType({
-      data: ['GENDER', 'MARITAL_STATUS', 'OCCUPATION', 'TITLE_NAME', 'NATIONALITY', 'SOURCE_CHANNEL', 'PHONE_PREFIX', 'COUNTRY', 'ADDRESS_TYPE', 'CUSTOMER_STATUS','BUSINESS_TYPE']
+      data: ['GENDER', 'MARITAL_STATUS', 'OCCUPATION', 'TITLE_NAME', 'NATIONALITY', 'SOURCE_CHANNEL', 'PHONE_PREFIX', 'COUNTRY', 'ADDRESS_TYPE', 'CUSTOMER_STATUS', 'BUSINESS_TYPE']
     }).then(
       result => {
         this.genderList = result.data['GENDER'];
@@ -174,9 +179,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
     this.caseForm = this.formBuilder.group({
       caseNumber: [''],
-      typeName:[''],
-      subTypeName:[''],
-      priorityName:[''],
+      typeName: [''],
+      subTypeName: [''],
+      priorityName: [''],
       subject: [''],
       detail: [''],
       channelName: [''],
@@ -210,12 +215,13 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     // });
 
     if (this.tabParam.params['customerId']) {
+      this.customerId = this.tabParam.params['customerId'];
       this.customerService.getCustomerById({ data: { customerId: this.tabParam.params['customerId'] } })
         .then(result => {
           this.createForm.patchValue(result.data);
-          this.createForm.patchValue({ 'previousCitizenId':  this.createForm.value['citizenId']});
-          this.createForm.patchValue({ 'previousPassportNo':  this.createForm.value['passportNo']});
-          this.createForm.patchValue({ 'programId':  this.createForm.value['programId'].toString()});
+          this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
+          this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
+          this.createForm.patchValue({ 'programId': this.createForm.value['programId'].toString() });
           Utils.setBirthDatePicker(this.createForm);
           this.setDisabled();
           this.searchAddress();
@@ -376,7 +382,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.addrSelectedRow = row;
     this.addressForm.patchValue(row);
     this.addressForm.patchValue({ primary: row.primaryYn == "Y" });
-    this.addressForm.patchValue({ previousPrimaryYn:  this.addressForm.value['primary']});
+    this.addressForm.patchValue({ previousPrimaryYn: this.addressForm.value['primary'] });
     this.setComboAddress(row.subDistrict);
   }
 
@@ -449,7 +455,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.verifyPassportNo();
     } else {
       const param = {
-        citizenId : citizenId
+        citizenId: citizenId
       };
       this.customerService.getCustomerByCitizenIdOrPassportNo({
         data: param
@@ -491,7 +497,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.saveCustomer();
     } else {
       const param = {
-        passportNo : passportNo
+        passportNo: passportNo
       };
       this.customerService.getCustomerByCitizenIdOrPassportNo({
         data: param
@@ -548,9 +554,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       if (result.status) {
         this.createForm.patchValue(result.data);
         Utils.setBirthDatePicker(this.createForm);
-        this.createForm.patchValue({ 'previousCitizenId':  this.createForm.value['citizenId']});
-        this.createForm.patchValue({ 'previousPassportNo':  this.createForm.value['passportNo']});
-        this.createForm.patchValue({ 'programId':  result.data.programId.toString()});
+        this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
+        this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
+        this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         this.setDisabled();
         Utils.alertSuccess({
           title: msgTitle,
@@ -576,13 +582,13 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['phoneArea'].updateValueAndValidity();
     this.createForm.controls['phoneNo'].setValidators([Validators.required]);
     this.createForm.controls['phoneNo'].updateValueAndValidity();
-    this.createForm.controls['email'].setValidators([Validators.required,Validators.maxLength(100),Validators.email]);
+    this.createForm.controls['email'].setValidators([Validators.required, Validators.maxLength(100), Validators.email]);
     this.createForm.controls['email'].updateValueAndValidity();
 
-    if(this.createForm.controls['customerType'].value && this.THAI_NATIONALITY==this.createForm.controls['nationality'].value){
+    if (this.createForm.controls['customerType'].value && this.THAI_NATIONALITY == this.createForm.controls['nationality'].value) {
       this.createForm.controls['citizenId'].setValidators([Validators.required, Validators.maxLength(13)]);
       this.createForm.controls['citizenId'].updateValueAndValidity();
-    }else{
+    } else {
       this.createForm.controls['firstName'].clearValidators();
       this.createForm.controls['firstName'].updateValueAndValidity();
 
@@ -608,63 +614,63 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     if (nextStatus == "01") { // Submit
       this.createForm.patchValue({ customerStatus: nextStatus });
       this.onSave();
-    /*} else if ("02" == nextStatus) {
-      this.createForm.enable();
-      const param = {
-        ...this.createForm.value
-      };
-      this.setDisabled();
-      this.customerService.verifyRequest({
-        data: param
-      }).then(result => {
-        if (result.status) {
-          this.customerVerify = result.data;
-
-          const dialogRef = this.dialog.open(VerifyCustomerDialogComponent, {
-            width: '400px',
-            data: this.customerVerify
-          });
-
-          dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            this.customerVerify.key = result;
-            if (result == null || result == "") {
-              return;
-            }
-            this.customerService.verifyValidate({
+      /*} else if ("02" == nextStatus) {
+        this.createForm.enable();
+        const param = {
+          ...this.createForm.value
+        };
+        this.setDisabled();
+        this.customerService.verifyRequest({
+          data: param
+        }).then(result => {
+          if (result.status) {
+            this.customerVerify = result.data;
+  
+            const dialogRef = this.dialog.open(VerifyCustomerDialogComponent, {
+              width: '400px',
               data: this.customerVerify
-            }).then(result => {
-              if (result.status) {
-                if ("OK" == result.data) {
-                  this.sendUpdateStatus(nextStatus);
+            });
+  
+            dialogRef.afterClosed().subscribe(result => {
+              console.log('The dialog was closed');
+              this.customerVerify.key = result;
+              if (result == null || result == "") {
+                return;
+              }
+              this.customerService.verifyValidate({
+                data: this.customerVerify
+              }).then(result => {
+                if (result.status) {
+                  if ("OK" == result.data) {
+                    this.sendUpdateStatus(nextStatus);
+                  } else {
+                    Utils.alertError({
+                      text: 'Verify key not valid.',
+                    });
+                  }
                 } else {
                   Utils.alertError({
-                    text: 'Verify key not valid.',
+                    text: 'Please, try again later',
                   });
                 }
-              } else {
+              }, error => {
                 Utils.alertError({
                   text: 'Please, try again later',
                 });
-              }
-            }, error => {
-              Utils.alertError({
-                text: 'Please, try again later',
               });
             });
-          });
-
-        } else {
+  
+          } else {
+            Utils.alertError({
+              text: 'Please, try again later',
+            });
+          }
+        }, error => {
           Utils.alertError({
             text: 'Please, try again later',
           });
-        }
-      }, error => {
-        Utils.alertError({
-          text: 'Please, try again later',
         });
-      });
-      */
+        */
     } else if ("04" == nextStatus) { // Active, create member.
       const param = {
         ...this.createForm.value
@@ -674,10 +680,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       }).then(result => {
         if (result.status) {
           this.router.navigate(["/customer/member",
-          {
-            memberId: result.data.memberId,
-            memberType: result.data.memberType
-          }]);
+            {
+              memberId: result.data.memberId,
+              memberType: result.data.memberType
+            }]);
           // console.log(result.data);
           // this.createForm.patchValue(result.data);
           this.setDisabled();
@@ -712,7 +718,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     }).then(result => {
       if (result.status) {
         this.createForm.patchValue(result.data);
-        this.createForm.patchValue({ 'programId':  result.data.programId.toString()});
+        this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         Utils.setBirthDatePicker(this.createForm);
         this.setDisabled();
         Utils.alertSuccess({
@@ -749,9 +755,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.addressForm.reset();
     this.addressForm.patchValue({ customerId: this.createForm.value.customerId });
     if (this.addressDS == null) {
-      this.addressForm.patchValue({ primary: true, addressType: '02', country: this.THAI_COUNTRY_CODE ,previousPrimaryYn:  false});
+      this.addressForm.patchValue({ primary: true, addressType: '02', country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
     } else {
-      this.addressForm.patchValue({ country: this.THAI_COUNTRY_CODE ,previousPrimaryYn:  false});
+      this.addressForm.patchValue({ country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
     }
     this.setDisabledAddress();
     setTimeout(() => {
@@ -765,8 +771,8 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.addressForm.reset();
   }
   changeCountry() {
-    this.addressForm.patchValue({province:null,district:null,subDistrict:null,postCode:''});
-    if(this.addressForm.controls['country'].value == this.THAI_COUNTRY_CODE){
+    this.addressForm.patchValue({ province: null, district: null, subDistrict: null, postCode: '' });
+    if (this.addressForm.controls['country'].value == this.THAI_COUNTRY_CODE) {
       this.addressForm.controls['province'].setValidators([Validators.required]);
       this.addressForm.controls['province'].updateValueAndValidity();
       this.addressForm.controls['district'].setValidators([Validators.required]);
@@ -775,7 +781,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.addressForm.controls['subDistrict'].updateValueAndValidity();
       this.addressForm.controls['postCode'].setValidators([Validators.required]);
       this.addressForm.controls['postCode'].updateValueAndValidity();
-    }else{
+    } else {
       this.addressForm.controls['province'].clearValidators();
       this.addressForm.controls['province'].updateValueAndValidity();
       this.addressForm.controls['district'].clearValidators();
@@ -846,7 +852,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   setComboAddress(subDistrict) {
-    if(subDistrict==null || subDistrict.length<4){
+    if (subDistrict == null || subDistrict.length < 4) {
       this.changeCountry();
       return;
     }
@@ -878,7 +884,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     //   primaryYn: Utils.convertToYN(this.addressForm.value['primary']),
     // };
 
-   if (this.addressForm.invalid) {
+    if (this.addressForm.invalid) {
       console.log("invalid addressForm");
       Object.keys(this.addressForm.controls).forEach(element => {
         this.addressForm.controls[element].markAsTouched({ onlySelf: true });
@@ -1026,11 +1032,11 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   /*------------------------------------------------------------------------------------------------------------------------------*/
   /*---------------------------------------------------------- Case --------------------------------------------------------------*/
   /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchCase(){
+  searchCase() {
     this.customerService.getCustomerCaseList({
       pageSize: this.caseTableControl.pageSize,
       pageNo: this.caseTableControl.pageNo,
-      data: { customerId:this.createForm.controls['customerId'].value, sortColumn: this.caseTableControl.sortColumn, sortDirection: this.caseTableControl.sortDirection }
+      data: { customerId: this.createForm.controls['customerId'].value, sortColumn: this.caseTableControl.sortColumn, sortDirection: this.caseTableControl.sortDirection }
     }).then(result => {
       this.caseDS = result.data;
       this.caseTableControl.total = result.total;
@@ -1047,7 +1053,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.caseStore.updateCaseDetail(e.caseNumber);
   }
 
-  onSelectCaseRow(row){
+  onSelectCaseRow(row) {
     this.caseSelectedRow = row;
     this.caseForm.patchValue(row);
     this.caseForm.disable();
