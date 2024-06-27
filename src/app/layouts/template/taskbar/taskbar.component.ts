@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { SoftphoneService } from "./softphone/softphone.service";
+import { TaskbarService } from "./taskbar.service";
 
 @Component({
   selector: "app-taskbar-cmp",
@@ -9,12 +11,44 @@ export class TaskbarComponent implements OnInit {
 
   isSoftphoneOpen = false;
 
-  constructor() {}
+  constructor(
+    private softphoneService: SoftphoneService,
+    private taskbarService: TaskbarService
+  ) { }
 
   ngOnInit(): void {
+    this.taskbarService.getTaskbarEvent().subscribe((event) => {
+      if (event.type === "phone") {
+        switch (event.action) {
+          case "close":
+            this.isSoftphoneOpen = false;
+            break;
+          case "open":
+            this.isSoftphoneOpen = true;
+            break;
+        }
+      }
+    });
   }
 
   toggleSoftphone() {
     this.isSoftphoneOpen = !this.isSoftphoneOpen;
   }
+
+  pickup() {
+    this.softphoneService.pickup();
+  }
+
+  disconnect() {
+    this.softphoneService.disconnect();
+  }
+
+  hold() {
+    this.softphoneService.hold();
+  }
+
+  mute() {
+    this.softphoneService.mute();
+  }
+
 }

@@ -4,12 +4,14 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TaskbarComponent } from './taskbar.component';
 import { SoftphoneComponent } from './softphone/softphone.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @NgModule({
   imports: [
     RouterModule,
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    SharedModule
   ],
   declarations: [TaskbarComponent, SoftphoneComponent],
   exports: [TaskbarComponent, SoftphoneComponent]

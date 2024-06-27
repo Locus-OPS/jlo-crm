@@ -1,5 +1,6 @@
 <div class="container">
   <div class="form-container" [ngClass]="{ show: isOpen, hidden: !isOpen }">
+    <div class="form-title">Phone<mat-icon (click)="close()" class="close-icon"> cancel </mat-icon></div>
     <iframe
       id="embedded-softphone"
       class="genesys-frame"
