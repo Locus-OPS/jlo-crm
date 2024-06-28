@@ -11,6 +11,10 @@ import { TableControl } from 'src/app/shared/table-control';
 import { CaseStore } from '../case/case.store';
 import Utils from 'src/app/shared/utils';
 import { CaseactivityService } from '../case/caseactivity/caseactivity.service';
+import { DashboardService } from './dashboard.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSelectChange } from '@angular/material/select';
+import { Case } from '../case/case.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,15 +25,17 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   searchForm: FormGroup;
   searchFormCase: FormGroup;
-  dataSourceSr: any[];
+  dataSourceCase: any[];
   displayedColumnsCase: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
   tableControlCase: TableControl = new TableControl(() => { this.searchCase(); });
 
 
+  searchFormAct: FormGroup;
   tableControlAct: TableControl = new TableControl(() => { this.searchAct(); });
   dataSourceAct: any[];
 
-  selectedRow: any[];
+  selectedRow: Case;
+
   displayedColumnsAct: string[] = ['activityNumber', 'typeName', 'statusName', 'createdBy', 'updatedBy', 'action'];
 
   summaryCaseStatusData = [
@@ -91,6 +97,13 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   ViewByList: Dropdown[];
 
+  countNew: number = 0;
+  countWorking: number = 0;
+  countEscalated: number = 0;
+  countClosed: number = 0;
+
+  selViewBy: any;
+
   constructor(
     public api: ApiService,
     public dialog: MatDialog,
@@ -100,6 +113,8 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     private caseactivityService: CaseactivityService,
     private consulting: ConsultingService,
     private caseStore: CaseStore,
+    private dashboardService: DashboardService,
+    private spinner: NgxSpinnerService,
   ) {
     super(router, globals);
 
@@ -115,10 +130,24 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   ngOnInit() {
 
     this.searchForm = this.formBuilder.group({
-      viewBy: [""],
-      consultingNumber: [""]
+      viewBy: ["01"]
     });
 
+    this.searchFormCase = this.formBuilder.group({
+      viewBy: ["01"],
+      statusCd: [""],
+    });
+
+    this.searchFormAct = this.formBuilder.group({
+      caseNumber: [""]
+    });
+
+
+    this.selViewBy = "01";
+
+    this.getCountCaseEachStatus();
+
+    this.onSearchCase();
 
   }
 
@@ -126,6 +155,42 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   }
 
+  /**
+   *  01 My  > UserId
+   *  02 Org >    
+   * @param evt       
+   */
+  changeView(evt: MatSelectChange) {
+    this.selViewBy = evt.value;
+    this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
+  }
+
+  getCountCaseEachStatus() {
+
+    const params = { data: { viewBy: this.selViewBy } };
+
+    this.dashboardService.getCountCaseEachStatus(params).then((result: any) => {
+      this.spinner.hide("approve_process_spinner");
+      if (result.status) {
+        console.log(result.data);
+        this.countNew = result.data.countNew;
+        this.countWorking = result.data.countWorking;
+        this.countEscalated = result.data.countEscalated;
+        this.countClosed = result.data.countClosed;
+      } else {
+
+      }
+    }, (err: any) => {
+      Utils.alertError({
+        text: err.message,
+      });
+    });
+
+  }
+  onSearchCase() {
+    this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
+    this.searchCase();
+  }
 
 
   searchCase() {
@@ -135,14 +200,14 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
       sortDirection: this.tableControlCase.sortDirection,
     };
 
-    this.consulting.getCaseUnderConsultingList({
+    this.dashboardService.getCaseDashboardList({
       pageSize: this.tableControlCase.pageSize,
       pageNo: this.tableControlCase.pageNo,
       data: param,
     })
       .then(
         (result) => {
-          this.dataSourceSr = result.data;
+          this.dataSourceCase = result.data;
           this.tableControlCase.total = result.total;
         },
         (error) => {
@@ -157,10 +222,26 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     this.caseStore.updateCaseDetail(e.caseNumber);
   }
 
+
+
+  onSelectRow(row: Case) {
+    this.selectedRow = row;
+
+    this.onSearchAct(row);
+  }
+
+
+  onSearchAct(row?: any) {
+    this.selectedRow = row;
+
+    this.searchFormAct.patchValue({ caseNumber: this.selectedRow?.caseNumber });
+    this.searchAct();
+  }
+
+
   searchAct() {
-    //this.selectedRow = null;
     const param = {
-      ...this.searchForm.value
+      ...this.searchFormAct.value
       , sortColumn: this.tableControlAct.sortColumn
       , sortDirection: this.tableControlAct.sortDirection
     };
