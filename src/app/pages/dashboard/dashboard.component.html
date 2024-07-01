@@ -106,21 +106,40 @@
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <mat-card class="chart-card">
-                  <mat-card-title class="chart-title">Summary Case Channel</mat-card-title>
+                  <mat-card-title class="chart-title">{{'dashboard.chartbar.text'|translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
-                    <ngx-charts-bar-horizontal class="chart-card" [results]="summaryCaseChannelData" [animations]="true"
-                      [xAxis]="true" [yAxis]="true" [xScaleMax]="10"></ngx-charts-bar-horizontal>
+                    <!-- <ngx-charts-bar-horizontal class="chart-card" [results]="summaryCaseChannelData" [animations]="true"
+                      [xAxis]="true" [yAxis]="true" [xScaleMax]="10" [legend]="showLegend"
+                      [legendTitle]="'ช่องทาง'"></ngx-charts-bar-horizontal> -->
+
+                    <ngx-charts-bar-horizontal class="chart-card" [view]="view" [scheme]="colorScheme"
+                      [animations]="true" [results]="summaryCaseChannelData" [gradient]="gradient" [xAxis]="showXAxis"
+                      [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel" [legendTitle]="yAxisLabel" [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel">
+                    </ngx-charts-bar-horizontal>
                   </mat-card-content>
+
+
+
                 </mat-card>
               </div>
 
 
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <mat-card class="chart-card">
-                  <mat-card-title class="chart-title">Summary Case Type</mat-card-title>
+                  <mat-card-title class="chart-title">{{'dashboard.piechart.text'|translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
-                    <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [animations]="true"
-                      [labels]="true" [maxLabelLength]="20"></ngx-charts-pie-chart>
+                    <!-- <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [animations]="true"
+                      [labels]="true" [maxLabelLength]="20"></ngx-charts-pie-chart> -->
+
+                    <ngx-charts-pie-chart class="chart-card" [view]="viewPie" [scheme]="colorSchemePie"
+                      [results]="summaryCaseTypeData" [animations]="true" [legend]="showLegend" [labels]="showLabels"
+                      [doughnut]="doughnut" [maxLabelLength]="20" [gradient]="gradient"
+                      [legendTitle]="yAxisLabelPie"></ngx-charts-pie-chart>
+
+
+
                   </mat-card-content>
                 </mat-card>
               </div>
@@ -283,8 +302,8 @@
 
                           <tr mat-header-row *matHeaderRowDef="displayedColumnsAct; sticky: true"></tr>
 
-                          <tr mat-row *matRowDef="let row; columns: displayedColumnsAct" (click)="onSelectRow(row)"
-                            [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumnsAct" (click)="onSelectRowAct(row)"
+                            [ngClass]="{ 'selected-row': selectedRowAct == row }"></tr>
                         </table>
                       </div>
                       <mat-paginator class="mat-paginator-sticky" (page)="tableControlAct.onPage($event)"

@@ -31,6 +31,14 @@ export class DashboardService {
     }
 
 
+    getChartBarDataList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+        return this.api.call('/api/dashboard/getChartBarDataList', param);
+    }
+
+    getChartPieDataList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+        return this.api.call('/api/dashboard/getChartPieDataList', param);
+    }
+
 
 
 } 

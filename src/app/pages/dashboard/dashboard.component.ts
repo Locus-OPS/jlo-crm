@@ -15,6 +15,7 @@ import { DashboardService } from './dashboard.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSelectChange } from '@angular/material/select';
 import { Case } from '../case/case.model';
+import { Caseactivity } from '../case/caseactivity/caseactivity.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +37,39 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   selectedRow: Case;
 
+  selectedRowAct: Caseactivity;
+
   displayedColumnsAct: string[] = ['activityNumber', 'typeName', 'statusName', 'createdBy', 'updatedBy', 'action'];
+
+
+  name = 'Angular';
+  //view: any[];
+  width: number = 700;
+  height: number = 300;
+  fitContainer: boolean = false;
+  view: any[] = [530, 400];
+  // options for the chart
+  showXAxis = true;
+  showYAxis = true;
+  gradient = true;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Number';
+  showYAxisLabel = true;
+  yAxisLabel = 'Channel';//'dashboard.channel';
+  timeline = true;
+  doughnut = true;
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+  //pie
+  viewPie: any[] = [530, 400];
+  showLabels = true;
+  colorSchemePie = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+  yAxisLabelPie = 'Case Type';
+
 
   summaryCaseStatusData = [
     {
@@ -57,43 +90,43 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     },
   ];
 
-  summaryCaseChannelData = [
-    {
-      "name": "Phone",
-      "value": 16,
-    },
-    {
-      "name": "Email",
-      "value": 4,
-    },
-    {
-      "name": "Web",
-      "value": 8,
-    },
-    {
-      "name": "Walk In",
-      "value": 5,
-    },
-    {
-      "name": "Line",
-      "value": 1,
-    },
-    {
-      "name": "Facebook",
-      "value": 4,
-    },
-  ];
+  summaryCaseChannelData: any = [];
+  //   {
+  //     "name": "Phone",
+  //     "value": 16,
+  //   },
+  //   {
+  //     "name": "Email",
+  //     "value": 4,
+  //   },
+  //   {
+  //     "name": "Web",
+  //     "value": 8,
+  //   },
+  //   {
+  //     "name": "Walk In",
+  //     "value": 5,
+  //   },
+  //   {
+  //     "name": "Line",
+  //     "value": 1,
+  //   },
+  //   {
+  //     "name": "Facebook",
+  //     "value": 4,
+  //   },
+  // ];
 
-  summaryCaseTypeData = [
-    {
-      "name": "Incident",
-      "value": 4,
-    },
-    {
-      "name": "Service Request",
-      "value": 20,
-    },
-  ];
+  summaryCaseTypeData: any = [];
+  // {
+  //   "name": "Incident",
+  //   "value": 4,
+  // },
+  // {
+  //   "name": "Service Request",
+  //   "value": 20,
+  // },
+  //];
 
   ViewByList: Dropdown[];
 
@@ -146,8 +179,20 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     this.selViewBy = "01";
 
     this.getCountCaseEachStatus();
+    this.getChartBarDataList();
+    this.getChartPieDataList();
 
     this.onSearchCase();
+
+
+
+
+    this.caseStore.getCaseDetail().subscribe(detail => {
+      console.log("Dashboad caseDetailSubscription");
+      console.log(detail);
+
+    });
+
 
   }
 
@@ -163,6 +208,12 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   changeView(evt: MatSelectChange) {
     this.selViewBy = evt.value;
     this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
+
+
+    this.getCountCaseEachStatus();
+    this.getChartBarDataList();
+    this.getChartPieDataList();
+    this.onSearchCase();
   }
 
   getCountCaseEachStatus() {
@@ -187,6 +238,56 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     });
 
   }
+
+
+
+
+  getChartBarDataList() {
+
+    this.spinner.show("approve_process_spinner");
+    const params = { data: { viewBy: this.selViewBy } };
+
+    this.dashboardService.getChartBarDataList(params).then((result: any) => {
+      this.spinner.hide("approve_process_spinner");
+      if (result.status) {
+        console.log(result.data);
+        this.summaryCaseChannelData = result.data;
+
+      } else {
+
+      }
+    }, (err: any) => {
+      Utils.alertError({
+        text: err.message,
+      });
+    });
+
+  }
+
+
+  getChartPieDataList() {
+
+    this.spinner.show("approve_process_spinner");
+    const params = { data: { viewBy: this.selViewBy } };
+
+    this.dashboardService.getChartPieDataList(params).then((result: any) => {
+      this.spinner.hide("approve_process_spinner");
+      if (result.status) {
+        console.log(result.data);
+        this.summaryCaseTypeData = result.data;
+
+      } else {
+
+      }
+    }, (err: any) => {
+      Utils.alertError({
+        text: err.message,
+      });
+    });
+
+  }
+
+
   onSearchCase() {
     this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
     this.searchCase();
@@ -220,6 +321,13 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   onCaseEdit(e) {
     this.caseStore.updateCaseDetail(e.caseNumber);
+    this.gotoCaseDetail();
+  }
+
+  gotoCaseDetail() {
+    this.router.navigate([
+      "/casedetails",
+    ]);
   }
 
 
@@ -231,10 +339,16 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   }
 
 
-  onSearchAct(row?: any) {
-    this.selectedRow = row;
+  onSelectRowAct(row: Case) {
+    this.selectedRowAct = row;
 
-    this.searchFormAct.patchValue({ caseNumber: this.selectedRow?.caseNumber });
+  }
+
+
+  onSearchAct(row?: any) {
+    this.selectedRowAct = row;
+
+    this.searchFormAct.patchValue({ caseNumber: this.selectedRowAct?.caseNumber });
     this.searchAct();
   }
 
