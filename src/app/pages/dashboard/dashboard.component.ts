@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSelectChange } from '@angular/material/select';
 import { Case } from '../case/case.model';
 import { Caseactivity } from '../case/caseactivity/caseactivity.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,9 +55,9 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   gradient = true;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Number';
+  xAxisLabel: string = 'Number';
   showYAxisLabel = true;
-  yAxisLabel = 'Channel';//'dashboard.channel';
+  yAxisLabel: string = 'Channel';
   timeline = true;
   doughnut = true;
   colorScheme = {
@@ -68,7 +69,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   colorSchemePie = {
     domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
   };
-  yAxisLabelPie = 'Case Type';
+  yAxisLabelPie: string = 'Case Type';
 
 
   summaryCaseStatusData = [
@@ -91,42 +92,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   ];
 
   summaryCaseChannelData: any = [];
-  //   {
-  //     "name": "Phone",
-  //     "value": 16,
-  //   },
-  //   {
-  //     "name": "Email",
-  //     "value": 4,
-  //   },
-  //   {
-  //     "name": "Web",
-  //     "value": 8,
-  //   },
-  //   {
-  //     "name": "Walk In",
-  //     "value": 5,
-  //   },
-  //   {
-  //     "name": "Line",
-  //     "value": 1,
-  //   },
-  //   {
-  //     "name": "Facebook",
-  //     "value": 4,
-  //   },
-  // ];
-
   summaryCaseTypeData: any = [];
-  // {
-  //   "name": "Incident",
-  //   "value": 4,
-  // },
-  // {
-  //   "name": "Service Request",
-  //   "value": 20,
-  // },
-  //];
 
   ViewByList: Dropdown[];
 
@@ -136,6 +102,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   countClosed: number = 0;
 
   selViewBy: any;
+
 
   constructor(
     public api: ApiService,
@@ -148,6 +115,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     private caseStore: CaseStore,
     private dashboardService: DashboardService,
     private spinner: NgxSpinnerService,
+    private translate: TranslateService
   ) {
     super(router, globals);
 
@@ -157,6 +125,16 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
       this.ViewByList = result.data['VIEW_BY'];
 
     });
+
+    this.translate.get([
+      'dashboard.channel', 'case.type', 'dashboard.number'
+    ]).subscribe(translation => {
+      this.yAxisLabel = translation['dashboard.channel'];
+      this.yAxisLabelPie = translation['case.type'];
+      this.xAxisLabel = translation['dashboard.number'];
+
+    });
+
 
   }
 
