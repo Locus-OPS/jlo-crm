@@ -24,7 +24,7 @@ import { AuthLayoutComponent } from "./layouts/auth/auth-layout.component";
 import { JWT_OPTIONS, JwtModule } from "@auth0/angular-jwt";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import TokenUtils from "./shared/token-utils";
-import { HttpErrorInterceptor } from "./interceptor/httperror.interceptor";
+import { HttpLoadingInterceptor } from "./interceptor/httploading.interceptor";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { SharedModule } from "./shared/module/shared.module";
@@ -43,7 +43,7 @@ export function jwtOptionsFactory() {
       return TokenUtils.getToken();
     },
     allowedDomains: environment.whitelistedDomains,
-    disallowedRoutes: [new RegExp('.+\/auth\/token')]
+    disallowedRoutes: [new RegExp('.+\/common\/auth\/login')]
   };
 }
 
@@ -94,9 +94,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     Globals,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpLoadingInterceptor, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }

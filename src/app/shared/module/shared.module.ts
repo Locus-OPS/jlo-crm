@@ -7,7 +7,9 @@ import { MaterialModule } from './material.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
-  imports: [],
+  imports: [
+    ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' })
+  ],
   declarations: [],
   exports: [
     CommonModule,

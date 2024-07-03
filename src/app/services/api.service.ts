@@ -70,85 +70,39 @@ export class ApiService {
   }
 
   getMultipleCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Map<string, Dropdown[]>>> {
-    return this.http.post(this.rootPath + '/api/selector/getMultipleCodebookByCodeType', param).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getMultipleCodebookByCodeType', param).toPromise();
   }
 
   getCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getCodebookByCodeType', param).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getCodebookByCodeType', param).toPromise();
   }
 
   getCodebookByCodeTypeAndParentId(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getCodebookByCodeTypeAndParentId', param).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getCodebookByCodeTypeAndParentId', param).toPromise();
   }
 
   getBusinessUnit(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getBusinessUnit', {}).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getBusinessUnit', {}).toPromise();
   }
 
   getRole(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getRole', {}).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getRole', {}).toPromise();
   }
 
   getPosition(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getPosition', {}).toPromise();
+    return this.http.post(this.rootPath + '/common/selector/getPosition', {}).toPromise();
+  }
+
+  getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
+    return this.http.post(this.rootPath + '/common/selector/getCodebookType', {}).toPromise();
+  }
+
+  getParentMenu(): Promise<any> {
+    return this.http.post(this.rootPath + '/common/selector/getParentMenu', {}).toPromise();
   }
 
   getProgram(): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/api/selector/getProgram', {}).toPromise();
-  }
-
-  getParentProductCategory(param): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getParentProductCategory', param).toPromise();
-  }
-
-  getProductCategory(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getProductCategory', {}).toPromise();
-  }
-
-  getSaleProductCategory(): Promise<ApiResponse<DropdownModel[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getSaleProductCategory', {}).toPromise();
-  }
-
-  getCampaign(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getCampaign', {}).toPromise();
-  }
-
-
-  getShopType(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getShopType', {}).toPromise();
-  }
-
-  getMemberTier(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getMemberTier', {}).toPromise();
-  }
-
-  getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getCodebookType', {}).toPromise();
-  }
-
-  // Should have a common function for the below functions.
-  uploadExcelApi(param: any): Promise<ApiResponse<any>> {
-    return this.http.post(this.rootPath + '/api/loyalty/promotion/uploadExcel', param).toPromise();
-  }
-
-  uploadMemberExcelApi(param: any): Promise<ApiResponse<any>> {
-    return this.http.post(this.rootPath + '/api/loyalty/promotion/uploadPromotionMemberExcel', param).toPromise();
-  }
-
-  uploadShopExcelApi(param: any): Promise<ApiResponse<any>> {
-    return this.http.post(this.rootPath + '/api/loyalty/promotion/uploadPromotionShopExcel', param).toPromise();
-  }
-
-  uploadProgramShopExcelApi(param: any): Promise<ApiResponse<any>> {
-    return this.http.post(this.rootPath + '/api/loyalty/program/uploadProgramShopExcel', param).toPromise();
-  }
-
-  getPartnerType(): Promise<any> {
-    return this.http.post(this.rootPath + '/api/selector/getPartnerType', {}).toPromise();
-  }
-
-  getParentMenu(): Promise<any> {
-    return this.http.post(this.rootPath + '/api/selector/getParentMenu', {}).toPromise();
   }
 
   getProvince(param: ApiRequest<any>): Promise<ApiResponse<any>> {
@@ -172,10 +126,10 @@ export class ApiService {
 
   getAttachmentByAttId(attId: number) {
     const url = this.rootPath + '/api/attachment/getAttachmentByAttId?attId=' + attId;
-    return this.http.get(url, { responseType: 'blob'});
+    return this.http.get(url, { responseType: 'blob' });
   }
 
-  uploadAttachmentApi(file: File, formdata: FormData,url : string): Observable<HttpEvent<{}>> {      
+  uploadAttachmentApi(file: File, formdata: FormData, url: string): Observable<HttpEvent<{}>> {
     const req = new HttpRequest('POST', this.getRootPath() + url, formdata, {
       reportProgress: true,
       responseType: 'text'
@@ -186,5 +140,5 @@ export class ApiService {
   getTableList(): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/api/selector/getTableList', {}).toPromise();
   }
- 
+
 }

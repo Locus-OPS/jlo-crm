@@ -7,21 +7,23 @@ import { Router } from '@angular/router';
 import TokenUtils from '../shared/token-utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../services/auth.service';
 
 const IGNORE_LOADING = [
 
 ];
 const IGNORE_AUTH_LIST = [
-
+  '/common/auth/refreshToken'
 ];
 
 @Injectable()
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class HttpLoadingInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
+    private spinner: NgxSpinnerService,
+    private authService: AuthService,
     private jwtHelper: JwtHelperService,
-    private spinner: NgxSpinnerService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -65,8 +67,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     const token = TokenUtils.getToken();
     if (!this.checkIgnoreAuth(url)) {
       if (token && this.jwtHelper.isTokenExpired(token, 5)) {
-        TokenUtils.removeToken();
-        this.router.navigate(['/login'], { queryParams: {} });
+        try {
+          await this.authService.syncRefreshToken(TokenUtils.getRefreshToken());
+        } catch (e) {
+          TokenUtils.removeToken();
+          this.router.navigate(['/login'], { queryParams: {} });
+        }
       }
     }
   }
@@ -88,4 +94,5 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       return true;
     }
   }
+
 }

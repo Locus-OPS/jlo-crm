@@ -1,27 +1,26 @@
 <form [formGroup]="createdForm" novalidate>
-    <div class="toolbar">
-        <!-- <mat-form-field class="col-md-12" disabled appearance="outline"> -->
-        <div class="outline">
-            <div class="row">
-                <mat-form-field class="col-md-3">
-                    <mat-label>{{'common.createdBy' | translate}}</mat-label>
-                    <input matInput type="text" disabled readonly formControlName="createdBy">
-                </mat-form-field>
-                <mat-form-field class="col-md-3">
-                    <mat-label>{{'common.createdDate' | translate}}</mat-label>
-                    <input matInput type="text"  disabled readonly formControlName="createdDate">
-                </mat-form-field>
-                <mat-form-field class="col-md-3">
-                    <mat-label>{{'common.updatedBy' | translate}}</mat-label>
-                    <input matInput type="text" disabled readonly formControlName="updatedBy">
-                </mat-form-field>
-                <mat-form-field class="col-md-3">
-                    <mat-label>{{'common.updatedDate' | translate}}</mat-label>
-                    <input matInput type="text" disabled readonly formControlName="updatedDate">
-                </mat-form-field>
-
-            </div>
-        </div>
-        <!-- </mat-form-field> -->
+  <div class="toolbar">
+    <!-- <mat-form-field class="col-md-12" disabled appearance="outline"> -->
+    <div class="outline">
+      <div class="row">
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'common.createdBy' | translate }}</mat-label>
+          <input matInput type="text" disabled readonly formControlName="createdBy" />
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'common.createdDate' | translate }}</mat-label>
+          <input matInput type="text" disabled readonly formControlName="createdDate" />
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'common.updatedBy' | translate }}</mat-label>
+          <input matInput type="text" disabled readonly formControlName="updatedBy" />
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'common.updatedDate' | translate }}</mat-label>
+          <input matInput type="text" disabled readonly formControlName="updatedDate" />
+        </mat-form-field>
+      </div>
     </div>
-    </form>
+    <!-- </mat-form-field> -->
+  </div>
+</form>

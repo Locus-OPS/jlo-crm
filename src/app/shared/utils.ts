@@ -2,8 +2,30 @@ import { UntypedFormGroup } from '@angular/forms';
 import Swal, { SweetAlertOptions } from 'sweetalert2';
 import moment from 'moment';
 import { ApiResponse } from '../model/api-response.model';
+import * as _ from "lodash";
 
 export default class Utils {
+
+  static asyncDebounce(func, wait) {
+    const debounced = _.debounce(async (resolve, reject, bindSelf, args) => {
+      try {
+        const result = await func.bind(bindSelf)(...args);
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    }, wait);
+
+    // This is the function that will be bound by the caller, so it must contain the `function` keyword.
+    function returnFunc(...args) {
+      return new Promise((resolve, reject) => {
+        debounced(resolve, reject, this, args);
+      });
+    }
+
+    return returnFunc;
+  }
+
   static alertSuccess(options: SweetAlertOptions) {
     // return new SwalComponent({
     //   type: 'success',
@@ -114,8 +136,7 @@ export default class Utils {
    * @param startDate First date object to compare.
    * @param endDate Second date object to compare.
    */
-  static validateDateTimeRange(startDate: Date, endDate: Date, startTime: string, endTime: string): boolean
-  {
+  static validateDateTimeRange(startDate: Date, endDate: Date, startTime: string, endTime: string): boolean {
     let result = 0;
 
     // With Date object we can compare dates them using the >, <, <= or >=.
@@ -198,8 +219,8 @@ export default class Utils {
     }
   }
 
-  static showError(obj1, obj2){
-    if(obj1 !== null){
+  static showError(obj1, obj2) {
+    if (obj1 !== null) {
       this.alertError({
         text: `There is a logical problem.
         errorCode : ${obj1.errorCode}
@@ -214,19 +235,19 @@ export default class Utils {
     }
   }
 
-  static convertToBoolean( source: any, target: any, controlName: any) {
-    source[controlName] === 'Y' ? target.patchValue({[controlName]: true}) : target.patchValue({[controlName]: false});
+  static convertToBoolean(source: any, target: any, controlName: any) {
+    source[controlName] === 'Y' ? target.patchValue({ [controlName]: true }) : target.patchValue({ [controlName]: false });
   }
 
   static convertToYN(source: any) {
     return source === true ? 'Y' : 'N';
   }
 
-  static showSuccess(isCreated: any, objName: string, isDeleted?: boolean){
+  static showSuccess(isCreated: any, objName: string, isDeleted?: boolean) {
     let msgTitle = null;
     let msgText = null;
 
-    if(!isDeleted){
+    if (!isDeleted) {
       msgTitle = isCreated ? 'Created!' : 'Updated!';
       msgText = isCreated ? `${objName} has been created.!` : `${objName} has been updated.`;
       this.alertSuccess({
@@ -243,7 +264,7 @@ export default class Utils {
     }
   }
 
-  static showUploadSuccess(result: ApiResponse<any>, uploadTarget?: string){
+  static showUploadSuccess(result: ApiResponse<any>, uploadTarget?: string) {
 
     let msgTitle = 'Product Upload';
 
@@ -264,7 +285,7 @@ export default class Utils {
     });
   }
 
-  static showUploadError(result: ApiResponse<any>){
+  static showUploadError(result: ApiResponse<any>) {
 
     const msgTitle = 'Product Upload';
 
@@ -285,14 +306,14 @@ export default class Utils {
    * Validate Thai citizen id value.
    */
   static isValidCitizenId(value: string) {
-	  var fullCitizenId = value.substring(0, 1) + '-' + value.substring(1, 5) + '-' + value.substring(5, 10) + '-' + value.substring(10, 12)
-		  + '-' + value.substring(12);
+    var fullCitizenId = value.substring(0, 1) + '-' + value.substring(1, 5) + '-' + value.substring(5, 10) + '-' + value.substring(10, 12)
+      + '-' + value.substring(12);
 
     if (fullCitizenId.length == 17) {
       var k = fullCitizenId.length;
       var r = 0;
       var j = 13; {
-        for(var i = 0; i <= (k - 3); i++) {
+        for (var i = 0; i <= (k - 3); i++) {
           if (fullCitizenId.charAt(i) != '-') {
 
             r = r + Number(fullCitizenId.charAt(i)) * j;
@@ -318,11 +339,11 @@ export default class Utils {
       });
       return false;
     }
-}
+  }
 
 
-  static replaceThCodePhoneNo(ani:string){    
-    return ani.replace("+66","0");
-  } 
+  static replaceThCodePhoneNo(ani: string) {
+    return ani.replace("+66", "0");
+  }
 
 }
