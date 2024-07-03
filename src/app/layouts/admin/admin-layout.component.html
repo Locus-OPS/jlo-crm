@@ -1,22 +1,26 @@
-<div class="wrapper" [style]="initialCount === 0 ? 'display:;' : 'display:none;'">
+<div class="wrapper">
   <div class="sidebar" data-color="white" data-background-color="blue">
     <app-sidebar-cmp></app-sidebar-cmp>
     <div class="sidebar-background"></div>
   </div>
   <div class="main-panel">
     <app-navbar-cmp></app-navbar-cmp>
-    <mat-tab-group animationDuration="0ms" class="main-tab" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start"
-      (selectedTabChange)="selectedTabChanged($event)">
+    <mat-tab-group
+      animationDuration="0ms"
+      class="main-tab"
+      [selectedIndex]="selectedTab"
+      mat-stretch-tabs="false"
+      mat-align-tabs="start"
+      (selectedTabChange)="selectedTabChanged($event)"
+    >
       <mat-tab *ngFor="let tab of tabsComponents; index as i">
         <ng-template mat-tab-label>
-          {{ tab.title | translate:tab.titleParam }}
-          <button *ngIf="tab.canClose" mat-icon-button class="close-icon" style="margin-left: 35px;" (click)="closeTab($event,i)">
-            <mat-icon class="close-icon">
-              close
-            </mat-icon>
+          {{ tab.title | translate : tab.titleParam }}
+          <button *ngIf="tab.canClose" mat-icon-button class="close-icon" style="margin-left: 35px" (click)="closeTab($event, i)">
+            <mat-icon class="close-icon"> close </mat-icon>
           </button>
         </ng-template>
-        <ng-container *ngComponentOutlet="tab.component; injector:tab.params"></ng-container>
+        <ng-container *ngComponentOutlet="tab.component; injector: tab.params"></ng-container>
       </mat-tab>
     </mat-tab-group>
   </div>

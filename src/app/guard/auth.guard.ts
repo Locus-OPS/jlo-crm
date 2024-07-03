@@ -25,7 +25,7 @@ export class AuthGuard {
 
     const accessToken = TokenUtils.getToken();
     if (accessToken && !this.jwtHelper.isTokenExpired(accessToken)) {
-      let url = "/" + route.url.join("/");
+      let url = "/" + route.url.join("/").split(";")[0];
       const index = this.globals.profile.menuRespList.findIndex(menu => menu.link === url && menu.respFlag != null && menu.respFlag.indexOf('R') > -1);
       if (index !== -1) {
         return true;
