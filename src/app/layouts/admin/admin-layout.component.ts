@@ -30,6 +30,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(NavbarComponent) navbar: NavbarComponent;
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
 
+  ALLOW_ONE_TAB = [''];
+
   initialCount = 0;
   tabsKeys: string[] = [
     '/dashboard'
@@ -59,33 +61,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.lastPoppedUrl = ev.url;
     });
 
-    // this._router = this.router.events.subscribe((event: any) => {
-    //   if (event instanceof NavigationStart) {
-    //     if (event.url !== this.lastPoppedUrl) {
-    //       this.lastPoppedUrl = event.url;
-    //       this.yScrollStack.push(window.scrollY);
-    //     }
-    //   } else if (event instanceof NavigationEnd) {
-    //     console.log('xxxx');
-    //     console.log('event.url - ' + event.url);
-    //     console.log('lastPoppedUrl - ' + this.lastPoppedUrl);
-    //     if (event.url === this.lastPoppedUrl) {
-    //       console.log(this.yScrollStack[this.yScrollStack.length - 1]);
-    //       console.log('yyyy');
-    //       this.lastPoppedUrl = undefined;
-    //       window.scrollTo(0, this.yScrollStack.pop());
-    //     } else {
-    //       console.log('zzzz');
-    //       window.scrollTo(0, 0);
-    //     }
-    //   }
-    // });
-
-    // this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-    //   elemMainPanel.scrollTop = 0;
-    //   elemSidebar.scrollTop = 0;
-    // });
-
     const html = document.getElementsByTagName('html')[0];
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       let ps = new PerfectScrollbar(elemMainPanel);
@@ -94,9 +69,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       html.classList.add('perfect-scrollbar-off');
     }
-    // this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-    //   this.navbar.sidebarClose();
-    // });
+
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       tap((event: NavigationEnd) => {
@@ -106,29 +79,48 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((routeChange: NavigationEnd) => {
-        // this.layout.adjustLayout({ route: routeChange.url });
         if (this.tabManageService.isTab(routeChange.url)) {
           const child = this.route.snapshot.firstChild;
-
           if (this.tabsKeys.indexOf(routeChange.url) === -1) {
-            this.newTab(routeChange.url);
+            let mode = 'C';
+            let index = this.tabsComponents.length;
+            const tabIndex = this.checkAllowOneTab(routeChange.url);
+            if (tabIndex > -1) {
+              mode = 'U';
+              index = tabIndex;
+              this.updateTab(index, routeChange.url);
+            } else {
+              this.newTab(routeChange.url);
+            }
+
             const myParams: TabParam = {
               params: child.params,
               queryParam: child.queryParams,
-              path: this.router.url,
-              index: this.tabsComponents.length
+              path: routeChange.url,
+              index: index
             };
             const params = Injector.create({ providers: [{ provide: TabParam, useValue: myParams }], parent: this.injector });
-            const title = this.getTitle(this.router.url);
+            const title = this.getTitle(routeChange.url);
 
-            this.tabManageService.addTab({
-              title: title
-              , component: child.component
-              , params: params
-              , path: this.router.url
-              , canClose: true
-            });
-            this.changeTab(this.tabsComponents.length - 1);
+            if (mode === 'C') {
+              this.tabManageService.addTab({
+                title: title
+                , component: child.component
+                , params: params
+                , path: routeChange.url
+                , canClose: true
+              });
+              this.changeTab(this.tabsComponents.length - 1);
+            } else {
+              this.tabManageService.updateTab({
+                title: title
+                , component: child.component
+                , params: params
+                , path: routeChange.url
+                , canClose: true
+              });
+              this.changeTab(tabIndex);
+            }
           } else {
             this.changeTab(this.tabsKeys.indexOf(routeChange.url));
           }
@@ -140,6 +132,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     this.loadTab();
+  }
+
+  getTabs() {
+    return this.tabManageService.getTabs() || [
+      "/dashboard"
+    ];
   }
 
   ngOnDestroy() {
@@ -154,9 +152,35 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
       keepTabs.forEach(tab => {
         setTimeout(() => {
           this.navigate(tab, true);
-        }, 1);
+        }, 10);
       });
     }
+  }
+
+  initialCurrentTab() {
+    const keepTabs = this.tabManageService.getTabs();
+    let currentTab = this.router.url;
+    if (keepTabs && keepTabs.length > 0) {
+      keepTabs.forEach((tab, idx) => {
+        if (currentTab == tab) {
+          this.changeTab(idx);
+          return;
+        }
+      });
+    }
+  }
+
+  checkAllowOneTab(url: string) {
+    const checkUrl = this.ALLOW_ONE_TAB.find(item => url.startsWith(item));
+    if (checkUrl) {
+      return this.tabsKeys.findIndex(item => item.indexOf(checkUrl) > -1);
+    }
+    return -1;
+  }
+
+  updateTab(index: number, url: string) {
+    this.tabsKeys[index] = url;
+    this.tabManageService.keepTabs(this.tabsKeys);
   }
 
   newTab(url: string) {
@@ -165,6 +189,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   removeTab(index: number) {
+    this.tabsKeys = this.getTabs();
     this.tabsKeys.splice(index, 1);
     this.tabManageService.keepTabs(this.tabsKeys);
   }
@@ -186,20 +211,18 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAddressBarPath() {
-    // const href = window.location.href;
-    // if (href.indexOf('#') !== -1) {
-    //   return href.split('#')[1];
-    // }
-    // return '/dashboard';
-    return this.router.url;
+    return this.location.path();
   }
 
   getTitle(url: string) {
     if (url.indexOf(';') !== -1) {
       url = url.substring(0, url.indexOf(';'));
     }
-
-    return this.globals.profile.menuRespList.find(item => item.link === url).name;
+    try {
+      return this.globals.profile.menuRespList.find(item => item.link === url).name;
+    } catch (e) {
+      return "undefined";
+    }
   }
 
   selectedTabChanged(event) {
