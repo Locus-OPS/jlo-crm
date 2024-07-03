@@ -422,14 +422,29 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.createForm.controls['citizenId'].clearValidators();
       this.createForm.controls['citizenId'].updateValueAndValidity();
     }
+
     if (this.createForm.invalid) {
       console.log("invalid createForm");
+
       Object.keys(this.createForm.controls).forEach(element => {
         this.createForm.controls[element].markAsTouched({ onlySelf: true });
+
+        this.createForm.controls[element].invalid
       });
       return;
     }
     this.verifyCitizenId();
+  }
+
+
+  checkValidateFormField() {
+    console.log("begin");
+    Object.keys(this.createForm.controls).forEach(element => {
+      if (this.createForm.controls[element].invalid) {
+        console.log(this.createForm.controls[element]);
+      }
+    });
+    console.log("end");
   }
 
   /**
