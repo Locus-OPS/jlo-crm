@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
@@ -35,9 +35,11 @@ import { ConsultingService } from '../../consulting/consulting.service';
 export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   selectedTab: number;
-  createForm: UntypedFormGroup;
-  customerForm: UntypedFormGroup;
-  ccntactForm: UntypedFormGroup;
+  createForm: FormGroup;
+  customerForm: FormGroup;
+  contactForm: FormGroup;
+
+  contactRelTypeList: Dropdown[];
 
   typeList: Dropdown[];
   subTypeList: Dropdown[];
@@ -87,7 +89,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
-      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE'] }
+      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
     ).then(result => {
       this.typeList = result.data['CASE_TYPE'];
       this.priorityList = result.data['CASE_PRIORITY'];
@@ -95,6 +97,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       this.caseStatuslList = result.data['CASE_STATUS'];
       this.titleNameList = result.data['TITLE_NAME'];
       this.subTypeList = result.data['CASE_SUBTYPE'];
+      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
     });
 
   }
@@ -141,6 +144,17 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       email: [''],
     });
 
+
+    this.contactForm = this.formBuilder.group({
+      contId: [''],
+      customerId: ['', Validators.required],
+      title: [''],
+      firstName: [''],
+      lastName: [''],
+      relationCd: [''],
+      phoneNo: [''],
+      email: [''],
+    });
 
 
 
@@ -467,6 +481,39 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.customerForm.reset();
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
+  }
+
+  createContact() {
+    this.contactForm.reset();
+    console.log(this.customerForm.value);
+    this.contactForm.patchValue(this.customerForm.value);
+  }
+
+  saveContact() {
+    if (this.customerForm.invalid) {
+
+      Utils.alertError({
+        text: 'Please, Select Customer',
+      });
+      return;
+    }
+
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+    let data = this.createForm.getRawValue();
+    // Keep in session storage
+
+
+
+
+  }
+
+  resetContactForm() {
+    this.contactForm.reset();
+    this.contactForm.patchValue({ status: '01', priority: '04', channel: '01' });
+    this.contactForm.patchValue(this.customerForm.value);
   }
 
 }
