@@ -30,10 +30,10 @@
                 </mat-form-field>
               </div>
               <div class="row">
-                <mat-form-field class="col-md-3">
+                <!-- <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.cardNo' | translate }}</mat-label>
                   <input matInput type="text" formControlName="memberCardNo" />
-                </mat-form-field>
+                </mat-form-field> -->
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.phoneNo' | translate }}</mat-label>
                   <input matInput type="text" formControlName="phoneNo" />
@@ -43,15 +43,9 @@
                 <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">
                   {{ 'button.search' | translate }}
                 </button>
-                <a
-                  [routerLink]="['/customer/customer']"
-                  mat-raised-button
-                  type="button"
-                  class="btn btn-fill btn-primary"
-                  type="button"
-                  *ngIf="CAN_WRITE()"
-                  >{{ 'button.create' | translate }}</a
-                >
+                <a [routerLink]="['/customer/customer']" mat-raised-button type="button"
+                  class="btn btn-fill btn-primary" type="button" *ngIf="CAN_WRITE()">{{ 'button.create' | translate
+                  }}</a>
                 <button mat-raised-button type="reset" class="btn btn-fill btn-default" (click)="clear()">
                   {{ 'button.clear' | translate }}
                 </button>
@@ -61,23 +55,29 @@
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables table-responsive">
-              <table
-                mat-table
-                [dataSource]="dataSource"
-                class="mat-elevation-z8"
-                (matSortChange)="tableControl.onSort($event)"
-                matSort
-                matSortActive="firstName"
-                matSortDirection="asc"
-                matSortDisableClear
-              >
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                (matSortChange)="tableControl.onSort($event)" matSort matSortActive="firstName" matSortDirection="asc"
+                matSortDisableClear>
                 <ng-container matColumnDef="customerStatus">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
                     {{ 'member.customerStatus' | translate }}
                   </th>
-                  <td mat-cell *matCellDef="let element">
-                    <span *ngFor="let item of customerStatusList">{{ (element.customerStatus == item.codeId ? item.etc1 : '') | translate }}</span>
+                  <!-- <td mat-cell *matCellDef="let element">
+                    {{element.customerStatusName}}
+                     
+                  </td> -->
+
+
+                  <td mat-cell *matCellDef="let element" style="text-align: center; vertical-align: middle;">
+                    <mat-label *ngIf="element.customerStatus == '01'" class="badge low">{{element.customerStatusName}}
+                    </mat-label>
+                    <mat-label *ngIf="element.customerStatus == '02'" class="badge hight">{{element.customerStatusName}}
+                    </mat-label>
+                    <mat-label *ngIf="element.customerStatus == '03'"
+                      class="badge critical moderate">{{element.customerStatusName}}
+                    </mat-label>
                   </td>
+
                 </ng-container>
                 <ng-container matColumnDef="fullName">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -88,19 +88,21 @@
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="citizenId">
-                  <th mat-header-cell *matHeaderCellDef>{{ 'member.citizenId' | translate }}/{{ 'member.passportNo' | translate }}</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'member.citizenId' | translate }}/{{ 'member.passportNo' |
+                    translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.customerType ? (element.nationality == THAI_NATIONALITY ? element.citizenId : element.passportNo) : element.taxId }}
+                    {{ element.customerType ? (element.nationality == THAI_NATIONALITY ? element.citizenId :
+                    element.passportNo) : element.taxId }}
                   </td>
                 </ng-container>
-                <ng-container matColumnDef="memberCardNo">
+                <!-- <ng-container matColumnDef="memberCardNo">
                   <th mat-header-cell *matHeaderCellDef>
                     {{ 'member.cardNo' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.memberCardNo | memberCard }}
                   </td>
-                </ng-container>
+                </ng-container> -->
                 <ng-container matColumnDef="customerType">
                   <th mat-header-cell *matHeaderCellDef>
                     {{ 'member.customerType' | translate }}
@@ -127,22 +129,13 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                  (click)="selectCustomer(row)"
-                  [ngClass]="{ 'selected-row': selectedRow == row }"
-                ></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectCustomer(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
               </table>
             </div>
-            <mat-paginator
-              class="mat-paginator-sticky"
-              (page)="tableControl.onPage($event)"
-              [length]="tableControl.total"
-              [pageSize]="tableControl.pageSize"
-              [pageSizeOptions]="tableControl.pageSizeOptions"
-              showFirstLastButtons
-            >
+            <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
+              [length]="tableControl.total" [pageSize]="tableControl.pageSize"
+              [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
             </mat-paginator>
           </div>
           <!-- end content-->
@@ -183,7 +176,8 @@
               </button> -->
             </ng-container>
             <ng-template #elseCustomer>
-              <button (click)="selectCustomerConsulting('customer')" mat-raised-button class="btn btn-fill btn-default">View Customer Detail</button>
+              <button (click)="selectCustomerConsulting('customer')" mat-raised-button
+                class="btn btn-fill btn-default">View Customer Detail</button>
               <!--
               <button
                 mat-raised-button
@@ -198,8 +192,7 @@
             </ng-template>
           </div>
           <h4 class="card-title">Customer</h4>
-          <mat-card-subtitle
-            >Customer Name :
+          <mat-card-subtitle>Customer Name :
             <b>{{ (selectedRow.firstName || selectedRow.businessName || '') + ' ' + (selectedRow.lastName || '') }}</b>
           </mat-card-subtitle>
         </div>
@@ -212,7 +205,8 @@
                     <mat-label>{{ 'member.title' | translate }}</mat-label>
                     <mat-select formControlName="title">
                       <mat-option>--</mat-option>
-                      <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }} </mat-option>
+                      <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field class="col-md-5" disabled>
@@ -229,14 +223,17 @@
                 <mat-label>{{ 'member.nationality' | translate }}</mat-label>
                 <mat-select formControlName="nationality">
                   <mat-option>--</mat-option>
-                  <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }} </mat-option>
+                  <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value == THAI_NATIONALITY" disabled>
+              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value == THAI_NATIONALITY"
+                disabled>
                 <mat-label>{{ 'member.citizenId' | translate }}</mat-label>
                 <input matInput type="text" formControlName="citizenId" maxlength="13" />
               </mat-form-field>
-              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value != THAI_NATIONALITY" disabled>
+              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value != THAI_NATIONALITY"
+                disabled>
                 <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
                 <input matInput type="text" formControlName="passportNo" />
               </mat-form-field>

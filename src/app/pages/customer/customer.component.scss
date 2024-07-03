@@ -12,18 +12,21 @@ div[matLabel] {
     position: absolute;
     margin-top: 15px;
     right: 0px;
+
     button {
       margin-left: 8px;
     }
   }
 }
+
 .mat-mdc-step-icon .mat-mdc-icon,
 .mat-mdc-step-icon-not-touched .mat-mdc-icon {
   height: 40px;
   width: 40px;
 }
 
-.card-body{
+.card-body {
+
   /* Chrome, Safari, Edge, Opera */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -33,6 +36,47 @@ div[matLabel] {
 
   /* Firefox */
   input[type=number] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
   }
+
+}
+
+.badge {
+  color: #fff !important;
+  border-radius: .125rem;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 71px;
+}
+
+/* 
+  Critical>ขาว High>ดำ Moderate>ดำ Low>ขาว 
+*/
+
+.critical {
+  background-color: #800000 !important;
+  color: white !important;
+  margin-left: .25rem !important;
+  font-weight: bold;
+}
+
+.hight {
+  background-color: #D44E39 !important;
+  color: white !important;
+  margin-left: .25rem !important;
+  font-weight: bold;
+}
+
+.moderate {
+  background-color: #EDCB3E !important;
+  color: black !important;
+  margin-left: .25rem !important;
+  font-weight: bold;
+}
+
+.low {
+  background-color: #68937E !important;
+  color: white !important;
+  margin-left: .25rem !important;
+  font-weight: bold;
 }

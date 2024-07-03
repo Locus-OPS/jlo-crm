@@ -14,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ConsultingService } from '../consulting/consulting.service';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-customer',
@@ -32,7 +34,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   createFormDirective: FormGroupDirective;
 
   dataSource: CustomerData[];
-  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'memberCardNo', 'customerType', 'approvedDate', 'approvedBy'];
+  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'customerType', 'approvedDate', 'approvedBy'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   searchForm: UntypedFormGroup;
@@ -55,8 +57,13 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     private consultingService: ConsultingService,
     private spinner: NgxSpinnerService,
     private tabParam: TabParam,
+    public iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
   ) {
     super(router, globals);
+    iconRegistry.addSvgIcon('half-circle', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/adjust-solid.svg'));
+    //iconRegistry.addSvgIcon('voice-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/phone-square-light.svg'));
+
     this.api.getMultipleCodebookByCodeType({
       data: ['CUSTOMER_STATUS', 'TITLE_NAME', 'NATIONALITY']
     }).then(
