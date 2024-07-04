@@ -201,7 +201,10 @@ export class SoftphoneComponent implements OnInit {
 
   initSendEvent() {
     this.softphoneService.getSendAgentStatus().subscribe((status) => {
-      this.updateUserStatus(status.status);
+      if (status) {
+        this.updateUserStatus(status.status);
+      }
+
     });
     this.softphoneService.getSendInteractionStatus().subscribe((state) => {
       if (state) {

@@ -25,15 +25,29 @@
                   <input matInput type="number" formControlName="citizenId" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
-                  <input matInput type="text" formControlName="passportNo" />
+                  <mat-label>{{ 'member.customerStatus' | translate }}</mat-label>
+                  <mat-select formControlName="customerStatus">
+                    <mat-option value="">ทั้งหมด</mat-option>
+                    <mat-option *ngFor="let type of customerStatusList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="row">
-                <!-- <mat-form-field class="col-md-3">
-                  <mat-label>{{ 'member.cardNo' | translate }}</mat-label>
-                  <input matInput type="text" formControlName="memberCardNo" />
-                </mat-form-field> -->
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'member.customerType' | translate }}</mat-label>
+                  <mat-select formControlName="customerType">
+                    <mat-option value="">ทั้งหมด</mat-option>
+                    <mat-option *ngFor="let type of customerTypeList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="passportNo" />
+                </mat-form-field>
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.phoneNo' | translate }}</mat-label>
                   <input matInput type="text" formControlName="phoneNo" />
@@ -59,15 +73,10 @@
                 (matSortChange)="tableControl.onSort($event)" matSort matSortActive="firstName" matSortDirection="asc"
                 matSortDisableClear>
                 <ng-container matColumnDef="customerStatus">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky
+                    style="text-align: center; vertical-align: middle;">
                     {{ 'member.customerStatus' | translate }}
                   </th>
-                  <!-- <td mat-cell *matCellDef="let element">
-                    {{element.customerStatusName}}
-                     
-                  </td> -->
-
-
                   <td mat-cell *matCellDef="let element" style="text-align: center; vertical-align: middle;">
                     <mat-label *ngIf="element.customerStatus == '01'" class="badge low">{{element.customerStatusName}}
                     </mat-label>
@@ -111,20 +120,20 @@
                     {{ (element.customerType ? 'member.individual' : 'member.corporate') | translate }}
                   </td>
                 </ng-container>
-                <ng-container matColumnDef="approvedDate">
+                <ng-container matColumnDef="updatedDate">
                   <th mat-header-cell *matHeaderCellDef>
-                    {{ 'member.approvedDate' | translate }}
+                    {{ 'common.updatedDate' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.approvedDate }}
+                    {{ element.updatedDate }}
                   </td>
                 </ng-container>
-                <ng-container matColumnDef="approvedBy">
+                <ng-container matColumnDef="updatedByName">
                   <th mat-header-cell *matHeaderCellDef>
-                    {{ 'member.approvedBy' | translate }}
+                    {{ 'common.updatedBy' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.approvedByName }}
+                    {{ element.updatedByName }}
                   </td>
                 </ng-container>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl, FormGroupDirective, FormGroup } from '@angular/forms';
 import Utils from 'src/app/shared/utils';
 import { CustomerData } from './customer-data'
 import { CustomerService } from './customer.service';
@@ -16,6 +16,7 @@ import ConsultingUtils from 'src/app/shared/consultingStore';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Dropdown } from 'src/app/model/dropdown.model';
 
 @Component({
   selector: 'app-customer',
@@ -34,18 +35,19 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   createFormDirective: FormGroupDirective;
 
   dataSource: CustomerData[];
-  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'customerType', 'approvedDate', 'approvedBy'];
+  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'customerType', 'updatedDate', 'updatedByName'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchForm: UntypedFormGroup;
+  searchForm: FormGroup;
 
 
   selectedRow: CustomerData;
-  createForm: UntypedFormGroup;
+  createForm: FormGroup;
 
-  customerStatusList = [];
-  titleNameList = [];
-  nationalityList = [];
+  customerTypeList: Dropdown[];
+  customerStatusList: Dropdown[];
+  titleNameList: Dropdown[];
+  nationalityList: Dropdown[];
 
   constructor(
     private api: ApiService,
@@ -65,12 +67,13 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     //iconRegistry.addSvgIcon('voice-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/phone-square-light.svg'));
 
     this.api.getMultipleCodebookByCodeType({
-      data: ['CUSTOMER_STATUS', 'TITLE_NAME', 'NATIONALITY']
+      data: ['CUSTOMER_CRM_STATUS', 'TITLE_NAME', 'NATIONALITY', 'CUSTOMER_TYPE']
     }).then(
       result => {
-        this.customerStatusList = result.data['CUSTOMER_STATUS'];
+        this.customerStatusList = result.data['CUSTOMER_CRM_STATUS'];
         this.titleNameList = result.data['TITLE_NAME'];
         this.nationalityList = result.data['NATIONALITY'];
+        this.customerTypeList = result.data['CUSTOMER_TYPE'];
       }
     );
   }
@@ -83,7 +86,8 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       lastName: [''],
       citizenId: [''],
       passportNo: [''],
-      memberCardNo: [''],
+      customerStatus: [''],
+      customerType: [''],
       phoneNo: [''],
     });
     this.defaultCriteriaSearchFromOtherPage();

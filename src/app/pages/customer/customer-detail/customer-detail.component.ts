@@ -79,6 +79,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   countryList = [];
   addressTypeList = [];
   customerStatusList = [];
+  customerTypeList = [];
   provinceList = [];
   districtList = [];
   subDistrictList = [];
@@ -103,7 +104,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   ) {
     super(router, globals);
     this.api.getMultipleCodebookByCodeType({
-      data: ['GENDER', 'MARITAL_STATUS', 'OCCUPATION', 'TITLE_NAME', 'NATIONALITY', 'SOURCE_CHANNEL', 'PHONE_PREFIX', 'COUNTRY', 'ADDRESS_TYPE', 'CUSTOMER_STATUS', 'BUSINESS_TYPE']
+      data: ['GENDER', 'MARITAL_STATUS', 'CUSTOMER_TYPE', 'OCCUPATION', 'TITLE_NAME', 'NATIONALITY', 'SOURCE_CHANNEL', 'PHONE_PREFIX', 'COUNTRY', 'ADDRESS_TYPE', 'CUSTOMER_CRM_STATUS', 'BUSINESS_TYPE']
     }).then(
       result => {
         this.genderList = result.data['GENDER'];
@@ -115,8 +116,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
         this.phonePrefixList = result.data['PHONE_PREFIX'];
         this.countryList = result.data['COUNTRY'];
         this.addressTypeList = result.data['ADDRESS_TYPE'];
-        this.customerStatusList = result.data['CUSTOMER_STATUS'];
+        this.customerStatusList = result.data['CUSTOMER_CRM_STATUS'];
         this.businessTypeList = result.data['BUSINESS_TYPE'];
+        this.customerTypeList = result.data['CUSTOMER_TYPE'];
       }
     );
 
@@ -130,7 +132,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm = this.formBuilder.group({
       customerId: [''],
       customerType: [true],
-      customerStatus: ['1'],
+      customerStatus: ['01'],
       title: [''],
       firstName: [''],
       lastName: [''],
@@ -250,58 +252,58 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   setDisabled() {
-    if (this.createForm.value.customerStatus > "00") {
-      this.createDisabled = true;
-      this.addressDisabled = true;
-    } else {
-      this.createDisabled = false;
-      this.addressDisabled = false;
-    }
-    if (this.createDisabled) {
-      this.createForm.controls['customerType'].disable();
-      this.createForm.controls['title'].disable();
-      this.createForm.controls['firstName'].disable();
-      this.createForm.controls['lastName'].disable();
-      this.createForm.controls['nationality'].disable();
-      this.createForm.controls['citizenId'].disable();
-      this.createForm.controls['passportNo'].disable();
-      this.createForm.controls['birthDate'].disable();
-      this.createForm.controls['gender'].disable();
-      this.createForm.controls['maritalStatus'].disable();
-      this.createForm.controls['occupation'].disable();
-      this.createForm.controls['businessName'].disable();
-      this.createForm.controls['taxId'].disable();
-      this.createForm.controls['businessType'].disable();
-      this.createForm.controls['phoneArea'].disable();
-      this.createForm.controls['phoneNo'].disable();
-      this.createForm.controls['email'].disable();
-      this.createForm.controls['registrationChannel'].disable();
-      this.createForm.controls['registrationStore'].disable();
-      this.createForm.controls['remark'].disable();
-      this.createForm.controls['programId'].disable();
-    } else {
-      this.createForm.controls['customerType'].enable();
-      this.createForm.controls['title'].enable();
-      this.createForm.controls['firstName'].enable();
-      this.createForm.controls['lastName'].enable();
-      this.createForm.controls['nationality'].enable();
-      this.createForm.controls['citizenId'].enable();
-      this.createForm.controls['passportNo'].enable();
-      this.createForm.controls['birthDate'].enable();
-      this.createForm.controls['gender'].enable();
-      this.createForm.controls['maritalStatus'].enable();
-      this.createForm.controls['occupation'].enable();
-      this.createForm.controls['businessName'].enable();
-      this.createForm.controls['taxId'].enable();
-      this.createForm.controls['businessType'].enable();
-      this.createForm.controls['phoneArea'].enable();
-      this.createForm.controls['phoneNo'].enable();
-      this.createForm.controls['email'].enable();
-      this.createForm.controls['registrationChannel'].enable();
-      this.createForm.controls['registrationStore'].enable();
-      this.createForm.controls['remark'].enable();
-      this.createForm.controls['programId'].enable();
-    }
+    // if (this.createForm.value.customerStatus > "00") {
+    //   this.createDisabled = true;
+    //   this.addressDisabled = true;
+    // } else {
+    //   this.createDisabled = false;
+    //   this.addressDisabled = false;
+    // }
+    // if (this.createDisabled) {
+    //   this.createForm.controls['customerType'].disable();
+    //   this.createForm.controls['title'].disable();
+    //   this.createForm.controls['firstName'].disable();
+    //   this.createForm.controls['lastName'].disable();
+    //   this.createForm.controls['nationality'].disable();
+    //   this.createForm.controls['citizenId'].disable();
+    //   this.createForm.controls['passportNo'].disable();
+    //   this.createForm.controls['birthDate'].disable();
+    //   this.createForm.controls['gender'].disable();
+    //   this.createForm.controls['maritalStatus'].disable();
+    //   this.createForm.controls['occupation'].disable();
+    //   this.createForm.controls['businessName'].disable();
+    //   this.createForm.controls['taxId'].disable();
+    //   this.createForm.controls['businessType'].disable();
+    //   this.createForm.controls['phoneArea'].disable();
+    //   this.createForm.controls['phoneNo'].disable();
+    //   this.createForm.controls['email'].disable();
+    //   this.createForm.controls['registrationChannel'].disable();
+    //   this.createForm.controls['registrationStore'].disable();
+    //   this.createForm.controls['remark'].disable();
+    //   this.createForm.controls['programId'].disable();
+    // } else {
+    this.createForm.controls['customerType'].enable();
+    this.createForm.controls['title'].enable();
+    this.createForm.controls['firstName'].enable();
+    this.createForm.controls['lastName'].enable();
+    this.createForm.controls['nationality'].enable();
+    this.createForm.controls['citizenId'].enable();
+    this.createForm.controls['passportNo'].enable();
+    this.createForm.controls['birthDate'].enable();
+    this.createForm.controls['gender'].enable();
+    this.createForm.controls['maritalStatus'].enable();
+    this.createForm.controls['occupation'].enable();
+    this.createForm.controls['businessName'].enable();
+    this.createForm.controls['taxId'].enable();
+    this.createForm.controls['businessType'].enable();
+    this.createForm.controls['phoneArea'].enable();
+    this.createForm.controls['phoneNo'].enable();
+    this.createForm.controls['email'].enable();
+    this.createForm.controls['registrationChannel'].enable();
+    this.createForm.controls['registrationStore'].enable();
+    this.createForm.controls['remark'].enable();
+    this.createForm.controls['programId'].enable();
+    // }
     this.createForm.controls['createdBy'].disable();
     this.createForm.controls['createdDate'].disable();
     this.createForm.controls['updatedBy'].disable();
@@ -313,25 +315,25 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   setDisabledAddress() {
-    if (this.addressDisabled) {
-      this.addressForm.controls['primary'].disable();
-      this.addressForm.controls['addressType'].disable();
-      this.addressForm.controls['address'].disable();
-      this.addressForm.controls['postCode'].disable();
-      this.addressForm.controls['subDistrict'].disable();
-      this.addressForm.controls['district'].disable();
-      this.addressForm.controls['province'].disable();
-      this.addressForm.controls['country'].disable();
-    } else {
-      this.addressForm.controls['primary'].enable();
-      this.addressForm.controls['addressType'].enable();
-      this.addressForm.controls['address'].enable();
-      this.addressForm.controls['postCode'].enable();
-      this.addressForm.controls['subDistrict'].enable();
-      this.addressForm.controls['district'].enable();
-      this.addressForm.controls['province'].enable();
-      this.addressForm.controls['country'].enable();
-    }
+    // if (this.addressDisabled) {
+    //   this.addressForm.controls['primary'].disable();
+    //   this.addressForm.controls['addressType'].disable();
+    //   this.addressForm.controls['address'].disable();
+    //   this.addressForm.controls['postCode'].disable();
+    //   this.addressForm.controls['subDistrict'].disable();
+    //   this.addressForm.controls['district'].disable();
+    //   this.addressForm.controls['province'].disable();
+    //   this.addressForm.controls['country'].disable();
+    // } else {
+    this.addressForm.controls['primary'].enable();
+    this.addressForm.controls['addressType'].enable();
+    this.addressForm.controls['address'].enable();
+    this.addressForm.controls['postCode'].enable();
+    this.addressForm.controls['subDistrict'].enable();
+    this.addressForm.controls['district'].enable();
+    this.addressForm.controls['province'].enable();
+    this.addressForm.controls['country'].enable();
+    // }
   }
 
   changeCustomerType(val) {
@@ -358,7 +360,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
   create() {
     this.createForm.reset();
-    this.createForm.patchValue({ customerType: true, customerStatus: '00', nationality: this.THAI_NATIONALITY, phoneArea: this.THAI_COUNTRY_CODE });
+    this.createForm.patchValue({ customerType: true, customerStatus: '01', nationality: this.THAI_NATIONALITY, phoneArea: this.THAI_COUNTRY_CODE });
     this.addressDS = null;
     this.changeCustomerType(false);
   }
@@ -593,6 +595,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   onChangeStatus(nextStatus) {
+
     this.createForm.controls['phoneArea'].setValidators([Validators.required]);
     this.createForm.controls['phoneArea'].updateValueAndValidity();
     this.createForm.controls['phoneNo'].setValidators([Validators.required]);
@@ -629,63 +632,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     if (nextStatus == "01") { // Submit
       this.createForm.patchValue({ customerStatus: nextStatus });
       this.onSave();
-      /*} else if ("02" == nextStatus) {
-        this.createForm.enable();
-        const param = {
-          ...this.createForm.value
-        };
-        this.setDisabled();
-        this.customerService.verifyRequest({
-          data: param
-        }).then(result => {
-          if (result.status) {
-            this.customerVerify = result.data;
-  
-            const dialogRef = this.dialog.open(VerifyCustomerDialogComponent, {
-              width: '400px',
-              data: this.customerVerify
-            });
-  
-            dialogRef.afterClosed().subscribe(result => {
-              console.log('The dialog was closed');
-              this.customerVerify.key = result;
-              if (result == null || result == "") {
-                return;
-              }
-              this.customerService.verifyValidate({
-                data: this.customerVerify
-              }).then(result => {
-                if (result.status) {
-                  if ("OK" == result.data) {
-                    this.sendUpdateStatus(nextStatus);
-                  } else {
-                    Utils.alertError({
-                      text: 'Verify key not valid.',
-                    });
-                  }
-                } else {
-                  Utils.alertError({
-                    text: 'Please, try again later',
-                  });
-                }
-              }, error => {
-                Utils.alertError({
-                  text: 'Please, try again later',
-                });
-              });
-            });
-  
-          } else {
-            Utils.alertError({
-              text: 'Please, try again later',
-            });
-          }
-        }, error => {
-          Utils.alertError({
-            text: 'Please, try again later',
-          });
-        });
-        */
     } else if ("04" == nextStatus) { // Active, create member.
       const param = {
         ...this.createForm.value
