@@ -4,8 +4,9 @@ import { ApiService } from 'src/app/services/api.service';
 import { ApiPageRequest } from 'src/app/model/api-page-request.model';
 import { ApiPageResponse } from 'src/app/model/api-page-response.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -73,5 +74,20 @@ export class CustomerService {
 
   getCustomerByPhoneNo(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/customer/getCustomerByPhoneNo', param);
+  }
+
+  getCustomerProfileImagePath(pictureUrl: string) {
+    return this.rootPath + '/api/customer/profile_image/' + pictureUrl;
+  }
+
+  uploadCustomerProfileImage(file: File, customerId: string): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('customerId', customerId);
+    const req = new HttpRequest('POST', this.rootPath + '/api/customer/upload', formdata, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.http.request(req);
   }
 }

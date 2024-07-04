@@ -163,7 +163,7 @@ export class UserComponent extends BaseComponent implements OnInit {
         this.createForm.patchValue({
           ...this.selectedRow
           , buId: this.selectedRow.buId.toString()
-      });
+        });
         Utils.alertSuccess({
           title: 'Updated!',
           text: 'User has been updated.',

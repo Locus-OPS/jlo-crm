@@ -66,16 +66,23 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="row d-flex align-items-stretch">
-                    <div class="col-md-4 d-sm-none d-md-block">
+                    <div class="col-md-6 d-sm-none d-md-block">
                       <div class="card-simple">
-                        <!-- <img class="card-bg" src="assets/img/card/card_default.png" /> -->
-                        <img class="card-bg" [src]="'./assets/img/profile_image_not_found.png'" />
+                        <img class="card-bg" [src]="imageSrc
+                              ? imageSrc  : this.createForm.controls['pictureUrl'].value
+                              ? customerService.getCustomerProfileImagePath(this.createForm.controls['pictureUrl'].value)
+                              : './assets/img/profile_image_not_found.png'" />
+                      </div>
+                      <input type="file" hidden #fileUpload (change)="selectFile($event)" accept="image/*" /><br />
+                      <div *ngIf="this.customerId">
+                        <a class="btn btn-info btn-round"
+                          (click)="fileUpload.click()"><mat-icon>attachment</mat-icon></a> &nbsp;
+                        <a *ngIf="imageSrc" class="btn btn-info btn-round"
+                          (click)="upload()"><mat-icon>upload</mat-icon></a>
                       </div>
                     </div>
                   </div>
                 </div>
-
-
               </div>
               <div class="row">&nbsp;</div>
               <div class="row">

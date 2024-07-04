@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ContactHistoryComponent } from '../contact-history/contact-history.component';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-customer-detail',
@@ -88,13 +89,18 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
   get c() { return this.createForm.controls; }
 
+
+  selectedFiles: FileList;
+  imageSrc: string;
+  uploadProgress = 0;
+
   constructor(
     private caseStore: CaseStore,
     private tabManageService: TabManageService,
     private tabParam: TabParam,
-    private api: ApiService,
+    public api: ApiService,
     private formBuilder: UntypedFormBuilder,
-    private customerService: CustomerService,
+    public customerService: CustomerService,
     private el: ElementRef,
     public dialog: MatDialog,
     private route: ActivatedRoute,
@@ -155,6 +161,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       registrationStore: [''],
       remark: [''],
       programId: [''],
+      pictureUrl: [''],
       createdBy: new UntypedFormControl({ value: '', disabled: true }),
       createdDate: new UntypedFormControl({ value: '', disabled: true }),
       updatedBy: new UntypedFormControl({ value: '', disabled: true }),
@@ -362,6 +369,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.reset();
     this.createForm.patchValue({ customerType: true, customerStatus: '01', nationality: this.THAI_NATIONALITY, phoneArea: this.THAI_COUNTRY_CODE });
     this.addressDS = null;
+    this.imageSrc = null;
     this.changeCustomerType(false);
   }
 
@@ -1030,6 +1038,49 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     } else {
       this.createForm.patchValue({ citizenId: null });
     }
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = <string>reader.result;
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  upload() {
+
+    this.uploadProgress = 0;
+    console.log(this.selectedFiles);
+
+    console.log(this.selectedFiles.item(0));
+
+    this.customerService.uploadCustomerProfileImage(this.selectedFiles.item(0), this.customerId).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.uploadProgress = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        if (event.status === 200) {
+          Utils.alertSuccess({
+            title: 'Uploaded!',
+            text: 'Profile image has been updated.',
+          });
+
+          this.createForm.get('pictureUrl').setValue(<string>event.body);
+
+          // this.selectedRow.pictureUrl = <string>event.body;
+        } else {
+          Utils.alertError({
+            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+          });
+        }
+        this.uploadProgress = 0;
+        this.imageSrc = null;
+      }
+    });
+    this.selectedFiles = null;
   }
 
 }
