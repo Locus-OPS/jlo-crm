@@ -33,7 +33,7 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
     , "action"];
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
-
+  selectedRow: any;
 
   constructor(
     private tabManageService: TabManageService,
@@ -110,6 +110,10 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
           });
         }
       );
+  }
+
+  onSelectRow(row: any) {
+    this.selectedRow = row;
   }
 
 
