@@ -1,17 +1,14 @@
-* {
-    box-sizing: border-box;
-}
+@use '@angular/material' as mat;
+@import "src/assets/scss/core/variables.scss";
 
-body {
-    background-color: #474e5d;
-    font-family: Helvetica, sans-serif;
-}
+@include mat.core();
 
 /* The actual timeline (the vertical ruler) */
 .timeline {
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    background-color: $brand-locus !important;
 }
 
 
@@ -20,7 +17,7 @@ body {
     content: '';
     position: absolute;
     width: 6px;
-    background-color: red;
+    background-color: white;
     top: 0;
     bottom: 0;
     left: 50%;

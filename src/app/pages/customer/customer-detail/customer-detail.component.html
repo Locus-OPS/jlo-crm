@@ -620,7 +620,8 @@
                 <!-- <app-contact-history #contactHistoryConponent *ngIf="this.customerId != null"
                   [customerIdParam]="this.createForm.controls['customerId'].value">
                 </app-contact-history> -->
-                <app-contact-history-tl>
+                <app-contact-history-tl *ngIf="this.customerId != null"
+                  [customerIdParam]="this.createForm.controls['customerId'].value">
 
                 </app-contact-history-tl>
 
