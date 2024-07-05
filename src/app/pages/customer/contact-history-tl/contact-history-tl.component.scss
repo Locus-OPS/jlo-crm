@@ -40,12 +40,13 @@ body {
     position: absolute;
     width: 25px;
     height: 25px;
-    right: -17px;
+    right: 0px;
     background-color: white;
     border: 4px solid #FF9F55;
     top: 15px;
     border-radius: 50%;
     z-index: 1;
+    transform: translateX(13px);
 }
 
 /* Place the container-tl to the left */
@@ -88,7 +89,8 @@ body {
 
 /* Fix the circle for containers on the right side */
 .right::after {
-    left: -16px;
+    transform: translateX(-12px);
+    left: 0px;
 }
 
 /* The actual content */
@@ -97,6 +99,14 @@ body {
     background-color: white;
     position: relative;
     border-radius: 6px;
+
+    h2 {
+        border-bottom-width: 5px;
+        border-bottom-style: dashed;
+        border-bottom-color: #ebd2bf;
+        font-size: 34px;
+        font-weight: 600;
+    }
 }
 
 /* Media queries - Responsive timeline on screens less than 600px wide */
