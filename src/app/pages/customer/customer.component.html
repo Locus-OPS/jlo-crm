@@ -207,8 +207,26 @@
         </div>
         <div class="card-body">
           <form #createFormDirective="ngForm" [formGroup]="createForm" novalidate>
-            <div class="row" *ngIf="createForm.value.customerType">
+            <div class="row">
               <div class="col-md-6">
+                <div class="row d-flex align-items-stretch">
+                  <div class="col-md-4 d-sm-none d-md-block">
+                    <div class="card-simple">
+                      <img class="card-bg" [src]="this.createForm.controls['pictureUrl'].value
+                            ? customerService.getCustomerProfileImagePath(this.createForm.controls['pictureUrl'].value)
+                            : './assets/img/profile_image_not_found.png'" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="createForm.value.customerType">
+
+              <div class="col-md-6">
+
+
+
                 <div class="row">
                   <mat-form-field class="col-md-2" disabled>
                     <mat-label>{{ 'member.title' | translate }}</mat-label>

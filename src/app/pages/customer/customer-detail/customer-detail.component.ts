@@ -230,7 +230,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
           this.createForm.patchValue(result.data);
           this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
           this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
-          this.createForm.patchValue({ 'programId': this.createForm.value['programId'].toString() });
+          //this.createForm.patchValue({ 'programId': this.createForm.value['programId'].toString() });
           Utils.setBirthDatePicker(this.createForm);
           this.setDisabled();
           this.searchAddress();
@@ -309,7 +309,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['registrationChannel'].enable();
     this.createForm.controls['registrationStore'].enable();
     this.createForm.controls['remark'].enable();
-    this.createForm.controls['programId'].enable();
+    //this.createForm.controls['programId'].enable();
     // }
     this.createForm.controls['createdBy'].disable();
     this.createForm.controls['createdDate'].disable();
@@ -578,10 +578,11 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     }).then(result => {
       if (result.status) {
         this.createForm.patchValue(result.data);
+        this.customerId = result.data.customerId;
         Utils.setBirthDatePicker(this.createForm);
         this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
         this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
-        this.createForm.patchValue({ 'programId': result.data.programId.toString() });
+        //  this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         this.setDisabled();
         Utils.alertSuccess({
           title: msgTitle,
@@ -687,7 +688,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     }).then(result => {
       if (result.status) {
         this.createForm.patchValue(result.data);
-        this.createForm.patchValue({ 'programId': result.data.programId.toString() });
+        //this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         Utils.setBirthDatePicker(this.createForm);
         this.setDisabled();
         Utils.alertSuccess({

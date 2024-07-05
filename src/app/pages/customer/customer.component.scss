@@ -80,3 +80,20 @@ div[matLabel] {
   margin-left: .25rem !important;
   font-weight: bold;
 }
+
+.card-simple {
+  img.card-bg {
+    width: 100%;
+  }
+
+  .logo {
+    width: 100%;
+
+    img {
+      width: 50%;
+      float: right;
+      margin-top: 3%;
+      margin-right: 5px;
+    }
+  }
+}
