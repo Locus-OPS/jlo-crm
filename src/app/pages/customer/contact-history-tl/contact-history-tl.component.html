@@ -1,0 +1,29 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">timeline</i>
+                        </div>
+                        <h4 class="card-title">{{ 'consulting.menu' | translate }}</h4>
+                    </div>
+                    <!-- <div class="card-body" style="background-color: #474e5d;"> -->
+
+                    <div class="timeline">
+                        <div *ngFor='let entry of timeLine;let i = index'>
+                            <div class="container-tl" [ngClass]="{ left: i%2!==0, right:i%2==0}">
+                                <div class="content-tl">
+                                    <h2>{{entry.year}}</h2>
+                                    <p>{{entry.detail}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

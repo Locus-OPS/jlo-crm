@@ -13,6 +13,7 @@ import { MemberRedeemComponent } from './member-redeem/member-redeem.component';
 import { RedeemSummaryDialogComponent } from './member-redeem/redeem-summary-dialog/redeem-summary-dialog.component';
 import { CommonModule } from '../common/common.module';
 import { ContactHistoryComponent } from './contact-history/contact-history.component';
+import { ContactHistoryTlComponent } from './contact-history-tl/contact-history-tl.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ContactHistoryComponent } from './contact-history/contact-history.compo
     BlockCardComponent,
     MemberRedeemComponent,
     RedeemSummaryDialogComponent,
-    ContactHistoryComponent
+    ContactHistoryComponent,
+    ContactHistoryTlComponent
   ],
   exports: [
     CustomerComponent,
@@ -37,7 +39,8 @@ import { ContactHistoryComponent } from './contact-history/contact-history.compo
     BlockCardComponent,
     MemberRedeemComponent,
     RedeemSummaryDialogComponent,
-    ContactHistoryComponent
+    ContactHistoryComponent,
+    ContactHistoryTlComponent
   ],
   imports: [
     SharedModule,

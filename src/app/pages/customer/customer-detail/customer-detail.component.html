@@ -617,9 +617,13 @@
                 <!-- END Case -->
               </mat-tab>
               <mat-tab [label]=" 'contact.history'| translate">
-                <app-contact-history #contactHistoryConponent *ngIf="this.customerId != null"
+                <!-- <app-contact-history #contactHistoryConponent *ngIf="this.customerId != null"
                   [customerIdParam]="this.createForm.controls['customerId'].value">
-                </app-contact-history>
+                </app-contact-history> -->
+                <app-contact-history-tl>
+
+                </app-contact-history-tl>
+
               </mat-tab>
 
               <mat-tab [label]="'member.changeLog' | translate">
