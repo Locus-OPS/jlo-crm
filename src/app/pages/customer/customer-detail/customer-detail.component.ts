@@ -313,7 +313,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     // }
     this.createForm.controls['createdByName'].disable();
     this.createForm.controls['createdDate'].disable();
-    this.createForm.controls['updatedBy'].disable();
+    this.createForm.controls['updatedByName'].disable();
     this.createForm.controls['updatedDate'].disable();
 
     this.setDisabledAddress();
