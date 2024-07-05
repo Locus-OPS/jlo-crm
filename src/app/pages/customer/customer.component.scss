@@ -34,10 +34,6 @@ div[matLabel] {
     margin: 0;
   }
 
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
 
 }
 
@@ -49,33 +45,24 @@ div[matLabel] {
   width: 71px;
 }
 
-/* 
-  Critical>ขาว High>ดำ Moderate>ดำ Low>ขาว 
-*/
 
-.critical {
-  background-color: #800000 !important;
+
+.cancelled {
+  background-color: #f52505 !important;
   color: white !important;
   margin-left: .25rem !important;
   font-weight: bold;
 }
 
-.hight {
-  background-color: #D44E39 !important;
+.inactive {
+  background-color: #aa5641 !important;
   color: white !important;
   margin-left: .25rem !important;
   font-weight: bold;
 }
 
-.moderate {
-  background-color: #EDCB3E !important;
-  color: black !important;
-  margin-left: .25rem !important;
-  font-weight: bold;
-}
-
-.low {
-  background-color: #68937E !important;
+.active {
+  background-color: #3f32f6 !important;
   color: white !important;
   margin-left: .25rem !important;
   font-weight: bold;

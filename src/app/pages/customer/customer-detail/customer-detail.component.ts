@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/co
 import { CustomerAddressData } from '../customer-address-data';
 import { TableControl } from 'src/app/shared/table-control';
 import { ChangeLog } from 'src/app/model/change-log.model';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, FormGroup } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { CustomerService } from '../customer.service';
 import Utils from 'src/app/shared/utils';
@@ -56,7 +56,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   changeLogColumn: string[] = ['changedBy', 'changedDetail', 'changedDate'];
   changeLogTableControl: TableControl = new TableControl(() => { this.searchChangeLog() });
 
-  createForm: UntypedFormGroup;
+  createForm: FormGroup;
   addressForm: UntypedFormGroup;
   caseForm: UntypedFormGroup;
 
@@ -162,9 +162,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       remark: [''],
       programId: [''],
       pictureUrl: [''],
-      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdByName: new UntypedFormControl({ value: '', disabled: true }),
       createdDate: new UntypedFormControl({ value: '', disabled: true }),
-      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
+      updatedByName: new UntypedFormControl({ value: '', disabled: true }),
       updatedDate: new UntypedFormControl({ value: '', disabled: true })
     });
 
@@ -180,7 +180,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       district: [''],
       province: [''],
       country: [''],
-      createdBy: new UntypedFormControl({ value: '', disabled: true }),
+      createdByName: new UntypedFormControl({ value: '', disabled: true }),
       createdDate: new UntypedFormControl({ value: '', disabled: true }),
       updatedBy: new UntypedFormControl({ value: '', disabled: true }),
       updatedDate: new UntypedFormControl({ value: '', disabled: true })
@@ -311,7 +311,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['remark'].enable();
     //this.createForm.controls['programId'].enable();
     // }
-    this.createForm.controls['createdBy'].disable();
+    this.createForm.controls['createdByName'].disable();
     this.createForm.controls['createdDate'].disable();
     this.createForm.controls['updatedBy'].disable();
     this.createForm.controls['updatedDate'].disable();
