@@ -7,14 +7,17 @@ import { Globals } from 'src/app/shared/globals';
 import { ModalMemberModel } from '../../common/modal-member/modal-member.model';
 import { TableControl } from 'src/app/shared/table-control';
 import { MatSort } from '@angular/material/sort';
-import { MemberPopupService} from '../../common/modal-member/member.popup.service';
+import { MemberPopupService } from '../../common/modal-member/member.popup.service';
 import Utils from 'src/app/shared/utils';
 import { BaseComponent } from 'src/app/shared/base.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-modal-member',
   templateUrl: './modal-member.component.html',
-  styleUrls: ['./modal-member.component.scss']
+  styleUrls: ['./modal-member.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ModalMemberComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -27,15 +30,15 @@ export class ModalMemberComponent extends BaseComponent implements OnInit {
   searchForm: UntypedFormGroup;
 
   constructor(
-      @Inject(MAT_DIALOG_DATA) public memberInfo: any,
-      private dialogRef: MatDialogRef<ModalMemberComponent>,
-      public api: ApiService,
-      private memberPopupService: MemberPopupService,
-      private formBuilder: UntypedFormBuilder,
-      public router: Router,
-      public globals: Globals) {
-        super(router, globals);
-      }
+    @Inject(MAT_DIALOG_DATA) public memberInfo: any,
+    private dialogRef: MatDialogRef<ModalMemberComponent>,
+    public api: ApiService,
+    private memberPopupService: MemberPopupService,
+    private formBuilder: UntypedFormBuilder,
+    public router: Router,
+    public globals: Globals) {
+    super(router, globals);
+  }
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
@@ -71,7 +74,7 @@ export class ModalMemberComponent extends BaseComponent implements OnInit {
     this.search();
   }
 
-  search(){
+  search() {
     this.selectedRow = null;
     this.memberPopupService.getMemberPopupList({
       pageSize: this.tableControl.pageSize,

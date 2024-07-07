@@ -13,11 +13,14 @@ import { UserService } from '../../system/user/user.service';
 import { TableControl } from 'src/app/shared/table-control';
 import { CustomerData } from '../../customer/customer-data'
 import { CustomerModalService } from './customer-modal-service.service';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-modal-customer',
   templateUrl: './modal-customer.component.html',
-  styleUrls: ['./modal-customer.component.scss']
+  styleUrls: ['./modal-customer.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ModalCustomerComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;

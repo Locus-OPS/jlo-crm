@@ -9,14 +9,6 @@ import { ModalConsultingComponent } from './modal-consulting/modal-consulting.co
 import { CreatedByComponent } from './created-by/created-by.component';
 
 @NgModule({
-  declarations: [
-    ModalUserComponent
-    , ModalMemberComponent
-    , ModalContentFileComponent
-    , ModalConfirmComponent
-    , ModalCustomerComponent
-    , ModalConsultingComponent
-  ],
   exports: [
     ModalUserComponent
     , ModalMemberComponent
@@ -28,7 +20,13 @@ import { CreatedByComponent } from './created-by/created-by.component';
   ],
   imports: [
     SharedModule,
-    CreatedByComponent
+    CreatedByComponent,
+    ModalConfirmComponent,
+    ModalUserComponent,
+    ModalMemberComponent,
+    ModalContentFileComponent,
+    ModalCustomerComponent,
+    ModalConsultingComponent
   ]
 })
 export class CommonModule { }

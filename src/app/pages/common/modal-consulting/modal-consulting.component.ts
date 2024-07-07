@@ -15,11 +15,15 @@ import Utils from 'src/app/shared/utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { ConsultingInfoService } from 'src/app/layouts/template/consulting-info/consulting-info.service';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../created-by/created-by.component';
 
 @Component({
   selector: 'app-modal-consulting',
   templateUrl: './modal-consulting.component.html',
-  styleUrl: './modal-consulting.component.scss'
+  styleUrl: './modal-consulting.component.scss',
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class ModalConsultingComponent extends BaseComponent implements OnInit {
 
@@ -196,7 +200,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
           text: "บันทึกข้อมูลการติดต่อสำเร็จ",
         });
 
-        // update session store data 
+        // update session store data
         if (ConsultingUtils.isConsulting()) {
           ConsultingUtils.setConsultingData(result.data);
         }

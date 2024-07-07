@@ -12,11 +12,14 @@ import { Globals } from 'src/app/shared/globals';
 import { UserService } from '../../system/user/user.service';
 import { UserData } from './modal-user'
 import { TableControl } from 'src/app/shared/table-control';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-modal-user',
   templateUrl: './modal-user.component.html',
-  styleUrls: ['./modal-user.component.scss']
+  styleUrls: ['./modal-user.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ModalUserComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;

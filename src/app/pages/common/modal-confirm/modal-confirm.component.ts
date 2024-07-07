@@ -1,11 +1,14 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-modal-confirm',
   templateUrl: './modal-confirm.component.html',
-  styleUrls: ['./modal-confirm.component.scss']
+  styleUrls: ['./modal-confirm.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ModalConfirmComponent implements OnInit {
   title: string;

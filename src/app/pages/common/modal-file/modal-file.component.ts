@@ -6,12 +6,15 @@ import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 
 @Component({
   selector: 'modal-file.component',
   templateUrl: 'modal-file.component.html',
-  styleUrls: ['./modal-file.component.scss']
+  styleUrls: ['./modal-file.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ModalContentFileComponent extends BaseComponent implements OnInit {
 
@@ -36,10 +39,10 @@ export class ModalContentFileComponent extends BaseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data,
     public router: Router,
     public globals: Globals) {
-      super(router, globals);
-      this.attId = data.attId;
-      this.fileExtension = data.fileExtension;
-      this.fileName = data.fileName;
+    super(router, globals);
+    this.attId = data.attId;
+    this.fileExtension = data.fileExtension;
+    this.fileName = data.fileName;
   }
 
   ngOnInit(): void {
