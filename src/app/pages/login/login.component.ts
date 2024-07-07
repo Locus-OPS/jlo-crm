@@ -5,13 +5,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import TokenUtils from 'src/app/shared/token-utils';
 import { TranslateService } from '@ngx-translate/core';
 import { TabManageService } from 'src/app/layouts/admin/tab-manage.service';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 declare var $: any;
 
 @Component({
   selector: 'app-login-cmp',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
@@ -60,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.authService.login(this.username, this.password).then(result => {
-      
+
       this.tabManageService.removeTabs();
       this.translate.use('th').subscribe(() => {
         this.redirectToMainPage();

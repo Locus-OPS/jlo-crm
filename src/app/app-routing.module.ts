@@ -112,8 +112,8 @@ const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [{
-      path: '',
-      loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+      path: 'login',
+      loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
     }]
   }
 ];
