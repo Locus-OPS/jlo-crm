@@ -10,7 +10,6 @@ import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
 import { CustomerModule } from './pages/customer/customer.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
-import { CaseModule } from './pages/case/case.module';
 import { ConsultingComponent } from './pages/consulting/consulting.component';
 import { ConsultingModule } from './pages/consulting/consulting.module';
 
@@ -51,12 +50,12 @@ const routes: Routes = [
       {
         path: 'case',
         canActivate: [AuthGuard],
-        component: CaseComponent
+        loadComponent: () => import('./pages/case/case.component').then(m => m.CaseComponent)
       },
       {
         path: 'casedetails',
         canActivate: [AuthGuard],
-        component: CasedetailsComponent
+        loadComponent: () => import('./pages/case/casedetails/casedetails.component').then(m => m.CasedetailsComponent)
       },
       {
         path: 'kb/content/:contentType',
@@ -123,7 +122,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {}),
     CustomerModule,
-    CaseModule,
     ConsultingModule
   ],
   exports: [RouterModule]

@@ -23,13 +23,19 @@ import { ModalCustomerComponent } from '../../common/modal-customer/modal-custom
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ConsultingService } from '../../consulting/consulting.service';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CaseattComponent } from '../caseatt/caseatt.component';
+import { CaseactivityComponent } from '../caseactivity/caseactivity.component';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 
 
 @Component({
   selector: 'app-casedetails',
   templateUrl: './casedetails.component.html',
-  styleUrls: ['./casedetails.component.scss']
+  styleUrls: ['./casedetails.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent]
 })
 
 export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {

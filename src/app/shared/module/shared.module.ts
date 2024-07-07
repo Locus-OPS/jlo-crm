@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ReactiveFormsModule,
     MaterialModule,
     PdfViewerModule,
+    RouterModule
   ]
 })
 export class SharedModule { }

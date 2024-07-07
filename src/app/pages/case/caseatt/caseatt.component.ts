@@ -18,13 +18,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSort } from '@angular/material/sort';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModalContentFileComponent } from 'src/app/pages/common/modal-file/modal-file.component';
-import { CustomerService } from '../../customer/customer.service';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'tab-caseatt-content',
   templateUrl: './caseatt.component.html',
-  styleUrls: ['./caseatt.component.scss']
-
+  styleUrls: ['./caseatt.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy {
   caseNumber: string;

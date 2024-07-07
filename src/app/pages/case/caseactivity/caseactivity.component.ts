@@ -15,10 +15,14 @@ import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { ModalUserComponent } from 'src/app/pages/common/modal-user/modal-user.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 @Component({
   selector: 'tab-caseactivity-content',
   templateUrl: './caseactivity.component.html',
-  styleUrls: ['./caseactivity.component.scss']
+  styleUrls: ['./caseactivity.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 
 export class CaseactivityComponent extends BaseComponent implements OnInit, OnDestroy {

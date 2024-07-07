@@ -2,8 +2,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-
-
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="pull-right">
@@ -24,7 +22,7 @@
                 <div class="row">
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.title' | translate }}</mat-label>
-                    <mat-select placeholder="{{'contact.title' | translate }}" formControlName="title" required>
+                    <mat-select placeholder="{{ 'contact.title' | translate }}" formControlName="title" required>
                       <mat-option>--</mat-option>
                       <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">
                         {{ item.codeName }}
@@ -36,21 +34,18 @@
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.firstName' | translate }}</mat-label>
-                    <input matInput placeholder="{{'contact.firstName' | translate }}" type="text" required
-                      formControlName="firstName">
+                    <input matInput placeholder="{{ 'contact.firstName' | translate }}" type="text" required formControlName="firstName" />
                     <mat-error *ngIf="contactForm.controls['firstName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.lastName' | translate }}</mat-label>
-                    <input matInput placeholder="{{'contact.lastName' | translate }}" type="text" required
-                      formControlName="lastName">
+                    <input matInput placeholder="{{ 'contact.lastName' | translate }}" type="text" required formControlName="lastName" />
                     <mat-error *ngIf="contactForm.controls['lastName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
                   </mat-form-field>
-
 
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.relationtype' | translate }}</mat-label>
@@ -66,36 +61,32 @@
                   <mat-form-field class="col-md-3">
                     <mat-icon matSuffix>phone</mat-icon>
                     <mat-label>{{ 'contact.phoneNo' | translate }}</mat-label>
-                    <input matInput type="text" placeholder="{{'contact.phoneNo' | translate}}" required
-                      formControlName="phoneNo">
+                    <input matInput type="text" placeholder="{{ 'contact.phoneNo' | translate }}" required formControlName="phoneNo" />
                     <mat-error *ngIf="contactForm.controls['phoneNo'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.email' | translate }}</mat-label>
-                    <input matInput type="text" placeholder="{{'contact.email' | translate}}" formControlName="email">
+                    <input matInput type="text" placeholder="{{ 'contact.email' | translate }}" formControlName="email" />
                   </mat-form-field>
                 </div>
                 <div class="pull-right">
-                  <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="createContact()">{{
-                    'button.create.contact' | translate }}</button>
+                  <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="createContact()">
+                    {{ 'button.create.contact' | translate }}
+                  </button>
 
                   <button mat-raised-button type="button" (click)="saveContact()" class="btn btn-fill btn-rose">
-                    {{'button.save' | translate
-                    }}</button>
+                    {{ 'button.save' | translate }}
+                  </button>
 
                   <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetContactForm()">
                     {{ 'button.clear' | translate }}
                   </button>
                 </div>
-
               </form>
             </div>
-
-
           </div>
-
         </div>
 
         <div class="card">
@@ -107,7 +98,6 @@
           </div>
           <div class="card-body">
             <form [formGroup]="customerForm">
-
               <div class="row">
                 <div class="col-md-7" *ngIf="customerForm.value.businessName == null">
                   <div class="row">
@@ -150,10 +140,7 @@
                   <input matInput type="text" formControlName="email" />
                 </mat-form-field>
               </div>
-
-
             </form>
-
 
             <div class="pull-right">
               <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="searchCustomer()">
@@ -161,8 +148,6 @@
               </button>
             </div>
           </div>
-
-
         </div>
         <!-- {{this.createForm.value | json}} -->
 
@@ -237,8 +222,7 @@
               <div class="row">
                 <mat-form-field class="col-md-6">
                   <mat-label>{{ 'case.description' | translate }}</mat-label>
-                  <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text"
-                    formControlName="detail">
+                  <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text" formControlName="detail">
                   </textarea>
                 </mat-form-field>
               </div>
@@ -303,17 +287,18 @@
                   <input matInput type="text" formControlName="closedDate" readonly />
                 </mat-form-field>
               </div>
-              <app-created-by [createdBy]="createForm.controls['createdBy'].value"
+              <app-created-by
+                [createdBy]="createForm.controls['createdBy'].value"
                 [createdDate]="createForm.controls['createdDate'].value"
                 [updatedBy]="createForm.controls['updatedBy'].value"
-                [updatedDate]="createForm.controls['updatedDate'].value">
+                [updatedDate]="createForm.controls['updatedDate'].value"
+              >
               </app-created-by>
               <div class="pull-right">
                 <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
                   {{ 'button.back' | translate }}
                 </button>
-                <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate
-                  }}</button>
+                <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate }}</button>
                 <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetForm()">
                   {{ 'button.clear' | translate }}
                 </button>
@@ -331,8 +316,7 @@
           </div>
           <div class="card-body">
             <div class="mat-app-background basic-container">
-              <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false"
-                mat-align-tabs="start">
+              <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
                 <mat-tab label="{{ 'case.activity.tab' | translate }}">
                   <tab-caseactivity-content></tab-caseactivity-content>
                 </mat-tab>

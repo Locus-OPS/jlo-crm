@@ -14,11 +14,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { CreatedByComponent } from '../common/created-by/created-by.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-case',
   templateUrl: './case.component.html',
-  styleUrls: ['./case.component.scss']
+  styleUrls: ['./case.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class CaseComponent extends BaseComponent implements OnInit {
   @ViewChild('createFormDirective')
@@ -157,17 +161,17 @@ export class CaseComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onCaseEdit(e) {    
+  onCaseEdit(e) {
 
-    console.log("onCaseEdit :"+e.caseNumber +" ="+sessionStorage.getItem('caseNumber')); 
+    console.log("onCaseEdit :" + e.caseNumber + " =" + sessionStorage.getItem('caseNumber'));
     this.caseStore.updateCaseDetail(e.caseNumber);
 
     this.gotoCaseDetail();
-    
+
 
   }
 
-  gotoCaseDetail(){
+  gotoCaseDetail() {
     this.router.navigate([
       "/casedetails",
     ]);
