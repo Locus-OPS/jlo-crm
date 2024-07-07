@@ -8,11 +8,14 @@ import { KbDetail, KbDetailInfo } from '../../kb.model';
 import { KbService } from '../../kb.service';
 import { KbStore } from '../../kb.store';
 import Utils from 'src/app/shared/utils';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'kb-detail-info',
   templateUrl: './detail-info.component.html',
-  styleUrls: ['./detail-info.component.scss']
+  styleUrls: ['./detail-info.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class DetailInfoComponent extends BaseComponent implements OnInit, OnDestroy {
 

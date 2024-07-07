@@ -6,11 +6,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-new-folder',
   templateUrl: './new-folder.component.html',
-  styleUrls: ['./new-folder.component.scss']
+  styleUrls: ['./new-folder.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class NewFolderComponent extends BaseComponent implements OnInit {
 

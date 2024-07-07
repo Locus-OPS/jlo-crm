@@ -6,11 +6,14 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { KbService } from '../../../kb.service';
 import Utils from 'src/app/shared/utils';
 import { KbStore } from '../../../kb.store';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-tree-modal',
   templateUrl: './tree-modal.component.html',
-  styleUrls: ['./tree-modal.component.scss']
+  styleUrls: ['./tree-modal.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class TreeModalComponent implements OnInit {
 
@@ -64,7 +67,7 @@ export class TreeModalComponent implements OnInit {
 
   confirmSelect() {
     if (!this.activeNode) {
-      Utils.alertError({ text: 'Please select a folder.'});
+      Utils.alertError({ text: 'Please select a folder.' });
       return;
     }
     this.dialogRef.close(this.activeNode);

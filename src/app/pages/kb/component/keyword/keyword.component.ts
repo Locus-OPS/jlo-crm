@@ -9,6 +9,7 @@ import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 interface Keyword {
   keyId?: number;
@@ -19,7 +20,9 @@ interface Keyword {
 @Component({
   selector: 'kb-keyword',
   templateUrl: './keyword.component.html',
-  styleUrls: ['./keyword.component.scss']
+  styleUrls: ['./keyword.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy {
 

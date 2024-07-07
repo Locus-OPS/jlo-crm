@@ -9,8 +9,6 @@ import { CustomerDetailComponent } from './pages/customer/customer-detail/custom
 import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
 import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
-import { ContentComponent } from './pages/kb/content/content.component';
-import { KbModule } from './pages/kb/kb.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
@@ -65,7 +63,7 @@ const routes: Routes = [
       {
         path: 'kb/content/:contentType',
         canActivate: [AuthGuard],
-        component: ContentComponent
+        loadComponent: () => import('./pages/kb/content/content.component').then(m => m.ContentComponent)
       },
       {
         path: 'system/user',
@@ -128,7 +126,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {}),
     DashboardModule,
     CustomerModule,
-    KbModule,
     CaseModule,
     ConsultingModule
   ],

@@ -6,11 +6,14 @@ import { KbDocument } from '../../kb.model';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'kb-main-document',
   templateUrl: './main-document.component.html',
-  styleUrls: ['./main-document.component.scss']
+  styleUrls: ['./main-document.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class MainDocumentComponent extends BaseComponent implements OnInit, OnDestroy {
 

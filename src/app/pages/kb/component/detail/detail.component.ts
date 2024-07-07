@@ -13,11 +13,15 @@ import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 
 @Component({
   selector: 'kb-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  styleUrls: ['./detail.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class DetailComponent extends BaseComponent implements OnInit, OnDestroy {
 

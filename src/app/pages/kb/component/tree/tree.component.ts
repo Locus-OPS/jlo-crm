@@ -13,11 +13,15 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'kb-tree',
   templateUrl: './tree.component.html',
-  styleUrls: ['./tree.component.scss']
+  styleUrls: ['./tree.component.scss'],
+  standalone: true,
+  imports: [SharedModule, NewFolderComponent, FontAwesomeModule]
 })
 export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
 
@@ -31,7 +35,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
   activeNode: FlatNode;
 
   // Folder and file context menu
-  @ViewChild(MatMenuTrigger, {static: true}) contextMenu: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: true }) contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
   folder: boolean;
   rootFolder: boolean;
@@ -124,7 +128,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
     if (super.CAN_WRITE()) {
       this.contextMenuPosition.x = event.clientX + 'px';
       this.contextMenuPosition.y = event.clientY + 'px';
-      this.contextMenu.menuData = { 'item' : item };
+      this.contextMenu.menuData = { 'item': item };
       this.contextMenu.menu.focusFirstItem('mouse');
       this.rootFolder = this.isRootFolder(item);
       this.folder = this.isFolder(item);
@@ -206,7 +210,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
 
   private isLastFile(item: FlatNode) {
 
-     if (!this.isFolder(item)) {
+    if (!this.isFolder(item)) {
       for (let i = this.treeControl.dataNodes.length - 1; i >= 0; i--) {
         let dataNode = this.treeControl.dataNodes[i];
         if (dataNode.parentId == item.parentId && !this.isFolder(dataNode)) {
@@ -232,7 +236,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
       data: {
         id: null
         , title: null
-        , parentId: item.id.replace("C","")
+        , parentId: item.id.replace("C", "")
         , contentType: this.kbStore.getKbContentType()
         , translatePrefix: this.translatePrefix
       }
@@ -251,7 +255,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
       width: '20%',
       panelClass: 'my-dialog',
       data: {
-        id: item.id.replace("C","")
+        id: item.id.replace("C", "")
         , title: item.name
         , parentId: null
         , contentType: null
@@ -270,7 +274,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
     Utils.confirmDelete().then(confirm => {
       if (confirm.value) {
         this.kbService.deleteKbFolder({
-          data: item.id.replace("C","")
+          data: item.id.replace("C", "")
         }).then(result => {
           if (result.status) {
             this.kbStore.loadKbContentType(this.kbStore.getKbContentType());
@@ -299,7 +303,7 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
   private updateKbFolderSequence(item: FlatNode, _moveFlag) {
     this.kbService.updateKbFolderSequence({
       data: {
-        catId: item.id.replace("C","")
+        catId: item.id.replace("C", "")
         , moveFlag: _moveFlag
       }
     }).then(result => {

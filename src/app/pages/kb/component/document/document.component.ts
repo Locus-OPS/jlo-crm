@@ -12,11 +12,15 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { ModalContentFileComponent } from 'src/app/pages/common/modal-file/modal-file.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 
 @Component({
   selector: 'kb-document',
   templateUrl: './document.component.html',
-  styleUrls: ['./document.component.scss']
+  styleUrls: ['./document.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class DocumentComponent extends BaseComponent implements OnInit, OnDestroy {
 
@@ -98,7 +102,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
       this.createFormDirective.resetForm();
     }
     this.creatingDocument = true;
-    this.createForm.patchValue({ 'previousMainFlag':  false});
+    this.createForm.patchValue({ 'previousMainFlag': false });
   }
 
   cancel() {
@@ -107,7 +111,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
         ...this.selectedRow
       });
       Utils.convertToBoolean(this.selectedRow, this.createForm, 'mainFlag');
-      this.createForm.patchValue({ 'previousMainFlag':  this.createForm.value['mainFlag']});
+      this.createForm.patchValue({ 'previousMainFlag': this.createForm.value['mainFlag'] });
     } else {
       this.createForm.reset();
       if (this.createFormDirective) {
@@ -186,7 +190,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
       ...this.selectedRow
     });
     Utils.convertToBoolean(this.selectedRow, this.createForm, 'mainFlag');
-    this.createForm.patchValue({ 'previousMainFlag':  this.createForm.value['mainFlag']});
+    this.createForm.patchValue({ 'previousMainFlag': this.createForm.value['mainFlag'] });
     this.creatingDocument = false;
   }
 
@@ -254,9 +258,9 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
 
   openAttachmentDialog(attId: number) {
     const dialogRef = this.dialog.open(ModalContentFileComponent, {
-    /*  height: '90%',
-      width: '90%',
-      panelClass: 'my-dialog',*/
+      /*  height: '90%',
+        width: '90%',
+        panelClass: 'my-dialog',*/
       data: {
         attId: attId,
         fileExtension: this.createForm.controls['fileExtension'].value,
