@@ -17,11 +17,15 @@ import { MatSelectChange } from '@angular/material/select';
 import { Case } from '../case/case.model';
 import { Caseactivity } from '../case/caseactivity/caseactivity.model';
 import { TranslateService } from '@ngx-translate/core';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  standalone: true,
+  imports: [SharedModule, NgxChartsModule]
 })
 export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
 
@@ -180,8 +184,8 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
   /**
    *  01 My  > UserId
-   *  02 Org >    
-   * @param evt       
+   *  02 Org >
+   * @param evt
    */
   changeView(evt: MatSelectChange) {
     this.selViewBy = evt.value;

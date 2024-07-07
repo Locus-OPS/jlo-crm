@@ -3,13 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthGuard } from './guard/auth.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { CustomerDetailComponent } from './pages/customer/customer-detail/customer-detail.component';
 import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
 import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
 import { CaseModule } from './pages/case/case.module';
@@ -28,7 +26,7 @@ const routes: Routes = [
       {
         path: 'dashboard',
         canActivate: [AuthGuard],
-        component: DashboardComponent
+        loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
         path: 'customer',
@@ -124,7 +122,6 @@ const routes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forRoot(routes, {}),
-    DashboardModule,
     CustomerModule,
     CaseModule,
     ConsultingModule
