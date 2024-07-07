@@ -10,11 +10,15 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-business-unit',
   templateUrl: './business-unit.component.html',
-  styleUrls: ['./business-unit.component.scss']
+  styleUrls: ['./business-unit.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class BusinessUnitComponent extends BaseComponent implements OnInit {
 
@@ -40,11 +44,11 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
     private businessUnitService: BusinessUnitService,
     public router: Router,
     public globals: Globals
-    ) {
-      super(router, globals);
-      api.getCodebookByCodeType({ data: 'ACTIVE_FLAG' })
-        .then(result => { this.statusList = result.data; });
-     }
+  ) {
+    super(router, globals);
+    api.getCodebookByCodeType({ data: 'ACTIVE_FLAG' })
+      .then(result => { this.statusList = result.data; });
+  }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({

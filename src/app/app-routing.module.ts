@@ -3,21 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthGuard } from './guard/auth.guard';
-import { PositionComponent } from './pages/system/position/position.component';
-import { CodebookComponent } from './pages/system/codebook/codebook.component';
-import { InternationalizationComponent } from './pages/system/internationalization/internationalization.component';
-import { RoleComponent } from './pages/system/role/role.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { MenuComponent } from './pages/system/menu/menu.component';
-import { UserComponent } from './pages/system/user/user.component';
-import { BusinessUnitComponent } from './pages/system/business-unit/business-unit.component';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { CustomerDetailComponent } from './pages/customer/customer-detail/customer-detail.component';
 import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
 import { CaseComponent } from './pages/case/case.component';
 import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
 import { ContentComponent } from './pages/kb/content/content.component';
-import { SystemModule } from './pages/system/system.module';
 import { KbModule } from './pages/kb/kb.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
@@ -25,7 +17,6 @@ import { MemberRedeemComponent } from './pages/customer/member-redeem/member-red
 import { CaseModule } from './pages/case/case.module';
 import { ConsultingComponent } from './pages/consulting/consulting.component';
 import { ConsultingModule } from './pages/consulting/consulting.module';
-import { ChatComponent } from './pages/channel/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -79,37 +70,37 @@ const routes: Routes = [
       {
         path: 'system/user',
         canActivate: [AuthGuard],
-        component: UserComponent
+        loadComponent: () => import('./pages/system/user/user.component').then(m => m.UserComponent)
       },
       {
         path: 'system/position',
         canActivate: [AuthGuard],
-        component: PositionComponent
+        loadComponent: () => import('./pages/system/position/position.component').then(m => m.PositionComponent)
       },
       {
         path: 'system/codebook',
         canActivate: [AuthGuard],
-        component: CodebookComponent
+        loadComponent: () => import('./pages/system/codebook/codebook.component').then(m => m.CodebookComponent)
       },
       {
         path: 'system/i18n',
         canActivate: [AuthGuard],
-        component: InternationalizationComponent
+        loadComponent: () => import('./pages/system/internationalization/internationalization.component').then(m => m.InternationalizationComponent)
       },
       {
         path: 'system/role',
         canActivate: [AuthGuard],
-        component: RoleComponent
+        loadComponent: () => import('./pages/system/role/role.component').then(m => m.RoleComponent)
       },
       {
         path: 'system/menu',
         canActivate: [AuthGuard],
-        component: MenuComponent
+        loadComponent: () => import('./pages/system/menu/menu.component').then(m => m.MenuComponent)
       },
       {
         path: 'system/business-unit',
         canActivate: [AuthGuard],
-        component: BusinessUnitComponent
+        loadComponent: () => import('./pages/system/business-unit/business-unit.component').then(m => m.BusinessUnitComponent)
       },
       {
         path: 'consulting/consultingList',
@@ -136,7 +127,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {}),
     DashboardModule,
-    SystemModule,
     CustomerModule,
     KbModule,
     CaseModule,

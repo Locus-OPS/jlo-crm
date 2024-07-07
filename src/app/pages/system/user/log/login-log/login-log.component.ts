@@ -3,6 +3,7 @@ import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { UserService } from '../../user.service';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 interface LoginLogData {
   userId?: string;
@@ -16,7 +17,9 @@ interface LoginLogData {
 @Component({
   selector: 'app-login-log',
   templateUrl: './login-log.component.html',
-  styleUrls: ['./login-log.component.scss']
+  styleUrls: ['./login-log.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class LoginLogComponent implements OnInit {
 

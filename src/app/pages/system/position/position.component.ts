@@ -9,11 +9,15 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { Position } from './position.model';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-position',
   templateUrl: './position.component.html',
-  styleUrls: ['./position.component.scss']
+  styleUrls: ['./position.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class PositionComponent extends BaseComponent implements OnInit {
 

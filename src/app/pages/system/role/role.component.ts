@@ -9,11 +9,15 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { RoleModel } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.scss']
+  styleUrls: ['./role.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class RoleComponent extends BaseComponent implements OnInit {
 
@@ -149,7 +153,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     const dialogRef = this.dialog.open(ResponsibilityComponent, {
       height: '85%',
       width: '80%',
-     // panelClass: 'my-dialog',
+      // panelClass: 'my-dialog',
       data: { roleCode: roleCode }
     });
 

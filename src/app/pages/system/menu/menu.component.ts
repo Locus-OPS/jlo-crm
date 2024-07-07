@@ -11,11 +11,15 @@ import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree'
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  styleUrls: ['./menu.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class MenuComponent extends BaseComponent implements OnInit {
 

@@ -13,11 +13,15 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { UserData } from './user.model';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class UserComponent extends BaseComponent implements OnInit {
 

@@ -5,8 +5,8 @@ import { ModalContentFileComponent } from './modal-file/modal-file.component';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { ModalCustomerComponent } from './modal-customer/modal-customer.component';
-import { CreatedByComponent } from './created-by/created-by.component';
 import { ModalConsultingComponent } from './modal-consulting/modal-consulting.component';
+import { CreatedByComponent } from './created-by/created-by.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,6 @@ import { ModalConsultingComponent } from './modal-consulting/modal-consulting.co
     , ModalContentFileComponent
     , ModalConfirmComponent
     , ModalCustomerComponent
-    , CreatedByComponent
     , ModalConsultingComponent
   ],
   exports: [
@@ -24,11 +23,12 @@ import { ModalConsultingComponent } from './modal-consulting/modal-consulting.co
     , ModalContentFileComponent
     , ModalConfirmComponent
     , ModalCustomerComponent
-    , CreatedByComponent
     , ModalConsultingComponent
+    , CreatedByComponent
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    CreatedByComponent
   ]
 })
 export class CommonModule { }

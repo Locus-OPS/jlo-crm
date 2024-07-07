@@ -10,12 +10,16 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 
 @Component({
   selector: 'app-internationalization',
   templateUrl: './internationalization.component.html',
-  styleUrls: ['./internationalization.component.scss']
+  styleUrls: ['./internationalization.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class InternationalizationComponent extends BaseComponent implements OnInit {
 

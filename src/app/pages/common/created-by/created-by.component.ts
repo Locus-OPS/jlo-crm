@@ -1,10 +1,13 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-created-by',
   templateUrl: './created-by.component.html',
-  styleUrls: ['./created-by.component.scss']
+  styleUrls: ['./created-by.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class CreatedByComponent implements OnChanges {
 
@@ -17,13 +20,13 @@ export class CreatedByComponent implements OnChanges {
 
   constructor(
     private formBuilder: UntypedFormBuilder
-    ) {
-      this.createdForm = this.formBuilder.group({
-        createdBy: [''],
-        createdDate: [''],
-        updatedBy: [''],
-        updatedDate: ['']
-      });
+  ) {
+    this.createdForm = this.formBuilder.group({
+      createdBy: [''],
+      createdDate: [''],
+      updatedBy: [''],
+      updatedDate: ['']
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -9,11 +9,15 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { CodebookData } from './codebook.model';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
   selector: 'app-codebook',
   templateUrl: './codebook.component.html',
-  styleUrls: ['./codebook.component.scss']
+  styleUrls: ['./codebook.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class CodebookComponent extends BaseComponent implements OnInit {
 

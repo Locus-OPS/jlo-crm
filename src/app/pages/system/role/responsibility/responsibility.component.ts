@@ -6,6 +6,7 @@ import Utils from 'src/app/shared/utils';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 interface Resp {
   respCode?: string;
@@ -23,7 +24,9 @@ interface Resp {
 @Component({
   selector: 'app-responsibility',
   templateUrl: './responsibility.component.html',
-  styleUrls: ['./responsibility.component.scss']
+  styleUrls: ['./responsibility.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ResponsibilityComponent extends BaseComponent implements OnInit {
 

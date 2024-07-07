@@ -8,9 +8,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   imports: [
-    ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' })
+    ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' }),
   ],
-  declarations: [],
   exports: [
     CommonModule,
     FormsModule,
@@ -18,7 +17,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     TranslateModule,
     ReactiveFormsModule,
     MaterialModule,
-    PdfViewerModule
+    PdfViewerModule,
   ]
 })
 export class SharedModule { }
