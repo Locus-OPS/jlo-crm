@@ -9,6 +9,7 @@ import { filter, tap } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
 import { MatTabGroup } from '@angular/material/tabs';
+import { ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
 
 @Component({
   selector: 'app-layout',
@@ -42,6 +43,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   tabsComponents: Tab[];
   selectedTab = 0;
 
+  shortcuts: ShortcutInput[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -51,6 +54,20 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     location: Location
   ) {
     this.location = location;
+  }
+
+  ngAfterViewInit() {
+    this.runOnRouteChange();
+
+    this.shortcuts.push(
+      {
+        key: "ctrl + p",
+        label: "Open page",
+        description: "Open page",
+        command: (e) => this.router.navigate(['/channel/chat']),
+        preventDefault: true
+      }
+    );
   }
 
   ngOnInit() {
@@ -273,10 +290,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate([this.tabsComponents[i - 1].path]);
       }
     }
-  }
-
-  ngAfterViewInit() {
-    this.runOnRouteChange();
   }
 
   runOnRouteChange(): void {

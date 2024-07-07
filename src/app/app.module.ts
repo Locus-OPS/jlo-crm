@@ -32,6 +32,7 @@ import { BaseComponent } from "./shared/base.component";
 import { Globals } from "./shared/globals";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { TaskbarModule } from "./layouts/template/taskbar/taskbar.module";
+import { KeyboardShortcutsModule } from "ng-keyboard-shortcuts";
 
 export function jwtTokenGetter() {
   return TokenUtils.getToken();
@@ -85,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    KeyboardShortcutsModule.forRoot(),
     SharedModule,
     SidebarModule,
     NavbarModule,

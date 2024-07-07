@@ -25,6 +25,7 @@ import { MemberRedeemComponent } from './pages/customer/member-redeem/member-red
 import { CaseModule } from './pages/case/case.module';
 import { ConsultingComponent } from './pages/consulting/consulting.component';
 import { ConsultingModule } from './pages/consulting/consulting.module';
+import { ChatComponent } from './pages/channel/chat/chat.component';
 
 const routes: Routes = [
   {
@@ -115,6 +116,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: ConsultingComponent
       },
+      {
+        path: 'channel/chat',
+        loadComponent: () => import('./pages/channel/chat/chat.component').then(m => m.ChatComponent)
+      }
     ]
   }, {
     path: '',
