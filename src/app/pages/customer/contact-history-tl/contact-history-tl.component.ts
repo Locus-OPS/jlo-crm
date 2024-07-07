@@ -11,11 +11,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 @Component({
   selector: 'app-contact-history-tl',
-  standalone: false,
   templateUrl: './contact-history-tl.component.html',
-  styleUrl: './contact-history-tl.component.scss'
+  styleUrl: './contact-history-tl.component.scss',
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ContactHistoryTlComponent extends BaseComponent implements OnInit {
   searchForm: FormGroup;

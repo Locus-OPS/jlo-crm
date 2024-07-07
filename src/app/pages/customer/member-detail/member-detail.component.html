@@ -15,13 +15,12 @@
                 <!-- <button type="button" mat-raised-button class="btn btn-fill btn-info" (click)="reloadPoint()">
                   {{ 'button.reloadPoint' | translate }}
                 </button> -->
-                <button type="button" mat-raised-button class="btn btn-fill btn-primary" (click)="onSave()">{{
-                  'button.save' | translate }}</button>
+                <button type="button" mat-raised-button class="btn btn-fill btn-primary" (click)="onSave()">{{ 'button.save' | translate }}</button>
               </div>
               <h4 class="card-title d-flex justify-content-start">{{ 'member.text' | translate }}</h4>
-              <mat-card-subtitle>{{ memberForm.controls['memberCardNo'].value | memberCard }} :
-                {{ (memberForm.controls['firstName'].value || '') + ' ' + (memberForm.controls['lastName'].value || '')
-                }}
+              <mat-card-subtitle
+                >{{ memberForm.controls['memberCardNo'].value | memberCard }} :
+                {{ (memberForm.controls['firstName'].value || '') + ' ' + (memberForm.controls['lastName'].value || '') }}
               </mat-card-subtitle>
             </div>
             <div class="card-body">
@@ -37,8 +36,13 @@
                       <div class="row">
                         <mat-form-field class="col-md-12" appearance="outline">
                           <mat-label> {{ 'member.cardNo' | translate }} </mat-label>
-                          <input matInput type="text" class="text-center text-danger text-membercard" readonly
-                            [value]="memberForm.controls['memberCardNo'].value | memberCard" />
+                          <input
+                            matInput
+                            type="text"
+                            class="text-center text-danger text-membercard"
+                            readonly
+                            [value]="memberForm.controls['memberCardNo'].value | memberCard"
+                          />
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
                           <mat-label> {{ 'member.cardTier' | translate }} </mat-label>
@@ -48,8 +52,7 @@
                           <mat-label> {{ 'member.cardStatus' | translate }} </mat-label>
                           <mat-select formControlName="cardStatus">
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of cardStatusList" [value]="item.codeId">{{ item.etc1 |
-                              translate }} </mat-option>
+                            <mat-option *ngFor="let item of cardStatusList" [value]="item.codeId">{{ item.etc1 | translate }} </mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
@@ -84,13 +87,11 @@
                       <div class="row">
                         <div class="col-md-6">
                           <label matLable>{{ 'member.pointBalanceToday' | translate }}</label>
-                          <p class="loy-point text-primary text-center">{{ memberForm.controls['currentPoint'].value |
-                            number }}</p>
+                          <p class="loy-point text-primary text-center">{{ memberForm.controls['currentPoint'].value | number }}</p>
                         </div>
                         <div class="col-md-6">
                           <label matLable class="nowrap">{{ 'member.pointExpiredThisYear' | translate }}</label>
-                          <p class="loy-point text-danger text-center">{{
-                            memberForm.controls['pointExpireThisYear'].value | number }}</p>
+                          <p class="loy-point text-danger text-center">{{ memberForm.controls['pointExpireThisYear'].value | number }}</p>
                         </div>
                       </div>
                     </div>
@@ -105,11 +106,10 @@
                 <div class="col-md-12">
                   <label>{{ 'member.memberType' | translate }} </label>
                   &nbsp;
-                  <mat-slide-toggle formControlName="memberType"
-                    (click)="changeMemberType(memberForm.controls['memberType'].value)">
+                  <mat-slide-toggle formControlName="memberType" (click)="changeMemberType(memberForm.controls['memberType'].value)">
                     <b class="{{ memberForm.controls['memberType'].value ? 'text-warning' : 'text-info' }}">{{
                       (memberForm.controls['memberType'].value ? 'member.individual' : 'member.corporate') | translate
-                      }}</b>
+                    }}</b>
                   </mat-slide-toggle>
                 </div>
               </div>
@@ -120,22 +120,19 @@
                       <mat-label> {{ 'member.title' | translate }} </mat-label>
                       <mat-select formControlName="title">
                         <mat-option>--</mat-option>
-                        <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }}
-                        </mat-option>
+                        <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col-md-5">
                       <mat-label> {{ 'member.firstName' | translate }} </mat-label>
-                      <input matInput type="text" formControlName="firstName" [required]="memberForm.value.memberType"
-                        maxlength="255" />
+                      <input matInput type="text" formControlName="firstName" [required]="memberForm.value.memberType" maxlength="255" />
                       <mat-error *ngIf="memberForm.controls['firstName'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-5">
                       <mat-label> {{ 'member.lastName' | translate }} </mat-label>
-                      <input matInput type="text" formControlName="lastName" [required]="memberForm.value.memberType"
-                        maxlength="255" />
+                      <input matInput type="text" formControlName="lastName" [required]="memberForm.value.memberType" maxlength="255" />
                       <mat-error *ngIf="memberForm.controls['lastName'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
@@ -146,15 +143,19 @@
                   <mat-label> {{ 'member.nationality' | translate }} </mat-label>
                   <mat-select formControlName="nationality" (valueChange)="onChangeNationality($event)">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-3" *ngIf="memberForm.controls['nationality'].value == THAI_NATIONALITY">
                   <mat-label> {{ 'member.citizenId' | translate }} </mat-label>
-                  <input matInput type="text" formControlName="citizenId" maxlength="13"
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="citizenId"
+                    maxlength="13"
                     [required]="memberForm.value.memberType && memberForm.value.nationality == THAI_NATIONALITY"
-                    pattern="[0-9]{13}" />
+                    pattern="[0-9]{13}"
+                  />
                   <mat-error *ngIf="memberForm.controls['citizenId'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
@@ -168,8 +169,14 @@
               <div class="row" *ngIf="!memberForm.controls['memberType'].value">
                 <mat-form-field class="col-md-10">
                   <mat-label> {{ 'member.businessName' | translate }} </mat-label>
-                  <input matInput placeholder="{{ 'member.businessName' | translate }}" type="text"
-                    formControlName="businessName" [required]="!memberForm.value.memberType" maxlength="255" />
+                  <input
+                    matInput
+                    placeholder="{{ 'member.businessName' | translate }}"
+                    type="text"
+                    formControlName="businessName"
+                    [required]="!memberForm.value.memberType"
+                    maxlength="255"
+                  />
                   <mat-error *ngIf="memberForm.controls['businessName'].hasError('required')">
                     {{ 'error.required' | translate }}
                   </mat-error>
@@ -182,8 +189,7 @@
               <div class="row">
                 <mat-form-field class="col-md-3">
                   <mat-label>
-                    {{ (memberForm.controls['memberType'].value ? 'member.birthDate' : 'member.companyRegisterDate') |
-                    translate }}
+                    {{ (memberForm.controls['memberType'].value ? 'member.birthDate' : 'member.companyRegisterDate') | translate }}
                   </mat-label>
                   <input matInput [matDatepicker]="birthDateRef" formControlName="birthDate" />
                   <mat-datepicker-toggle matSuffix [for]="birthDateRef"></mat-datepicker-toggle>
@@ -194,32 +200,30 @@
                     {{ 'member.gender' | translate }}
                   </div>
                   <mat-radio-group class="no-label" formControlName="gender">
-                    <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList">{{ item.etc1 | translate }}
-                      &nbsp;&nbsp;</mat-radio-button>
+                    <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList"
+                      >{{ item.etc1 | translate }} &nbsp;&nbsp;</mat-radio-button
+                    >
                   </mat-radio-group>
                 </div>
                 <mat-form-field class="col-md-3" *ngIf="memberForm.controls['memberType'].value">
                   <mat-label> {{ 'member.maritalStatus' | translate }} </mat-label>
                   <mat-select formControlName="maritalStatus">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }} </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-3" *ngIf="memberForm.controls['memberType'].value">
                   <mat-label> {{ 'member.occupation' | translate }} </mat-label>
                   <mat-select formControlName="occupation">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-3" *ngIf="!memberForm.controls['memberType'].value">
                   <mat-label> {{ 'member.businessType' | translate }} </mat-label>
                   <mat-select placeholder="{{ 'member.businessType' | translate }}" formControlName="businessType">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of businessTypeList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of businessTypeList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -236,8 +240,7 @@
                           <mat-label> {{ 'member.mobileArea' | translate }} </mat-label>
                           <mat-select formControlName="phoneArea" required>
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of phonePrefixList" [value]="item.codeId">{{ item.codeName }}
-                            </mat-option>
+                            <mat-option *ngFor="let item of phonePrefixList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
@@ -250,8 +253,14 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
                           <mat-label> {{ 'member.email' | translate }} </mat-label>
-                          <input matInput type="text" placeholder="{{ 'member.email' | translate }}"
-                            formControlName="email" required maxlength="100" />
+                          <input
+                            matInput
+                            type="text"
+                            placeholder="{{ 'member.email' | translate }}"
+                            formControlName="email"
+                            required
+                            maxlength="100"
+                          />
                           <mat-error *ngIf="memberForm.controls['email'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
@@ -270,16 +279,14 @@
                           <mat-label> {{ 'member.registrationStore' | translate }} </mat-label>
                           <mat-select formControlName="registrationStore" required>
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of regisStoreList" [value]="item.codeId"> {{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of regisStoreList" [value]="item.codeId"> {{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
                           <mat-label> {{ 'member.registrationChannel' | translate }} </mat-label>
                           <mat-select formControlName="registrationChannel" required>
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of sourceChannelList" [value]="item.codeId"> {{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of sourceChannelList" [value]="item.codeId"> {{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
@@ -293,10 +300,12 @@
                   <textarea matInput type="text" formControlName="remark"></textarea>
                 </mat-form-field>
               </div>
-              <app-created-by [createdBy]="memberForm.controls['createdBy'].value"
+              <app-created-by
+                [createdBy]="memberForm.controls['createdBy'].value"
                 [createdDate]="memberForm.controls['createdDate'].value"
                 [updatedBy]="memberForm.controls['updatedBy'].value"
-                [updatedDate]="memberForm.controls['updatedDate'].value">
+                [updatedDate]="memberForm.controls['updatedDate'].value"
+              >
               </app-created-by>
             </div>
           </div>
@@ -311,16 +320,6 @@
               <mat-tab [label]="'member.card' | translate">
                 <!-- Card -->
                 <div class="col-md-12">
-                  <div class="row">
-                    <div class="col-md-12 text-right">
-                      <button class="btn btn-danger" (click)="blockCard()"
-                        *ngIf="memberForm.controls['cardStatus'].value != '04'">
-                        {{ 'card.block' | translate }}
-                      </button>
-                      <button class="btn btn-primary" (click)="reissueCard()">{{ 'card.reissuesCard' | translate
-                        }}</button>
-                    </div>
-                  </div>
                   <form [formGroup]="addressForm" novalidate>
                     <div class="row">
                       <div class="col-md-12">
@@ -328,8 +327,7 @@
                           <table mat-table [dataSource]="cardDS" class="mat-elevation-z8 table-responsive">
                             <ng-container matColumnDef="primary">
                               <th mat-header-cell *matHeaderCellDef>{{ 'member.address.primary' | translate }}</th>
-                              <td mat-cell *matCellDef="let row"><i
-                                  class="{{ row.primaryYn == 'Y' ? 'fa fa-key' : '' }}"></i></td>
+                              <td mat-cell *matCellDef="let row"><i class="{{ row.primaryYn == 'Y' ? 'fa fa-key' : '' }}"></i></td>
                             </ng-container>
                             <ng-container matColumnDef="memberCardNo">
                               <th mat-header-cell *matHeaderCellDef>{{ 'member.cardNo' | translate }}</th>
@@ -360,16 +358,20 @@
                             <tr mat-row *matRowDef="let row; columns: cardColumn"></tr>
                           </table>
                         </div>
-                        <mat-paginator class="mat-paginator-sticky" (page)="cardTableControl.onPage($event)"
-                          [length]="cardTableControl.total" [pageSize]="cardTableControl.pageSize"
-                          [pageSizeOptions]="cardTableControl.pageSizeOptions" showFirstLastButtons>
+                        <mat-paginator
+                          class="mat-paginator-sticky"
+                          (page)="cardTableControl.onPage($event)"
+                          [length]="cardTableControl.total"
+                          [pageSize]="cardTableControl.pageSize"
+                          [pageSizeOptions]="cardTableControl.pageSizeOptions"
+                          showFirstLastButtons
+                        >
                         </mat-paginator>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-12 text-right">
-                        <button mat-button type="button" class="btn btn-default" *ngIf="cardSelectedRow != null"
-                          (click)="onCancelCard()">
+                        <button mat-button type="button" class="btn btn-default" *ngIf="cardSelectedRow != null" (click)="onCancelCard()">
                           <i class="fa fa-cancel"></i> {{ 'button.cancel' | translate }}
                         </button>
                       </div>
@@ -382,8 +384,7 @@
                 <!-- Address -->
                 <div class="col-md-12">
                   <div class="text-right">
-                    <button mat-button class="btn btn-primary" *ngIf="addrSelectedRow == null && CAN_WRITE()"
-                      (click)="addressAdd()">
+                    <button mat-button class="btn btn-primary" *ngIf="addrSelectedRow == null && CAN_WRITE()" (click)="addressAdd()">
                       <i class="fa fa-plus"></i> {{ 'button.create' | translate }}
                     </button>
                     <!-- <button mat-button type="button" class="btn btn-default" *ngIf="addrSelectedRow!=null" (click)="onCancelAddress()"><i class="fa fa-cancel"></i> {{ 'button.cancel' | translate}}</button>
@@ -396,8 +397,11 @@
                       <ng-container matColumnDef="actionDelAdd">
                         <th mat-header-cell *matHeaderCellDef>Action</th>
                         <td mat-cell *matCellDef="let element">
-                          <button *ngIf="CAN_WRITE()" class="btn btn-danger btn-round btn-fab mat-raised-button"
-                            (click)="onDeleteMemberAddress(element); $event.stopPropagation()">
+                          <button
+                            *ngIf="CAN_WRITE()"
+                            class="btn btn-danger btn-round btn-fab mat-raised-button"
+                            (click)="onDeleteMemberAddress(element); $event.stopPropagation()"
+                          >
                             <span class="mat-button-wrapper">
                               <i class="material-icons">remove</i>
                             </span>
@@ -406,14 +410,12 @@
                       </ng-container>
                       <ng-container matColumnDef="primary">
                         <th mat-header-cell *matHeaderCellDef>{{ 'member.address.primary' | translate }}</th>
-                        <td mat-cell *matCellDef="let row"><i class="{{ row.primaryYn == 'Y' ? 'fa fa-key' : '' }}"></i>
-                        </td>
+                        <td mat-cell *matCellDef="let row"><i class="{{ row.primaryYn == 'Y' ? 'fa fa-key' : '' }}"></i></td>
                       </ng-container>
                       <ng-container matColumnDef="addressType">
                         <th mat-header-cell *matHeaderCellDef>{{ 'member.addressType' | translate }}</th>
                         <td mat-cell *matCellDef="let row">
-                          <span *ngFor="let item of addressTypeList">{{ (item.codeId == row.addressType ? item.etc1 :
-                            '') | translate }}</span>
+                          <span *ngFor="let item of addressTypeList">{{ (item.codeId == row.addressType ? item.etc1 : '') | translate }}</span>
                         </td>
                       </ng-container>
                       <ng-container matColumnDef="address">
@@ -421,13 +423,22 @@
                         <td mat-cell *matCellDef="let row">{{ row.fullAddress }}</td>
                       </ng-container>
                       <tr mat-header-row *matHeaderRowDef="addressColumn; sticky: true"></tr>
-                      <tr mat-row *matRowDef="let row; columns: addressColumn" (click)="selectAddress(row)"
-                        [ngClass]="{ 'selected-row': addrSelectedRow == row }"></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: addressColumn"
+                        (click)="selectAddress(row)"
+                        [ngClass]="{ 'selected-row': addrSelectedRow == row }"
+                      ></tr>
                     </table>
                   </div>
-                  <mat-paginator class="mat-paginator-sticky" (page)="addrTableControl.onPage($event)"
-                    [length]="addrTableControl.total" [pageSize]="addrTableControl.pageSize"
-                    [pageSizeOptions]="addrTableControl.pageSizeOptions" showFirstLastButtons>
+                  <mat-paginator
+                    class="mat-paginator-sticky"
+                    (page)="addrTableControl.onPage($event)"
+                    [length]="addrTableControl.total"
+                    [pageSize]="addrTableControl.pageSize"
+                    [pageSizeOptions]="addrTableControl.pageSizeOptions"
+                    showFirstLastButtons
+                  >
                   </mat-paginator>
                 </div>
                 <div class="row" *ngIf="addrSelectedRow != null" id="divAddressEditMode">
@@ -437,12 +448,10 @@
                       <div class="row">
                         <div class="col-md-12 text-right">
                           <!-- <button mat-button class="btn btn-primary" *ngIf="addrSelectedRow==null && !addressDisabled && CAN_WRITE()" (click)="addressAdd()"><i class="fa fa-plus"></i> {{ 'button.create' | translate}}</button> -->
-                          <button mat-button type="button" class="btn btn-default" *ngIf="addrSelectedRow != null"
-                            (click)="onCancelAddress()">
+                          <button mat-button type="button" class="btn btn-default" *ngIf="addrSelectedRow != null" (click)="onCancelAddress()">
                             <i class="fa fa-cancel"></i> {{ 'button.cancel' | translate }}
                           </button>
-                          <button mat-button type="submit" class="btn btn-success"
-                            *ngIf="addrSelectedRow != null && !addressDisabled && CAN_WRITE()">
+                          <button mat-button type="submit" class="btn btn-success" *ngIf="addrSelectedRow != null && !addressDisabled && CAN_WRITE()">
                             <i class="fa fa-save"></i> {{ 'button.save' | translate }}
                           </button>
                         </div>
@@ -450,13 +459,11 @@
                           <mat-label> {{ 'member.addressType' | translate }} </mat-label>
                           <mat-select formControlName="addressType" required>
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of addressTypeList" [value]="item.codeId">{{ item.etc1 |
-                              translate }}</mat-option>
+                            <mat-option *ngFor="let item of addressTypeList" [value]="item.codeId">{{ item.etc1 | translate }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <div class="col-md-3 no-label">
-                          <mat-checkbox formControlName="primary">{{ 'member.address.primary' | translate
-                            }}</mat-checkbox>
+                          <mat-checkbox formControlName="primary">{{ 'member.address.primary' | translate }}</mat-checkbox>
                         </div>
                       </div>
                       <div class="row">
@@ -469,12 +476,18 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
                           <mat-label> {{ 'address.postCode' | translate }} </mat-label>
-                          <input matInput type="text" formControlName="postCode" [matAutocomplete]="auto"
-                            (keyup)="keypressPostCode()" maxlength="5" minlength="5"
-                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE" />
+                          <input
+                            matInput
+                            type="text"
+                            formControlName="postCode"
+                            [matAutocomplete]="auto"
+                            (keyup)="keypressPostCode()"
+                            maxlength="5"
+                            minlength="5"
+                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE"
+                          />
                           <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let state of postCodeList" [value]="state.codeId"
-                              (onSelectionChange)="selectPostCode(state.etc1)">
+                            <mat-option *ngFor="let state of postCodeList" [value]="state.codeId" (onSelectionChange)="selectPostCode(state.etc1)">
                               {{ state.codeName }}
                             </mat-option>
                           </mat-autocomplete>
@@ -483,44 +496,51 @@
                       <div class="row">
                         <mat-form-field class="col-md-3">
                           <mat-label> {{ 'address.province' | translate }} </mat-label>
-                          <mat-select formControlName="province" (selectionChange)="changeProvince()"
-                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE">
+                          <mat-select
+                            formControlName="province"
+                            (selectionChange)="changeProvince()"
+                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE"
+                          >
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of provinceList" [value]="item.codeId">{{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of provinceList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                           <mat-label> {{ 'address.district' | translate }} </mat-label>
-                          <mat-select formControlName="district" (selectionChange)="changeDistrict()"
-                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE">
+                          <mat-select
+                            formControlName="district"
+                            (selectionChange)="changeDistrict()"
+                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE"
+                          >
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of districtList" [value]="item.codeId">{{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of districtList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                           <mat-label> {{ 'address.subDistrict' | translate }} </mat-label>
-                          <mat-select formControlName="subDistrict" (selectionChange)="changeSubDistrict()"
-                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE">
+                          <mat-select
+                            formControlName="subDistrict"
+                            (selectionChange)="changeSubDistrict()"
+                            [required]="addressForm.controls['country'].value == THAI_COUNTRY_CODE"
+                          >
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of subDistrictList" [value]="item.codeId">{{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of subDistrictList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                           <mat-label> {{ 'address.country' | translate }} </mat-label>
                           <mat-select formControlName="country" (selectionChange)="changeCountry()" required>
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of countryList" [value]="item.codeId">{{ item.codeName
-                              }}</mat-option>
+                            <mat-option *ngFor="let item of countryList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                       </div>
-                      <app-created-by [createdBy]="addressForm.controls['createdBy'].value"
+                      <app-created-by
+                        [createdBy]="addressForm.controls['createdBy'].value"
                         [createdDate]="addressForm.controls['createdDate'].value"
                         [updatedBy]="addressForm.controls['updatedBy'].value"
-                        [updatedDate]="addressForm.controls['updatedDate'].value">
+                        [updatedDate]="addressForm.controls['updatedDate'].value"
+                      >
                       </app-created-by>
                     </form>
                   </div>
@@ -529,20 +549,24 @@
               <mat-tab [label]="'case.attachment.tab' | translate">
                 <div class="col-md-12">
                   <div class="pull-right">
-                    <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
-                      (click)="onAttCreate()">
+                    <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onAttCreate()">
                       {{ 'button.create' | translate }}
                     </button>
                   </div>
                   <div class="material-datatables table-responsive" *ngIf="attDS != null">
-                    <table mat-table [dataSource]="attDS" class="mat-elevation-z8 table-responsive"
-                      (matSortChange)="attTableControl.onSort($event)" matSort matSortDirection="asc"
-                      matSortDisableClear>
+                    <table
+                      mat-table
+                      [dataSource]="attDS"
+                      class="mat-elevation-z8 table-responsive"
+                      (matSortChange)="attTableControl.onSort($event)"
+                      matSort
+                      matSortDirection="asc"
+                      matSortDisableClear
+                    >
                       <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
-                          <button class="btn btn-danger btn-round btn-fab mat-raised-button"
-                            (click)="onAttDelete(element); $event.stopPropagation()">
+                          <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="onAttDelete(element); $event.stopPropagation()">
                             <span class="mat-button-wrapper">
                               <i class="material-icons">remove</i>
                             </span>
@@ -570,28 +594,40 @@
                         <td mat-cell *matCellDef="let element">{{ element.updatedBy }}</td>
                       </ng-container>
                       <tr mat-header-row *matHeaderRowDef="attColumn; sticky: true"></tr>
-                      <tr mat-row *matRowDef="let row; columns: attColumn"
-                        [ngClass]="{ 'selected-row': attSelectedRow == row }" (click)="onSelectAttRow(row)"></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: attColumn"
+                        [ngClass]="{ 'selected-row': attSelectedRow == row }"
+                        (click)="onSelectAttRow(row)"
+                      ></tr>
                     </table>
                   </div>
-                  <mat-paginator class="mat-paginator-sticky" (page)="attTableControl.onPage($event)"
-                    [length]="attTableControl.total" [pageSize]="attTableControl.pageSize"
-                    [pageSizeOptions]="attTableControl.pageSizeOptions" showFirstLastButtons>
+                  <mat-paginator
+                    class="mat-paginator-sticky"
+                    (page)="attTableControl.onPage($event)"
+                    [length]="attTableControl.total"
+                    [pageSize]="attTableControl.pageSize"
+                    [pageSizeOptions]="attTableControl.pageSizeOptions"
+                    showFirstLastButtons
+                  >
                   </mat-paginator>
                   <div *ngIf="attSelectedRow != null">
                     <form [formGroup]="attForm" (ngSubmit)="onAttSave()" novalidate>
                       <div class="row">
                         <div class="col-md-12">
-                          <button mat-raised-button type="button" class="btn btn-fill pull-right"
-                            (click)="onAttCancel()">
+                          <button mat-raised-button type="button" class="btn btn-fill pull-right" (click)="onAttCancel()">
                             {{ 'button.cancel' | translate }}
                           </button>
-                          <button *ngIf="CAN_WRITE()" mat-raised-button type="submit"
-                            class="btn btn-fill btn-primary pull-right">
+                          <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">
                             {{ 'button.save' | translate }}
                           </button>
-                          <button (click)="getDocPath()" *ngIf="attForm.controls['attId'].value != null"
-                            mat-raised-button type="button" class="btn btn-fill btn-success pull-right">
+                          <button
+                            (click)="getDocPath()"
+                            *ngIf="attForm.controls['attId'].value != null"
+                            mat-raised-button
+                            type="button"
+                            class="btn btn-fill btn-success pull-right"
+                          >
                             {{ 'document.download' | translate }}
                           </button>
                         </div>
@@ -605,8 +641,7 @@
                           <mat-label> {{ 'document.file' | translate }} </mat-label>
                           <input type="file" hidden #fileUpload (change)="selectFile($event)" />
                           <input formControlName="fileName" matInput type="text" readonly required />
-                          <button type="button" matSuffix mat-icon-button (click)="fileUpload.click()"
-                            class="file-icon">
+                          <button type="button" matSuffix mat-icon-button (click)="fileUpload.click()" class="file-icon">
                             <mat-icon>attachment</mat-icon>
                           </button>
                           <mat-error *ngIf="attForm.controls['fileName'].hasError('required')">
@@ -615,8 +650,13 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-6">
                           <mat-label> {{ 'document.fullPath' | translate }} </mat-label>
-                          <input matInput type="text" *ngIf="attForm.controls['filePath'].value != null" disabled
-                            [value]="attForm.controls['filePath'].value + '/' + attForm.controls['fileName'].value" />
+                          <input
+                            matInput
+                            type="text"
+                            *ngIf="attForm.controls['filePath'].value != null"
+                            disabled
+                            [value]="attForm.controls['filePath'].value + '/' + attForm.controls['fileName'].value"
+                          />
                           <input matInput *ngIf="attForm.controls['filePath'].value == null" disabled />
                         </mat-form-field>
                       </div>
@@ -626,10 +666,12 @@
                           <textarea matInput maxlength="2000" formControlName="descp"></textarea>
                         </mat-form-field>
                       </div>
-                      <app-created-by [createdBy]="attForm.controls['createdBy'].value"
+                      <app-created-by
+                        [createdBy]="attForm.controls['createdBy'].value"
                         [createdDate]="attForm.controls['createdDate'].value"
                         [updatedBy]="attForm.controls['updatedBy'].value"
-                        [updatedDate]="attForm.controls['updatedDate'].value">
+                        [updatedDate]="attForm.controls['updatedDate'].value"
+                      >
                       </app-created-by>
                     </form>
                   </div>
@@ -638,20 +680,33 @@
               <mat-tab [label]="'case.title' | translate">
                 <div class="col-md-12">
                   <div class="pull-right">
-                    <button mat-raised-button type="button" class="btn btn-fill btn-primary"
-                      [routerLink]="['/casedetails', { customerId: memberForm.controls['customerId'].value, type: 'member' }]">
+                    <button
+                      mat-raised-button
+                      type="button"
+                      class="btn btn-fill btn-primary"
+                      [routerLink]="['/casedetails', { customerId: memberForm.controls['customerId'].value, type: 'member' }]"
+                    >
                       {{ 'customer.newcase' | translate }}
                     </button>
                   </div>
                   <div class="material-datatables table-responsive" *ngIf="caseDS != null">
-                    <table mat-table [dataSource]="caseDS" class="mat-elevation-z8 table-responsive"
-                      (matSortChange)="caseTableControl.onSort($event)" matSort matSortDirection="asc"
-                      matSortDisableClear>
+                    <table
+                      mat-table
+                      [dataSource]="caseDS"
+                      class="mat-elevation-z8 table-responsive"
+                      (matSortChange)="caseTableControl.onSort($event)"
+                      matSort
+                      matSortDirection="asc"
+                      matSortDisableClear
+                    >
                       <ng-container matColumnDef="action">
                         <th mat-header-cell *matHeaderCellDef></th>
                         <td mat-cell *matCellDef="let element">
-                          <button class="btn btn-danger btn-round btn-fab mat-raised-button"
-                            (click)="onCaseEdit(element); $event.stopPropagation()" [routerLink]="['/casedetails']">
+                          <button
+                            class="btn btn-danger btn-round btn-fab mat-raised-button"
+                            (click)="onCaseEdit(element); $event.stopPropagation()"
+                            [routerLink]="['/casedetails']"
+                          >
                             <span class="mat-button-wrapper">
                               <i class="material-icons">mode_edit</i>
                             </span>
@@ -684,13 +739,22 @@
                         <td mat-cell *matCellDef="let element">{{ element.priorityName }}</td>
                       </ng-container>
                       <tr mat-header-row *matHeaderRowDef="caseColumn; sticky: true"></tr>
-                      <tr mat-row *matRowDef="let row; columns: caseColumn"
-                        [ngClass]="{ 'selected-row': caseSelectedRow == row }" (click)="onSelectCaseRow(row)"></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: caseColumn"
+                        [ngClass]="{ 'selected-row': caseSelectedRow == row }"
+                        (click)="onSelectCaseRow(row)"
+                      ></tr>
                     </table>
                   </div>
-                  <mat-paginator class="mat-paginator-sticky" (page)="caseTableControl.onPage($event)"
-                    [length]="caseTableControl.total" [pageSize]="caseTableControl.pageSize"
-                    [pageSizeOptions]="caseTableControl.pageSizeOptions" showFirstLastButtons>
+                  <mat-paginator
+                    class="mat-paginator-sticky"
+                    (page)="caseTableControl.onPage($event)"
+                    [length]="caseTableControl.total"
+                    [pageSize]="caseTableControl.pageSize"
+                    [pageSizeOptions]="caseTableControl.pageSizeOptions"
+                    showFirstLastButtons
+                  >
                   </mat-paginator>
                   <div class="row" *ngIf="attSelectedRow != null">
                     <div class="col-md-12">
@@ -705,9 +769,13 @@
                             <input matInput type="text" formControlName="subject" />
                           </mat-form-field>
                           <div class="col-md-3 text-right">
-                            <button type="button" class="btn btn-default" *ngIf="caseSelectedRow != null"
+                            <button
+                              type="button"
+                              class="btn btn-default"
+                              *ngIf="caseSelectedRow != null"
                               (click)="onCaseEdit(caseSelectedRow); $event.stopPropagation()"
-                              [routerLink]="['/casedetails']">
+                              [routerLink]="['/casedetails']"
+                            >
                               View Case Detail
                             </button>
                           </div>
@@ -715,8 +783,14 @@
                         <div class="row">
                           <mat-form-field class="col-md-12">
                             <mat-label> {{ 'case.description' | translate }} </mat-label>
-                            <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="20"
-                              type="text" formControlName="detail">
+                            <textarea
+                              matInput
+                              matTextareaAutosize
+                              matAutosizeMinRows="1"
+                              matAutosizeMaxRows="20"
+                              type="text"
+                              formControlName="detail"
+                            >
                             </textarea>
                           </mat-form-field>
                         </div>
@@ -761,10 +835,12 @@
                   </div>
                 </div>
               </mat-tab>
-              <mat-tab [label]=" 'contact.history'| translate">
-                <app-contact-history #contactHistoryConponent *ngIf="this.customerId != null"
-                  [customerIdParam]="this.memberForm.controls['customerId'].value">
-
+              <mat-tab [label]="'contact.history' | translate">
+                <app-contact-history
+                  #contactHistoryConponent
+                  *ngIf="this.customerId != null"
+                  [customerIdParam]="this.memberForm.controls['customerId'].value"
+                >
                 </app-contact-history>
               </mat-tab>
               <mat-tab [label]="'member.changeLog' | translate">
@@ -786,9 +862,14 @@
                     <tr mat-row *matRowDef="let row; columns: changeLogColumn"></tr>
                   </table>
                 </div>
-                <mat-paginator class="mat-paginator-sticky" (page)="changeLogTableControl.onPage($event)"
-                  [length]="changeLogTableControl.total" [pageSize]="changeLogTableControl.pageSize"
-                  [pageSizeOptions]="changeLogTableControl.pageSizeOptions" showFirstLastButtons>
+                <mat-paginator
+                  class="mat-paginator-sticky"
+                  (page)="changeLogTableControl.onPage($event)"
+                  [length]="changeLogTableControl.total"
+                  [pageSize]="changeLogTableControl.pageSize"
+                  [pageSizeOptions]="changeLogTableControl.pageSizeOptions"
+                  showFirstLastButtons
+                >
                 </mat-paginator>
               </mat-tab>
             </mat-tab-group>

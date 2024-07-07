@@ -17,11 +17,14 @@ import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Dropdown } from 'src/app/model/dropdown.model';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss']
+  styleUrls: ['./customer.component.scss'],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class CustomerComponent extends BaseComponent implements OnInit {
 

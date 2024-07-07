@@ -3,11 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthGuard } from './guard/auth.guard';
-import { CustomerComponent } from './pages/customer/customer.component';
-import { CustomerDetailComponent } from './pages/customer/customer-detail/customer-detail.component';
-import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
-import { CustomerModule } from './pages/customer/customer.module';
-import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
 
 const routes: Routes = [
   {
@@ -26,22 +21,17 @@ const routes: Routes = [
       {
         path: 'customer',
         canActivate: [AuthGuard],
-        component: CustomerComponent
+        loadComponent: () => import('./pages/customer/customer.component').then(m => m.CustomerComponent)
       },
       {
         path: 'customer/customer',
         canActivate: [AuthGuard],
-        component: CustomerDetailComponent
+        loadComponent: () => import('./pages/customer/customer-detail/customer-detail.component').then(m => m.CustomerDetailComponent)
       },
       {
         path: 'customer/member',
         canActivate: [AuthGuard],
-        component: MemberDetailComponent
-      },
-      {
-        path: 'customer/member-redeem',
-        canActivate: [AuthGuard],
-        component: MemberRedeemComponent
+        loadComponent: () => import('./pages/customer/member-detail/member-detail.component').then(m => m.MemberDetailComponent)
       },
       {
         path: 'case',
@@ -116,8 +106,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(routes, {}),
-    CustomerModule,
+    RouterModule.forRoot(routes, {})
   ],
   exports: [RouterModule]
 })

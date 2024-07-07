@@ -14,11 +14,14 @@ import Utils from 'src/app/shared/utils';
 import { ModalConsultingComponent } from '../../common/modal-consulting/modal-consulting.component';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-contact-history',
   templateUrl: './contact-history.component.html',
-  styleUrl: './contact-history.component.scss'
+  styleUrl: './contact-history.component.scss',
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ContactHistoryComponent extends BaseComponent implements OnInit {
   searchForm: FormGroup;
@@ -135,4 +138,4 @@ export class ContactHistoryComponent extends BaseComponent implements OnInit {
     });
   }
 
-}  
+}

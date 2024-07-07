@@ -17,20 +17,22 @@ import { environment } from 'src/environments/environment';
 import { Case } from '../../case/case.model';
 import { CaseStore } from '../../case/case.store';
 import { TabParam, TabManageService } from 'src/app/layouts/admin/tab-manage.service';
-import { ReIssuesCardComponent } from './re-issues-card/re-issues-card.component';
 import { MatDialog } from '@angular/material/dialog';
-import { BlockCardComponent } from './block-card/block-card.component';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
-import { MemberRedeemService } from '../member-redeem/member-redeem.service';
 import { CustomerService } from '../customer.service';
 import { ContactHistoryComponent } from '../contact-history/contact-history.component';
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { MemberCardPipe } from './member-card-pipe';
 
 @Component({
   selector: 'app-member-detail',
   templateUrl: './member-detail.component.html',
-  styleUrls: ['./member-detail.component.scss']
+  styleUrls: ['./member-detail.component.scss'],
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent, MemberCardPipe]
 })
 export class MemberDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
@@ -114,7 +116,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   txnSubTypeList: Dropdown[];
   constructor(
     private tabManageService: TabManageService,
-    private memberRedeemService: MemberRedeemService,
     private api: ApiService,
     private formBuilder: UntypedFormBuilder,
     private customerService: CustomerService,
@@ -153,17 +154,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
     );
     api.getProgram().then(result => { this.programList = result.data; });
     this.servicePath = environment.endpoint;
-
-    // Listen from member redeem submission.
-    // If there is a submit of this member redeem, find his new member point.
-    this.redeemSubscription = this.memberRedeemService.getMemberRedeemSubmissionObservable().subscribe(redeemMemberId => {
-      if (redeemMemberId) {
-        let memberId = this.memberForm.controls['memberId'].value;
-        if (redeemMemberId == memberId) {
-          this.reloadPoint();
-        }
-      }
-    });
   }
 
   ngOnInit() {
@@ -868,48 +858,6 @@ export class MemberDetailComponent extends BaseComponent implements OnInit, OnDe
   onCancelCard() {
     this.cardSelectedRow = null;
     this.cardForm.reset();
-  }
-
-  reissueCard() {
-    let membercard: MemberCardData = {
-      memberId: this.memberForm.controls['memberId'].value,
-      programId: this.memberForm.controls['programId'].value,
-      programName: this.memberForm.controls['programName'].value,
-      memberCardNo: this.memberForm.controls['memberCardNo'].value,
-      cardTierId: this.memberForm.controls['cardTierId'].value
-    };
-    const dialogRef = this.dialog.open(ReIssuesCardComponent, {
-      width: '400px',
-      data: membercard,
-      panelClass: 'my-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.memberForm.patchValue({ memberCardNo: result.memberCardNo, cardStatus: '01', cardTierId: result.cardTierId, tierName: result.tierName });
-        this.searchCard();
-      }
-    });
-  }
-
-  blockCard() {
-    let membercard: MemberCardData = {
-      memberId: this.memberForm.controls['memberId'].value,
-      programId: this.memberForm.controls['programId'].value,
-      programName: this.memberForm.controls['programName'].value,
-      memberCardNo: this.memberForm.controls['memberCardNo'].value,
-      cardTierId: this.memberForm.controls['cardTierId'].value
-    };
-    const dialogRef = this.dialog.open(BlockCardComponent, {
-      width: '400px',
-      data: membercard,
-      panelClass: 'my-dialog'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.memberForm.patchValue({ cardStatus: '04' });
-        this.searchCard();
-      }
-    });
   }
 
   /*------------------------------------------------------------------------------------------------------------------------------*/
