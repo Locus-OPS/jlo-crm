@@ -14,12 +14,15 @@ import Utils from 'src/app/shared/utils';
 import { ModalConsultingComponent } from '../common/modal-consulting/modal-consulting.component';
 import { ConsultingModel } from './consulting.model';
 import { CaseStore } from '../case/case.store';
+import { CreatedByComponent } from '../common/created-by/created-by.component';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-consulting',
-  standalone: false,
   templateUrl: './consulting.component.html',
-  styleUrl: './consulting.component.scss'
+  styleUrl: './consulting.component.scss',
+  standalone: true,
+  imports: [SharedModule, CreatedByComponent]
 })
 export class ConsultingComponent extends BaseComponent implements OnInit {
 
@@ -203,7 +206,7 @@ export class ConsultingComponent extends BaseComponent implements OnInit {
 
   onSearchCase(row?: any) {
     this.selectedRow = row;
-    // this.tableControlCase.resetPage(); 
+    // this.tableControlCase.resetPage();
     this.searchFormCase.patchValue({ consultingNumber: this.selectedRow?.consultingNumber });
     this.searchCase();
   }

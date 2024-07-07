@@ -6,12 +6,8 @@ import { AuthGuard } from './guard/auth.guard';
 import { CustomerComponent } from './pages/customer/customer.component';
 import { CustomerDetailComponent } from './pages/customer/customer-detail/customer-detail.component';
 import { MemberDetailComponent } from './pages/customer/member-detail/member-detail.component';
-import { CaseComponent } from './pages/case/case.component';
-import { CasedetailsComponent } from './pages/case/casedetails/casedetails.component';
 import { CustomerModule } from './pages/customer/customer.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
-import { ConsultingComponent } from './pages/consulting/consulting.component';
-import { ConsultingModule } from './pages/consulting/consulting.module';
 
 const routes: Routes = [
   {
@@ -100,7 +96,7 @@ const routes: Routes = [
       {
         path: 'consulting/consultingList',
         canActivate: [AuthGuard],
-        component: ConsultingComponent
+        loadComponent: () => import('./pages/consulting/consulting.component').then(m => m.ConsultingComponent)
       },
       {
         path: 'channel/chat',
@@ -122,7 +118,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {}),
     CustomerModule,
-    ConsultingModule
   ],
   exports: [RouterModule]
 })
