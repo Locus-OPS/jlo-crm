@@ -22,14 +22,6 @@ import { KbModule } from './pages/kb/kb.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { CustomerModule } from './pages/customer/customer.module';
 import { MemberRedeemComponent } from './pages/customer/member-redeem/member-redeem.component';
-import { LineModule } from './pages/line/line.module';
-import { LineMemberRedeemComponent } from './pages/line/member-redeem/line-member-redeem.component';
-import { LineMemberRedeemHistoryComponent } from './pages/line/member-redeem-history/line-member-redeem-history.component';
-import { LineRewardDetailComponent } from './pages/line/reward-detail/reward-detail.component';
-import { LineReceiptUploadComponent } from './pages/line/receipt-upload/receipt-upload.component';
-import { LineReceiptApproveComponent } from './pages/line/receipt-approve/receipt-approve.component';
-import { LineXcashDetailComponent } from './pages/line/xcash-detail/xcash-detail.component';
-import { LineRewardAddressComponent } from './pages/line/reward-address/reward-address.component';
 import { CaseModule } from './pages/case/case.module';
 import { ConsultingComponent } from './pages/consulting/consulting.component';
 import { ConsultingModule } from './pages/consulting/consulting.module';
@@ -131,27 +123,6 @@ const routes: Routes = [
       path: '',
       loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
     }]
-  }, {
-    path: 'line-liff/redeem',
-    component: LineMemberRedeemComponent
-  }, {
-    path: 'line-liff/redeem-history',
-    component: LineMemberRedeemHistoryComponent
-  }, {
-    path: 'line-liff/reward-detail',
-    component: LineRewardDetailComponent
-  }, {
-    path: 'line-liff/reward-address',
-    component: LineRewardAddressComponent
-  }, {
-    path: 'line-liff/xcash-detail',
-    component: LineXcashDetailComponent
-  }, {
-    path: 'line-liff/receipt-upload',
-    component: LineReceiptUploadComponent
-  }, {
-    path: 'line-liff/receipt-approve',
-    component: LineReceiptApproveComponent
   }
 ];
 
@@ -164,8 +135,7 @@ const routes: Routes = [
     CustomerModule,
     KbModule,
     CaseModule,
-    ConsultingModule,
-    LineModule
+    ConsultingModule
   ],
   exports: [RouterModule]
 })
