@@ -21,13 +21,14 @@ import { ContactHistoryComponent } from '../contact-history/contact-history.comp
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { ContactHistoryTlComponent } from '../contact-history-tl/contact-history-tl.component';
 
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.scss'],
   standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent]
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
