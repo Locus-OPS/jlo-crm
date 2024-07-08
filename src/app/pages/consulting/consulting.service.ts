@@ -33,6 +33,10 @@ export class ConsultingService {
     return this.api.call('/api/consulting/getCaseUnderConsultingList', param);
   }
 
+  getConsultingTimelineDataListByCustomerId(param?: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/consulting/getConsultingTimelineDataListByCustomerId', param);
+  }
+
 
 
 }

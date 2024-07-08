@@ -1,29 +1,36 @@
 <div class="main-content">
-    <!-- <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">timeline</i>
-                        </div>
-                        <h4 class="card-title">{{ 'consulting.menu' | translate }}</h4>
-                    </div> -->
-    <!-- <div class="card-body" style="background-color: #474e5d;"> -->
-
-    <div class="timeline">
-        <div *ngFor='let entry of timeLine;let i = index'>
+    <div class="timeline" *ngIf="this.timeLine.length > 0; else elseTimeLine">
+        <div *ngFor='let element of timeLine;let i = index'>
             <div class="container-tl" [ngClass]="{ left: i%2!==0, right:i%2==0}">
                 <div class="content-tl">
-                    <h2>{{entry.year}}</h2>
-                    <p>{{entry.detail}}</p>
+                    <span class="mat-button-wrapper">
+                        <mat-icon *ngIf="element.channelCd == '01'">call</mat-icon>
+                        <mat-icon *ngIf="element.channelCd == '02'">mail</mat-icon>
+                        <mat-icon *ngIf="element.channelCd == '03'">chat</mat-icon>
+                        <mat-icon *ngIf="element.channelCd == '04'" svgIcon="walkin-icon"></mat-icon>
+                        <mat-icon *ngIf="element.channelCd == '05'" svgIcon="line-icon"></mat-icon>
+                        <mat-icon *ngIf="element.channelCd == '06'" svgIcon="fb-icon"></mat-icon>
+
+                    </span>
+                    <p>
+                        {{'consulting.contact.center.text'|translate}}&nbsp;{{element.channelName}}
+                        <br>
+                        {{'consulting.title'|translate}}&nbsp;{{element.title}}
+                        <br>
+                        {{'consulting.startDate'|translate}}&nbsp;{{element.startDate}} - {{element.endDate}}
+                        <br>
+                        {{'consulting.header.status'|translate}}&nbsp;{{element.statusName}}
+                        <br>
+                        {{'consulting.owner'|translate}}&nbsp;{{element.consOwnerName}}
+
+                    </p>
                 </div>
             </div>
         </div>
+
     </div>
-    <!-- </div> -->
-    <!-- </div>
-            </div>
-        </div>
-    </div>-->
+    <ng-template #elseTimeLine>
+        No Data Found
+    </ng-template>
+
 </div>

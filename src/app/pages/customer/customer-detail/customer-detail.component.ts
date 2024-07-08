@@ -32,8 +32,8 @@ import { ContactHistoryTlComponent } from '../contact-history-tl/contact-history
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  @ViewChild("contactHistoryConponent", { static: false })
-  contactHistoryConponent: ContactHistoryComponent;
+  @ViewChild("contactHistoryTlComponent", { static: false })
+  contactHistoryTlComponent: ContactHistoryTlComponent;
   customerId: string;
 
   THAI_NATIONALITY: string = "37";
@@ -230,12 +230,14 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
     if (this.tabParam.params['customerId']) {
       this.customerId = this.tabParam.params['customerId'];
+
       this.customerService.getCustomerById({ data: { customerId: this.tabParam.params['customerId'] } })
         .then(result => {
           this.createForm.patchValue(result.data);
           this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
           this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
-          //this.createForm.patchValue({ 'programId': this.createForm.value['programId'].toString() });
+
+
           Utils.setBirthDatePicker(this.createForm);
           this.setDisabled();
           this.searchAddress();

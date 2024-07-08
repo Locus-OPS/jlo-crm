@@ -38,7 +38,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   createFormDirective: FormGroupDirective;
 
   dataSource: CustomerData[];
-  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'customerType', 'updatedDate', 'updatedByName'];
+  displayedColumns: string[] = ['fullName', 'citizenId', 'customerType', 'customerStatus', 'updatedDate', 'updatedByName'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   searchForm: FormGroup;

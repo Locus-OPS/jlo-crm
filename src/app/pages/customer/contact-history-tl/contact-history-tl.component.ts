@@ -12,6 +12,7 @@ import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SharedModule } from 'src/app/shared/module/shared.module';
+import Utils from 'src/app/shared/utils';
 @Component({
   selector: 'app-contact-history-tl',
   templateUrl: './contact-history-tl.component.html',
@@ -62,18 +63,44 @@ export class ContactHistoryTlComponent extends BaseComponent implements OnInit {
       customerId: [this.customerIdParam]
     });
 
-    this.mockupDataTimeline();
+    //this.mockupDataTimeline();
+    this.search();
   }
 
 
+
+
+  search() {
+    //alert("custId : " + this.customerIdParam)
+    const param = {
+      ...this.searchForm.getRawValue()
+    };
+    console.log(param);
+    console.log(this.customerIdParam);
+
+    this.consulting.getConsultingTimelineDataListByCustomerId({ data: param }).then((result) => {
+      if (result.status) {
+        this.timeLine = result.data;
+      } else {
+        this.timeLine = [];
+      }
+
+    },
+      (error) => {
+        Utils.alertError({
+          text: error.message,
+        });
+      }
+    );
+  }
   mockupDataTimeline() {
 
     this.timeLine = [
-      { year: '2015', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
-      { year: '2016', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
-      { year: '2017', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
-      { year: '2018', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
-      { year: '2019', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' }
+      { channelCd: '01', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
+      { channelCd: '02', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
+      { channelCd: '03', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
+      { channelCd: '04', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' },
+      { channelCd: '05', detail: 'Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.' }
 
     ]
   }
