@@ -1,0 +1,22 @@
+<div class="col-md-12 material-datatables">
+    <table mat-table [dataSource]="changeLogDS" class="mat-elevation-z8">
+        <ng-container matColumnDef="changedBy">
+            <th mat-header-cell *matHeaderCellDef>User ID</th>
+            <td mat-cell *matCellDef="let row">{{ row.changedBy }}</td>
+        </ng-container>
+        <ng-container matColumnDef="changedDetail">
+            <th mat-header-cell *matHeaderCellDef>Changed Detail</th>
+            <td mat-cell *matCellDef="let row">{{ row.changedDetail }}</td>
+        </ng-container>
+        <ng-container matColumnDef="changedDate">
+            <th mat-header-cell *matHeaderCellDef>Changed Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.changedDate }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="changeLogColumn; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: changeLogColumn"></tr>
+    </table>
+</div>
+<mat-paginator class="mat-paginator-sticky" (page)="changeLogTableControl.onPage($event)"
+    [length]="changeLogTableControl.total" [pageSize]="changeLogTableControl.pageSize"
+    [pageSizeOptions]="changeLogTableControl.pageSizeOptions" showFirstLastButtons>
+</mat-paginator>

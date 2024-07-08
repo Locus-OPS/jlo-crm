@@ -1,0 +1,125 @@
+<div class="col-md-12">
+    <div class="text-right">
+        <button mat-raised-button type="button" class="btn btn-fill btn-primary"
+            [routerLink]="['/casedetails', { customerId: this.customerIdParam }]">
+            {{ 'customer.newcase' | translate }}
+        </button>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="material-datatables table-responsive" *ngIf="caseDS != null">
+        <table mat-table [dataSource]="caseDS" class="mat-elevation-z8 table-responsive"
+            (matSortChange)="caseTableControl.onSort($event)" matSort matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button class="btn btn-danger btn-round btn-fab mat-raised-button"
+                        (click)="onCaseEdit(element); $event.stopPropagation()" [routerLink]="['/casedetails']">
+                        <span class="mat-button-wrapper">
+                            <i class="material-icons">mode_edit</i>
+                        </span>
+                    </button>
+                </td>
+            </ng-container>
+            <!-- displayedColumns -->
+            <ng-container matColumnDef="caseNumber">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.number' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.caseNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="typeName">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.type' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.typeName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="openedDate">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.openDate' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.openedDateDate }}</td>
+            </ng-container>
+            <ng-container matColumnDef="closedDate">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.closeDate' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.closedDateDate }}</td>
+            </ng-container>
+            <ng-container matColumnDef="subTypeName">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.subType' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.subTypeName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="priorityName">
+                <th mat-header-cell *matHeaderCellDef>{{ 'case.priority' | translate }}</th>
+                <td mat-cell *matCellDef="let element">{{ element.priorityName }}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="caseColumn; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: caseColumn" (click)="onSelectCaseRow(row)"></tr>
+        </table>
+    </div>
+
+    <mat-paginator class="mat-paginator-sticky" (page)="caseTableControl.onPage($event)"
+        [length]="caseTableControl.total" [pageSize]="caseTableControl.pageSize"
+        [pageSizeOptions]="caseTableControl.pageSizeOptions" showFirstLastButtons>
+    </mat-paginator>
+    <div class="row" *ngIf="caseSelectedRow != null">
+        <div class="col-md-12">
+            <form [formGroup]="caseForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.number' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="caseNumber" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>{{ 'case.subject' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="subject" />
+                    </mat-form-field>
+                    <div class="col-md-3 text-right">
+                        <button type="button" class="btn btn-default" *ngIf="caseSelectedRow != null"
+                            (click)="onCaseEdit(caseSelectedRow); $event.stopPropagation()"
+                            [routerLink]="['/casedetails']">
+                            View Case Detail
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-12">
+                        <mat-label>{{ 'case.description' | translate }}</mat-label>
+                        <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="20"
+                            type="text" formControlName="detail">
+              </textarea>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.type' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="typeName" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.subType' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="subTypeName" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.priority' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="priorityName" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.status' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="statusName" />
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.channel' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="channelName" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.owner' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="displayName" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.openDate' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="openedDateDate" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{ 'case.closeDate' | translate }}</mat-label>
+                        <input matInput type="text" formControlName="closedDateDate" />
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

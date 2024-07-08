@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { CustomerAddressData } from '../customer-address-data';
 import { TableControl } from 'src/app/shared/table-control';
 import { ChangeLog } from 'src/app/model/change-log.model';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl, FormGroup } from '@angular/forms';
@@ -12,47 +11,45 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerVerifyData } from './verify-customer-dialog/customer-verify-data';
 import { TabManageService, TabParam } from 'src/app/layouts/admin/tab-manage.service';
-import { Case } from '../../case/case.model';
-import { CaseStore } from '../../case/case.store';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
-import { ContactHistoryTlComponent } from '../contact-history-tl/contact-history-tl.component';
+import { ContactHistoryTlComponent } from './tab/contact-history-tl/contact-history-tl.component';
+import { CustomerCaseComponent } from "./tab/customer-case/customer-case.component";
+import { CustomerAddressComponent } from './tab/customer-address/customer-address.component';
+import { CustomerAuditLogComponent } from './tab/customer-audit-log/customer-audit-log.component';
 
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.scss'],
   standalone: true,
-  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent]
+  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent, CustomerCaseComponent, CustomerAddressComponent, CustomerAuditLogComponent]
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
   @ViewChild("contactHistoryTlComponent", { static: false })
   contactHistoryTlComponent: ContactHistoryTlComponent;
+
+  @ViewChild("customerCase", { static: false })
+  customerCaseComponent: CustomerCaseComponent;
+
+  @ViewChild("customerAddress", { static: false })
+  customerAddressComponent: CustomerAddressComponent;
+
+  @ViewChild("customerAuditLogComponent", { static: false })
+  customerAuditLogComponent: CustomerAuditLogComponent;
+
+
   customerId: string;
 
   THAI_NATIONALITY: string = "37";
   THAI_COUNTRY_CODE: string = "66";
 
   newCaseSubscription: Subscription;
-
-  /* address table */
-  addrSelectedRow: CustomerAddressData;
-  addressDS: CustomerAddressData[];
-  addressColumn: string[] = ['primary', 'addressType', 'address', 'actionDelAdd'];
-  addrTableControl: TableControl = new TableControl(() => { this.searchAddress() });
-  deleted = false;
-
-  /* Case table */
-  caseSelectedRow: Case;
-  caseDS: Case[];
-  caseColumn: string[] = ['caseNumber', 'typeName', 'openedDate', 'closedDate', 'subTypeName', 'priorityName', 'action'];
-  caseTableControl: TableControl = new TableControl(() => { this.searchCase() });
-
 
   /* change log table */
   chSelectedRow: ChangeLog;
@@ -61,11 +58,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   changeLogTableControl: TableControl = new TableControl(() => { this.searchChangeLog() });
 
   createForm: FormGroup;
-  addressForm: UntypedFormGroup;
-  caseForm: UntypedFormGroup;
+  // addressForm: UntypedFormGroup;
 
   createDisabled: Boolean;
-  addressDisabled: Boolean;
+  // addressDisabled: Boolean;
 
   customerVerify: CustomerVerifyData;
 
@@ -82,7 +78,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     codeName: "Head Office"
   }];
   countryList = [];
-  addressTypeList = [];
+  // addressTypeList = [];
   customerStatusList = [];
   customerTypeList = [];
   provinceList = [];
@@ -99,7 +95,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   uploadProgress = 0;
 
   constructor(
-    private caseStore: CaseStore,
     private tabManageService: TabManageService,
     private tabParam: TabParam,
     public api: ApiService,
@@ -125,7 +120,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
         this.sourceChannelList = result.data['SOURCE_CHANNEL'];
         this.phonePrefixList = result.data['PHONE_PREFIX'];
         this.countryList = result.data['COUNTRY'];
-        this.addressTypeList = result.data['ADDRESS_TYPE'];
+        // this.addressTypeList = result.data['ADDRESS_TYPE'];
         this.customerStatusList = result.data['CUSTOMER_CRM_STATUS'];
         this.businessTypeList = result.data['BUSINESS_TYPE'];
         this.customerTypeList = result.data['CUSTOMER_TYPE'];
@@ -172,60 +167,10 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       updatedDate: new UntypedFormControl({ value: '', disabled: true })
     });
 
-    this.addressForm = this.formBuilder.group({
-      addressId: [],
-      customerId: [],
-      primary: [''],
-      previousPrimaryYn: [''],
-      addressType: [''],
-      address: [''],
-      postCode: [''],
-      subDistrict: [''],
-      district: [''],
-      province: [''],
-      country: [''],
-      createdByName: new UntypedFormControl({ value: '', disabled: true }),
-      createdDate: new UntypedFormControl({ value: '', disabled: true }),
-      updatedBy: new UntypedFormControl({ value: '', disabled: true }),
-      updatedDate: new UntypedFormControl({ value: '', disabled: true })
-    });
 
-    this.caseForm = this.formBuilder.group({
-      caseNumber: [''],
-      typeName: [''],
-      subTypeName: [''],
-      priorityName: [''],
-      subject: [''],
-      detail: [''],
-      channelName: [''],
-      statusName: [''],
-      createdBy: [''],
-      createdDate: [''],
-      updatedBy: [''],
-      updatedDate: [''],
-      openedDateDate: [''],
-      closedDateDate: [''],
-      customerId: [''],
-      displayName: [''],
-    });
-    // this.route.params.subscribe(params=>{
-    //   if(params['customerId']!=null){
-    //     this.customerService.getCustomerById({data:{customerId:params['customerId']}})
-    //     .then(result => {
-    //       this.createForm.patchValue(result.data);
-    //       this.setProgram(result.data.programId);
-    //       this.setDisabled();
-    //       this.searchAddress();
-    //     }, error => {
-    //       Utils.alertError({
-    //         text: 'Please try again later.',
-    //       });
-    //     });
-    //   }else{
-    //     this.create();
-    //     this.setProgram(null);
-    //   }
-    // });
+
+
+
 
     if (this.tabParam.params['customerId']) {
       this.customerId = this.tabParam.params['customerId'];
@@ -239,8 +184,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
           Utils.setBirthDatePicker(this.createForm);
           this.setDisabled();
-          this.searchAddress();
-          this.searchCase();
+
           this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.customer', { name: result.data.firstName || result.data.businessName });
         }, error => {
           Utils.alertError({
@@ -254,7 +198,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
     this.newCaseSubscription = this.appStore.observeNewCase().subscribe(newCase => {
       if (newCase.customerId === this.createForm.controls['customerId'].value) {
-        this.searchCase();
+        this.customerCaseComponent.searchCase();
       }
     });
 
@@ -265,36 +209,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   setDisabled() {
-    // if (this.createForm.value.customerStatus > "00") {
-    //   this.createDisabled = true;
-    //   this.addressDisabled = true;
-    // } else {
-    //   this.createDisabled = false;
-    //   this.addressDisabled = false;
-    // }
-    // if (this.createDisabled) {
-    //   this.createForm.controls['customerType'].disable();
-    //   this.createForm.controls['title'].disable();
-    //   this.createForm.controls['firstName'].disable();
-    //   this.createForm.controls['lastName'].disable();
-    //   this.createForm.controls['nationality'].disable();
-    //   this.createForm.controls['citizenId'].disable();
-    //   this.createForm.controls['passportNo'].disable();
-    //   this.createForm.controls['birthDate'].disable();
-    //   this.createForm.controls['gender'].disable();
-    //   this.createForm.controls['maritalStatus'].disable();
-    //   this.createForm.controls['occupation'].disable();
-    //   this.createForm.controls['businessName'].disable();
-    //   this.createForm.controls['taxId'].disable();
-    //   this.createForm.controls['businessType'].disable();
-    //   this.createForm.controls['phoneArea'].disable();
-    //   this.createForm.controls['phoneNo'].disable();
-    //   this.createForm.controls['email'].disable();
-    //   this.createForm.controls['registrationChannel'].disable();
-    //   this.createForm.controls['registrationStore'].disable();
-    //   this.createForm.controls['remark'].disable();
-    //   this.createForm.controls['programId'].disable();
-    // } else {
     this.createForm.controls['customerType'].enable();
     this.createForm.controls['title'].enable();
     this.createForm.controls['firstName'].enable();
@@ -322,34 +236,11 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['updatedByName'].disable();
     this.createForm.controls['updatedDate'].disable();
 
-    this.setDisabledAddress();
     this.CHECK_FORM_PERMISSION(this.createForm);
-    this.CHECK_FORM_PERMISSION(this.addressForm);
-  }
-
-  setDisabledAddress() {
-    // if (this.addressDisabled) {
-    //   this.addressForm.controls['primary'].disable();
-    //   this.addressForm.controls['addressType'].disable();
-    //   this.addressForm.controls['address'].disable();
-    //   this.addressForm.controls['postCode'].disable();
-    //   this.addressForm.controls['subDistrict'].disable();
-    //   this.addressForm.controls['district'].disable();
-    //   this.addressForm.controls['province'].disable();
-    //   this.addressForm.controls['country'].disable();
-    // } else {
-    this.addressForm.controls['primary'].enable();
-    this.addressForm.controls['addressType'].enable();
-    this.addressForm.controls['address'].enable();
-    this.addressForm.controls['postCode'].enable();
-    this.addressForm.controls['subDistrict'].enable();
-    this.addressForm.controls['district'].enable();
-    this.addressForm.controls['province'].enable();
-    this.addressForm.controls['country'].enable();
-    // }
   }
 
   changeCustomerType(val) {
+
     if (!val) {
       this.createForm.controls['firstName'].setValidators([Validators.required, Validators.maxLength(255)]);
       this.createForm.controls['firstName'].updateValueAndValidity();
@@ -374,32 +265,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   create() {
     this.createForm.reset();
     this.createForm.patchValue({ customerType: true, customerStatus: '01', nationality: this.THAI_NATIONALITY, phoneArea: this.THAI_COUNTRY_CODE });
-    this.addressDS = null;
+    this.customerAddressComponent.addressDS = null;
     this.imageSrc = null;
     this.changeCustomerType(false);
-  }
-
-  searchAddress() {
-    this.customerService.getCustomerAddressList({
-      pageSize: this.addrTableControl.pageSize,
-      pageNo: this.addrTableControl.pageNo,
-      data: { customerId: this.createForm.value.customerId, sortColumn: this.addrTableControl.sortColumn, sortDirection: this.addrTableControl.sortDirection }
-    }).then(result => {
-      this.addressDS = result.data;
-      this.addrTableControl.total = result.total;
-    }, error => {
-      Utils.alertError({
-        text: 'Please try again later.',
-      });
-    });
-  }
-
-  selectAddress(row) {
-    this.addrSelectedRow = row;
-    this.addressForm.patchValue(row);
-    this.addressForm.patchValue({ primary: row.primaryYn == "Y" });
-    this.addressForm.patchValue({ previousPrimaryYn: this.addressForm.value['primary'] });
-    this.setComboAddress(row.subDistrict);
   }
 
   onCancel() {
@@ -638,7 +506,8 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       });
       return;
     }
-    if (this.addressDS == null || this.addressDS.length == 0) {
+
+    if (this.customerAddressComponent.addressDS == null || this.customerAddressComponent.addressDS.length == 0) {
       Utils.alertError({
         text: 'Require Address'
       });
@@ -660,10 +529,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
               memberId: result.data.memberId,
               memberType: result.data.memberType
             }]);
-          // console.log(result.data);
-          // this.createForm.patchValue(result.data);
+
           this.setDisabled();
-          // this.tabManageService.removeTab(this.tabParam.index);
+
         } else {
           Utils.alertError({
             text: 'Please, try again later',
@@ -714,326 +582,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     });
   }
 
-
-  //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //----------------------------------------------------------------------------------- Address -----------------------------------------------------------------------
-  //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  addressAdd() {
-    if (this.createForm.value.customerId == null) {
-      Utils.confirm("Warning", "Please Save Customer before create address.", "Save Customer").then(confirm => {
-        if (confirm.value) {
-          this.onSave();
-        }
-      });
-      return false;
-    }
-    this.addrSelectedRow = {};
-    this.addressForm.reset();
-    this.addressForm.patchValue({ customerId: this.createForm.value.customerId });
-    if (this.addressDS == null) {
-      this.addressForm.patchValue({ primary: true, addressType: '02', country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
-    } else {
-      this.addressForm.patchValue({ country: this.THAI_COUNTRY_CODE, previousPrimaryYn: false });
-    }
-    this.setDisabledAddress();
-    setTimeout(() => {
-      document.querySelector("#divAddressEditMode").scrollIntoView(true);
-    }, 300);
-    this.changeCountry();
-  }
-
-  onCancelAddress() {
-    this.addrSelectedRow = null;
-    this.addressForm.reset();
-  }
-  changeCountry() {
-    this.addressForm.patchValue({ province: null, district: null, subDistrict: null, postCode: '' });
-    if (this.addressForm.controls['country'].value == this.THAI_COUNTRY_CODE) {
-      this.addressForm.controls['province'].setValidators([Validators.required]);
-      this.addressForm.controls['province'].updateValueAndValidity();
-      this.addressForm.controls['district'].setValidators([Validators.required]);
-      this.addressForm.controls['district'].updateValueAndValidity();
-      this.addressForm.controls['subDistrict'].setValidators([Validators.required]);
-      this.addressForm.controls['subDistrict'].updateValueAndValidity();
-      this.addressForm.controls['postCode'].setValidators([Validators.required]);
-      this.addressForm.controls['postCode'].updateValueAndValidity();
-    } else {
-      this.addressForm.controls['province'].clearValidators();
-      this.addressForm.controls['province'].updateValueAndValidity();
-      this.addressForm.controls['district'].clearValidators();
-      this.addressForm.controls['district'].updateValueAndValidity();
-      this.addressForm.controls['subDistrict'].clearValidators();
-      this.addressForm.controls['subDistrict'].updateValueAndValidity();
-      this.addressForm.controls['postCode'].clearValidators();
-      this.addressForm.controls['postCode'].updateValueAndValidity();
-    }
-
-    this.api.getProvince({ data: this.addressForm.controls['country'].value }).then(
-      result => {
-        this.provinceList = result.data;
-        this.districtList = [];
-        this.subDistrictList = [];
-        this.postCodeList = [];
-      }
-    );
-  }
-
-  changeProvince() {
-    this.api.getDistrict({ data: this.addressForm.controls['province'].value }).then(
-      result => {
-        this.districtList = result.data;
-        this.subDistrictList = [];
-        this.postCodeList = [];
-      }
-    );
-  }
-
-  changeDistrict() {
-    this.api.getSubDistrict({ data: this.addressForm.controls['district'].value }).then(
-      result => {
-        this.subDistrictList = result.data;
-        this.postCodeList = [];
-      }
-    );
-  }
-
-  changeSubDistrict() {
-    this.api.getPostCode({ data: this.addressForm.controls['subDistrict'].value }).then(
-      result => {
-        this.postCodeList = result.data;
-        if (result.data.length == 1) {
-          this.addressForm.patchValue({ postCode: this.postCodeList[0].codeId });
-        }
-      }
-    );
-  }
-
-  keypressPostCode() {
-    if (this.addressForm.controls['postCode'].value.length == 5) {
-      this.api.getPostCodeDetail({ data: this.addressForm.controls['postCode'].value }).then(
-        result => {
-          this.postCodeList = result.data;
-        }
-      );
-    }
-  }
-  selectPostCode(subDistrict) {
-    if (this.addressForm.controls['country'].value != this.THAI_COUNTRY_CODE) {
-      return false;
-    }
-
-    if (subDistrict != this.addressForm.controls['subDistrict'].value) {
-      this.setComboAddress(subDistrict);
-    }
-  }
-
-  setComboAddress(subDistrict) {
-    if (subDistrict == null || subDistrict.length < 4) {
-      this.changeCountry();
-      return;
-    }
-    if (subDistrict != null) {
-      this.api.getProvince({ data: this.addressForm.controls['country'].value }).then(
-        result => {
-          this.provinceList = result.data;
-          this.api.getDistrict({ data: subDistrict.substring(0, 2) }).then(
-            result => {
-              this.districtList = result.data;
-              this.api.getSubDistrict({ data: subDistrict.substring(0, 4) }).then(
-                result => {
-                  this.subDistrictList = result.data;
-                  this.addressForm.patchValue({ province: subDistrict.substring(0, 2), district: subDistrict.substring(0, 4), subDistrict: subDistrict });
-                }
-              );
-            }
-          );
-        }
-      );
-    } else {
-      this.changeCountry();
-    }
-  }
-
-  onSaveAddress(e) {
-    // const param = {
-    //   ...this.addressForm.value,
-    //   primaryYn: Utils.convertToYN(this.addressForm.value['primary']),
-    // };
-
-    if (this.addressForm.invalid) {
-      console.log("invalid addressForm");
-      Object.keys(this.addressForm.controls).forEach(element => {
-        this.addressForm.controls[element].markAsTouched({ onlySelf: true });
-      });
-      return;
-    }
-
-    let primaryYn = this.addressForm.controls['primary'].value;
-    let previousPrimaryYn = this.addressForm.controls['previousPrimaryYn'].value;
-
-    if (primaryYn && !previousPrimaryYn) {
-      this.customerService.getCustomerAddressPrimary({
-        data: {
-          customerId: this.createForm.controls['customerId'].value
-        }
-      }).then(result => {
-        if (result.data) {
-          let fullAddress = result.data.fullAddress;
-          Utils.confirm("Warning", "Save this address as a primary will remove primary flag from \"" + fullAddress + "\" , do you want to save this address?", "Save Address").then(confirm => {
-            if (confirm.value) {
-              this.saveAddress();
-            }
-          });
-        } else {
-          this.saveAddress();
-        }
-      }, error => {
-        Utils.alertError({
-          text: 'Please, try again later',
-        });
-      });
-    } else {
-      this.saveAddress();
-    }
-  }
-
-  saveAddress() {
-    const param = {
-      ...this.addressForm.value,
-      // primaryYn: (this.addressForm.controls['primary'].value ? "Y" : "N")
-      // addressId: addressId,
-      primaryYn: Utils.convertToYN(this.addressForm.value['primary']),
-    };
-
-    const msgTitle = this.addressForm.value.addressId == null ? 'Created!' : 'Updated!';
-    const msgText = this.addressForm.value.addressId == null ? 'Address has been created.!' : 'Address has been updated.';
-
-    this.customerService.saveCustomerAddress({
-      data: param
-    }).then(result => {
-      if (result.status) {
-        // Utils.assign(this.addrSelectedRow, result.data);
-        this.addressForm.patchValue(result.data);
-
-        Utils.alertSuccess({
-          title: msgTitle,
-          text: msgText,
-        });
-        this.searchAddress();
-        this.addrSelectedRow = null;
-        this.addressForm.reset();
-      } else {
-        Utils.alertError({
-          text: 'Please, try again later',
-        });
-      }
-    }, error => {
-      console.log("error");
-      Utils.alertError({
-        text: 'Please, try again later',
-      });
-    });
-  }
-
-  onDeleteCustomerAddress(element: CustomerAddressData) {
-    this.deleted = true;
-    Utils.confirmDelete().then(confirm => {
-      if (confirm.value) {
-        this.customerService.deleteCustomerAddress({
-          data: {
-            addressId: element.addressId
-          }
-        }).then(result => {
-          if (result.status) {
-            Utils.showSuccess(this.deleted, 'Customer Address', this.deleted);
-          } else {
-            Utils.showError(result, null);
-          }
-          this.searchAddress();
-        }, error => {
-          console.log('error ==============================>', error);
-          Utils.showError(null, error);
-        });
-      }
-    });
-  }
-
-  /*
-  onSaveAddress() {
-    const param = {
-      ...this.addressForm.value,
-      primaryYn: (this.addressForm.controls['primary'].value ? "Y" : "N")
-    };
-    if (this.addressForm.invalid) {
-      console.log("invalid");
-      Object.keys(this.addressForm.controls).forEach(element => {
-        this.addressForm.controls[element].markAsTouched({ onlySelf: true });
-      });
-      return;
-    }
-
-    const msgTitle = this.addressForm.value.addressId == null ? 'Created!' : 'Updated!';
-    const msgText = this.addressForm.value.addressId == null ? 'Address has been created.!' : 'Address has been updated.';
-
-    this.customerService.saveCustomerAddress({
-      data: param
-    }).then(result => {
-      console.log(result);
-      if (result.status) {
-        // Utils.assign(this.addrSelectedRow, result.data);
-        this.addressForm.patchValue(result.data);
-
-        Utils.alertSuccess({
-          title: msgTitle,
-          text: msgText,
-        });
-        this.searchAddress();
-        this.addrSelectedRow = null;
-        this.addressForm.reset();
-      } else {
-        Utils.alertError({
-          text: 'Please, try again later',
-        });
-      }
-    }, error => {
-      console.log("error");
-      Utils.alertError({
-        text: 'Please, try again later',
-      });
-    });
-  }
-  */
-
-
-  /*------------------------------------------------------------------------------------------------------------------------------*/
-  /*---------------------------------------------------------- Case --------------------------------------------------------------*/
-  /*------------------------------------------------------------------------------------------------------------------------------*/
-  searchCase() {
-    this.customerService.getCustomerCaseList({
-      pageSize: this.caseTableControl.pageSize,
-      pageNo: this.caseTableControl.pageNo,
-      data: { customerId: this.createForm.controls['customerId'].value, sortColumn: this.caseTableControl.sortColumn, sortDirection: this.caseTableControl.sortDirection }
-    }).then(result => {
-      this.caseDS = result.data;
-      this.caseTableControl.total = result.total;
-      this.caseSelectedRow = null;
-      this.caseForm.disable();
-    }, error => {
-      Utils.alertError({
-        text: 'Please try again later.',
-      });
-    });
-  }
-
-  onCaseEdit(e) {
-    this.caseStore.updateCaseDetail(e.caseNumber);
-  }
-
-  onSelectCaseRow(row) {
-    this.caseSelectedRow = row;
-    this.caseForm.patchValue(row);
-    this.caseForm.disable();
-  }
 
   searchChangeLog() {
 
