@@ -47,10 +47,6 @@ export class SidebarComponent implements OnInit {
     this.REVISION = versions.revision;
 
     this.loadProfile();
-    // if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-    //   const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-    //   this.ps = new PerfectScrollbar(elemSidebar);
-    // }
   }
 
   loadProfile() {
@@ -68,17 +64,4 @@ export class SidebarComponent implements OnInit {
     }, 1000);
   }
 
-  // updatePS(): void {
-  //   if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-  //     this.ps.update();
-  //   }
-  // }
-
-  // isMac(): boolean {
-  //   let bool = false;
-  //   if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-  //     bool = true;
-  //   }
-  //   return bool;
-  // }
 }

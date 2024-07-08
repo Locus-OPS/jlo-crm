@@ -27,7 +27,6 @@
               "src/styles.scss",
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/assets/scss/material-dashboard.scss",
-              "src/assets/css/demo.css",
               "src/assets/css/custom-theme.scss",
               "node_modules/ngx-spinner/animations/ball-pulse-sync.css",
               "src/assets/css/jlo-crm.scss"
@@ -38,8 +37,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js",
-              "node_modules/bootstrap-notify/bootstrap-notify.js"
+              "node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

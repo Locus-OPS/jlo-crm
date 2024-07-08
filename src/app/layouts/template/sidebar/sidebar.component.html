@@ -45,7 +45,6 @@
           [attr.aria-expanded]="this.router.url.startsWith(menuitem.link)"
           href="#{{ menuitem.collapse }}"
           *ngIf="menuitem.type === 'sub'"
-          (click)="updatePS()"
           class="nav-link"
         >
           <i class="material-icons">{{ menuitem.icon }}</i>
