@@ -8,14 +8,11 @@ import { TabManageService } from '../../admin/tab-manage.service';
 import { Profile } from 'src/app/model/profile.model';
 import { ApiService } from 'src/app/services/api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
-import Utils from 'src/app/shared/utils';
-import { CustomerService } from 'src/app/pages/customer/customer.service';
-import ConsultingUtils from 'src/app/shared/consultingStore';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalConsultingComponent } from 'src/app/pages/common/modal-consulting/modal-consulting.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { filter, tap } from 'rxjs/operators';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { ConsultingInfoComponent } from '../consulting-info/consulting-info.component';
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -30,7 +27,9 @@ export interface NavTitle {
 
 @Component({
   selector: 'app-navbar-cmp',
-  templateUrl: 'navbar.component.html'
+  templateUrl: 'navbar.component.html',
+  standalone: true,
+  imports: [SharedModule, ConsultingInfoComponent]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 

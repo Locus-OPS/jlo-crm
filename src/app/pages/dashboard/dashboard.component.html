@@ -10,92 +10,89 @@
             <h4 class="card-title">{{ 'My Task' | translate }}</h4>
           </div>
           <div class="card-body">
-
             <form [formGroup]="searchForm" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'mytask.viewby' | translate}}</mat-label>
+                  <mat-label>{{ 'mytask.viewby' | translate }}</mat-label>
                   <mat-select formControlName="viewBy" (selectionChange)="changeView($event)">
                     <mat-option *ngFor="let type of ViewByList" [value]="type.codeId">
-                      {{type.codeName}}
+                      {{ type.codeName }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
               <div class="row">
-
-                <div class="col-md-3" style="display:flex">
-                  <mat-card style="width:100%">
-                    <mat-card-title style="padding:10px;">New</mat-card-title>
+                <div class="col-md-3" style="display: flex">
+                  <mat-card style="width: 100%">
+                    <mat-card-title style="padding: 10px">New</mat-card-title>
                     <mat-card-content>
                       <div class="row">
-                        <div class="col-md-8" style="display:flex">
-                          <h4 class="card-title" style="font-weight: bold;">{{this.countNew}}</h4>
+                        <div class="col-md-8" style="display: flex">
+                          <h4 class="card-title" style="font-weight: bold">{{ this.countNew }}</h4>
                         </div>
-                        <div class="col-md-3" style="display:flex">
+                        <div class="col-md-3" style="display: flex">
                           <div class="card-icon">
-                            <i class="material-icons-dashboard" style="color: blueviolet;">assignment</i>
+                            <i class="material-icons-dashboard" style="color: blueviolet">assignment</i>
                           </div>
                         </div>
-                        <div class="col-md-1" style="display:flex"></div>
+                        <div class="col-md-1" style="display: flex"></div>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
 
-                <div class="col-md-3" style="display:flex">
-                  <mat-card style="width:100%">
-                    <mat-card-title style="padding:10px;">Working</mat-card-title>
+                <div class="col-md-3" style="display: flex">
+                  <mat-card style="width: 100%">
+                    <mat-card-title style="padding: 10px">Working</mat-card-title>
                     <mat-card-content>
                       <div class="row">
-                        <div class="col-md-8" style="display:flex">
-                          <h4 class="card-title" style="font-weight: bold;">{{this.countWorking}}</h4>
+                        <div class="col-md-8" style="display: flex">
+                          <h4 class="card-title" style="font-weight: bold">{{ this.countWorking }}</h4>
                         </div>
-                        <div class="col-md-3" style="display:flex">
+                        <div class="col-md-3" style="display: flex">
                           <div class="card-icon">
-                            <i class="material-icons-dashboard" style="color: lightskyblue ;">play_arrow</i>
+                            <i class="material-icons-dashboard" style="color: lightskyblue">play_arrow</i>
                           </div>
                         </div>
-                        <div class="col-md-1" style="display:flex"></div>
+                        <div class="col-md-1" style="display: flex"></div>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
 
-                <div class="col-md-3" style="display:flex">
-                  <mat-card style="width:100%">
-                    <mat-card-title style="padding:10px;">Escalated</mat-card-title>
+                <div class="col-md-3" style="display: flex">
+                  <mat-card style="width: 100%">
+                    <mat-card-title style="padding: 10px">Escalated</mat-card-title>
                     <mat-card-content>
                       <div class="row">
-                        <div class="col-md-8" style="display:flex">
-                          <h4 class="card-title" style="font-weight: bold;">{{this.countEscalated}}</h4>
+                        <div class="col-md-8" style="display: flex">
+                          <h4 class="card-title" style="font-weight: bold">{{ this.countEscalated }}</h4>
                         </div>
-                        <div class="col-md-3" style="display:flex">
+                        <div class="col-md-3" style="display: flex">
                           <div class="card-icon">
-                            <i class="material-icons-dashboard" style="color: gold;">assignment_add</i>
+                            <i class="material-icons-dashboard" style="color: gold">assignment_add</i>
                           </div>
                         </div>
-                        <div class="col-md-1" style="display:flex"></div>
+                        <div class="col-md-1" style="display: flex"></div>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
 
-
-                <div class="col-md-3" style="display:flex">
-                  <mat-card style="width:100%">
-                    <mat-card-title style="padding:10px;">Closed</mat-card-title>
+                <div class="col-md-3" style="display: flex">
+                  <mat-card style="width: 100%">
+                    <mat-card-title style="padding: 10px">Closed</mat-card-title>
                     <mat-card-content>
                       <div class="row">
-                        <div class="col-md-8" style="display:flex">
-                          <h4 class="card-title" style="font-weight: bold;">{{this.countClosed}}</h4>
+                        <div class="col-md-8" style="display: flex">
+                          <h4 class="card-title" style="font-weight: bold">{{ this.countClosed }}</h4>
                         </div>
-                        <div class="col-md-3" style="display:flex;">
-                          <div class="card-icon" style="padding-right: 10px;">
-                            <i class="material-icons-dashboard" style="color: green;">assignment_turned_in</i>
+                        <div class="col-md-3" style="display: flex">
+                          <div class="card-icon" style="padding-right: 10px">
+                            <i class="material-icons-dashboard" style="color: green">assignment_turned_in</i>
                           </div>
                         </div>
-                        <div class="col-md-1" style="display:flex"></div>
+                        <div class="col-md-1" style="display: flex"></div>
                       </div>
                     </mat-card-content>
                   </mat-card>
@@ -106,40 +103,53 @@
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <mat-card class="chart-card">
-                  <mat-card-title class="chart-title">{{'dashboard.chartbar.text'|translate }}</mat-card-title>
+                  <mat-card-title class="chart-title">{{ 'dashboard.chartbar.text' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <!-- <ngx-charts-bar-horizontal class="chart-card" [results]="summaryCaseChannelData" [animations]="true"
                       [xAxis]="true" [yAxis]="true" [xScaleMax]="10" [legend]="showLegend"
                       [legendTitle]="'ช่องทาง'"></ngx-charts-bar-horizontal> -->
 
-                    <ngx-charts-bar-horizontal class="chart-card" [view]="view" [scheme]="colorScheme"
-                      [animations]="true" [results]="summaryCaseChannelData" [gradient]="gradient" [xAxis]="showXAxis"
-                      [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
-                      [showYAxisLabel]="showYAxisLabel" [legendTitle]="yAxisLabel" [xAxisLabel]="xAxisLabel"
-                      [yAxisLabel]="yAxisLabel">
+                    <ngx-charts-bar-horizontal
+                      class="chart-card"
+                      [view]="view"
+                      [scheme]="colorScheme"
+                      [animations]="true"
+                      [results]="summaryCaseChannelData"
+                      [gradient]="gradient"
+                      [xAxis]="showXAxis"
+                      [yAxis]="showYAxis"
+                      [legend]="showLegend"
+                      [showXAxisLabel]="showXAxisLabel"
+                      [showYAxisLabel]="showYAxisLabel"
+                      [legendTitle]="yAxisLabel"
+                      [xAxisLabel]="xAxisLabel"
+                      [yAxisLabel]="yAxisLabel"
+                    >
                     </ngx-charts-bar-horizontal>
                   </mat-card-content>
-
-
-
                 </mat-card>
               </div>
 
-
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <mat-card class="chart-card">
-                  <mat-card-title class="chart-title">{{'dashboard.piechart.text'|translate }}</mat-card-title>
+                  <mat-card-title class="chart-title">{{ 'dashboard.piechart.text' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <!-- <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [animations]="true"
                       [labels]="true" [maxLabelLength]="20"></ngx-charts-pie-chart> -->
 
-                    <ngx-charts-pie-chart class="chart-card" [view]="viewPie" [scheme]="colorSchemePie"
-                      [results]="summaryCaseTypeData" [animations]="true" [legend]="showLegend" [labels]="showLabels"
-                      [doughnut]="doughnut" [maxLabelLength]="20" [gradient]="gradient"
-                      [legendTitle]="yAxisLabelPie"></ngx-charts-pie-chart>
-
-
-
+                    <ngx-charts-pie-chart
+                      class="chart-card"
+                      [view]="viewPie"
+                      [scheme]="colorSchemePie"
+                      [results]="summaryCaseTypeData"
+                      [animations]="true"
+                      [legend]="showLegend"
+                      [labels]="showLabels"
+                      [doughnut]="doughnut"
+                      [maxLabelLength]="20"
+                      [gradient]="gradient"
+                      [legendTitle]="yAxisLabelPie"
+                    ></ngx-charts-pie-chart>
                   </mat-card-content>
                 </mat-card>
               </div>
@@ -167,17 +177,23 @@
                   <div class="card-body">
                     <form [formGroup]="searchFormCase" (ngSubmit)="searchCase()" novalidate>
                       <div class="material-datatables table-responsive">
-
-                        <table mat-table [dataSource]="dataSourceCase" class="mat-elevation-z8 table-responsive"
-                          (matSortChange)="tableControlCase.onSort($event)" matSort matSortDirection="asc"
-                          matSortDisableClear>
+                        <table
+                          mat-table
+                          [dataSource]="dataSourceCase"
+                          class="mat-elevation-z8 table-responsive"
+                          (matSortChange)="tableControlCase.onSort($event)"
+                          matSort
+                          matSortDirection="asc"
+                          matSortDisableClear
+                        >
                           <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef></th>
                             <td mat-cell *matCellDef="let element">
-
-                              <button class="btn btn-primary btn-round btn-fab mat-raised-button"
-                                (click)="onCaseEdit(element); $event.stopPropagation();"
-                                [routerLink]="['/casedetails']">
+                              <button
+                                class="btn btn-primary btn-round btn-fab mat-raised-button"
+                                (click)="onCaseEdit(element); $event.stopPropagation()"
+                                [routerLink]="['/casedetails']"
+                              >
                                 <span class="mat-button-wrapper">
                                   <i class="material-icons">mode_edit</i>
                                 </span>
@@ -187,48 +203,54 @@
                                 (click)="onCaseEdit(element); $event.stopPropagation()" [routerLink]="['/casedetails']">
                                 View Case Detail
                               </button> -->
-
                             </td>
                           </ng-container>
                           <!-- displayedColumns -->
                           <ng-container matColumnDef="caseNumber">
                             <th mat-header-cell *matHeaderCellDef>{{ 'case.number' | translate }}</th>
-                            <td mat-cell *matCellDef="let element"> {{element.caseNumber}} </td>
+                            <td mat-cell *matCellDef="let element">{{ element.caseNumber }}</td>
                           </ng-container>
                           <ng-container matColumnDef="typeName">
                             <th mat-header-cell *matHeaderCellDef>{{ 'case.type' | translate }}</th>
-                            <td mat-cell *matCellDef="let element"> {{element.typeName}} </td>
+                            <td mat-cell *matCellDef="let element">{{ element.typeName }}</td>
                           </ng-container>
                           <ng-container matColumnDef="fullName">
-                            <th mat-header-cell *matHeaderCellDef> {{'member.firstName' | translate}} </th>
+                            <th mat-header-cell *matHeaderCellDef>{{ 'member.firstName' | translate }}</th>
                             <td mat-cell *matCellDef="let element">
-                              {{element.businessName ? element.businessName:(element.firstName+' '+element.lastName)}}
+                              {{ element.businessName ? element.businessName : element.firstName + ' ' + element.lastName }}
                             </td>
                           </ng-container>
                           <ng-container matColumnDef="subTypeName">
                             <th mat-header-cell *matHeaderCellDef>{{ 'case.subType' | translate }}</th>
-                            <td mat-cell *matCellDef="let element"> {{element.subTypeName}} </td>
+                            <td mat-cell *matCellDef="let element">{{ element.subTypeName }}</td>
                           </ng-container>
                           <ng-container matColumnDef="priorityName">
                             <th mat-header-cell *matHeaderCellDef>{{ 'case.priority' | translate }}</th>
-                            <td mat-cell *matCellDef="let element"> {{element.priorityName}} </td>
+                            <td mat-cell *matCellDef="let element">{{ element.priorityName }}</td>
                           </ng-container>
 
                           <tr mat-header-row *matHeaderRowDef="displayedColumnsCase; sticky: true"></tr>
-                          <tr mat-row *matRowDef="let row; columns: displayedColumnsCase;" (click)="onSelectRow(row)"
-                            [ngClass]="{ 'selected-row': selectedRow == row }">
-                          </tr>
+                          <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumnsCase"
+                            (click)="onSelectRow(row)"
+                            [ngClass]="{ 'selected-row': selectedRow == row }"
+                          ></tr>
                         </table>
                       </div>
-                      <mat-paginator class="mat-paginator-sticky" (page)="tableControlCase.onPage($event)"
-                        [length]="tableControlCase.total" [pageSize]="tableControlCase.pageSize"
-                        [pageSizeOptions]="tableControlCase.pageSizeOptions" showFirstLastButtons>
+                      <mat-paginator
+                        class="mat-paginator-sticky"
+                        (page)="tableControlCase.onPage($event)"
+                        [length]="tableControlCase.total"
+                        [pageSize]="tableControlCase.pageSize"
+                        [pageSizeOptions]="tableControlCase.pageSizeOptions"
+                        showFirstLastButtons
+                      >
                       </mat-paginator>
                     </form>
                   </div>
                 </div>
               </div>
-
             </div>
 
             <div class="row">
@@ -244,9 +266,15 @@
                   <div class="card-body">
                     <form [formGroup]="searchFormAct" novalidate>
                       <div class="material-datatables table-responsive">
-                        <table mat-table [dataSource]="dataSourceAct" class="mat-elevation-z8"
-                          (matSortChange)="tableControlAct.onSort($event)" matSort matSortDirection="asc"
-                          matSortDisableClear>
+                        <table
+                          mat-table
+                          [dataSource]="dataSourceAct"
+                          class="mat-elevation-z8"
+                          (matSortChange)="tableControlAct.onSort($event)"
+                          matSort
+                          matSortDirection="asc"
+                          matSortDisableClear
+                        >
                           <ng-container matColumnDef="action" stickyEnd>
                             <th mat-header-cell *matHeaderCellDef></th>
 
@@ -258,17 +286,16 @@
                                 </span>
                               </button> -->
 
-                              <button class="btn btn-primary btn-round btn-fab mat-raised-button"
-                                (click)="onCaseEdit(element); $event.stopPropagation();"
-                                [routerLink]="['/casedetails']">
+                              <button
+                                class="btn btn-primary btn-round btn-fab mat-raised-button"
+                                (click)="onCaseEdit(element); $event.stopPropagation()"
+                                [routerLink]="['/casedetails']"
+                              >
                                 <span class="mat-button-wrapper">
                                   <i class="material-icons">mode_edit</i>
                                 </span>
                               </button>
-
                             </td>
-
-
                           </ng-container>
 
                           <ng-container matColumnDef="activityNumber" sticky>
@@ -302,24 +329,29 @@
 
                           <tr mat-header-row *matHeaderRowDef="displayedColumnsAct; sticky: true"></tr>
 
-                          <tr mat-row *matRowDef="let row; columns: displayedColumnsAct" (click)="onSelectRowAct(row)"
-                            [ngClass]="{ 'selected-row': selectedRowAct == row }"></tr>
+                          <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumnsAct"
+                            (click)="onSelectRowAct(row)"
+                            [ngClass]="{ 'selected-row': selectedRowAct == row }"
+                          ></tr>
                         </table>
                       </div>
-                      <mat-paginator class="mat-paginator-sticky" (page)="tableControlAct.onPage($event)"
-                        [length]="tableControlAct.total" [pageSize]="tableControlAct.pageSize"
-                        [pageSizeOptions]="tableControlAct.pageSizeOptions" showFirstLastButtons>
+                      <mat-paginator
+                        class="mat-paginator-sticky"
+                        (page)="tableControlAct.onPage($event)"
+                        [length]="tableControlAct.total"
+                        [pageSize]="tableControlAct.pageSize"
+                        [pageSizeOptions]="tableControlAct.pageSizeOptions"
+                        showFirstLastButtons
+                      >
                       </mat-paginator>
-
                     </form>
-
-
                   </div>
                 </div>
               </div>
             </div>
             <!-- End row Activity -->
-
           </div>
         </div>
       </div>
