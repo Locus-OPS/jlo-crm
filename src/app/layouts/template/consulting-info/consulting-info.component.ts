@@ -14,12 +14,14 @@ import { ConsultingInfoService } from './consulting-info.service';
 import { ConsultingModel } from 'src/app/pages/consulting/consulting.model';
 import { ModalConsultingService } from 'src/app/pages/common/modal-consulting/modal-consulting.service';
 import { BehaviorSubject } from 'rxjs';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-consulting-info',
-  standalone: false,
   templateUrl: './consulting-info.component.html',
-  styleUrl: './consulting-info.component.scss'
+  styleUrl: './consulting-info.component.scss',
+  standalone: true,
+  imports: [SharedModule]
 })
 export class ConsultingInfoComponent extends BaseComponent implements OnInit {
   consultingForm: FormGroup;
@@ -145,12 +147,12 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
           ConsultingUtils.removeConsultingData();
         }
 
-        //1.Set data from server into Session Storage 
+        //1.Set data from server into Session Storage
         this.constInfoModel = null;
         this.constInfoModel = result.data;
         ConsultingUtils.setConsultingData(this.constInfoModel);
-        //2. SetValue into form 
-        //  this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());    
+        //2. SetValue into form
+        //  this.constInfoModel = JSON.parse(ConsultingUtils.getConsultingData());
         this.setValueConsultingInfo(this.constInfoModel);
 
         //3.Open Consulting Dialog

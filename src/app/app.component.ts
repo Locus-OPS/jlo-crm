@@ -1,17 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
+import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 import { Globals } from "./shared/globals";
 import { filter, tap } from "rxjs/operators";
+import { SharedModule } from "./shared/module/shared.module";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
+  standalone: true,
+  imports: [SharedModule, NgxSpinnerModule]
 })
 export class AppComponent implements OnInit {
   private _router: Subscription;
 
-  constructor(private router: Router, private globals: Globals) {}
+  constructor(private router: Router, private globals: Globals) { }
 
   async ngOnInit() {
     await this.globals.init().then((result) => {

@@ -1,11 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { SoftphoneService } from "./softphone/softphone.service";
 import { TaskbarService } from "./taskbar.service";
+import { SharedModule } from "src/app/shared/module/shared.module";
+import { SoftphoneComponent } from "./softphone/softphone.component";
 
 @Component({
   selector: "app-taskbar-cmp",
   templateUrl: "./taskbar.component.html",
   styleUrls: ["./taskbar.component.scss"],
+  standalone: true,
+  imports: [SharedModule, SoftphoneComponent]
 })
 export class TaskbarComponent implements OnInit {
 

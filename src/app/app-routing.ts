@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthGuard } from './guard/auth.guard';
@@ -103,11 +102,4 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  declarations: [],
-  imports: [
-    RouterModule.forRoot(routes, {})
-  ],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+export default routes;

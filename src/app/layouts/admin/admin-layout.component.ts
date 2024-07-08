@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Injector, Injectable, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart, ActivatedRoute, Params, RouteConfigLoadEnd } from '@angular/router';
-import { NavItem } from '../../md/md.module';
+import { Component, OnInit, ViewChild, AfterViewInit, Injector, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Location, PopStateEvent } from '@angular/common';
 import { NavbarComponent } from '../../layouts/template/navbar/navbar.component';
@@ -9,17 +8,22 @@ import { filter, tap } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
 import { MatTabGroup } from '@angular/material/tabs';
-import { ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
+import { KeyboardShortcutsModule, ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { TaskbarComponent } from '../template/taskbar/taskbar.component';
+import { SidebarComponent } from '../template/sidebar/sidebar.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [SharedModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  public navItems: NavItem[];
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
@@ -51,6 +55,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private injector: Injector,
     private globals: Globals,
     private tabManageService: TabManageService,
+    private spinner: NgxSpinnerService,
     location: Location
   ) {
     this.location = location;
@@ -70,7 +75,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
     const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
 
@@ -148,7 +153,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.tabsComponents = tabs.slice();
     });
 
-    this.loadTab();
+    await this.loadTab();
+    this.initialCurrentTab();
   }
 
   getTabs() {
@@ -162,15 +168,15 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tabsComponentSubscription.unsubscribe();
   }
 
-  loadTab() {
+  async loadTab() {
     const keepTabs = this.tabManageService.getTabs();
-    if (keepTabs && keepTabs.length > 0) {
+    if (keepTabs && keepTabs.length > 1) {
+      this.spinner.show("initialTab");
       this.initialCount = keepTabs.length;
-      keepTabs.forEach(tab => {
-        setTimeout(() => {
-          this.navigate(tab, true);
-        }, 10);
-      });
+      for (let i = 0; i < keepTabs.length; i++) {
+        await this.navigate(keepTabs[i], true);
+      };
+      this.spinner.hide("initialTab");
     }
   }
 
@@ -250,14 +256,14 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   navigate(url: string, skipLocationChange: boolean) {
     if (url.indexOf(';') !== -1) {
-      this.router.navigate(
+      return this.router.navigate(
         [
           url.substring(0, url.indexOf(';')),
           this.mapRequestParamToObject(url.substring(url.indexOf(';') + 1))
         ], { skipLocationChange: skipLocationChange }
       );
     } else {
-      this.router.navigate([url], { skipLocationChange: skipLocationChange });
+      return this.router.navigate([url], { skipLocationChange: skipLocationChange });
     }
   }
 

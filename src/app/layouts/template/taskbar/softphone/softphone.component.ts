@@ -7,11 +7,14 @@ import { CustomerService } from "src/app/pages/customer/customer.service";
 import { ConsultingInfoService } from "../../consulting-info/consulting-info.service";
 import { MatDialog } from "@angular/material/dialog";
 import { TaskbarService } from "../taskbar.service";
+import { SharedModule } from "src/app/shared/module/shared.module";
 
 @Component({
   selector: "app-softphone-cmp",
   templateUrl: "./softphone.component.html",
   styleUrls: ["./softphone.component.scss"],
+  standalone: true,
+  imports: [SharedModule]
 })
 export class SoftphoneComponent implements OnInit {
   @Input()

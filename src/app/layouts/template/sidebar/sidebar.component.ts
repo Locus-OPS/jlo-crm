@@ -6,14 +6,16 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { versions } from 'src/environments/versions';
 import { RouteInfo } from 'src/app/model/route.model';
-import TokenUtils from 'src/app/shared/token-utils';
 import { TabManageService } from '../../admin/tab-manage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
   selector: 'app-sidebar-cmp',
   templateUrl: 'sidebar.component.html',
   styleUrls: ["./sidebar.component.scss"],
+  standalone: true,
+  imports: [SharedModule]
 })
 
 export class SidebarComponent implements OnInit {
