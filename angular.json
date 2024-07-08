@@ -22,13 +22,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
-              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
@@ -37,9 +33,7 @@
               "src/assets/css/jlo-crm.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                ""
-              ]
+              "includePaths": [""]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
@@ -165,13 +159,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         },

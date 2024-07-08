@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import PerfectScrollbar from 'perfect-scrollbar';
 import { Profile } from 'src/app/model/profile.model';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -9,13 +8,14 @@ import { RouteInfo } from 'src/app/model/route.model';
 import { TabManageService } from '../../admin/tab-manage.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/module/shared.module';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @Component({
   selector: 'app-sidebar-cmp',
   templateUrl: 'sidebar.component.html',
   styleUrls: ["./sidebar.component.scss"],
   standalone: true,
-  imports: [SharedModule]
+  imports: [SharedModule, NgScrollbarModule]
 })
 
 export class SidebarComponent implements OnInit {
@@ -47,10 +47,10 @@ export class SidebarComponent implements OnInit {
     this.REVISION = versions.revision;
 
     this.loadProfile();
-    if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-      this.ps = new PerfectScrollbar(elemSidebar);
-    }
+    // if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+    //   const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
+    //   this.ps = new PerfectScrollbar(elemSidebar);
+    // }
   }
 
   loadProfile() {
@@ -68,17 +68,17 @@ export class SidebarComponent implements OnInit {
     }, 1000);
   }
 
-  updatePS(): void {
-    if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      this.ps.update();
-    }
-  }
+  // updatePS(): void {
+  //   if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+  //     this.ps.update();
+  //   }
+  // }
 
-  isMac(): boolean {
-    let bool = false;
-    if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-      bool = true;
-    }
-    return bool;
-  }
+  // isMac(): boolean {
+  //   let bool = false;
+  //   if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
+  //     bool = true;
+  //   }
+  //   return bool;
+  // }
 }

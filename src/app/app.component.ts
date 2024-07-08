@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
 import { Globals } from "./shared/globals";
 import { filter, tap } from "rxjs/operators";
 import { SharedModule } from "./shared/module/shared.module";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-root",

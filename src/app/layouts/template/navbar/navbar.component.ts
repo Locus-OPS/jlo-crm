@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Directive, Renderer2, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from 'src/app/shared/globals';
@@ -13,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { filter, tap } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ConsultingInfoComponent } from '../consulting-info/consulting-info.component';
+import { Subscription } from 'rxjs';
 
 const misc: any = {
   navbar_menu_visible: 0,

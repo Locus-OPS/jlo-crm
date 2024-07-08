@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 

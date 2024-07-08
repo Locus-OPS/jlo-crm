@@ -90,7 +90,7 @@
       }
     }
 
-    > .nav,
+    .nav,
     .user .user-info {
       [data-toggle='collapse'] ~ div > ul > li > a {
         span {
@@ -577,10 +577,10 @@
       }
 
       .sidebar-wrapper {
-        > .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
+        .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
         .user .user-info [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
         .user .user-info > a > span,
-        > .nav li > a p {
+        .nav li > a p {
           @include transform-translate-x(-25px);
           opacity: 0;
         }
@@ -600,8 +600,8 @@
       .sidebar-wrapper {
         width: 260px;
 
-        > .nav li > a p,
-        > .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
+        .nav li > a p,
+        .nav [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
         .user .user-info [data-toggle='collapse'] ~ div > ul > li > a .sidebar-normal,
         .user .user-info > a > span {
           @include transform-translate-x(0px);

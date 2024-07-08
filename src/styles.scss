@@ -398,14 +398,14 @@ mat-form-field.mat-form-field-appearance-legacy {
   }
 }
 
-.sidebar-mini .sidebar:hover .sidebar-wrapper > ul.nav li.nav-item > a.nav-link p {
+.sidebar-mini .sidebar:hover .sidebar-wrapper ul.nav li.nav-item > a.nav-link p {
   transform: translateX(-13px);
 }
 
 .sidebar-wrapper {
   .collapse,
   .collapsing {
-    margin-left: 15px;
+    margin-left: 0px;
   }
   .user {
     .collapsing {

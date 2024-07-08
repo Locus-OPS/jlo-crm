@@ -48,11 +48,10 @@
     "moment": "^2.24.0",
     "ng-keyboard-shortcuts": "^13.0.8",
     "ng2-pdf-viewer": "^10.2.2",
+    "ngx-scrollbar": "^15.0.3",
     "ngx-spinner": "^17.0.0",
-    "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
-    "rxjs": "^6.5.2",
-    "rxjs-compat": "^6.5.2",
+    "rxjs": "^7.8.1",
     "sweetalert2": "^11.6.13",
     "tslib": "^2.0.0",
     "zone.js": "~0.14.7"

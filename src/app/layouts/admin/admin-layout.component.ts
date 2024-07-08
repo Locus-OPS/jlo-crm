@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Injector, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 import { Location, PopStateEvent } from '@angular/common';
 import { NavbarComponent } from '../../layouts/template/navbar/navbar.component';
-import PerfectScrollbar from 'perfect-scrollbar';
 import { filter, tap } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
@@ -13,6 +11,8 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { TaskbarComponent } from '../template/taskbar/taskbar.component';
 import { SidebarComponent } from '../template/sidebar/sidebar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @Component({
   selector: 'app-layout',
@@ -20,7 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./admin-layout.component.scss'],
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [SharedModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
+  imports: [SharedModule, NgScrollbarModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -62,7 +62,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.runOnRouteChange();
+    // this.runOnRouteChange();
 
     this.shortcuts.push(
       {
@@ -76,21 +76,21 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {
-    const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-    const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
+    // const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
+    // const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
 
-    this.location.subscribe((ev: PopStateEvent) => {
-      this.lastPoppedUrl = ev.url;
-    });
+    // this.location.subscribe((ev: PopStateEvent) => {
+    //   this.lastPoppedUrl = ev.url;
+    // });
 
-    const html = document.getElementsByTagName('html')[0];
-    if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      let ps = new PerfectScrollbar(elemMainPanel);
-      ps = new PerfectScrollbar(elemSidebar);
-      html.classList.add('perfect-scrollbar-on');
-    } else {
-      html.classList.add('perfect-scrollbar-off');
-    }
+    // const html = document.getElementsByTagName('html')[0];
+    // if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+    //   let ps = new PerfectScrollbar(elemMainPanel);
+    //   ps = new PerfectScrollbar(elemSidebar);
+    //   html.classList.add('perfect-scrollbar-on');
+    // } else {
+    //   html.classList.add('perfect-scrollbar-off');
+    // }
 
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
@@ -298,21 +298,21 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  runOnRouteChange(): void {
-    if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-      const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-      const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-      let ps = new PerfectScrollbar(elemMainPanel);
-      ps = new PerfectScrollbar(elemSidebar);
-      ps.update();
-    }
-  }
+  // runOnRouteChange(): void {
+  //   if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+  //     const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
+  //     const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
+  //     let ps = new PerfectScrollbar(elemMainPanel);
+  //     ps = new PerfectScrollbar(elemSidebar);
+  //     ps.update();
+  //   }
+  // }
 
-  isMac(): boolean {
-    let bool = false;
-    if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-      bool = true;
-    }
-    return bool;
-  }
+  // isMac(): boolean {
+  //   let bool = false;
+  //   if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
+  //     bool = true;
+  //   }
+  //   return bool;
+  // }
 }

@@ -1,3 +1,9 @@
+@import 'src/assets/scss/core/variables.scss';
+
 .sidebar-wrapper {
   height: calc(100vh - 98px);
+}
+
+.sidebar-wrapper .nav {
+  margin-left: 5px;
 }

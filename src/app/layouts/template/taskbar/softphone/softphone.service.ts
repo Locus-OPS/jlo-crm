@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { Observable } from "rxjs-compat";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AgentStatus, Interaction, InteractionStatus } from "./softphone.model";
 
 @Injectable({
