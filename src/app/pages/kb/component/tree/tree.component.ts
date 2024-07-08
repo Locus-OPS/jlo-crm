@@ -14,7 +14,9 @@ import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/module/shared.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'kb-tree',
@@ -52,9 +54,11 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private api: ApiService,
     public router: Router,
-    public globals: Globals
+    public globals: Globals,
+    private library: FaIconLibrary
   ) {
     super(router, globals);
+    library.addIconPacks(far, fas);
     this.treeControl = new FlatTreeControl<FlatNode>(node => node.level, node => node.expandable);
     this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.children);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
