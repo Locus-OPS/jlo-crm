@@ -28,11 +28,6 @@ const routes: Routes = [
         loadComponent: () => import('./pages/customer/customer-detail/customer-detail.component').then(m => m.CustomerDetailComponent)
       },
       {
-        path: 'customer/member',
-        canActivate: [AuthGuard],
-        loadComponent: () => import('./pages/customer/member-detail/member-detail.component').then(m => m.MemberDetailComponent)
-      },
-      {
         path: 'case',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/case/case.component').then(m => m.CaseComponent)

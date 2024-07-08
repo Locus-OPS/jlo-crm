@@ -13,7 +13,6 @@ import { Globals } from 'src/app/shared/globals';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { CustomerService } from 'src/app/pages/customer/customer.service';
-import { MemberService } from 'src/app/pages/customer/member-detail/member.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalUserComponent } from '../../common/modal-user/modal-user.component';
 import { UserData } from '../../common/modal-user/modal-user'
@@ -85,7 +84,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     public globals: Globals,
     private route: ActivatedRoute,
     private customerService: CustomerService,
-    private memberService: MemberService,
     public dialog: MatDialog,
     private tabParam: TabParam,
     private appStore: AppStore,

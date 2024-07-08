@@ -17,7 +17,6 @@ import { CaseStore } from '../../case/case.store';
 import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { Dropdown } from 'src/app/model/dropdown.model';
-import { ContactHistoryComponent } from '../contact-history/contact-history.component';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
