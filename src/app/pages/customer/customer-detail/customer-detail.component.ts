@@ -51,11 +51,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
   newCaseSubscription: Subscription;
 
-  /* change log table */
-  chSelectedRow: ChangeLog;
-  changeLogDS: ChangeLog[];
-  changeLogColumn: string[] = ['changedBy', 'changedDetail', 'changedDate'];
-  changeLogTableControl: TableControl = new TableControl(() => { this.searchChangeLog() });
+
 
   createForm: FormGroup;
   // addressForm: UntypedFormGroup;
@@ -159,7 +155,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       registrationChannel: [''],
       registrationStore: [''],
       remark: [''],
-      programId: [''],
       pictureUrl: [''],
       createdByName: new UntypedFormControl({ value: '', disabled: true }),
       createdDate: new UntypedFormControl({ value: '', disabled: true }),
@@ -229,7 +224,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     this.createForm.controls['registrationChannel'].enable();
     this.createForm.controls['registrationStore'].enable();
     this.createForm.controls['remark'].enable();
-    //this.createForm.controls['programId'].enable();
     // }
     this.createForm.controls['createdByName'].disable();
     this.createForm.controls['createdDate'].disable();
@@ -456,7 +450,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
         Utils.setBirthDatePicker(this.createForm);
         this.createForm.patchValue({ 'previousCitizenId': this.createForm.value['citizenId'] });
         this.createForm.patchValue({ 'previousPassportNo': this.createForm.value['passportNo'] });
-        //  this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         this.setDisabled();
         Utils.alertSuccess({
           title: msgTitle,
@@ -562,19 +555,20 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
     }).then(result => {
       if (result.status) {
         this.createForm.patchValue(result.data);
-        //this.createForm.patchValue({ 'programId': result.data.programId.toString() });
         Utils.setBirthDatePicker(this.createForm);
         this.setDisabled();
         Utils.alertSuccess({
           title: msgTitle,
           text: msgText,
         });
+
       } else {
+
         Utils.alertError({
           text: 'Please, try again later',
         });
       }
-      //this.customerComp.search();
+
     }, error => {
       Utils.alertError({
         text: 'Please, try again later',
@@ -583,9 +577,6 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
 
-  searchChangeLog() {
-
-  }
 
   onChangeNationality(nationality) {
     if (nationality == this.THAI_NATIONALITY) {
