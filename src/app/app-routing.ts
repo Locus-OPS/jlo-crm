@@ -78,6 +78,17 @@ const routes: Routes = [
         loadComponent: () => import('./pages/system/business-unit/business-unit.component').then(m => m.BusinessUnitComponent)
       },
       {
+        path: 'system/sla',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/sla/sla.component').then(m => m.SlaComponent)
+      },
+      {
+        path: 'system/holiday',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/holiday/holiday.component').then(m => m.HolidayComponent)
+      },
+
+      {
         path: 'consulting/consultingList',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/consulting/consulting.component').then(m => m.ConsultingComponent)
