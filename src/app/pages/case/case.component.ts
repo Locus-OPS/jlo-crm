@@ -106,6 +106,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
       createdDate: [''],
       updatedBy: [''],
       updatedDate: [''],
+      dueDate: [''],
       openedDate: [''],
       closedDate: [''],
       customerId: [''],

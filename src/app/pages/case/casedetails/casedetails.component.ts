@@ -132,6 +132,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       createdDate: [''],
       updatedBy: [''],
       updatedDate: [''],
+      dueDate: [''],
       openedDate: [''],
       closedDate: [''],
       customerId: ['']

@@ -34,14 +34,16 @@
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.firstName' | translate }}</mat-label>
-                    <input matInput placeholder="{{ 'contact.firstName' | translate }}" type="text" required formControlName="firstName" />
+                    <input matInput placeholder="{{ 'contact.firstName' | translate }}" type="text" required
+                      formControlName="firstName" />
                     <mat-error *ngIf="contactForm.controls['firstName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.lastName' | translate }}</mat-label>
-                    <input matInput placeholder="{{ 'contact.lastName' | translate }}" type="text" required formControlName="lastName" />
+                    <input matInput placeholder="{{ 'contact.lastName' | translate }}" type="text" required
+                      formControlName="lastName" />
                     <mat-error *ngIf="contactForm.controls['lastName'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
@@ -61,14 +63,16 @@
                   <mat-form-field class="col-md-3">
                     <mat-icon matSuffix>phone</mat-icon>
                     <mat-label>{{ 'contact.phoneNo' | translate }}</mat-label>
-                    <input matInput type="text" placeholder="{{ 'contact.phoneNo' | translate }}" required formControlName="phoneNo" />
+                    <input matInput type="text" placeholder="{{ 'contact.phoneNo' | translate }}" required
+                      formControlName="phoneNo" />
                     <mat-error *ngIf="contactForm.controls['phoneNo'].hasError('required')">
                       {{ 'error.required' | translate }}
                     </mat-error>
                   </mat-form-field>
                   <mat-form-field class="col-md-3">
                     <mat-label>{{ 'contact.email' | translate }}</mat-label>
-                    <input matInput type="text" placeholder="{{ 'contact.email' | translate }}" formControlName="email" />
+                    <input matInput type="text" placeholder="{{ 'contact.email' | translate }}"
+                      formControlName="email" />
                   </mat-form-field>
                 </div>
                 <div class="pull-right">
@@ -165,48 +169,7 @@
             <h4 class="card-title">{{ 'case.detail' | translate }}</h4>
           </div>
           <div class="card-body">
-            <!-- <form [formGroup]="customerForm">
-                            <div class="row">
-                                <div class="col-md-7" *ngIf="customerForm.value.businessName == null">
-                                    <div class="row">
-                                        <mat-form-field class="col-md-2" disabled>
-                                            <mat-select placeholder="{{'member.title' | translate }}"
-                                                formControlName="title">
-                                                <mat-option>--</mat-option>
-                                                <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">
-                                                    {{ item.codeName }}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <mat-form-field class="col-md-5" disabled>
-                                            <input matInput placeholder="{{'member.firstName' | translate }}"
-                                                type="text" formControlName="firstName">
-                                        </mat-form-field>
-                                        <mat-form-field class="col-md-5" disabled>
-                                            <input matInput placeholder="{{'member.lastName' | translate }}" type="text"
-                                                formControlName="lastName">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="col-md-7" *ngIf="customerForm.value.businessName != null">
-                                    <div class="row">
-                                        <mat-form-field class="col-md-12" disabled>
-                                            <input matInput placeholder="{{'member.businessName' | translate }}"
-                                                type="text" formControlName="businessName">
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <mat-form-field class="col-md-2" disabled>
-                                    <mat-icon matSuffix>phone</mat-icon>
-                                    <input matInput type="text" placeholder="{{'member.phoneNo' | translate}}"
-                                        formControlName="phoneNo">
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3" disabled>
-                                    <input matInput type="text" placeholder="{{'member.email' | translate}}"
-                                        formControlName="email">
-                                </mat-form-field>
-                            </div>
-                        </form> -->
+
 
             <form [formGroup]="createForm" (ngSubmit)="onSave($event)">
               <div class="row">
@@ -214,18 +177,20 @@
                   <mat-label>{{ 'case.number' | translate }}</mat-label>
                   <input matInput type="text" formControlName="caseNumber" readonly />
                 </mat-form-field>
-                <mat-form-field class="col-md-3">
+                <mat-form-field class="col-md-6">
                   <mat-label>{{ 'case.subject' | translate }}</mat-label>
                   <input matInput type="text" formControlName="subject" />
                 </mat-form-field>
-              </div>
-              <div class="row">
-                <mat-form-field class="col-md-6">
-                  <mat-label>{{ 'case.description' | translate }}</mat-label>
-                  <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text" formControlName="detail">
-                  </textarea>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.status' | translate }}</mat-label>
+                  <mat-select formControlName="status">
+                    <mat-option *ngFor="let type of caseStatuslList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
+
               <div class="row">
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'case.type' | translate }}</mat-label>
@@ -252,16 +217,6 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{ 'case.status' | translate }}</mat-label>
-                  <mat-select formControlName="status">
-                    <mat-option *ngFor="let type of caseStatuslList" [value]="type.codeId">
-                      {{ type.codeName }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <div class="row">
-                <mat-form-field class="col-md-3">
                   <mat-label>{{ 'case.channel' | translate }}</mat-label>
                   <mat-select formControlName="channel">
                     <mat-option *ngFor="let type of caseChannelList" [value]="type.codeId">
@@ -269,6 +224,10 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
+
+
+              </div>
+              <div class="row">
                 <div class="col-md-3">
                   <div class="row">
                     <mat-form-field class="col-md-12">
@@ -279,6 +238,10 @@
                   </div>
                 </div>
                 <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.dueDate' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="dueDate" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
                   <mat-label>{{ 'case.openDate' | translate }}</mat-label>
                   <input matInput type="text" formControlName="openedDate" readonly />
                 </mat-form-field>
@@ -287,18 +250,25 @@
                   <input matInput type="text" formControlName="closedDate" readonly />
                 </mat-form-field>
               </div>
-              <app-created-by
-                [createdBy]="createForm.controls['createdBy'].value"
+              <div class="row">
+                <mat-form-field class="col-md-12">
+                  <mat-label>{{ 'case.description' | translate }}</mat-label>
+                  <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text"
+                    formControlName="detail">
+                  </textarea>
+                </mat-form-field>
+              </div>
+              <app-created-by [createdBy]="createForm.controls['createdBy'].value"
                 [createdDate]="createForm.controls['createdDate'].value"
                 [updatedBy]="createForm.controls['updatedBy'].value"
-                [updatedDate]="createForm.controls['updatedDate'].value"
-              >
+                [updatedDate]="createForm.controls['updatedDate'].value">
               </app-created-by>
               <div class="pull-right">
                 <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
                   {{ 'button.back' | translate }}
                 </button>
-                <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate }}</button>
+                <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate
+                  }}</button>
                 <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetForm()">
                   {{ 'button.clear' | translate }}
                 </button>
@@ -316,7 +286,8 @@
           </div>
           <div class="card-body">
             <div class="mat-app-background basic-container">
-              <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
+              <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false"
+                mat-align-tabs="start">
                 <mat-tab label="{{ 'case.activity.tab' | translate }}">
                   <tab-caseactivity-content></tab-caseactivity-content>
                 </mat-tab>
