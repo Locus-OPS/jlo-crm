@@ -78,6 +78,8 @@ export class SlaComponent extends BaseComponent implements OnInit {
       updatedDate: ['']
     });
 
+    this.search();
+
   }
 
 
