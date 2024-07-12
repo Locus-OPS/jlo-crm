@@ -41,6 +41,8 @@ export class CaseComponent extends BaseComponent implements OnInit {
   caseStatuslList: Dropdown[];
   titleNameList: Dropdown[];
 
+
+
   submitted = false;
 
   isUpdate = false;
@@ -67,6 +69,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
     ).then(result => {
       this.typeList = result.data['CASE_TYPE'];
       this.priorityList = result.data['CASE_PRIORITY'];
+
       this.caseChannelList = result.data['CASE_CHANNEL'];
       this.caseStatuslList = result.data['CASE_STATUS'];
       this.titleNameList = result.data['TITLE_NAME'];
@@ -205,6 +208,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
     const data = `CASE_SUBTYPE,${caseTypeId}`;
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.subTypeList = result.data; });
   }
+
 
   showOwner() {
     const dialogRef = this.dialog.open(ModalUserComponent, {

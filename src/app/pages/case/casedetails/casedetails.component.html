@@ -210,7 +210,7 @@
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'case.priority' | translate }}</mat-label>
-                  <mat-select formControlName="priority">
+                  <mat-select formControlName="priority" (ngModelChange)="getSlaIdByPriority($event)">
                     <mat-option *ngFor="let type of priorityList" [value]="type.codeId">
                       {{ type.codeName }}
                     </mat-option>
@@ -224,8 +224,6 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-
-
               </div>
               <div class="row">
                 <div class="col-md-3">

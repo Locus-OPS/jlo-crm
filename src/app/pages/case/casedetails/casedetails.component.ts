@@ -52,6 +52,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   caseChannelList: Dropdown[];
   caseStatuslList: Dropdown[];
   titleNameList: Dropdown[];
+  priorityListTemp: Dropdown[];
+
   custParam: Object = {};
   submitted = false;
   isReadOnly = false;
@@ -73,6 +75,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   caseDetailSubscription: Subscription;
 
   mode: string = '';
+  caseSlaId: string = '1';
 
   constructor(
     public api: ApiService,
@@ -82,8 +85,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private caseStore: CaseStore,
     public router: Router,
     public globals: Globals,
-    private route: ActivatedRoute,
-    private customerService: CustomerService,
     public dialog: MatDialog,
     private tabParam: TabParam,
     private appStore: AppStore,
@@ -92,17 +93,20 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   ) {
     super(router, globals);
-    api.getMultipleCodebookByCodeType(
-      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
-    ).then(result => {
-      this.typeList = result.data['CASE_TYPE'];
-      this.priorityList = result.data['CASE_PRIORITY'];
-      this.caseChannelList = result.data['CASE_CHANNEL'];
-      this.caseStatuslList = result.data['CASE_STATUS'];
-      this.titleNameList = result.data['TITLE_NAME'];
-      this.subTypeList = result.data['CASE_SUBTYPE'];
-      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
-    });
+    this.loadCodebook();
+
+    // api.getMultipleCodebookByCodeType(
+    //   { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
+    // ).then(result => {
+    //   this.typeList = result.data['CASE_TYPE'];
+    //   this.priorityList = result.data['CASE_PRIORITY'];
+    //   this.priorityListTemp = result.data['CASE_PRIORITY'];
+    //   this.caseChannelList = result.data['CASE_CHANNEL'];
+    //   this.caseStatuslList = result.data['CASE_STATUS'];
+    //   this.titleNameList = result.data['TITLE_NAME'];
+    //   this.subTypeList = result.data['CASE_SUBTYPE'];
+    //   this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
+    // });
 
   }
 
@@ -128,6 +132,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       status: ['', Validators.required],
       owner: ['', Validators.required],
       displayName: ['', Validators.required],
+      caseSlaId: [''],
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
@@ -238,24 +243,29 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     }
 
 
+    this.getSlaIdByPriority(this.createForm.value['priority']);
 
-    // alert("ConsultingUtils : "+ConsultingUtils.isConsulting());
   }
 
-  //  isCaseModeCreateUpdate(){
+  loadCodebook() {
 
-  //   const params = this.route.firstChild.snapshot.params;
-  //   if(params != undefined && params != null){
-  //       if(params.mode == 'create'){
-  //             return true;
-  //       }else{
-  //           return false;
-  //       }
-  //   }else{
-  //     return true;
-  //   }
+    this.api.getMultipleCodebookByCodeType(
+      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
+    ).then(result => {
+      this.typeList = result.data['CASE_TYPE'];
+      this.priorityList = result.data['CASE_PRIORITY'];
+      this.priorityListTemp = result.data['CASE_PRIORITY'];
+      this.caseChannelList = result.data['CASE_CHANNEL'];
+      this.caseStatuslList = result.data['CASE_STATUS'];
+      this.titleNameList = result.data['TITLE_NAME'];
+      this.subTypeList = result.data['CASE_SUBTYPE'];
+      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
+    });
+  }
 
-  //  }
+
+
+
 
   setConsultingCase() {
     if (ConsultingUtils.isConsulting()) {
@@ -269,11 +279,11 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
   updateFormValue(detail: Case) {
-    console.log("227 updateFormValue");
     console.log(detail);
     this.created = false;
     this.customerForm.patchValue(detail);
     this.createForm.patchValue(detail);
+
   }
 
   backClicked() {
@@ -295,6 +305,54 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.subTypeList = result.data; });
   }
 
+  loadCodebookPrioriry(priorityId: String) {
+
+    this.api.getMultipleCodebookByCodeType(
+      { data: ['CASE_PRIORITY'] }
+    ).then(result => {
+      this.priorityList = result.data['CASE_PRIORITY'];
+      this.priorityListTemp = result.data['CASE_PRIORITY'];
+
+      this.setPriorityForSlaID(priorityId);
+    });
+  }
+
+  setPriorityForSlaID(priorityId) {
+
+    this.priorityListTemp = this.priorityList;
+    console.log(this.priorityListTemp);
+
+    this.priorityListTemp = this.priorityListTemp.filter(vl => {
+      return vl.codeId == priorityId;
+    });
+
+    if (this.priorityListTemp.length > 0) {
+      this.caseSlaId = this.priorityListTemp[0].etc1;
+      this.createForm.patchValue({ caseSlaId: this.caseSlaId });
+    } else {
+      //Defualt 1
+      this.createForm.patchValue({ caseSlaId: this.caseSlaId });
+    }
+  }
+
+  getSlaIdByPriority(priorityId: String) {
+
+    if (this.priorityListTemp == undefined) {
+      this.loadCodebookPrioriry(priorityId);
+
+    } else {
+      this.setPriorityForSlaID(priorityId);
+
+    }
+
+
+
+
+
+
+
+  }
+
   resetForm() {
     console.log("resetForm ")
     this.createForm.reset();
@@ -304,10 +362,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     }
   }
 
-  onSave(e) {
+  onSave(event: Event) {
     this.submitted = true;
-    const msgTitle = this.created ? 'Created!' : 'Updated!';
-    const msgText = this.created ? 'Case has been created.!' : 'Case has been updated.';
 
     if (this.customerForm.invalid) {
       Utils.alertError({
@@ -357,7 +413,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
           text: 'Case has not been saved.',
         });
       }
-    }, error => {
+    }, () => {
       Utils.alertError({
         text: 'Please, try again later',
       });
@@ -391,7 +447,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         this.customerForm.patchValue(this.cusInfo);
         this.createForm.patchValue(this.cusInfo);
       }
-    }, error => {
+    }, () => {
       Utils.alertError({
         text: 'Please, try again later',
       });
@@ -507,7 +563,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       this.contactForm.markAllAsTouched();
       return;
     }
-    let data = this.createForm.getRawValue();
     // Keep in session storage
 
 
