@@ -87,7 +87,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/system/holiday/holiday.component').then(m => m.HolidayComponent)
       },
-
+      {
+        path: 'system/email-template',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/email-template/email-template.component').then(m => m.EmailTemplateComponent)
+      },
       {
         path: 'consulting/consultingList',
         canActivate: [AuthGuard],
