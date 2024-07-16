@@ -21,7 +21,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>{{'emil.templatename' | translate}}</mat-label>
+                                    <mat-label>{{'email.templatename' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="templateName" maxlength="200" />
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
@@ -122,14 +122,14 @@
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.templatename' | translate}}</mat-label>
-                                    <input matInput type="text" formControlName="templateName">
+                                    <input matInput type="text" formControlName="templateName" required>
                                     <mat-error *ngIf="createForm.controls['templateName'].hasError('required')">
                                         {{ 'error.required' | translate }}
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.status' | translate}}</mat-label>
-                                    <mat-select formControlName="statusCd">
+                                    <mat-select formControlName="statusCd" required>
                                         <mat-option *ngFor="let type of statusList" [value]="type.codeId">{{
                                             type.codeName
                                             }}</mat-option>
@@ -140,10 +140,11 @@
                                 </mat-form-field>
                             </div>
                             <div class="row">
-                                <mat-form-field class="col-md-3">
+                                <mat-form-field class="col-md-6">
                                     <mat-label>{{ 'document.file' | translate }}</mat-label>
-                                    <input type="file" hidden #fileUpload (change)="selectFile($event)" />
-                                    <input disabled formControlName="fileName" matInput type="text" readonly />
+                                    <input type="file" hidden #fileUpload (change)="selectFile($event)" required
+                                        accept="ftl/*" />
+                                    <input disabled formControlName="fileName" matInput type="text" readonly required />
                                     <button type="button" matSuffix mat-button (click)="fileUpload.click()"
                                         class="file-icon">
                                         <mat-icon>attachment</mat-icon>
@@ -152,14 +153,22 @@
                                         {{ 'error.required' | translate }}
                                     </mat-error>
                                 </mat-form-field>
-                                <mat-form-field class="col-md-9">
-                                    <mat-label>{{ 'case.description' | translate }}</mat-label>
-                                    <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
-                                        matAutosizeMaxRows="20" type="text" formControlName="detail">
-                                    </textarea>
-                                </mat-form-field>
 
+                                <mat-form-field class="col-md-6">
+                                    <mat-label>{{ 'email.description' | translate }}</mat-label>
+                                    <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
+                                        matAutosizeMaxRows="20" type="text" formControlName="description">
+                                    </textarea>
+                                </mat-form-field>{{downloadfileUrl}}
+                                <div class="col-md-12">
+                                    <div *ngIf="!fileUrl">
+                                        <a [href]="downloadfileUrl" [download]="fileName"
+                                            *ngIf="createForm.controls['attId'].value != null">DownloadFile</a>
+                                    </div>
+
+                                </div>
                             </div>
+                            <!-- {{createForm.value | json}} -->
                             <app-created-by [createdBy]="createForm.controls['createdBy'].value"
                                 [createdDate]="createForm.controls['createdDate'].value"
                                 [updatedBy]="createForm.controls['updatedBy'].value"

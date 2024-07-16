@@ -12,9 +12,12 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
-import { SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmailTemplateService } from './email-template.service';
 import Utils from 'src/app/shared/utils';
+import { EmailTemplateModel } from './email-template.model';
+import { HttpResponse } from '@angular/common/http';
+import { ApiResponse } from 'src/app/model/api-response.model';
 
 
 
@@ -58,13 +61,15 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
   fileType: string;
   fileTempUrl: string;
   fileUrl: SafeResourceUrl;
+  downloadfileUrl: SafeResourceUrl;
 
   constructor(
     public emailTemplateService: EmailTemplateService,
     private api: ApiService,
     private formBuilder: FormBuilder,
     public router: Router,
-    public globals: Globals
+    public globals: Globals,
+    public sanitizer: DomSanitizer,
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
@@ -89,12 +94,12 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       id: [''],
       templateName: ['', Validators.required],
       statusCd: ['', Validators.required],
-      attachmentId: [''],
+      attId: [''],
       module: [''],
       fileName: [''],
       filePath: [''],
       fileExtension: [''],
-      desp: [''],
+      description: [''],
 
       createdBy: [''],
       createdDate: [''],
@@ -130,10 +135,23 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
 
 
+  // onAttCreate() {
+
+  //   this.isUpdate = false;
+  //   this.selectedRow = {};
+  //   this.attCreateForm.reset();
+  //   this.downloadfileUrl = null;
+  //   this.fileUrl = null;
+
+  //   this.attCreateForm.patchValue({ caseNumber: this.caseNumber });
+
+
+  // }
 
   create() {
     this.selectedRow = {};
     this.createForm.reset();
+    this.downloadfileUrl = null;
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
@@ -165,34 +183,77 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onSelectRow(row) {
+  // onSelectRow(row) {
+  //   this.selectedRow = row;
+  //   this.createForm.patchValue(this.selectedRow);
+  // }
+
+  onSelectRow(row: EmailTemplateModel) {
+
     this.selectedRow = row;
-    this.createForm.patchValue(this.selectedRow);
+    this.createForm.patchValue({
+      ...this.selectedRow
+    });
+    this.fileName = this.createForm.controls['fileName'].value;
+    this.getAttachDisplay(this.createForm.controls['attId'].value);
   }
 
+  getAttachDisplay(attId: number) {
+    this.api.getAttachmentByAttId(attId).subscribe(res => {
+      var resFileURL = URL.createObjectURL(res);
+      console.log(res.type);
+      this.fileType = res.type;
+      console.log(resFileURL);
+      this.fileUrl = null;
+      this.downloadfileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(res));
+    });
+
+  }
+
+
+
   onSave() {
+
     if (this.createForm.invalid) {
       return;
     }
-    this.emailTemplateService.saveEmailTemplate({
-      data: {
-        ...this.createForm.value
+
+    const formdata: FormData = new FormData();
+    if (this.file) {
+      formdata.append('file', this.file);
+    }
+
+    const emailModel: EmailTemplateModel = {
+      id: this.createForm.controls['id'].value
+      , attId: this.createForm.controls['attId'].value
+      , templateName: this.createForm.controls['templateName'].value
+      , statusCd: this.createForm.controls['statusCd'].value
+      , module: this.createForm.controls['module'].value
+      , description: this.createForm.controls['description'].value
+    };
+
+    this.emailTemplateService.saveEmailTemplate(this.file, emailModel).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        if (event.status === 200) {
+          const response: ApiResponse<EmailTemplateModel> = <ApiResponse<EmailTemplateModel>>JSON.parse(<string>event.body);
+          Utils.alertSuccess({
+            text: 'Email Template has been saved.',
+          });
+
+          this.search();
+
+          this.createForm.patchValue({
+            ...response.data
+          });
+        } else {
+          Utils.alertError({
+            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+          });
+        }
       }
-    }).then(result => {
-      if (result.status) {
-        Utils.assign(this.selectedRow, result.data);
-        this.createForm.patchValue(result.data);
-        Utils.alertSuccess({
-          text: 'Email Template has been saved.',
-        });
-        this.search();
-      }
-    }, error => {
-      Utils.alertError({
-        text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-      });
     });
   }
+
 
   selectFile(event) {
     if (event.target.files && event.target.files[0]) {
