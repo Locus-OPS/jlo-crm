@@ -4,6 +4,7 @@ export interface Dropdown {
   codeName: string;
   parentType: string;
   parentId: string;
+  description: string;
   lang: string;
   seq: number;
   etc1: string;

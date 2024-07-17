@@ -1,5 +1,8 @@
 @import 'src/assets/scss/core/variables.scss';
-
+// @import '~quill/dist/quill.bubble.css';
+// @import 'node_modules/quill/dist/quill.bubble.css';
+// or
+// import '~quill/dist/quill.snow.css';
 /* You can add global styles to this file, and also import other style files */
 // @use '@angular/material' as mat;
 
@@ -12,6 +15,7 @@
 .mat-mdc-select-disabled.mat-mdc-select .mat-mdc-select-value-text span {
   color: #9e9e9e;
 }
+
 .mat-form-field-disabled .mat-input-element:disabled,
 .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
   color: rgba(0, 0, 0, 0.7);
@@ -21,6 +25,7 @@
 .cdk-overlay-pane.my-dialog {
   position: relative !important;
 }
+
 .close.mat-button {
   position: absolute;
   top: 0;
@@ -29,6 +34,7 @@
   line-height: 14px;
   min-width: auto;
 }
+
 /* End close button style in mat-dialog. */
 
 mat-select.select-prefix-currency {
@@ -69,6 +75,7 @@ mat-tab-body {
   color: white;
   opacity: 1;
 }
+
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header .mat-tab-labels .mat-tab-label {
   background: rgba(151, 165, 153, 0.5);
   border-top-right-radius: 5px;
@@ -77,9 +84,11 @@ mat-tab-body {
   opacity: 0.7;
   border-bottom: 0px;
 }
+
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header {
   border-bottom: 1px solid $brand-second;
 }
+
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header mat-ink-bar {
   display: none !important;
 }
@@ -91,12 +100,14 @@ mat-tab-body {
     .mat-form-field-flex::before {
       content: none;
     }
+
     mat-label,
     .mat-form-field-label span {
       font-size: 14px;
       color: gray;
       padding: 0px 4px !important;
     }
+
     input {
       font-size: 11px;
       color: gray;
@@ -116,6 +127,7 @@ mat-tab-body {
   color: inherit;
   font-size: 1.125em;
 }
+
 .cancel-reason-select-modal[aria-invalid='true'] {
   border-color: #f27474 !important;
   box-shadow: 0 0 2px #f27474 !important;
@@ -144,6 +156,7 @@ mat-tab-body {
 table th.text-center button.mat-sort-header-button {
   margin: 0 auto;
 }
+
 table th.text-center .mat-sort-header-container {
   display: inline-flex;
 }
@@ -167,6 +180,7 @@ mat-form-field .mat-form-field-infix .mat-form-field-label {
 .ql-editor strong {
   font-weight: bold;
 }
+
 .ql-editor p {
   padding-bottom: 10px !important;
 }
@@ -188,41 +202,55 @@ mat-tooltip-component::after {
   border-style: solid;
   border-color: gray transparent transparent transparent;
   animation: fadein 1s;
-  -moz-animation: fadein 1s; /* Firefox */
-  -webkit-animation: fadein 1s; /* Safari and Chrome */
-  -o-animation: fadein 1s; /* Opera */
+  -moz-animation: fadein 1s;
+  /* Firefox */
+  -webkit-animation: fadein 1s;
+  /* Safari and Chrome */
+  -o-animation: fadein 1s;
+  /* Opera */
 }
+
 @keyframes fadein {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 @-moz-keyframes fadein {
+
   /* Firefox */
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes fadein {
+
   /* Safari and Chrome */
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 @-o-keyframes fadein {
+
   /* Opera */
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -245,20 +273,25 @@ mat-form-field.mat-form-field-appearance-legacy {
       .mat-form-field-flex::before {
         background-color: white;
       }
+
       .mat-form-field-suffix .suffix-btn {
         background-color: #dddddd;
+
         &:hover {
           background-color: #cccccc;
         }
       }
     }
   }
+
   &.d-none {
     display: none !important;
   }
+
   .mat-form-field-flex {
     min-height: 46px;
   }
+
   .mat-form-field-flex::before {
     border: 1px solid #ccc;
     content: '';
@@ -268,6 +301,7 @@ mat-form-field.mat-form-field-appearance-legacy {
     margin-top: 20px;
     border-radius: 5px;
   }
+
   &.mat-form-field-disabled {
     .mat-form-field-flex::before {
       background: #e5e5e5; // rgba(0, 0, 0, 0.25);
@@ -275,6 +309,7 @@ mat-form-field.mat-form-field-appearance-legacy {
       border-style: dashed;
       border-color: rgba(0, 0, 0, 0.5);
     }
+
     .mat-form-field-wrapper .mat-icon-button {
       pointer-events: none;
     }
@@ -284,50 +319,60 @@ mat-form-field.mat-form-field-appearance-legacy {
       color: rgba(0, 0, 0, 0.25);
     }
   }
+
   &.mat-focused {
     .mat-form-field-flex::before {
       box-shadow: #ffcccc 0px 0px 2px 2px;
       border: 1px solid #ffcccc;
     }
   }
+
   &.mat-form-field-invalid {
     .mat-form-field-flex::before {
       background: rgba(255, 0, 0, 0.1);
       border: 1px solid #ffb1b1;
     }
   }
+
   input.mat-input-element {
     padding: 5px 10px;
     margin-bottom: 1px;
     margin-top: 2px;
     width: calc(100% - 20px);
   }
+
   textarea.mat-input-element {
     padding: 5px 10px;
     width: calc(100% - 20px);
     margin-top: 2px;
   }
+
   .mat-select {
     padding: 5px 10px;
     margin-top: 2px;
   }
+
   .mat-form-field-underline {
     display: none;
   }
+
   .mat-form-field-subscript-wrapper {
     margin-top: 0px;
+
     .mat-error,
     .mat-hint {
       height: 17px;
       // transform: translateY(-3px);
     }
   }
+
   .mat-form-field-label {
     top: 1.15em;
     font-weight: 600;
     color: #555 !important;
     padding-left: 5px;
   }
+
   .mat-select-trigger,
   .mat-option {
     font-size: 14px;
@@ -336,15 +381,18 @@ mat-form-field.mat-form-field-appearance-legacy {
   .mat-form-field-prefix {
     padding-left: 5px;
   }
+
   .mat-form-field-suffix {
     button.mat-icon-button {
       transform: translate(-4px, 5px);
       border-radius: 50%;
       background-color: transparent;
       padding: 13px;
+
       &:hover {
         background-color: #eee;
       }
+
       .mat-icon {
         transform: translate(-7px, -11px);
       }
@@ -354,14 +402,17 @@ mat-form-field.mat-form-field-appearance-legacy {
 
 .mat-dialog-container {
   mat-form-field.mat-form-field-appearance-legacy {
+
     input.mat-input-element,
     textarea.mat-input-element,
     .mat-select {
       padding: 5px 10px;
     }
+
     .mat-form-field-suffix {
       button.mat-icon-button {
         transform: translate(-4px, 8px);
+
         .mat-icon,
         .mat-datepicker-toggle-default-icon {
           transform: translate(-7px, -14px);
@@ -369,16 +420,20 @@ mat-form-field.mat-form-field-appearance-legacy {
       }
     }
   }
+
   & .card .card-body {
     mat-form-field.mat-form-field-appearance-legacy {
+
       input.mat-input-element,
       textarea.mat-input-element,
       .mat-select {
         padding: 5px 10px;
       }
+
       .mat-form-field-suffix {
         button.mat-icon-button {
           transform: translate(-4px, 5px);
+
           .mat-icon,
           .mat-datepicker-toggle-default-icon {
             transform: translate(-7px, -11px);
@@ -393,20 +448,23 @@ mat-form-field.mat-form-field-appearance-legacy {
   .mat-checkbox label.mat-checkbox-layout {
     transform: translateY(15px);
   }
+
   .mat-radio-group .mat-radio-button {
     transform: translateY(17px);
   }
 }
 
-.sidebar-mini .sidebar:hover .sidebar-wrapper ul.nav li.nav-item > a.nav-link p {
+.sidebar-mini .sidebar:hover .sidebar-wrapper ul.nav li.nav-item>a.nav-link p {
   transform: translateX(-13px);
 }
 
 .sidebar-wrapper {
+
   .collapse,
   .collapsing {
     margin-left: 0px;
   }
+
   .user {
     .collapsing {
       overflow: hidden !important;
@@ -415,57 +473,70 @@ mat-form-field.mat-form-field-appearance-legacy {
 
   .nav {
     margin-top: 1px;
+
     .nav-link p {
       transform: translateX(-13px);
       margin-right: -13px;
     }
+
     li.nav-item {
       i.material-icons {
         transform: translateX(-5px);
       }
+
       .jlo-menu-sub {
         margin-left: 16px;
         margin-right: 15px;
         padding-left: 2px;
         margin-top: 7px;
+
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
           border-radius: 3px;
         }
+
         a[data-toggle='collapse'] {
           position: absolute;
           padding: 0px;
           margin: 0px;
           cursor: pointer;
           margin-left: 2px;
+
           i {
             margin-right: 0px;
             transform: translateX(0px);
           }
+
           &:hover {
             background-color: rgb(255, 255, 255, 0.7);
             border-radius: 50%;
+
             i {
               color: #333;
             }
           }
+
           &[aria-expanded='false'] {
             i.material-icons.add {
               display: block;
             }
+
             i.material-icons.remove {
               display: none;
             }
           }
+
           &[aria-expanded='true'] {
             i.material-icons.add {
               display: none;
             }
+
             i.material-icons.remove {
               display: block;
             }
           }
         }
+
         a.menu-text {
           color: #fff;
           margin-left: 29px;
@@ -651,11 +722,11 @@ td .mat-icon[svgicon='circle-modified'] svg {
 
 /* IA */
 /* header  tab */
-.main-tab > mat-tab-header .mat-tab-label {
+.main-tab>mat-tab-header .mat-tab-label {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.main-tab > mat-tab-header .mat-tab-label {
+.main-tab>mat-tab-header .mat-tab-label {
   color: #000000 !important;
   opacity: 1;
 }
@@ -665,9 +736,11 @@ td .mat-icon[svgicon='circle-modified'] svg {
   .card .card-header h4.card-title {
     font-weight: bold;
   }
+
   .card h4.card-title {
     font-weight: bold;
   }
+
   .card .card-header-primary .card-icon,
   .card .card-header-primary .card-text,
   .card .card-header-primary:not(.card-header-icon):not(.card-header-text),
@@ -678,6 +751,7 @@ td .mat-icon[svgicon='circle-modified'] svg {
   }
 
   .card {
+
     h3.mt-0,
     .mat-tab-body-content h3 {
       margin-top: 0 !important;
@@ -692,6 +766,7 @@ td .mat-icon[svgicon='circle-modified'] svg {
     }
   }
 }
+
 /*
 .card [class*=card-header-] .card-icon, .card [class*=card-header-] .card-text {
     border-radius: 50%;
@@ -831,32 +906,40 @@ body {
 .mat-tab-body-wrapper,
 .mat-dialog-container {
   .material-datatables table {
+
     .mat-cell,
     .mat-footer-cell {
       color: rgba(0, 0, 0, 1);
     }
+
     .mat-header-cell {
       background-color: gray;
       color: white;
+
       .mat-sort-header-arrow {
         color: #ffffff;
       }
+
       .mat-sort-header-sorted {
         color: #ffeb3b;
       }
     }
   }
 }
+
 .select-inner {
   .mat-form-field-wrapper {
     .mat-form-field-flex {
       background-color: transparent;
     }
+
     .mat-form-field-underline {
       transform: none;
+
       &::before {
         background-color: transparent;
       }
+
       .mat-form-field-ripple {
         opacity: 0;
         background-color: transparent;
@@ -864,12 +947,14 @@ body {
     }
   }
 }
+
 // info pop
 i.label-info {
   overflow: visible;
   position: absolute;
   right: 2px;
   transform: translateY(-15px);
+
   .material-icons {
     font-size: 16px;
     color: rgba(128, 128, 128, 0.555);
@@ -899,33 +984,41 @@ i.label-info {
   max-height: 400px;
 }
 
-mat-card .mat-list-base .mat-list-item .mat-list-text > *,
-mat-card .mat-list-base .mat-list-option .mat-list-text > * {
+mat-card .mat-list-base .mat-list-item .mat-list-text>*,
+mat-card .mat-list-base .mat-list-option .mat-list-text>* {
   font-size: 14px !important;
 }
+
 tr.mat-header-row {
   background: #808080;
 }
+
 .mat-badge.secondary .mat-badge-content {
   background: #999999;
 }
+
 .mat-badge.warning .mat-badge-content {
   background: #ffc107;
 }
+
 .mat-badge.success .mat-badge-content {
   background: green;
 }
+
 .mat-badge.danger .mat-badge-content {
   background: #bf0000;
 }
+
 mat-tab-body mat-tab-body .mat-form-field-appearance-legacy .mat-form-field-infix {
   padding-bottom: 5px;
   padding-top: 7px;
   font-size: 14px;
 }
+
 .data-not-found {
   font-size: 14px;
 }
+
 .material-datatables td.mat-cell.td-break-space {
   white-space: break-spaces !important;
   min-width: 200px;
@@ -934,6 +1027,7 @@ mat-tab-body mat-tab-body .mat-form-field-appearance-legacy .mat-form-field-infi
 li.close-all button .mat-button-focus-overlay {
   display: none;
 }
+
 .blink {
   animation: blinker 1s linear infinite;
 }
@@ -943,6 +1037,7 @@ li.close-all button .mat-button-focus-overlay {
     opacity: 0;
   }
 }
+
 .material-icons.icon-verified {
   color: #ffeb3b !important;
 }
@@ -958,22 +1053,27 @@ li.close-all button .mat-button-focus-overlay {
 .checkbox-list {
   .mat-checkbox-layout {
     white-space: normal;
+
     .mat-checkbox-inner-container {
       margin-top: 4px;
     }
+
     .mat-checkbox-label {
       color: #555;
     }
   }
 }
+
 .radio-list {
   .mat-radio-label-content {
     white-space: normal;
+
     .mat-radio-container {
       margin-top: 4px;
     }
   }
 }
+
 .section-style .section-title {
   font-size: 14px;
 }

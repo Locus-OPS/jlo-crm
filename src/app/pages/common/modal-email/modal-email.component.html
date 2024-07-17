@@ -1,0 +1,103 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="card-title">{{title}}</h4>
+            </div>
+            <!-- <p style="font-size: 12px;">{{sendEmailForm.value | json}}</p> -->
+            <div class="col-md-12">
+
+                <form [formGroup]="sendEmailForm">
+                    <div class="row">
+                        <mat-form-field class="col-md-12">
+                            <mat-label>From : </mat-label>
+                            <input matInput type="text" formControlName="fromEmail" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-12">
+                            <mat-label>To : </mat-label>
+                            <input matInput type="text" formControlName="toEmail" required />
+                            <mat-error *ngIf="sendEmailForm.controls['toEmail'].hasError('required')">
+                                {{ 'error.required' | translate }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-12">
+                            <mat-label>Cc : </mat-label>
+                            <input matInput type="text" formControlName="ccEmail" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-12">
+                            <mat-label>Subject : </mat-label>
+                            <input matInput type="text" formControlName="subjectEmail" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <quill-editor formControlName="bodyEmail" format="html">
+                            </quill-editor>
+                            <!-- <quill-editor formControlName="bodyEmail">
+                            </quill-editor> -->
+                        </div>
+
+                    </div>
+                    <div class="row"><br /> </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                            <mat-label>Attached File : </mat-label>
+                            <mat-label *ngFor="let item of this.dataIn.emailData.fileNameList;let num = index">
+                                {{num}}.{{item}}
+                            </mat-label>
+                            <input matInput type="text" formControlName="fileName"  readonly/>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="material-datatables">
+                                <table mat-table [dataSource]="this.fileNameList" class="mat-elevation-z8"
+                                    (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="desc"
+                                    matSortDisableClear>
+                                    <ng-container matColumnDef="fileName">
+                                        <th mat-header-cell *matHeaderCellDef> Attached File </th>
+                                        <td mat-cell *matCellDef="let element"> {{element}} </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="pull-right">
+                                    <button mat-raised-button type="button" *ngIf="this.parentModule!='004'"
+                                        class="btn btn-fill btn-success" (click)="onSendEmail()">Send Email</button>
+                                    <button mat-raised-button type="button" *ngIf="this.parentModule=='004'"
+                                        class="btn btn-fill btn-success" (click)="onSendEmail()">Approve & Send
+                                        Email</button>
+                                    <button mat-raised-button mat-dialog-close type="button" (click)="onCancel()"
+                                        class="btn btn-fill btn-rose">Cancel</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <!-- <div [formGroup]="form">
+                    <quill-editor formControlName="text" (onSelectionChanged)="onSelectionChanged()">
+                    </quill-editor>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>

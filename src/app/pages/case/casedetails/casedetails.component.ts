@@ -26,6 +26,7 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CaseattComponent } from '../caseatt/caseatt.component';
 import { CaseactivityComponent } from '../caseactivity/caseactivity.component';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { ModalEmailComponent } from '../../common/modal-email/modal-email.component';
 
 
 
@@ -574,6 +575,30 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.contactForm.reset();
     this.contactForm.patchValue({ status: '01', priority: '04', channel: '01' });
     this.contactForm.patchValue(this.customerForm.value);
+  }
+
+
+  openModalSendEmail(planStatusId: string) {
+
+    const dialogRef = this.dialog.open(ModalEmailComponent, {
+      maxWidth: "50%",
+      width: '1000px',
+      height: '800px',
+      disableClose: true,
+      // data:data,
+      data: {
+
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log('The dialog was closed');
+
+    });
+
+
+
   }
 
 }
