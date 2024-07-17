@@ -53,9 +53,9 @@
                                 (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="asc"
                                 matSortDisableClear>
 
-                                <ng-container matColumnDef="module">
+                                <ng-container matColumnDef="moduleName">
                                     <th mat-header-cell *matHeaderCellDef>{{ 'email.module' | translate }}</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.module}} </td>
+                                    <td mat-cell *matCellDef="let element"> {{element.moduleName}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="templateName">
@@ -113,13 +113,21 @@
                                     <mat-label>{{'sla.id' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="id" readonly>
                                 </mat-form-field>
+
+
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.module' | translate}}</mat-label>
-                                    <input matInput type="text" formControlName="module" required>
+                                    <mat-select formControlName="module" required>
+                                        <mat-option *ngFor="let type of moduleList" [value]="type.codeId">{{
+                                            type.codeName
+                                            }}</mat-option>
+                                    </mat-select>
                                     <mat-error *ngIf="createForm.controls['module'].hasError('required')">
                                         {{ 'error.required' | translate }}
                                     </mat-error>
                                 </mat-form-field>
+
+
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.templatename' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="templateName" required>
@@ -149,24 +157,34 @@
                                         class="file-icon">
                                         <mat-icon>attachment</mat-icon>
                                     </button>
+
                                     <mat-error *ngIf="createForm.controls['fileName'].hasError('required')">
                                         {{ 'error.required' | translate }}
                                     </mat-error>
+
+                                    <button type="button" matSuffix mat-button class="file-icon"
+                                        *ngIf="downloadfileUrl">
+                                        <a [href]="downloadfileUrl" [download]="fileName"
+                                            *ngIf="createForm.controls['attId'].value != null">
+                                            <mat-icon>download</mat-icon></a>
+                                    </button>
+
                                 </mat-form-field>
+
 
                                 <mat-form-field class="col-md-6">
                                     <mat-label>{{ 'email.description' | translate }}</mat-label>
                                     <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
                                         matAutosizeMaxRows="20" type="text" formControlName="description">
                                     </textarea>
-                                </mat-form-field>{{downloadfileUrl}}
-                                <div class="col-md-12">
-                                    <div *ngIf="!fileUrl">
+                                </mat-form-field>
+
+                                <!-- <div class="col-md-12">
+                                    <div *ngIf="downloadfileUrl">
                                         <a [href]="downloadfileUrl" [download]="fileName"
                                             *ngIf="createForm.controls['attId'].value != null">DownloadFile</a>
                                     </div>
-
-                                </div>
+                                </div> -->
                             </div>
                             <!-- {{createForm.value | json}} -->
                             <app-created-by [createdBy]="createForm.controls['createdBy'].value"

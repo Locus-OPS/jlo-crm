@@ -47,7 +47,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
   sortColumn: string;
   sortDirection: string;
-  displayedColumns: string[] = ['module', 'statusName', 'templateName', 'createdByName', 'action'];
+  displayedColumns: string[] = ['moduleName', 'statusName', 'templateName', 'createdByName', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
   dataSource: any[];
 
@@ -96,6 +96,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       statusCd: ['', Validators.required],
       attId: [''],
       module: [''],
+      moduleName: [''],
       fileName: [''],
       filePath: [''],
       fileExtension: [''],
@@ -152,6 +153,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     this.selectedRow = {};
     this.createForm.reset();
     this.downloadfileUrl = null;
+    this.fileUrl = null;
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
