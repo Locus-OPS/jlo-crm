@@ -3,10 +3,11 @@ import { BaseModel } from 'src/app/shared/base.model';
 export interface EmailTemplateModel extends BaseModel {
     id?: number;
     attId?: number;
-    templateName: string;
-    statusCd: string;
-    module: string;
-    description: string;
+    templateName?: string;
+    statusCd?: string;
+    module?: string;
+    description?: string;
+    templateHtmlCode?: string;
 
     filePath?: string;
     fileName?: string;

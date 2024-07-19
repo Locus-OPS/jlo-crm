@@ -179,12 +179,14 @@
                                     </textarea>
                                 </mat-form-field>
 
-                                <!-- <div class="col-md-12">
-                                    <div *ngIf="downloadfileUrl">
-                                        <a [href]="downloadfileUrl" [download]="fileName"
-                                            *ngIf="createForm.controls['attId'].value != null">DownloadFile</a>
-                                    </div>
-                                </div> -->
+                                <!-- </div>
+
+                            <div class="row"> -->
+                                <div class="col-md-12">
+                                    <quill-editor formControlName="templateHtmlCode" format="html" style="width: 100%;">
+                                    </quill-editor>
+                                </div>
+
                             </div>
                             <!-- {{createForm.value | json}} -->
                             <app-created-by [createdBy]="createForm.controls['createdBy'].value"

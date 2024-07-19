@@ -22,8 +22,8 @@ export class EmailTemplateService {
     return this.api.call('/api/email-template/getEmailTemplateList', param);
   }
 
-  saveEmailTemplateold(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/email-template/saveEmailTemplate', param);
+  getEmailTemplateByModule(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/email-template/getEmailTemplateByModule', param);
   }
 
   deleteEmailTemplate(param: ApiRequest<any>): Promise<ApiResponse<any>> {
@@ -42,6 +42,7 @@ export class EmailTemplateService {
     formdata.append('statusCd', emailTemplate.statusCd ? emailTemplate.statusCd.toString() : '');
     formdata.append('module', emailTemplate.module ? emailTemplate.module.toString() : '');
     formdata.append('description', emailTemplate.description ? emailTemplate.description.toString() : '');
+    formdata.append('templateHtmlCode', emailTemplate.templateHtmlCode ? emailTemplate.templateHtmlCode.toString() : '');
 
     const req = new HttpRequest('POST', this.api.getRootPath() + '/api/email-template/saveEmailTemplate', formdata, {
       reportProgress: true,
@@ -50,4 +51,7 @@ export class EmailTemplateService {
     return this.http.request(req);
 
   }
+
+
+
 }

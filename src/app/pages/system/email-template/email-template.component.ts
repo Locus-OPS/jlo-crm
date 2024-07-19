@@ -101,6 +101,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       filePath: [''],
       fileExtension: [''],
       description: [''],
+      templateHtmlCode: [''],
 
       createdBy: [''],
       createdDate: [''],
@@ -232,6 +233,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       , statusCd: this.createForm.controls['statusCd'].value
       , module: this.createForm.controls['module'].value
       , description: this.createForm.controls['description'].value
+      , templateHtmlCode: this.createForm.controls['templateHtmlCode'].value
     };
 
     this.emailTemplateService.saveEmailTemplate(this.file, emailModel).subscribe(event => {

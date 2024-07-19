@@ -579,17 +579,25 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
   openModalSendEmail(planStatusId: string) {
-
     const dialogRef = this.dialog.open(ModalEmailComponent, {
-      maxWidth: "50%",
-      width: '1000px',
-      height: '800px',
+      height: '85%',
+      width: '80%',
       disableClose: true,
-      // data:data,
       data: {
-
+        title: 'Send Email Case ',
+        parentModule: '01'
       }
     });
+
+    // const dialogRef = this.dialog.open(ModalEmailComponent, {
+    //   maxWidth: "50%",
+    //   width: '1000px',
+    //   height: '800px',
+    //   disableClose: true,
+    //   // data:data,
+    //   data: {
+    //   }
+    // });
 
     dialogRef.afterClosed().subscribe(result => {
 
