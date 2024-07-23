@@ -11,6 +11,11 @@ import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { EmailTemplateService } from '../../system/email-template/email-template.service';
 import { ModalEmailService } from './modal-email.service';
+import { VideoHandler, ImageHandler, Options } from 'ngx-quill-upload';
+import Quill from 'quill';
+
+
+
 
 @Component({
   selector: 'app-modal-email',
@@ -48,6 +53,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.dataIn.emailData.fileNameList });
   displayedColumns: string[] = ['fileName'];
 
+  modules: any;
+
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -59,6 +66,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dataIn: any,
   ) {
     super(router, globals);
+    Quill.register('modules/imageHandler', ImageHandler);
+    Quill.register('modules/videoHandler', VideoHandler);
 
     templateService.getEmailTemplateByModule({ data: { module: 'CASE' } }).then(result => {
       if (result.status) {
@@ -91,6 +100,26 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     //   });
     //this.replaceTemplate(this.emailTemplate);
     // });
+
+    this.modules = {
+      // toolbar: [
+      //   ['image', 'video']
+      // ],
+      imageHandler: {
+        upload: (file) => {
+          console.log("Sample API Call")
+          return // your uploaded image URL as Promise<string>
+        },
+        accepts: ['png', 'jpg', 'jpeg', 'jfif'] // Extensions to allow for images (Optional) | Default - ['jpg', 'jpeg', 'png']
+      } as Options,
+      videoHandler: {
+        upload: (file) => {
+          return // your uploaded video URL as Promise<string>
+        },
+        accepts: ['mpeg', 'avi']  // Extensions to allow for videos (Optional) | Default - ['mp4', 'webm']
+      } as Options
+    };
+
 
 
   }

@@ -7,12 +7,13 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { EmailTemplateModel } from './email-template.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailTemplateService {
-
+  private rootPath = environment.endpoint;
   constructor(
     private api: ApiService,
     private http: HttpClient
@@ -51,6 +52,33 @@ export class EmailTemplateService {
     return this.http.request(req);
 
   }
+
+  uploadImage(file: File, templateId: string): Observable<HttpEvent<{}>> {
+
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('templateId', templateId);
+    const req = new HttpRequest('POST', this.rootPath + '/api/email-template/upload', formdata, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.http.request(req);
+  }
+
+  getImagePath(fileName: string) {
+    return this.rootPath + '/api/email-template/email_template_image/' + fileName;
+  }
+
+
+  // return this.http.post('YOUR API URL', uploadData).toPromise()
+  // .then(result => {
+  //   resolve(result.message.url); // RETURN IMAGE URL from response
+  // })
+  // .catch(error => {
+  //   reject('Upload failed');
+  //   // Handle error control
+  //   console.error('Error:', error);
+  // });
 
 
 

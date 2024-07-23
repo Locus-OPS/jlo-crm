@@ -6451,6 +6451,13 @@ ng2-pdf-viewer@^10.2.2:
     pdfjs-dist "^3.11.174"
     tslib "^2.3.0"
 
+ngx-quill-upload@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/ngx-quill-upload/-/ngx-quill-upload-2.0.0.tgz"
+  integrity sha512-eL73yoNPY8gZQklBVrictgihPwcsY7luYIiXE5XepKbeizlwfOkWz4X7DQCYEVRNGCLzdSOp6bnl/qVR3XX+KQ==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-quill@^26.0.5:
   version "26.0.5"
   resolved "https://registry.npmjs.org/ngx-quill/-/ngx-quill-26.0.5.tgz"

@@ -16,9 +16,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmailTemplateService } from './email-template.service';
 import Utils from 'src/app/shared/utils';
 import { EmailTemplateModel } from './email-template.model';
-import { HttpResponse } from '@angular/common/http';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ApiResponse } from 'src/app/model/api-response.model';
-
+import { VideoHandler, ImageHandler, Options } from 'ngx-quill-upload';
+import Quill from 'quill';
 
 
 @Component({
@@ -63,6 +64,9 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
   fileUrl: SafeResourceUrl;
   downloadfileUrl: SafeResourceUrl;
 
+  uploadProgress = 0;
+  modules: any = {};
+
   constructor(
     public emailTemplateService: EmailTemplateService,
     private api: ApiService,
@@ -72,6 +76,10 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     public sanitizer: DomSanitizer,
   ) {
     super(router, globals);
+
+    Quill.register('modules/imageHandler', ImageHandler);
+    Quill.register('modules/videoHandler', VideoHandler);
+
     api.getMultipleCodebookByCodeType(
       { data: ['EMAIL_TEMPLATE_MODULE', 'ACTIVE_FLAG'] }
     ).then(result => {
@@ -108,6 +116,72 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       updatedBy: [''],
       updatedDate: ['']
     });
+
+    this.modules = {
+      // toolbar: [
+      //   ['image', 'video']
+      // ],
+      imageHandler: {
+        upload: (file) => {
+          return new Promise((resolve, reject) => {
+
+            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') { // File types supported for image
+              if (file.size < 1000000) { // Customize file size as per requirement
+
+                //  API Call
+                const uploadData = new FormData();
+                uploadData.append('file', file, file.name);
+                //this.uploadImage(file);                
+
+                this.uploadProgress = 0;
+
+                this.emailTemplateService.uploadImage(file, this.createForm.controls['id'].value).subscribe(event => {
+                  if (event.type === HttpEventType.UploadProgress) {
+                    this.uploadProgress = Math.round(100 * event.loaded / event.total);
+
+                  } else if (event instanceof HttpResponse) {
+                    if (event.status === 200) {
+                      Utils.alertSuccess({
+                        title: 'Uploaded!',
+                        text: 'Image has been updated.',
+                      });
+
+                      const pictureUrl = this.emailTemplateService.getImagePath(<string>event.body);
+                      console.log(pictureUrl);
+                      resolve(pictureUrl); // RETURN IMAGE URL from response
+
+                    } else {
+                      Utils.alertError({
+                        text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                      });
+                      reject('Upload failed');
+                    }
+
+                  }
+                });
+
+
+
+
+              } else {
+                reject('Size too large');
+                // Handle Image size large logic 
+              }
+            } else {
+              reject('Unsupported type');
+              // Handle Unsupported type logic
+            }
+          });
+        },
+        accepts: ['png', 'jpg', 'jpeg', 'jfif'] // Extensions to allow for images (Optional) | Default - ['jpg', 'jpeg', 'png']
+      } as Options,
+      videoHandler: {
+        upload: (file) => {
+          return // your uploaded video URL as Promise<string>
+        },
+        accepts: ['mpeg', 'avi']  // Extensions to allow for videos (Optional) | Default - ['mp4', 'webm']
+      } as Options
+    };
 
   }
 
@@ -266,6 +340,38 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
         fileName: this.file.name
       });
     }
+  }
+
+
+
+  uploadImage(imgFile: File) {
+
+    this.uploadProgress = 0;
+
+    this.emailTemplateService.uploadImage(imgFile, this.createForm.controls['id'].value).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.uploadProgress = Math.round(100 * event.loaded / event.total);
+
+      } else if (event instanceof HttpResponse) {
+        if (event.status === 200) {
+          Utils.alertSuccess({
+            title: 'Uploaded!',
+            text: 'Image has been updated.',
+          });
+          console.log(this.emailTemplateService.getImagePath(<string>event.body));
+          //  this.createForm.get('pictureUrl').setValue(<string>event.body);
+          // resolve(<string>event.body); // RETURN IMAGE URL from response
+
+        } else {
+          Utils.alertError({
+            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+          });
+          //reject('Upload failed');
+        }
+
+      }
+    });
+
   }
 
 }
