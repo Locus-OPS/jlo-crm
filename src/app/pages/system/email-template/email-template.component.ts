@@ -123,55 +123,8 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       // ],
       imageHandler: {
         upload: (file) => {
-          return new Promise((resolve, reject) => {
-
-            if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') { // File types supported for image
-              if (file.size < 1000000) { // Customize file size as per requirement
-
-                //  API Call
-                const uploadData = new FormData();
-                uploadData.append('file', file, file.name);
-                //this.uploadImage(file);                
-
-                this.uploadProgress = 0;
-
-                this.emailTemplateService.uploadImage(file, this.createForm.controls['id'].value).subscribe(event => {
-                  if (event.type === HttpEventType.UploadProgress) {
-                    this.uploadProgress = Math.round(100 * event.loaded / event.total);
-
-                  } else if (event instanceof HttpResponse) {
-                    if (event.status === 200) {
-                      Utils.alertSuccess({
-                        title: 'Uploaded!',
-                        text: 'Image has been updated.',
-                      });
-
-                      const pictureUrl = this.emailTemplateService.getImagePath(<string>event.body);
-                      console.log(pictureUrl);
-                      resolve(pictureUrl); // RETURN IMAGE URL from response
-
-                    } else {
-                      Utils.alertError({
-                        text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-                      });
-                      reject('Upload failed');
-                    }
-
-                  }
-                });
-
-
-
-
-              } else {
-                reject('Size too large');
-                // Handle Image size large logic 
-              }
-            } else {
-              reject('Unsupported type');
-              // Handle Unsupported type logic
-            }
-          });
+          console.log("file" + file);
+          return this.updateImageFile(file);
         },
         accepts: ['png', 'jpg', 'jpeg', 'jfif'] // Extensions to allow for images (Optional) | Default - ['jpg', 'jpeg', 'png']
       } as Options,
@@ -183,6 +136,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       } as Options
     };
 
+    this.onSearch();
   }
 
 
@@ -374,5 +328,62 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
   }
 
-}
 
+  updateImageFile(file: File) {
+    console.log("updateImageFile" + file);
+    return new Promise((resolve, reject) => {
+
+
+      if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') { // File types supported for image
+        if (file.size < 1000000) { // Customize file size as per requirement
+
+          //  API Call
+          const uploadData = new FormData();
+          uploadData.append('file', file, file.name);
+
+          this.uploadProgress = 0;
+
+          this.emailTemplateService.uploadImage(file, this.createForm.controls['id'].value).subscribe(event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.uploadProgress = Math.round(100 * event.loaded / event.total);
+
+            } else if (event instanceof HttpResponse) {
+              if (event.status === 200) {
+                Utils.alertSuccess({
+                  title: 'Uploaded!',
+                  text: 'Image has been updated.',
+                });
+
+                const pictureUrl = this.emailTemplateService.getImagePath(<string>event.body);
+                console.log(pictureUrl);
+                resolve(pictureUrl); // RETURN IMAGE URL from response
+
+              } else {
+                Utils.alertError({
+                  text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                });
+                reject('Upload failed');
+              }
+
+            }
+          });
+
+
+
+
+        } else {
+          console.log("Size too large");
+          reject('Size too large');
+          // Handle Image size large logic 
+        }
+      } else {
+        reject('Unsupported type');
+        console.log("Unsupported type");
+        // Handle Unsupported type logic
+      }
+    });
+  }
+
+
+
+}

@@ -93,6 +93,11 @@ const routes: Routes = [
         loadComponent: () => import('./pages/system/email-template/email-template.component').then(m => m.EmailTemplateComponent)
       },
       {
+        path: 'advertising',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/advertising/advertising.component').then(m => m.AdvertisingComponent)
+      },
+      {
         path: 'consulting/consultingList',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/consulting/consulting.component').then(m => m.ConsultingComponent)

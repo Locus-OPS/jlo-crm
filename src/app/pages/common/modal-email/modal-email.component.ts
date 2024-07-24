@@ -28,7 +28,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
   emailTemplateList: Dropdown[];
   emailFrom: Dropdown[];
-  parentModule: string = "01";
+  parentModule: string = "";
   fromEmail: string;
   toEmail: string = "apichathot@gmail.com";
   emailTemplate: string;
@@ -66,10 +66,13 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dataIn: any,
   ) {
     super(router, globals);
+
+    this.parentModule = this.dataIn.parentModule;
+
     Quill.register('modules/imageHandler', ImageHandler);
     Quill.register('modules/videoHandler', VideoHandler);
 
-    templateService.getEmailTemplateByModule({ data: { module: 'CASE' } }).then(result => {
+    templateService.getEmailTemplateByModule({ data: { module: this.parentModule } }).then(result => {
       if (result.status) {
         this.emailTemplate = result.data.templateHtmlCode;
         this.replaceTemplate(this.emailTemplate);

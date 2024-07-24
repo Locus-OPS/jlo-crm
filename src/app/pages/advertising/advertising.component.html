@@ -1,0 +1,32 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <h4 class="card-title">{{ 'menu.advertising' | translate }}</h4>
+                </div>
+                <div class="card-body">
+
+
+                    <form [formGroup]="createForm">
+
+
+
+
+                        <div class="pull-right">
+                            <button mat-raised-button type="button" class="btn btn-fill btn-primary"
+                                (click)="openModalSendEmail('ADS')">
+                                {{ 'btn.email.send' | translate }}
+                                <mat-icon>email</mat-icon>
+                            </button>
+                            <button mat-raised-button type="button" class="btn btn-fill btn-primary">
+                                {{ 'btn.sms.send' | translate }}
+                                <mat-icon>sms</mat-icon>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
