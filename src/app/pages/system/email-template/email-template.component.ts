@@ -110,10 +110,11 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       fileExtension: [''],
       description: [''],
       templateHtmlCode: [''],
-
+      createdByName: [''],
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
+      updatedByName: [''],
       updatedDate: ['']
     });
 

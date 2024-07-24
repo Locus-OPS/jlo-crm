@@ -110,7 +110,7 @@
                         <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
                             <div class="row">
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>{{'sla.id' | translate}}</mat-label>
+                                    <mat-label>{{'id' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="id" readonly>
                                 </mat-form-field>
 
@@ -190,9 +190,9 @@
 
                             </div>
                             <!-- {{createForm.value | json}} -->
-                            <app-created-by [createdBy]="createForm.controls['createdBy'].value"
+                            <app-created-by [createdBy]="createForm.controls['createdByName'].value"
                                 [createdDate]="createForm.controls['createdDate'].value"
-                                [updatedBy]="createForm.controls['updatedBy'].value"
+                                [updatedBy]="createForm.controls['updatedByName'].value"
                                 [updatedDate]="createForm.controls['updatedDate'].value">
                             </app-created-by>
                             <button *ngIf="CAN_WRITE()" mat-raised-button type="submit"
