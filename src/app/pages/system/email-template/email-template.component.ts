@@ -20,6 +20,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { VideoHandler, ImageHandler, Options } from 'ngx-quill-upload';
 import Quill from 'quill';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -67,6 +68,9 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
   uploadProgress = 0;
   modules: any = {};
 
+  sizeInBytesLimit: number = 1000000;
+  messageSizeLimit: string = "File size exceeds maximum allowed size 1MB.";
+
   constructor(
     public emailTemplateService: EmailTemplateService,
     private api: ApiService,
@@ -74,6 +78,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     public router: Router,
     public globals: Globals,
     public sanitizer: DomSanitizer,
+    private translate: TranslateService
   ) {
     super(router, globals);
 
@@ -85,6 +90,10 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     ).then(result => {
       this.statusList = result.data['ACTIVE_FLAG'];
       this.moduleList = result.data['EMAIL_TEMPLATE_MODULE'];
+    });
+
+    this.translate.get(['email.file.size']).subscribe(translation => {
+      this.messageSizeLimit = translation['email.file.size'];
     });
   }
 
@@ -326,15 +335,25 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
   }
 
+  checkTheFileSize(sizeInBytes: number) {
+
+    if (sizeInBytes != null && sizeInBytes != undefined) {
+      if (sizeInBytes > this.sizeInBytesLimit) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
 
   updateImageFile(file: File) {
     console.log("updateImageFile" + file);
     return new Promise((resolve, reject) => {
 
-
       if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') { // File types supported for image
-        if (file.size < 1000000) { // Customize file size as per requirement
 
+        if (this.checkTheFileSize(file.size)) { // Customize file size as per requirement
           //  API Call
           const uploadData = new FormData();
           uploadData.append('file', file, file.name);
@@ -371,6 +390,9 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
         } else {
           console.log("Size too large");
+          Utils.alertError({
+            text: this.messageSizeLimit,
+          });
           reject('Size too large');
           // Handle Image size large logic 
         }

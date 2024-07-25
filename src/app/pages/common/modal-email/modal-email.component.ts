@@ -90,25 +90,6 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     });
 
 
-
-
-    // api.getMultipleCodebookByCodeType(
-    //   { data: ['EMAIL_TEMPLATE_HTML'] }
-    // ).then(result => {
-    //   this.emailTemplateList = result.data['EMAIL_TEMPLATE_HTML'];
-
-    //   this.emailTemplateList.findIndex(values => {
-    //     console.log(values.codeId);
-    //     console.log(this.parentModule + "==" + values.codeId)
-    //     if (this.parentModule == values.codeId) {
-    //       this.emailTemplate = values.description;
-    //       this.fromEmail = values.etc1;
-    //       this.subjectEmail = values.etc2;
-    //     }
-    //   });
-    //this.replaceTemplate(this.emailTemplate);
-    // });
-
     this.modules = {
       // toolbar: [
       //   ['image', 'video']
@@ -143,19 +124,14 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     }
 
     this.sendEmailForm = this.formBuilder.group({
-      // fileDocName: [this.fileDocName],
-      // documentType: [this.documentType],
-      // documentTypeDesc: [this.documentTypeDesc],
-      // parentId: [this.parentId],
+
       fromEmail: [],
       toEmail: ['apichathot@gmail.com', Validators.required],
       ccEmail: [''],
       subjectEmail: [this.subjectEmail],
       bodyEmail: [this.emailTemplate],
       parentModule: [this.parentModule],
-      fileName: [''],
-      // filePath: [''],
-      // fileExtension: ['']
+      fileName: ['']
 
     });
 
