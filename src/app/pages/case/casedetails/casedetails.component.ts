@@ -27,6 +27,7 @@ import { CaseattComponent } from '../caseatt/caseatt.component';
 import { CaseactivityComponent } from '../caseactivity/caseactivity.component';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { ModalEmailComponent } from '../../common/modal-email/modal-email.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -78,6 +79,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   mode: string = '';
   caseSlaId: string = '1';
 
+  titleModalEmail: string = "";
   constructor(
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
@@ -91,10 +93,16 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private appStore: AppStore,
     private spinner: NgxSpinnerService,
     private consultingService: ConsultingService,
+    private translate: TranslateService
 
   ) {
     super(router, globals);
     this.loadCodebook();
+
+    this.translate.get(['case.email.title']).subscribe(translation => {
+      this.titleModalEmail = translation['case.email.title'];
+    });
+
 
     // api.getMultipleCodebookByCodeType(
     //   { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
@@ -586,7 +594,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       width: '80%',
       disableClose: true,
       data: {
-        title: 'Send Email Case ',
+        titleModalEmail: this.titleModalEmail,
         parentModule: module
       }
     });

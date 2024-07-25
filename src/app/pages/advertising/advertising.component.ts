@@ -11,6 +11,7 @@ import { Globals } from 'src/app/shared/globals';
 import { AppStore } from 'src/app/shared/app.store';
 import { id } from '@swimlane/ngx-charts';
 import { ModalEmailComponent } from '../common/modal-email/modal-email.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-advertising',
@@ -22,6 +23,7 @@ import { ModalEmailComponent } from '../common/modal-email/modal-email.component
 export class AdvertisingComponent extends BaseComponent implements OnInit {
 
   createForm: FormGroup;
+  titleModalEmail: string = "";
 
   constructor(
     public api: ApiService,
@@ -32,8 +34,15 @@ export class AdvertisingComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog,
     private appStore: AppStore,
     private spinner: NgxSpinnerService,
+    private translate: TranslateService
   ) {
     super(router, globals);
+
+
+    this.translate.get(['ads.email.title']).subscribe(translation => {
+      this.titleModalEmail = translation['ads.email.title'];
+    });
+
   }
 
   ngOnInit(): void {
@@ -55,7 +64,7 @@ export class AdvertisingComponent extends BaseComponent implements OnInit {
       width: '80%',
       disableClose: true,
       data: {
-        title: 'Send Email Case ',
+        titleModalEmail: this.titleModalEmail,
         parentModule: module
       }
     });

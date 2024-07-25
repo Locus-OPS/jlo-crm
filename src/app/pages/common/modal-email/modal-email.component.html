@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="card-title">{{title}}</h4>
+                    <h4 class="card-title">{{titleModalEmail}}</h4>
                 </div>
                 <div class="col-md-12">
 
@@ -14,9 +14,6 @@
                                 <mat-label>{{'email.from' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="fromEmail" />
                             </mat-form-field>
-                        </div>
-
-                        <div class="row">
                             <mat-form-field class="col-md-12">
                                 <mat-label>{{'email.to' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="toEmail" required />
@@ -24,19 +21,24 @@
                                     {{ 'error.required' | translate }}
                                 </mat-error>
                             </mat-form-field>
-                        </div>
-
-                        <div class="row">
                             <mat-form-field class="col-md-12">
                                 <mat-label>{{'email.cc' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="ccEmail" />
                             </mat-form-field>
-                        </div>
-
-                        <div class="row">
                             <mat-form-field class="col-md-12">
                                 <mat-label>{{'email.subject' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="subjectEmail" />
+                            </mat-form-field>
+
+                            <mat-form-field class="col-md-12">
+                                <mat-label>{{ 'document.file' | translate }}</mat-label>
+                                <input type="file" hidden #fileUpload (change)="selectFile($event)" />
+                                <input disabled formControlName="fileName" matInput type="text" readonly />
+                                <button type="button" matSuffix mat-button (click)="fileUpload.click()"
+                                    class="file-icon">
+                                    <mat-icon>attachment</mat-icon>
+                                </button>
+
                             </mat-form-field>
                         </div>
 

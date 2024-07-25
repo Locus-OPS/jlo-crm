@@ -314,9 +314,6 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
             text: 'Image has been updated.',
           });
           console.log(this.emailTemplateService.getImagePath(<string>event.body));
-          //  this.createForm.get('pictureUrl').setValue(<string>event.body);
-          // resolve(<string>event.body); // RETURN IMAGE URL from response
-
         } else {
           Utils.alertError({
             text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',

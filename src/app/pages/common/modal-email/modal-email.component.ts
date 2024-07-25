@@ -13,6 +13,9 @@ import { EmailTemplateService } from '../../system/email-template/email-template
 import { ModalEmailService } from './modal-email.service';
 import { VideoHandler, ImageHandler, Options } from 'ngx-quill-upload';
 import Quill from 'quill';
+import { EmailModel } from './modal-email.model';
+import { HttpResponse } from '@angular/common/http';
+import { ApiResponse } from 'src/app/model/api-response.model';
 
 
 
@@ -37,10 +40,10 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
   form: FormGroup;
   result: string;
 
-  title: string;
+  titleModalEmail: string;
 
   subjectEmail: string;
-  attachmentId: string;
+
   fileDocName: string;
   nameOfCompany: string;
   documentType: string;
@@ -54,6 +57,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['fileName'];
 
   modules: any;
+  file: File;
+
 
   constructor(
     public api: ApiService,
@@ -132,29 +137,25 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     this.parentModule = this.dataIn.parentModule;
     this.parentId = this.dataIn.parentId;
 
-    // console.log("ngOnInit dataIn : "+this.parentModule);
-    // console.log(this.dataIn);
-
     if (this.dataIn) {
-      this.title = this.dataIn.title;
+      this.titleModalEmail = this.dataIn.titleModalEmail;
       this.subjectEmail = this.dataIn.subjectEmail;
     }
 
-
-
     this.sendEmailForm = this.formBuilder.group({
-      attachmentId: [this.attachmentId],
-      fileName: [this.fileName],
-      fileDocName: [this.fileDocName],
-      documentType: [this.documentType],
-      documentTypeDesc: [this.documentTypeDesc],
+      // fileDocName: [this.fileDocName],
+      // documentType: [this.documentType],
+      // documentTypeDesc: [this.documentTypeDesc],
+      // parentId: [this.parentId],
       fromEmail: [],
       toEmail: ['apichathot@gmail.com', Validators.required],
       ccEmail: [''],
       subjectEmail: [this.subjectEmail],
       bodyEmail: [this.emailTemplate],
-      parentId: [this.parentId],
-      parentModule: [this.parentModule]
+      parentModule: [this.parentModule],
+      fileName: [''],
+      // filePath: [''],
+      // fileExtension: ['']
 
     });
 
@@ -189,6 +190,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
 
   onSendEmail() {
+
     const param = {
       ...this.sendEmailForm.value
     };
@@ -199,10 +201,43 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.sendEmail(param);
-    //this.sendEmailWithMultiAtt(param);
+    // this.sendEmail(param);
+    this.sendEmailWithAttachedFile();
 
   }
+
+  sendEmailWithAttachedFile() {
+    const msgTitle = 'Sent!';
+    const msgText = 'E-mail has been sent successfully.';
+
+    const emailModel: EmailModel = {
+      fromEmail: this.sendEmailForm.controls['fromEmail'].value
+      , toEmail: this.sendEmailForm.controls['toEmail'].value
+      , ccEmail: this.sendEmailForm.controls['ccEmail'].value
+      , subjectEmail: this.sendEmailForm.controls['subjectEmail'].value
+      , bodyEmail: this.sendEmailForm.controls['bodyEmail'].value
+      , parentModule: this.sendEmailForm.controls['parentModule'].value
+    };
+
+    this.emailService.sendEmailWithAttachedFile(this.file, emailModel).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        if (event.status === 200) {
+          const response: ApiResponse<EmailModel> = <ApiResponse<EmailModel>>JSON.parse(<string>event.body);
+          Utils.alertSuccess({
+            title: msgTitle,
+            text: msgText,
+          });
+          this.dialogRef.close();
+        } else {
+          Utils.alertError({
+            text: 'Save failed, please try again later.',
+          });
+        }
+      }
+    });
+  }
+
+
 
   sendEmail(param) {
 
@@ -319,6 +354,16 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
   onCancel() {
 
+  }
+
+
+  selectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.file = event.target.files[0];
+      this.sendEmailForm.patchValue({
+        fileName: this.file.name
+      });
+    }
   }
 
 }
