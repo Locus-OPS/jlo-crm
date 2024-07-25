@@ -353,7 +353,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
       if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') { // File types supported for image
 
-        if (this.checkTheFileSize(file.size)) { // Customize file size as per requirement
+        if (!this.checkTheFileSize(file.size)) { // Customize file size as per requirement
           //  API Call
           const uploadData = new FormData();
           uploadData.append('file', file, file.name);
