@@ -33,13 +33,12 @@
                 </div>
                 <div class="row">
                   <mat-form-field class="col-md-3">
-                    <input matInput placeholder="{{'member.cardNo' | translate }}" type="text"
-                      formControlName="memberCardNo">
+                    <input matInput placeholder="{{'member.email' | translate }}" type="text" formControlName="email">
                   </mat-form-field>
                 </div>
                 <div class="d-flex justify-content-end">
-                  <button mat-raised-button type="button" class="btn btn-fill btn-rose"
-                    type="submit">{{'button.search' | translate}}</button>
+                  <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{'button.search'
+                    | translate}}</button>
                   <button mat-raised-button type="reset" class="btn btn-fill btn-default"
                     (click)="clear()">{{'button.clear' | translate}}</button>
                 </div>
@@ -56,7 +55,8 @@
                       {{'member.customerStatus' | translate}}
                     </th>
                     <td mat-cell *matCellDef="let element"><span
-                        *ngFor="let item of customerStatusList">{{(element.customerStatus == item.codeId?item.etc1:"") | translate}}</span>
+                        *ngFor="let item of customerStatusList">{{(element.customerStatus == item.codeId?item.etc1:"") |
+                        translate}}</span>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="fullName">
@@ -71,9 +71,9 @@
                       {{element.customerType?(element.nationality=="37"?element.citizenId:element.passportNo):element.taxId}}
                     </td>
                   </ng-container>
-                  <ng-container matColumnDef="memberCardNo">
-                    <th mat-header-cell *matHeaderCellDef> {{'member.cardNo' | translate}} </th>
-                    <td mat-cell *matCellDef="let element"> {{element.memberCardNo }} </td>
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> {{'member.email' | translate}} </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email }} </td>
                   </ng-container>
                   <ng-container matColumnDef="customerType">
                     <th mat-header-cell *matHeaderCellDef> {{'member.customerType' | translate}} </th>
@@ -99,7 +99,7 @@
                 [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
               </mat-paginator>
             </div>
-            
+
           </div> <!--  end card  -->
         </div> <!-- end col-md-12 -->
       </div>
@@ -110,6 +110,6 @@
 <div class="d-flex justify-content-end">
   <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
     [mat-dialog-close]="customerInfo">{{ 'button.select' | translate }}</button>
-  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
-    class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
+  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()" class="btn btn-fill btn-default">{{
+    'button.cancel' | translate }}</button>
 </div>

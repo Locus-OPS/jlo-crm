@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,8 +16,12 @@ import Quill from 'quill';
 import { EmailModel } from './modal-email.model';
 import { HttpResponse } from '@angular/common/http';
 import { ApiResponse } from 'src/app/model/api-response.model';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ModalCustomerComponent } from '../modal-customer/modal-customer.component';
 
-
+interface Emails {
+  email: string;
+}
 
 
 @Component({
@@ -29,11 +33,17 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 })
 export class ModalEmailComponent extends BaseComponent implements OnInit {
 
+  SEMICOLON: number = 186;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  toEmails = [];
+  ccEmails = [];
+
+
   emailTemplateList: Dropdown[];
   emailFrom: Dropdown[];
   parentModule: string = "";
   fromEmail: string;
-  toEmail: string = "apichathot@gmail.com";
+  toEmailDefault: string = "apichathot@gmail.com";
   emailTemplate: string;
 
   sendEmailForm: FormGroup;
@@ -68,6 +78,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     private dialogRef: MatDialogRef<ModalEmailComponent>,
     private templateService: EmailTemplateService,
     private emailService: ModalEmailService,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dataIn: any,
   ) {
     super(router, globals);
@@ -157,7 +168,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     this.sendEmailForm.patchValue({
       fromEmail: this.fromEmail,
       bodyEmail: bodyEmail,
-      toEmail: this.toEmail,
+      toEmail: this.toEmails,
       subjectEmail: this.subjectEmail
     });
 
@@ -342,4 +353,74 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     }
   }
 
+  add(event) {
+    const index = this.toEmails.findIndex(key => key.keyword === event.value);
+    if (index === -1) {
+      this.toEmails.push({
+        email: event.value
+      });
+    }
+
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
+  remove(keyword: Emails) {
+    const index = this.toEmails.findIndex(key => key.email === keyword.email);
+    if (index !== -1) {
+      this.toEmails.splice(index, 1);
+    }
+  }
+
+
+  addCC(event) {
+    const index = this.ccEmails.findIndex(key => key.keyword === event.value);
+    if (index === -1) {
+      this.ccEmails.push({
+        email: event.value
+      });
+    }
+
+    if (event.input) {
+      event.input.value = '';
+    }
+  }
+
+  removeCC(keyword: Emails) {
+    const index = this.ccEmails.findIndex(key => key.email === keyword.email);
+    if (index !== -1) {
+      this.ccEmails.splice(index, 1);
+    }
+  }
+
+  searchCustomer(action: string) {
+
+    const dialogRef = this.dialog.open(ModalCustomerComponent, {
+      height: '85%',
+      width: '90%',
+      panelClass: 'my-dialog',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        let email = result.email;
+
+        if (action == "TO") {
+          this.toEmails.push({
+            email: email
+          });
+        }
+
+        if (action == "CC") {
+          this.ccEmails.push({
+            email: email
+          });
+        }
+
+      }
+    });
+  }
 }

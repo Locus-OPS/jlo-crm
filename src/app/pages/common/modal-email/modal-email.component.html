@@ -15,16 +15,59 @@
                                 <input matInput type="text" formControlName="fromEmail" />
                             </mat-form-field>
                             <mat-form-field class="col-md-12">
-                                <mat-label>{{'email.to' | translate}}</mat-label>
+
+                                <!-- <mat-label>{{'email.to' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="toEmail" required />
                                 <mat-error *ngIf="sendEmailForm.controls['toEmail'].hasError('required')">
                                     {{ 'error.required' | translate }}
+                                </mat-error> -->
+
+
+                                <mat-label>{{'email.to' | translate}}</mat-label>
+                                <mat-chip-grid formControlName="toEmail" #chipList aria-label="toEmail">
+                                    <mat-chip *ngFor="let value of toEmails" (removed)="remove(value)">
+                                        {{value.email}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                    <input [placeholder]="'email.to.placeholder' | translate"
+                                        [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        (matChipInputTokenEnd)="add($event)" maxlength="500" />
+
+                                </mat-chip-grid>
+                                <button type="button" matSuffix mat-button (click)="searchCustomer('TO')"
+                                    class="file-icon">
+                                    <mat-icon matSuffix (click)="searchCustomer('TO')">contact_mail</mat-icon>
+                                </button>
+                                <mat-error *ngIf="sendEmailForm.controls['toEmail'].hasError('required')">
+                                    {{ 'error.required' | translate }}
                                 </mat-error>
+
                             </mat-form-field>
                             <mat-form-field class="col-md-12">
+                                <!-- 
+                                    <mat-label>{{'email.cc' | translate}}</mat-label>
+                                    <input matInput type="text" formControlName="ccEmail" /> 
+                                -->
                                 <mat-label>{{'email.cc' | translate}}</mat-label>
-                                <input matInput type="text" formControlName="ccEmail" />
+                                <mat-chip-grid formControlName="ccEmail" #ccChipList aria-label="ccEmail">
+                                    <mat-chip *ngFor="let value of ccEmails" (removed)="removeCC(value)">
+                                        {{value.email}}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                    <input [placeholder]="'email.to.placeholder' | translate"
+                                        [matChipInputFor]="ccChipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        (matChipInputTokenEnd)="addCC($event)" maxlength="500" />
+
+                                </mat-chip-grid>
+                                <button type="button" matSuffix mat-button (click)="searchCustomer('CC')"
+                                    class="file-icon">
+                                    <mat-icon matSuffix (click)="searchCustomer('CC')">contact_mail</mat-icon>
+                                </button>
+
                             </mat-form-field>
+
                             <mat-form-field class="col-md-12">
                                 <mat-label>{{'email.subject' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="subjectEmail" />
@@ -49,33 +92,7 @@
                             </div>
 
                         </div>
-                        <!-- <div class="row"><br /> </div>
-                          <div class="row">
-                            <div class="col-md-12">
-                                <mat-label>Attached File : </mat-label>
-                                <mat-label *ngFor="let item of this.dataIn.emailData.fileNameList;let num = index">
-                                    {{num}}.{{item}}
-                                </mat-label>
-                                <input matInput type="text" formControlName="fileName"  readonly/>
-                            </div>
-                        </div>  -->
-                        <!-- <div class="row">
-                            <div class="col-md-12">
-                                <div class="material-datatables">
-                                    <table mat-table [dataSource]="this.fileNameList" class="mat-elevation-z8"
-                                        (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="desc"
-                                        matSortDisableClear>
-                                        <ng-container matColumnDef="fileName">
-                                            <th mat-header-cell *matHeaderCellDef> {{'email.attachedfile' | translate}}
-                                            </th>
-                                            <td mat-cell *matCellDef="let element"> {{element}} </td>
-                                        </ng-container>
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> -->
+
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

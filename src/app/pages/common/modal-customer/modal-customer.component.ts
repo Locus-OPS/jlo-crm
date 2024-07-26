@@ -25,7 +25,7 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 export class ModalCustomerComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'memberCardNo', 'customerType', 'approvedDate', 'approvedBy'];
+  displayedColumns: string[] = ['customerStatus', 'fullName', 'citizenId', 'email', 'customerType', 'approvedDate', 'approvedBy'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   loginTypes: Dropdown[];
@@ -74,7 +74,7 @@ export class ModalCustomerComponent extends BaseComponent implements OnInit {
       lastName: [''],
       citizenId: [''],
       passportNo: [''],
-      memberCardNo: [''],
+      email: [''],
     });
 
     //this.onSearch();

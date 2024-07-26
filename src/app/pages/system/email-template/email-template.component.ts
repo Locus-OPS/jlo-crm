@@ -366,6 +366,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
             } else if (event instanceof HttpResponse) {
               if (event.status === 200) {
+
                 Utils.alertSuccess({
                   title: 'Uploaded!',
                   text: 'Image has been updated.',
@@ -373,7 +374,8 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
                 const pictureUrl = this.emailTemplateService.getImagePath(<string>event.body);
                 console.log(pictureUrl);
-                resolve(pictureUrl); // RETURN IMAGE URL from response
+                resolve(pictureUrl);
+                //RETURN IMAGE URL from response
 
               } else {
                 Utils.alertError({
@@ -383,6 +385,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
               }
 
             }
+
           });
 
 
