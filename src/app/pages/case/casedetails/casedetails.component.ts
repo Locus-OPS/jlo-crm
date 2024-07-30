@@ -103,20 +103,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       this.titleModalEmail = translation['case.email.title'];
     });
 
-
-    // api.getMultipleCodebookByCodeType(
-    //   { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
-    // ).then(result => {
-    //   this.typeList = result.data['CASE_TYPE'];
-    //   this.priorityList = result.data['CASE_PRIORITY'];
-    //   this.priorityListTemp = result.data['CASE_PRIORITY'];
-    //   this.caseChannelList = result.data['CASE_CHANNEL'];
-    //   this.caseStatuslList = result.data['CASE_STATUS'];
-    //   this.titleNameList = result.data['TITLE_NAME'];
-    //   this.subTypeList = result.data['CASE_SUBTYPE'];
-    //   this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
-    // });
-
   }
 
   ngOnDestroy() {
@@ -355,13 +341,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       this.setPriorityForSlaID(priorityId);
 
     }
-
-
-
-
-
-
-
   }
 
   resetForm() {
@@ -439,11 +418,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         data: { customerId: parseInt(params['customerId']) }
       });
     }
-    else if (params['memberId'] != null) {
-      response = this.caseService.getMemberById({
-        data: { memberId: parseInt(params['memberId']) }
-      });
-    }
+
     response.then(result => {
       if (result.data) {
         console.log('result.data ', result.data);
@@ -589,13 +564,26 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
   openModalSendEmail(module: string) {
+
+    let customerName = "";
+    if (this.customerForm.value.businessName != null) {
+      customerName = this.customerForm.value.businessName;
+    } else {
+      customerName = this.customerForm.value['firstName'] + ' ' + this.customerForm.value['lastName'];
+    }
+
+
     const dialogRef = this.dialog.open(ModalEmailComponent, {
       height: '85%',
       width: '80%',
       disableClose: true,
       data: {
         titleModalEmail: this.titleModalEmail,
-        parentModule: module
+        parentModule: module,
+        customerName: customerName,
+        caseNumber: this.createForm.value['caseNumber'],
+        subjectEmail: 'เรื่องที่ให้บริการ ',
+        subject: this.createForm.value['subject'],
       }
     });
 

@@ -18,6 +18,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ModalCustomerComponent } from '../modal-customer/modal-customer.component';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Emails {
   email: string;
@@ -63,12 +64,13 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
   fileNameList: any[];
 
-  tableControl: TableControl = new TableControl(() => { this.dataIn.emailData.fileNameList });
-  displayedColumns: string[] = ['fileName'];
+  msgTitle: string = 'Sent!';
+  msgText: string = 'E-mail has been sent successfully.';
 
   modules: any;
   file: File;
-
+  customerName: string = "";
+  subject: string = "";
 
   constructor(
     public api: ApiService,
@@ -80,18 +82,23 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     private emailService: ModalEmailService,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dataIn: any,
+    private translate: TranslateService
   ) {
     super(router, globals);
 
     this.parentModule = this.dataIn.parentModule;
+    this.customerName = this.dataIn.customerName;
 
     Quill.register('modules/imageHandler', ImageHandler);
     Quill.register('modules/videoHandler', VideoHandler);
 
     templateService.getEmailTemplateByModule({ data: { module: this.parentModule } }).then(result => {
       if (result.status) {
-        this.emailTemplate = result.data.templateHtmlCode;
-        this.replaceTemplate(this.emailTemplate);
+        if (this.parentModule == "CASE") {
+          this.emailTemplate = result.data.templateHtmlCode;
+          this.replaceTemplateCase(this.emailTemplate);
+        }
+
       }
 
     }, error => {
@@ -100,6 +107,13 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       });
     });
 
+
+
+    this.translate.get(['email.sent.message', 'email.sent.title']).subscribe(translation => {
+      this.msgTitle = translation['email.sent.title'];
+      this.msgText = translation['email.sent.message'];
+
+    });
 
     this.modules = {
       // toolbar: [
@@ -132,6 +146,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     if (this.dataIn) {
       this.titleModalEmail = this.dataIn.titleModalEmail;
       this.subjectEmail = this.dataIn.subjectEmail;
+      this.subject = this.dataIn.subject;
     }
 
     this.sendEmailForm = this.formBuilder.group({
@@ -150,20 +165,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
 
 
-  replaceTemplate(bodyEmail: string) {
-    // this.fileNameList = this.dataIn.emailData.fileNameList;
+  replaceTemplateCase(bodyEmail: string) {
 
-    // bodyEmail = bodyEmail.replace('$caseNo', this.dataIn.emailData.caseNo);
-    // bodyEmail = bodyEmail.replace('$riskLevel', this.dataIn.emailData.riskLevel);
-    // bodyEmail = bodyEmail.replace('$subject', this.dataIn.emailData.subject);
-    // bodyEmail = bodyEmail.replace('$typeOfReport', this.dataIn.emailData.typeOfReport);
-    // bodyEmail = bodyEmail.replace('$whistleblowerName', this.dataIn.emailData.whistleblowerName);
-    // bodyEmail = bodyEmail.replace('$orderNo', this.dataIn.emailData.orderNo);
-    // bodyEmail = bodyEmail.replace('$memberNo', this.dataIn.emailData.memberNo);
-    // bodyEmail = bodyEmail.replace('$phoneContact', this.dataIn.emailData.phoneContact);
-    // bodyEmail = bodyEmail.replace('$location', this.dataIn.emailData.location);
-    // bodyEmail = bodyEmail.replace('$description', this.dataIn.emailData.description);
-    // bodyEmail = bodyEmail.replace('$dueDate', this.dataIn.emailData.dueDate);
+    bodyEmail = bodyEmail.replace('$CUSTOMER_NAME', this.dataIn.customerName);
+    bodyEmail = bodyEmail.replace('$CASE_NUMBER', this.dataIn.caseNumber);
+    bodyEmail = bodyEmail.replace('$SUBJECT', this.dataIn.subject);
+
     console.log(bodyEmail);
     this.sendEmailForm.patchValue({
       fromEmail: this.fromEmail,
@@ -171,7 +178,6 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       toEmail: this.toEmails,
       subjectEmail: this.subjectEmail
     });
-
 
   }
 
@@ -194,8 +200,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
   }
 
   sendEmailWithAttachedFile() {
-    const msgTitle = 'Sent!';
-    const msgText = 'E-mail has been sent successfully.';
+    // const msgTitle = 'Sent!';
+    // const msgText = 'E-mail has been sent successfully.';
 
     const emailModel: EmailModel = {
       fromEmail: this.sendEmailForm.controls['fromEmail'].value
@@ -211,8 +217,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
         if (event.status === 200) {
           const response: ApiResponse<EmailModel> = <ApiResponse<EmailModel>>JSON.parse(<string>event.body);
           Utils.alertSuccess({
-            title: msgTitle,
-            text: msgText,
+            title: this.msgTitle,
+            text: this.msgText,
           });
           this.dialogRef.close();
         } else {
@@ -228,8 +234,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
   sendEmail(param) {
 
-    const msgTitle = 'Sent!';
-    const msgText = 'E-mail has been sent successfully.';
+    //const msgTitle = 'Sent!';
+    //const msgText = 'E-mail has been sent successfully.';
 
     this.emailService.sendEmail({
       data: param
@@ -238,8 +244,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       if (result.status) {
 
         Utils.alertSuccess({
-          title: msgTitle,
-          text: msgText,
+          title: this.msgTitle,
+          text: this.msgText,
         });
         this.dialogRef.close();
 
@@ -257,8 +263,6 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
   }
 
   sendEmailWithMultiAtt(param) {
-    const msgTitle = 'Sent!';
-    const msgText = 'E-mail has been sent successfully.';
 
     this.emailService.sendEmailWithMultiAtt({
       data: param
@@ -267,8 +271,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       if (result.status) {
 
         Utils.alertSuccess({
-          title: msgTitle,
-          text: msgText,
+          title: this.msgTitle,
+          text: this.msgText,
         });
         this.dialogRef.close();
 
@@ -286,58 +290,6 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
   }
 
-  onSendEmailWithAprrove(paramEmail) {
-    let param = {
-      auditPlanId: this.parentId,
-      planStatusId: this.dataIn.planStatusId
-    };
-
-    // this.engagementDetailService.updatePlanStatus({
-    //   data: param
-    // }).then(result => {
-    //   if (result.status) {
-    //     this.sendEmailWithAprrove(paramEmail);
-    //   } else {
-    //     Utils.alertError({
-    //       text: 'Please try again later.',
-    //     });
-    //   }
-    // }, error => {
-    //   Utils.alertError({
-    //     text: 'Please try again later.',
-    //   });
-    // });
-
-  }
-
-  sendEmailWithAprrove(paramEmail) {
-    const msgTitle = 'Sent!';
-    const msgText = 'E-mail has been sent successfully.';
-
-    // this.emailService.sendEmailWithAtt({
-    //   data: paramEmail
-    // }).then(result => {
-
-    //   if (result.status) {
-
-    //     Utils.alertSuccess({
-    //       title: msgTitle,
-    //       text: msgText,
-    //     });
-    //     this.dialogRef.close();
-
-    //   } else {
-    //     Utils.alertError({
-    //       text: 'Save failed, please try again later.',
-    //     });
-    //   }
-    // }, error => {
-    //   Utils.alertError({
-    //     text: 'Please, try again later',
-    //   });
-    // });
-
-  }
 
   onCancel() {
 

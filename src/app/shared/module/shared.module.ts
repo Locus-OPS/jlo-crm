@@ -23,6 +23,11 @@ import { QuillConfigModule } from 'ngx-quill/config';
           ]
         }
       }
+      // ,
+      // customOptions: [{
+      //   import: 'formats/font',
+      //   whitelist: ['mirza', 'roboto', 'aref', 'serif', 'sansserif', 'monospace']
+      // }]
     }),
     QuillConfigModule.forRoot({
       modules: {
