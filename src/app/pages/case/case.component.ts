@@ -34,6 +34,8 @@ export class CaseComponent extends BaseComponent implements OnInit {
   createForm: UntypedFormGroup;
   customerForm: UntypedFormGroup;
 
+  divisionList: Dropdown[];
+  categoryList: Dropdown[];
   typeList: Dropdown[];
   subTypeList: Dropdown[];
   priorityList: Dropdown[];
@@ -65,8 +67,12 @@ export class CaseComponent extends BaseComponent implements OnInit {
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
-      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE'] }
+      { data: ['CASE_DIVISION', 'CASE_CATEGORY', 'CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE'] }
     ).then(result => {
+
+      this.divisionList = result.data['CASE_DIVISION'];
+      this.categoryList = result.data['CASE_CATEGORY'];
+
       this.typeList = result.data['CASE_TYPE'];
       this.priorityList = result.data['CASE_PRIORITY'];
 
@@ -74,6 +80,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
       this.caseStatuslList = result.data['CASE_STATUS'];
       this.titleNameList = result.data['TITLE_NAME'];
       this.subTypeList = result.data['CASE_SUBTYPE'];
+
     });
     this.maxDate = new Date();
   }
@@ -81,6 +88,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
       caseNumber: [''],
+      division: [''],
       type: [''],
       subType: [''],
       customerId: [''],
@@ -98,6 +106,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
 
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
+      division: [''],
       type: [''],
       subType: [''],
       subject: [''],

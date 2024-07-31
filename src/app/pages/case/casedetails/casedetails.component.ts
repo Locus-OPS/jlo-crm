@@ -48,6 +48,9 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   contactRelTypeList: Dropdown[];
 
+  divisionList: Dropdown[];
+  categoryList: Dropdown[];
+  serviceAreaList: Dropdown[];
   typeList: Dropdown[];
   subTypeList: Dropdown[];
   priorityList: Dropdown[];
@@ -105,6 +108,27 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   }
 
+  loadCodebook() {
+
+    this.api.getMultipleCodebookByCodeType(
+      { data: ['CASE_DIVISION', 'CASE_CATEGORY', 'CASE_SERVICE_AREA', 'CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
+    ).then(result => {
+
+      this.divisionList = result.data['CASE_DIVISION'];
+      this.categoryList = result.data['CASE_CATEGORY'];
+      this.serviceAreaList = result.data['CASE_SERVICE_AREA'];
+      this.typeList = result.data['CASE_TYPE'];
+      this.priorityList = result.data['CASE_PRIORITY'];
+      this.priorityListTemp = result.data['CASE_PRIORITY'];
+      this.caseChannelList = result.data['CASE_CHANNEL'];
+      this.caseStatuslList = result.data['CASE_STATUS'];
+      this.titleNameList = result.data['TITLE_NAME'];
+      this.subTypeList = result.data['CASE_SUBTYPE'];
+      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
+    });
+  }
+
+
   ngOnDestroy() {
     console.log("ngOnDestroy");
     this.caseDetailSubscription.unsubscribe();
@@ -113,21 +137,29 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   ngOnInit() {
 
-
-
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
       consultingNumber: [''],
+      divisionTypeCode: ['', Validators.required],
+      categoryTypeCode: ['', Validators.required],
       type: ['', Validators.required],
       subType: ['', Validators.required],
-      subject: ['', Validators.required],
-      detail: ['', Validators.required],
-      priority: ['', Validators.required],
-      channel: ['', Validators.required],
-      status: ['', Validators.required],
-      owner: ['', Validators.required],
-      displayName: ['', Validators.required],
+      subject: [''],
+      serviceAreaCode: [''],
+      priority: [''],
+      channel: [''],
+      status: [''],
+      owner: [''],
+      displayName: [''],
+      worknote: [''],
+      dslnumber: [''],
+      incnumber: [''],
+      dslstatus: [''],
+      informname: [''],
+
+      detail: [''],
       caseSlaId: [''],
+
       createdByName: [''],
       createdBy: [''],
       createdDate: [''],
@@ -244,21 +276,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   }
 
-  loadCodebook() {
 
-    this.api.getMultipleCodebookByCodeType(
-      { data: ['CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
-    ).then(result => {
-      this.typeList = result.data['CASE_TYPE'];
-      this.priorityList = result.data['CASE_PRIORITY'];
-      this.priorityListTemp = result.data['CASE_PRIORITY'];
-      this.caseChannelList = result.data['CASE_CHANNEL'];
-      this.caseStatuslList = result.data['CASE_STATUS'];
-      this.titleNameList = result.data['TITLE_NAME'];
-      this.subTypeList = result.data['CASE_SUBTYPE'];
-      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
-    });
-  }
 
 
 
@@ -297,7 +315,12 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   }
 
-  getCaseDetailsTypeId(caseTypeId) {
+  getCaseTypeByCategoryId(categoryId) {
+    const data = `CASE_TYPE,${categoryId}`;
+    this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.typeList = result.data; });
+  }
+
+  getCaseSubTypeByCaseTypeId(caseTypeId) {
     const data = `CASE_SUBTYPE,${caseTypeId}`;
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.subTypeList = result.data; });
   }
