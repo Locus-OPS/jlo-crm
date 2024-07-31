@@ -151,11 +151,11 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       status: [''],
       owner: [''],
       displayName: [''],
-      worknote: [''],
+      workNote: [''],
       dslnumber: [''],
       incnumber: [''],
       dslstatus: [''],
-      informname: [''],
+      informName: [''],
 
       detail: [''],
       caseSlaId: [''],
@@ -277,7 +277,10 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   }
 
 
-
+  onCaseCreate() {
+    sessionStorage.removeItem('caseNumber');
+    this.caseStore.clearCaseDetail();
+  }
 
 
 

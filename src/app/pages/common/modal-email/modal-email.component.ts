@@ -97,6 +97,9 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
         if (this.parentModule == "CASE") {
           this.emailTemplate = result.data.templateHtmlCode;
           this.replaceTemplateCase(this.emailTemplate);
+        } else {
+          this.emailTemplate = result.data.templateHtmlCode;
+          this.replaceTemplate(this.emailTemplate);
         }
 
       }
@@ -170,6 +173,23 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
     bodyEmail = bodyEmail.replace('$CUSTOMER_NAME', this.dataIn.customerName);
     bodyEmail = bodyEmail.replace('$CASE_NUMBER', this.dataIn.caseNumber);
     bodyEmail = bodyEmail.replace('$SUBJECT', this.dataIn.subject);
+
+    console.log(bodyEmail);
+    this.sendEmailForm.patchValue({
+      fromEmail: this.fromEmail,
+      bodyEmail: bodyEmail,
+      toEmail: this.toEmails,
+      subjectEmail: this.subjectEmail
+    });
+
+  }
+
+
+  replaceTemplate(bodyEmail: string) {
+
+    // bodyEmail = bodyEmail.replace('$CUSTOMER_NAME', this.dataIn.customerName);
+    // bodyEmail = bodyEmail.replace('$CASE_NUMBER', this.dataIn.caseNumber);
+    // bodyEmail = bodyEmail.replace('$SUBJECT', this.dataIn.subject);
 
     console.log(bodyEmail);
     this.sendEmailForm.patchValue({

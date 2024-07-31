@@ -149,6 +149,7 @@
                 <div class="pull-right">
                   <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="searchCustomer()">
                     {{ 'button.search' | translate }}
+                    <mat-icon>search</mat-icon>
                   </button>
                 </div>
               </div>
@@ -290,7 +291,7 @@
 
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.informname' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="informname" />
+                      <input matInput type="text" formControlName="informName" />
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
@@ -310,7 +311,7 @@
                     <mat-form-field class="col-md-6">
                       <mat-label>{{ 'case.worknote' | translate }}</mat-label>
                       <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text"
-                        formControlName="worknote">
+                        formControlName="workNote">
                         </textarea>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
@@ -340,12 +341,24 @@
                   <div class="pull-right">
                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
                       {{ 'button.back' | translate }}
+                      <mat-icon>undo</mat-icon>
                     </button>
                     <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate
-                      }}</button>
+                      }}
+                      <mat-icon>save</mat-icon>
+                    </button>
+
                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetForm()">
                       {{ 'button.clear' | translate }}
+                      <mat-icon>restart_alt</mat-icon>
                     </button>
+
+                    <button mat-raised-button type="button" (click)="onCaseCreate();" class="btn btn-fill btn-primary"
+                      routerLinkActive="router-link-active">
+                      {{ 'button.create' | translate }}
+                      <mat-icon>add_circle</mat-icon>
+                    </button>
+
                     <button mat-raised-button type="button" class="btn btn-fill btn-primary"
                       (click)="openModalSendEmail('CASE')">
                       {{ 'btn.email.send' | translate }}
