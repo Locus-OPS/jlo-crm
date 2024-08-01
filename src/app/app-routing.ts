@@ -103,6 +103,11 @@ const routes: Routes = [
         loadComponent: () => import('./pages/consulting/consulting.component').then(m => m.ConsultingComponent)
       },
       {
+        path: 'emaillog',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/email-log/email-log.component').then(m => m.EmailLogComponent)
+      },
+      {
         path: 'channel/chat',
         loadComponent: () => import('./pages/channel/chat/chat.component').then(m => m.ChatComponent)
       }
