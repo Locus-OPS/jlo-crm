@@ -3,17 +3,12 @@
 
 @include mat.core();
 
-$my-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-    ),
-    typography: (
-      plain-family: "'Noto Sans Thai', Roboto, sans-serif",
-    ),
-  )
-);
+$my-theme: mat.define-theme((color: (theme-type: light,
+        primary: mat.$azure-palette,
+      ),
+      typography: (plain-family: "'Noto Sans Thai', Roboto, sans-serif",
+      ),
+    ));
 
 :root {
   @include mat.all-component-themes($my-theme);
@@ -34,7 +29,7 @@ $my-theme: mat.define-theme(
   height: 100%;
 }
 
-.main-tab > {
+.main-tab> {
   mat-tab-header {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     // border-bottom: 2px solid #1565c0;
@@ -109,8 +104,8 @@ $my-theme: mat.define-theme(
       display: table-cell;
       padding: 0px 15px;
       line-break: unset;
-      width: 40%;
-      white-space: nowrap;
+      width: auto;
+      // white-space: nowrap;
       overflow: hidden;
       vertical-align: middle;
     }

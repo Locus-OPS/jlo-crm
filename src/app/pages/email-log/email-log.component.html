@@ -22,7 +22,6 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-
                             <div class="pull-right">
                                 <button mat-raised-button type="submit" class="btn btn-fill btn-warning">
                                     Search
@@ -31,10 +30,11 @@
                                     Clear
                                 </button>
                             </div>
+                            <div class="clearfix"></div>
                         </form>
 
-                        <div class="material-datatables">
-                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8  table-responsive"
+                        <div class="material-datatables table-responsive">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                                 (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="asc"
                                 matSortDisableClear>
 
@@ -108,8 +108,9 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onSelectRow(row)"
                                     [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
                             </table>
-                        </div>
 
+                            <div *ngIf="tableControl.total === 0" class="data-not-found">ไม่พบข้อมูล</div>
+                        </div>
                         <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
                             [length]="tableControl.total" [pageSize]="tableControl.pageSize"
                             [pageIndex]="tableControl.pageNo" [pageSizeOptions]="tableControl.pageSizeOptions"
