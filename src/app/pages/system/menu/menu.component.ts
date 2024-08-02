@@ -212,7 +212,10 @@ export class MenuComponent extends BaseComponent implements OnInit {
     for (i = 0; i < list.length; i++) {
       node = list[i];
       if (node.parentMenuId && node.parentMenuId !== '') {
-        list[map[node.parentMenuId]].children.push(node);
+        if (list[map[node.parentMenuId]] != undefined) {
+          list[map[node.parentMenuId]].children.push(node);
+        }
+
       } else {
         roots.push(node);
       }

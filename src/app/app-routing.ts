@@ -38,6 +38,16 @@ const routes: Routes = [
         loadComponent: () => import('./pages/case/casedetails/casedetails.component').then(m => m.CasedetailsComponent)
       },
       {
+        path: 'sr',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/service-request/service-request.component').then(m => m.ServiceRequestComponent)
+      },
+      {
+        path: 'srdetails',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/service-request/service-request-details/service-request-details.component').then(m => m.ServiceRequestDetailsComponent)
+      },
+      {
         path: 'kb/content/:contentType',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/kb/content/content.component').then(m => m.ContentComponent)

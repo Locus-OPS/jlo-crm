@@ -178,7 +178,7 @@
                       <mat-label>{{ 'case.number' | translate }}</mat-label>
                       <input matInput type="text" formControlName="caseNumber" readonly />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
+                    <mat-form-field class="col-md-9">
                       <mat-label>{{ 'case.subject' | translate }}</mat-label>
                       <input matInput type="text" formControlName="subject" required />
                       <mat-error *ngIf="createForm.controls['subject'].hasError('required')">
@@ -197,9 +197,6 @@
                         </mat-error>
                       </mat-select>
                     </mat-form-field>
-                  </div>
-
-                  <div class="row">
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.division' | translate }}</mat-label>
                       <mat-select formControlName="divisionTypeCode" required>
@@ -211,7 +208,7 @@
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
+                    <!-- <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.category' | translate }}</mat-label>
                       <mat-select formControlName="categoryTypeCode" (ngModelChange)="getCaseTypeByCategoryId($event)"
                         required>
@@ -222,7 +219,7 @@
                       <mat-error *ngIf="createForm.controls['categoryTypeCode'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.type' | translate }}</mat-label>
                       <mat-select formControlName="type" (ngModelChange)="getCaseSubTypeByCaseTypeId($event)" required>
@@ -242,6 +239,7 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
+                    <!--
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.area' | translate }}</mat-label>
                       <mat-select formControlName="serviceAreaCode" required>
@@ -253,6 +251,7 @@
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
+                     -->
 
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.priority' | translate }}</mat-label>
@@ -270,6 +269,10 @@
                           {{ type.codeName }}
                         </mat-option>
                       </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                      <mat-label>{{ 'case.informname' | translate }}</mat-label>
+                      <input matInput type="text" formControlName="informName" />
                     </mat-form-field>
                     <div class="col-md-3">
                       <div class="row">
@@ -289,10 +292,7 @@
 
                   <div class="row">
 
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.informname' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="informName" />
-                    </mat-form-field>
+
 
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.dueDate' | translate }}</mat-label>
@@ -320,7 +320,8 @@
                         formControlName="detail">
                         </textarea>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
+
+                    <!-- <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.dslnumber' | translate }}</mat-label>
                       <input matInput type="text" formControlName="dslnumber" readonly />
                     </mat-form-field>
@@ -331,7 +332,8 @@
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.dslstatus' | translate }}</mat-label>
                       <input matInput type="text" formControlName="dslstatus" readonly />
-                    </mat-form-field>
+                    </mat-form-field> -->
+
                   </div>
                   <app-created-by [createdBy]="createForm.controls['createdByName'].value"
                     [createdDate]="createForm.controls['createdDate'].value"

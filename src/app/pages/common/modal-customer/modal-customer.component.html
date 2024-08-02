@@ -94,6 +94,7 @@
                     [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
                 </table>
               </div>
+
               <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
                 [length]="tableControl.total" [pageSize]="tableControl.pageSize"
                 [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>

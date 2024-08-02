@@ -1,45 +1,41 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Location } from '@angular/common';
-import Utils from 'src/app/shared/utils';
-import { ApiService } from 'src/app/services/api.service';
-import { CaseService } from '../case.service';
-import { Case } from '../case.model';
-import { Dropdown } from 'src/app/model/dropdown.model';
-import { ApiResponse } from 'src/app/model/api-response.model';
-import { Subscription, from } from 'rxjs';
-import { CaseStore } from '../case.store';
-import { Globals } from 'src/app/shared/globals';
-import { Router, ActivatedRoute } from '@angular/router';
-import { BaseComponent } from 'src/app/shared/base.component';
-import { CustomerService } from 'src/app/pages/customer/customer.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ModalUserComponent } from '../../common/modal-user/modal-user.component';
-import { UserData } from '../../common/modal-user/modal-user'
-import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
-import { AppStore } from 'src/app/shared/app.store';
-import { ModalCustomerComponent } from '../../common/modal-customer/modal-customer.component';
-import ConsultingUtils from 'src/app/shared/consultingStore';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ConsultingService } from '../../consulting/consulting.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
-import { CaseattComponent } from '../caseatt/caseatt.component';
-import { CaseactivityComponent } from '../caseactivity/caseactivity.component';
+import { CaseactivityComponent } from '../../case/caseactivity/caseactivity.component';
+import { Location } from '@angular/common';
+import { CaseattComponent } from '../../case/caseatt/caseatt.component';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { ModalEmailComponent } from '../../common/modal-email/modal-email.component';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
+import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
+import { ApiResponse } from 'src/app/model/api-response.model';
+import { Dropdown } from 'src/app/model/dropdown.model';
+import { ApiService } from 'src/app/services/api.service';
+import { AppStore } from 'src/app/shared/app.store';
+import { BaseComponent } from 'src/app/shared/base.component';
+import ConsultingUtils from 'src/app/shared/consultingStore';
+import { Globals } from 'src/app/shared/globals';
+import Utils from 'src/app/shared/utils';
+import { Case } from '../../case/case.model';
+import { CaseService } from '../../case/case.service';
+import { CaseStore } from '../../case/case.store';
+import { ModalCustomerComponent } from '../../common/modal-customer/modal-customer.component';
+import { UserData } from '../../common/modal-user/modal-user';
+import { ModalUserComponent } from '../../common/modal-user/modal-user.component';
+import { ConsultingService } from '../../consulting/consulting.service';
 
 @Component({
-  selector: 'app-casedetails',
-  templateUrl: './casedetails.component.html',
-  styleUrls: ['./casedetails.component.scss'],
+  selector: 'app-service-request-details',
+  templateUrl: './service-request-details.component.html',
+  styleUrl: './service-request-details.component.scss',
   standalone: true,
   imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent]
 })
-
-export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ServiceRequestDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   selectedTab: number;
   createForm: FormGroup;
@@ -141,20 +137,20 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       caseNumber: [''],
       consultingNumber: [''],
       divisionTypeCode: ['', Validators.required],
-      // categoryTypeCode: ['', Validators.required],
+      categoryTypeCode: ['', Validators.required],
       type: ['', Validators.required],
       subType: ['', Validators.required],
       subject: [''],
-      //serviceAreaCode: [''],
+      serviceAreaCode: [''],
       priority: [''],
       channel: [''],
       status: [''],
       owner: [''],
       displayName: [''],
       workNote: [''],
-      // dslnumber: [''],
-      // incnumber: [''],
-      // dslstatus: [''],
+      dslnumber: [''],
+      incnumber: [''],
+      dslstatus: [''],
       informName: [''],
 
       detail: [''],
