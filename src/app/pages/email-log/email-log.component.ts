@@ -32,7 +32,7 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
   selectedRow: EmailModel;
   dataSource: EmailModel[];
   tableControl: TableControl = new TableControl(() => { this.search(); });
-  displayedColumns: string[] = ['toEmail', 'ccEmail', 'subjectEmail', 'statusDesc', 'createdByName', 'createdDate', 'action'];
+  displayedColumns: string[] = ['toEmail', 'ccEmail', 'subjectEmail', 'statusDesc', 'createdByName', 'createdDate', 'updatedByName', 'updatedDate', 'action'];
 
   constructor(
     public api: ApiService,
