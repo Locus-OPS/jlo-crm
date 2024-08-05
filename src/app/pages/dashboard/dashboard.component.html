@@ -123,13 +123,17 @@
                 <mat-card class="chart-card">
                   <mat-card-title class="chart-title">{{ 'dashboard.piechart.text' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
-                    <!-- <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [animations]="true"
-                      [labels]="true" [maxLabelLength]="20"></ngx-charts-pie-chart> -->
+                    <!-- <ngx-charts-pie-chart class="chart-card" [results]="summaryCaseTypeData" [scheme]="colorSchemePie"
+                      [animations]="true" [labels]="true" [maxLabelLength]="200"></ngx-charts-pie-chart> -->
 
                     <ngx-charts-pie-chart class="chart-card" [view]="viewPie" [scheme]="colorSchemePie"
-                      [results]="summaryCaseTypeData" [animations]="true" [legend]="showLegend" [labels]="showLabels"
-                      [doughnut]="doughnut" [maxLabelLength]="20" [gradient]="gradient"
-                      [legendTitle]="yAxisLabelPie"></ngx-charts-pie-chart>
+                      [legendPosition]="legendPosition" [results]="summaryCaseTypeData" [animations]="true"
+                      [legend]="showLegend" [labels]="showLabels" [doughnut]="doughnut" [maxLabelLength]="20"
+                      [gradient]="gradient" [legendTitle]="yAxisLabelPie" (select)="onSelect($event)"
+                      (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></ngx-charts-pie-chart>
+
+
+
                   </mat-card-content>
                 </mat-card>
               </div>

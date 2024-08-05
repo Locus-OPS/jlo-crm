@@ -69,12 +69,15 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   };
   //pie
   viewPie: any[] = [530, 400];
+
   showLabels = true;
   colorSchemePie = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+    domain: ['#9370DB', '#C7B42C', '#A10A28', '#AAAAAA']
   };
   yAxisLabelPie: string = 'Case Type';
 
+  isDoughnut: boolean = false;
+  legendPosition: string = 'right';
 
   summaryCaseStatusData = [
     {
@@ -95,7 +98,10 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     },
   ];
 
+
+
   summaryCaseChannelData: any = [];
+  //สรุปเคสตามประเภท
   summaryCaseTypeData: any = [];
 
   ViewByList: Dropdown[];
@@ -140,6 +146,9 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     });
 
 
+
+
+
   }
 
   ngOnInit() {
@@ -175,7 +184,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     });
 
-
   }
 
   ngAfterViewInit(): void {
@@ -194,7 +202,9 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     this.getCountCaseEachStatus();
     this.getChartBarDataList();
+
     this.getChartPieDataList();
+
     this.onSearchCase();
   }
 
@@ -255,7 +265,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     this.dashboardService.getChartPieDataList(params).then((result: any) => {
       this.spinner.hide("approve_process_spinner");
       if (result.status) {
-        console.log(result.data);
         this.summaryCaseTypeData = result.data;
 
       } else {
@@ -357,5 +366,16 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     });
   }
 
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  }
 
 }
