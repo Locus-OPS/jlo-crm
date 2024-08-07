@@ -62,7 +62,9 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
-      updatedDate: ['']
+      updatedDate: [''],
+      updatedByName: [''],
+      createdByName: ['']
     });
     this.search();
 

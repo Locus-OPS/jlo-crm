@@ -75,7 +75,9 @@ export class SlaComponent extends BaseComponent implements OnInit {
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
-      updatedDate: ['']
+      updatedDate: [''],
+      createdByName: [''],
+      updatedByName: [''],
     });
 
     this.search();

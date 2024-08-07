@@ -43,6 +43,7 @@
     "moment": "^2.24.0",
     "ng-keyboard-shortcuts": "^13.0.8",
     "ng2-pdf-viewer": "^10.2.2",
+    "ngx-mat-select-search": "^7.0.6",
     "ngx-quill": "^26.0.5",
     "ngx-quill-upload": "^2.0.0",
     "ngx-scrollbar": "^15.0.3",

@@ -70,7 +70,10 @@
 
                             <mat-form-field class="col-md-12">
                                 <mat-label>{{'email.subject' | translate}}</mat-label>
-                                <input matInput type="text" formControlName="subjectEmail" />
+                                <input matInput type="text" formControlName="subjectEmail" required />
+                                <mat-error *ngIf="sendEmailForm.controls['subjectEmail'].hasError('required')">
+                                    {{ 'error.required' | translate }}
+                                </mat-error>
                             </mat-form-field>
 
                             <mat-form-field class="col-md-12">

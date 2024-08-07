@@ -34,6 +34,8 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
   displayedColumns: string[] = ['toEmail', 'ccEmail', 'subjectEmail', 'statusDesc', 'createdByName', 'createdDate', 'updatedByName', 'updatedDate', 'action'];
 
+  createForm: FormGroup;
+
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -58,20 +60,35 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
       statusCode: ['']
     });
 
+    this.createForm = this.formBuilder.group({
+      id: [''],
+      parentModule: [''],
+      statusCode: [''],
+      statusDesc: [''],
+      formEmail: [''],
+      toEmail: [''],
+      ccEmail: [''],
+      subjectEmail: [''],
+      bodyEmail: [''],
+      deliverDesc: [''],
+      attachmentId: [''],
+      createdByName: [''],
+      createdDate: [''],
+      updatedByName: [''],
+      updatedDate: [''],
+    });
+
     this.search();
   }
 
   onSelectRow(row) {
     this.selectedRow = row;
-    //this.sendEmailForm.patchValue(row);
-
+    this.createForm.patchValue(row);
   }
 
   onSearch() {
-
     this.tableControl.resetPage();
     this.search();
-
   }
 
   search() {

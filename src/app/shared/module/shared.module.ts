@@ -6,6 +6,7 @@ import { MaterialModule } from './material.module';
 import { RouterModule } from '@angular/router';
 import { QuillModule } from 'ngx-quill'
 import { QuillConfigModule } from 'ngx-quill/config';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 @NgModule({
   imports: [
     ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' }),
@@ -64,6 +65,7 @@ import { QuillConfigModule } from 'ngx-quill/config';
     MaterialModule,
     RouterModule,
     QuillModule,
+    NgxMatSelectSearchModule
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

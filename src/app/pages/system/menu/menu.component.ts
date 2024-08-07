@@ -85,6 +85,9 @@ export class MenuComponent extends BaseComponent implements OnInit {
       createdDate: [''],
       updatedBy: [''],
       updatedDate: [''],
+      createdByName: [''],
+      updatedByName: [''],
+
     });
     this.initTree();
 

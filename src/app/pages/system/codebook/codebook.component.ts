@@ -11,6 +11,7 @@ import { Globals } from 'src/app/shared/globals';
 import { CodebookData } from './codebook.model';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-codebook',
@@ -44,6 +45,8 @@ export class CodebookComponent extends BaseComponent implements OnInit {
   dataSource: CodebookData[];
   selectedRow: CodebookData;
 
+  codeTypeFilter: Dropdown[];
+
   constructor(
     public codebookService: CodebookService,
     private api: ApiService,
@@ -54,11 +57,12 @@ export class CodebookComponent extends BaseComponent implements OnInit {
     super(router, globals);
     api.getCodebookByCodeType({ data: 'ACTIVE_FLAG' }).then(result => { this.statusList = result.data; });
     api.getBusinessUnit().then(result => { this.businessUnitList = result.data; });
-    api.getCodebookType().then(result => { this.codeTypeList = result.data; });
+    api.getCodebookType().then(result => { this.codeTypeList = result.data; this.codeTypeFilter = result.data; });
   }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
+      inputFilter: [''],
       codeId: [''],
       codeType: [''],
       codeName: [''],
@@ -83,11 +87,21 @@ export class CodebookComponent extends BaseComponent implements OnInit {
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
-      updatedDate: ['']
+      updatedDate: [''],
+      createdByName: [''],
+      updatedByName: ['']
     });
     this.search();
 
     this.CHECK_FORM_PERMISSION(this.createForm);
+
+
+
+    this.searchForm.get("inputFilter").valueChanges.pipe(takeUntil(new Subject<void>()))
+      .subscribe(() => {
+        this.codeTypeFilter = this.codeTypeList.filter(vl => vl.codeName.toUpperCase().indexOf(this.searchForm.get("inputFilter").value.toUpperCase()) >= 0);
+
+      });
   }
 
   search() {

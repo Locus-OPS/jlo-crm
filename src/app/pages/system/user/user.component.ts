@@ -100,6 +100,8 @@ export class UserComponent extends BaseComponent implements OnInit {
       createdDate: [''],
       updatedBy: [''],
       updatedDate: [''],
+      createdByName: [''],
+      updatedByName: ['']
     });
     this.search();
 

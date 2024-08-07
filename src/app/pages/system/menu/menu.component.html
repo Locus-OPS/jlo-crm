@@ -12,21 +12,23 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-3">
-                <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu-tree mat-elevation-z2" style="min-height: 500px;">
+                <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl" class="menu-tree mat-elevation-z2"
+                  style="min-height: 500px;">
                   <!-- This is the tree node template for leaf nodes -->
-                  <mat-tree-node *matTreeNodeDef="let node" (click)="selectNode(node)" [ngClass]="{ 'background-highlight': activeNode === node }"
-                    matTreeNodePadding>
+                  <mat-tree-node *matTreeNodeDef="let node" (click)="selectNode(node)"
+                    [ngClass]="{ 'background-highlight': activeNode === node }" matTreeNodePadding>
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <button mat-icon-button>
                       <mat-icon>article_shortcut</mat-icon>
                     </button>
                     <!-- <span [ngClass]="{ 'padding' : node.type === '02' && node.parentMenuId === '' }"> -->
-                      {{node.name | translate}}
+                    {{node.name | translate}}
                     <!-- </span> -->
                     <span *ngIf="node.activeFlag === 'N'">(inactive)</span>
                   </mat-tree-node>
                   <!-- This is the tree node template for expandable nodes -->
-                  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="selectNode(node)">
+                  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+                    (click)="selectNode(node)">
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                       <mat-icon class="mat-icon-rtl-mirror">
                         {{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}
@@ -58,7 +60,8 @@
                         <mat-form-field class="col-md-3">
                           <mat-label>{{'menu.type' | translate}}</mat-label>
                           <mat-select formControlName="type">
-                            <mat-option *ngFor="let item of menuTypeList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                            <mat-option *ngFor="let item of menuTypeList" [value]="item.codeId">{{ item.codeName
+                              }}</mat-option>
                           </mat-select>
                           <mat-error *ngIf="createForm.controls['type'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -75,7 +78,8 @@
                         <mat-form-field class="col-md-3">
                           <mat-label>{{'menu.activeFlag' | translate}}</mat-label>
                           <mat-select formControlName="activeFlag">
-                            <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
+                            <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName
+                              }}</mat-option>
                           </mat-select>
                           <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -83,12 +87,13 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                           <mat-label>{{'menu.seq' | translate}}</mat-label>
-                          <input  matInput type="number" formControlName="seq">
+                          <input matInput type="number" formControlName="seq">
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                           <mat-label>{{'menu.parentMenuId' | translate}}</mat-label>
                           <mat-select formControlName="parentMenuId">
-                            <mat-option *ngFor="let item of parentMenuList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                            <mat-option *ngFor="let item of parentMenuList" [value]="item.codeId">{{ item.codeName
+                              }}</mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
@@ -96,19 +101,19 @@
                           <input matInput type="text" formControlName="apiPath" maxlength="100" />
                         </mat-form-field>
                       </div>
-                      <app-created-by
-                        [createdBy]="createForm.controls['createdBy'].value"
+                      <app-created-by [createdBy]="createForm.controls['createdByName'].value"
                         [createdDate]="createForm.controls['createdDate'].value"
-                        [updatedBy]="createForm.controls['updatedBy'].value"
+                        [updatedBy]="createForm.controls['updatedByName'].value"
                         [updatedDate]="createForm.controls['updatedDate'].value">
                       </app-created-by>
                       <div class="pull-left">
-                        <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button"
-                          (click)="create()">{{ 'button.create' | translate }}</button>
+                        <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
+                          type="button" (click)="create()">{{ 'button.create' | translate }}</button>
                         <!-- <button mat-raised-button type="button" class="btn btn-fill btn-default"
                           type="reset">{{ 'button.clear' | translate }}</button> -->
                       </div>
-                      <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">{{ 'button.save' | translate }}</button>
+                      <button *ngIf="CAN_WRITE()" mat-raised-button type="submit"
+                        class="btn btn-fill btn-primary pull-right">{{ 'button.save' | translate }}</button>
                     </form>
                   </div>
                 </div>
