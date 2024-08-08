@@ -15,7 +15,7 @@
                             <div class="row">
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{ 'case.number' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="caseNumber" />
+                                    <input matInput type="text" formControlName="srNumber" />
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{ 'case.type' | translate }}</mat-label>
@@ -108,9 +108,9 @@
                                 <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.search'
                                     | translate
                                     }}</button>
-                                <button mat-raised-button type="button"
-                                    (click)="onCaseCreate(); $event.stopPropagation()" class="btn btn-fill btn-primary"
-                                    [routerLink]="['/srdetails']" routerLinkActive="router-link-active">
+                                <button mat-raised-button type="button" (click)="onSrCreate(); $event.stopPropagation()"
+                                    class="btn btn-fill btn-primary" [routerLink]="['/srdetails']"
+                                    routerLinkActive="router-link-active">
                                     {{ 'button.create' | translate }}
                                 </button>
                                 <button mat-raised-button type="reset" class="btn btn-fill btn-default">{{
@@ -137,9 +137,9 @@
                                     </td>
                                 </ng-container>
                                 <!-- displayedColumns -->
-                                <ng-container matColumnDef="caseNumber">
+                                <ng-container matColumnDef="srNumber">
                                     <th mat-header-cell *matHeaderCellDef>{{ 'case.number' | translate }}</th>
-                                    <td mat-cell *matCellDef="let element">{{ element.caseNumber }}</td>
+                                    <td mat-cell *matCellDef="let element">{{ element.srNumber }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="typeName">
                                     <th mat-header-cell *matHeaderCellDef>{{ 'case.type' | translate }}</th>
@@ -239,7 +239,7 @@
                             <div class="row">
                                 <mat-form-field class="col-md-3" disabled>
                                     <mat-label>{{ 'case.number' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="caseNumber" readonly />
+                                    <input matInput type="text" formControlName="srNumber" readonly />
                                 </mat-form-field>
                                 <mat-form-field class="col-md-6" disabled>
                                     <mat-label>{{ 'case.subject' | translate }}</mat-label>
@@ -316,9 +316,10 @@
                     </textarea>
                                 </mat-form-field>
                             </div>
+
                             <app-created-by [createdBy]="createForm.controls['createdByName'].value"
                                 [createdDate]="createForm.controls['createdDate'].value"
-                                [updatedBy]="createForm.controls['updatedByname'].value"
+                                [updatedBy]="createForm.controls['updatedByName'].value"
                                 [updatedDate]="createForm.controls['updatedDate'].value">
                             </app-created-by>
                         </form>

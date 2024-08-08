@@ -20,13 +20,16 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import ConsultingUtils from 'src/app/shared/consultingStore';
 import { Globals } from 'src/app/shared/globals';
 import Utils from 'src/app/shared/utils';
-import { Case } from '../../case/case.model';
-import { CaseService } from '../../case/case.service';
-import { CaseStore } from '../../case/case.store';
+
+import { ServiceRequestModel } from '../../service-request/service-request.model';
+import { ServiceRequestService } from '../../service-request/service-request-service';
+import { ServiceRequestStore } from '../../service-request/service-request.store';
+
 import { ModalCustomerComponent } from '../../common/modal-customer/modal-customer.component';
 import { UserData } from '../../common/modal-user/modal-user';
 import { ModalUserComponent } from '../../common/modal-user/modal-user.component';
 import { ConsultingService } from '../../consulting/consulting.service';
+
 
 @Component({
   selector: 'app-service-request-details',
@@ -50,8 +53,8 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   typeList: Dropdown[];
   subTypeList: Dropdown[];
   priorityList: Dropdown[];
-  caseChannelList: Dropdown[];
-  caseStatuslList: Dropdown[];
+  srChannelList: Dropdown[];
+  srStatusList: Dropdown[];
   titleNameList: Dropdown[];
   priorityListTemp: Dropdown[];
 
@@ -73,7 +76,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
   data: UserData;
 
-  caseDetailSubscription: Subscription;
+  srDetailSubscription: Subscription;
 
   mode: string = '';
   caseSlaId: string = '1';
@@ -82,9 +85,9 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   constructor(
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
-    private caseService: CaseService,
+    private srService: ServiceRequestService,
     private _location: Location,
-    private caseStore: CaseStore,
+    private srStore: ServiceRequestStore,
     public router: Router,
     public globals: Globals,
     public dialog: MatDialog,
@@ -107,34 +110,34 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   loadCodebook() {
 
     this.api.getMultipleCodebookByCodeType(
-      { data: ['CASE_DIVISION', 'CASE_CATEGORY', 'CASE_SERVICE_AREA', 'CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE', 'CASE_CONTACT_RELATION'] }
+      { data: ['SR_DIVISION', 'SR_CATEGORY', 'SR_SERVICE_AREA', 'SR_TYPE', 'SR_PRIORITY', 'SR_CHANNEL', 'SR_STATUS', 'TITLE_NAME', 'SR_SUBTYPE', 'SR_CONTACT_RELATION'] }
     ).then(result => {
 
-      this.divisionList = result.data['CASE_DIVISION'];
-      this.categoryList = result.data['CASE_CATEGORY'];
-      this.serviceAreaList = result.data['CASE_SERVICE_AREA'];
-      this.typeList = result.data['CASE_TYPE'];
-      this.priorityList = result.data['CASE_PRIORITY'];
-      this.priorityListTemp = result.data['CASE_PRIORITY'];
-      this.caseChannelList = result.data['CASE_CHANNEL'];
-      this.caseStatuslList = result.data['CASE_STATUS'];
+      this.divisionList = result.data['SR_DIVISION'];
+      this.categoryList = result.data['SR_CATEGORY'];
+      this.serviceAreaList = result.data['SR_SERVICE_AREA'];
+      this.typeList = result.data['SR_TYPE'];
+      this.priorityList = result.data['SR_PRIORITY'];
+      this.priorityListTemp = result.data['SR_PRIORITY'];
+      this.srChannelList = result.data['SR_CHANNEL'];
+      this.srStatusList = result.data['SR_STATUS'];
       this.titleNameList = result.data['TITLE_NAME'];
-      this.subTypeList = result.data['CASE_SUBTYPE'];
-      this.contactRelTypeList = result.data['CASE_CONTACT_RELATION'];
+      this.subTypeList = result.data['SR_SUBTYPE'];
+      this.contactRelTypeList = result.data['SR_CONTACT_RELATION'];
     });
   }
 
 
   ngOnDestroy() {
     console.log("ngOnDestroy");
-    this.caseDetailSubscription.unsubscribe();
-    sessionStorage.removeItem('caseNumber');
+    this.srDetailSubscription.unsubscribe();
+    sessionStorage.removeItem('srNumber');
   }
 
   ngOnInit() {
 
     this.createForm = this.formBuilder.group({
-      caseNumber: [''],
+      srNumber: [''],
       consultingNumber: [''],
       divisionTypeCode: ['', Validators.required],
       categoryTypeCode: ['', Validators.required],
@@ -197,14 +200,13 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
     this.create();
 
-    this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
-      console.log("caseDetailSubscription");
+    this.srDetailSubscription = this.srStore.getSrDetail().subscribe(detail => {
+      console.log("srDetailSubscription");
       console.log(detail);
       if (detail) {
-
-        sessionStorage.setItem('caseNumber', detail.caseNumber);
+        sessionStorage.setItem('srNumber', detail.srNumber);
         this.updateFormValue(detail);
-        console.log("update from value session caseNumber" + sessionStorage.getItem('caseNumber'));
+        console.log("update from value session srNumber" + sessionStorage.getItem('srNumber'));
       } else {
         console.log("resetCustomer")
         this.resetCustomer();
@@ -216,17 +218,16 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
     if (ConsultingUtils.isConsulting()) {
 
       if (this.tabParam.params.customerId) {
-        sessionStorage.removeItem('caseNumber');
+        sessionStorage.removeItem('srNumber');
         this.getCustomerInfo(this.tabParam.params);
-        this.caseStore.clearCaseDetail();
+        this.srStore.clearSrDetail();
         this.setConsultingCase();
       } else {
 
-        console.log("Session Casenumber : " + sessionStorage.getItem('caseNumber'));
-        if (sessionStorage.getItem('caseNumber') != null) {
+        console.log("Session srNumber : " + sessionStorage.getItem('srNumber'));
+        if (sessionStorage.getItem('srNumber') != null) {
 
-          //this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
-          console.log("ngOnInit updateCaseDetail");
+          console.log("ngOnInit updateSrDetail");
 
         } else {
 
@@ -238,7 +239,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
             this.getCustomerInfo(this.custParam);
           }
 
-          this.caseStore.clearCaseDetail();
+          this.srStore.clearSrDetail();
           this.setConsultingCase();
 
         }
@@ -250,19 +251,19 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
 
       if (this.tabParam.params.customerId) {
-        sessionStorage.removeItem('caseNumber');
+        sessionStorage.removeItem('srNumber');
         this.getCustomerInfo(this.tabParam.params);
-        this.caseStore.clearCaseDetail();
+        this.srStore.clearSrDetail();
         //"from customer page"
       } else {
-        console.log("195 else sessionStorage.getItem('caseNumber') " + sessionStorage.getItem('caseNumber'))
-        if (sessionStorage.getItem('caseNumber')) {
+        console.log("195 else sessionStorage.getItem('srNumber') " + sessionStorage.getItem('srNumber'))
+        if (sessionStorage.getItem('srNumber')) {
 
-          this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+          this.srStore.updateSrDetail(sessionStorage.getItem('srNumber'));
           //"Case edit "
         } else {
-          //"clearCaseDetail"
-          this.caseStore.clearCaseDetail();
+          //"clearSrDetail"
+          this.srStore.clearSrDetail();
         }
       }
     }
@@ -274,8 +275,8 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
 
   onCaseCreate() {
-    sessionStorage.removeItem('caseNumber');
-    this.caseStore.clearCaseDetail();
+    sessionStorage.removeItem('srNumber');
+    this.srStore.clearSrDetail();
   }
 
 
@@ -292,7 +293,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   }
 
 
-  updateFormValue(detail: Case) {
+  updateFormValue(detail: ServiceRequestModel) {
     console.log(detail);
     this.created = false;
     this.customerForm.patchValue(detail);
@@ -301,7 +302,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   }
 
   backClicked() {
-    this.caseStore.clearCaseDetail();
+    this.srStore.clearSrDetail();
     this._location.back();
   }
 
@@ -314,23 +315,23 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
   }
 
-  getCaseTypeByCategoryId(categoryId) {
-    const data = `CASE_TYPE,${categoryId}`;
+  getSrTypeByCategoryId(categoryId) {
+    const data = `SR_TYPE,${categoryId}`;
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.typeList = result.data; });
   }
 
-  getCaseSubTypeByCaseTypeId(caseTypeId) {
-    const data = `CASE_SUBTYPE,${caseTypeId}`;
+  getSrSubTypeByCaseTypeId(caseTypeId) {
+    const data = `SR_SUBTYPE,${caseTypeId}`;
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.subTypeList = result.data; });
   }
 
   loadCodebookPrioriry(priorityId: String) {
 
     this.api.getMultipleCodebookByCodeType(
-      { data: ['CASE_PRIORITY'] }
+      { data: ['SR_PRIORITY'] }
     ).then(result => {
-      this.priorityList = result.data['CASE_PRIORITY'];
-      this.priorityListTemp = result.data['CASE_PRIORITY'];
+      this.priorityList = result.data['SR_PRIORITY'];
+      this.priorityListTemp = result.data['SR_PRIORITY'];
 
       this.setPriorityForSlaID(priorityId);
     });
@@ -366,11 +367,11 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
   }
 
   resetForm() {
-    console.log("resetForm ")
+    console.log("resetForm ");
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
-    if (sessionStorage.getItem('caseNumber')) {
-      this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+    if (sessionStorage.getItem('srNumber')) {
+      this.srStore.updateSrDetail(sessionStorage.getItem('srNumber'));
     }
   }
 
@@ -393,7 +394,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
       ...this.createForm.value
     };
     if (this.created) {
-      response = this.caseService.createCase({
+      response = this.srService.createSr({
         data: param
       });
     } else {
@@ -401,19 +402,20 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
       param.updatedDate = '';
       param.openedDate = '';
       param.closedDate = '';
-      response = this.caseService.updateCase({
+      response = this.srService.updateSr({
         data: param
       });
     }
     console.log("data : ", param);
     response.then(result => {
-      this.appStore.broadcastNewCase({
-        caseNumber: result.data.caseNumber
+      this.appStore.broadcastNewSr({
+        srNumber: result.data.srNumber
         , customerId: this.cusInfo.customerId
       });
+
       if (result.status) {
-        sessionStorage.setItem('caseNumber', result.data.caseNumber);
-        this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+        sessionStorage.setItem('srNumber', result.data.srNumber);
+        this.srStore.updateSrDetail(sessionStorage.getItem('srNumber'));
         this.created = false;
         this.customerForm.patchValue(result.data);
         this.createForm.patchValue(result.data);
@@ -436,7 +438,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
     console.log("param", params);
     let response: Promise<ApiResponse<any>>;
     if (params['customerId'] != null) {
-      response = this.caseService.getCustomerById({
+      response = this.srService.getCustomerById({
         data: { customerId: parseInt(params['customerId']) }
       });
     }
@@ -603,7 +605,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
         titleModalEmail: this.titleModalEmail,
         parentModule: module,
         customerName: customerName,
-        caseNumber: this.createForm.value['caseNumber'],
+        srNumber: this.createForm.value['srNumber'],
         subjectEmail: 'เรื่องที่ให้บริการ ',
         subject: this.createForm.value['subject'],
       }

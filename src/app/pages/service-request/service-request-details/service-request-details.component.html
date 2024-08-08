@@ -191,7 +191,7 @@
                                         <mat-form-field class="col-md-3">
                                             <mat-label>{{ 'case.status' | translate }}</mat-label>
                                             <mat-select formControlName="status" required>
-                                                <mat-option *ngFor="let type of caseStatuslList" [value]="type.codeId">
+                                                <mat-option *ngFor="let type of srStatusList" [value]="type.codeId">
                                                     {{ type.codeName }}
                                                 </mat-option>
                                                 <mat-error *ngIf="createForm.controls['status'].hasError('required')">
@@ -217,7 +217,7 @@
                                         <mat-form-field class="col-md-3">
                                             <mat-label>{{ 'case.category' | translate }}</mat-label>
                                             <mat-select formControlName="categoryTypeCode"
-                                                (ngModelChange)="getCaseTypeByCategoryId($event)" required>
+                                                (ngModelChange)="getSrTypeByCategoryId($event)" required>
                                                 <mat-option *ngFor="let type of categoryList" [value]="type.codeId">
                                                     {{ type.codeName }}
                                                 </mat-option>
@@ -230,7 +230,7 @@
                                         <mat-form-field class="col-md-3">
                                             <mat-label>{{ 'case.type' | translate }}</mat-label>
                                             <mat-select formControlName="type"
-                                                (ngModelChange)="getCaseSubTypeByCaseTypeId($event)" required>
+                                                (ngModelChange)="getSrSubTypeByCaseTypeId($event)" required>
                                                 <mat-option *ngFor="let type of typeList" [value]="type.codeId">
                                                     {{ type.codeName }}
                                                 </mat-option>
@@ -273,7 +273,7 @@
                                         <mat-form-field class="col-md-3">
                                             <mat-label>{{ 'case.channel' | translate }}</mat-label>
                                             <mat-select formControlName="channel">
-                                                <mat-option *ngFor="let type of caseChannelList" [value]="type.codeId">
+                                                <mat-option *ngFor="let type of srChannelList" [value]="type.codeId">
                                                     {{ type.codeName }}
                                                 </mat-option>
                                             </mat-select>

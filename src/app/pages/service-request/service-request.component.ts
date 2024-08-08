@@ -11,9 +11,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { Globals } from 'src/app/shared/globals';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
-import { Case } from '../case/case.model';
-import { CaseService } from '../case/case.service';
-import { CaseStore } from '../case/case.store';
+
+import { ServiceRequestModel } from './service-request.model';
+import { ServiceRequestService } from './service-request-service';
+import { ServiceRequestStore } from './service-request.store';
+
 import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.component';
 import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 
@@ -43,14 +45,12 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
   caseStatuslList: Dropdown[];
   titleNameList: Dropdown[];
 
-
-
   submitted = false;
 
   isUpdate = false;
-  selectedRow: Case;
-  dataSource: Case[];
-  displayedColumns: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'customerId'];
+  selectedRow: ServiceRequestModel;
+  dataSource: ServiceRequestModel[];
+  displayedColumns: string[] = ['srNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'customerId'];
   custParam: Object = {};
   owner: Object = {};
 
@@ -59,27 +59,27 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
   constructor(
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
-    private caseService: CaseService,
-    private caseStore: CaseStore,
+    private srService: ServiceRequestService,
+    private srStore: ServiceRequestStore,
     public dialog: MatDialog,
     public router: Router,
     public globals: Globals
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType(
-      { data: ['CASE_DIVISION', 'CASE_CATEGORY', 'CASE_TYPE', 'CASE_PRIORITY', 'CASE_CHANNEL', 'CASE_STATUS', 'TITLE_NAME', 'CASE_SUBTYPE'] }
+      { data: ['SR_DIVISION', 'SR_CATEGORY', 'SR_TYPE', 'SR_PRIORITY', 'SR_CHANNEL', 'SR_STATUS', 'TITLE_NAME', 'SR_SUBTYPE'] }
     ).then(result => {
 
-      this.divisionList = result.data['CASE_DIVISION'];
-      this.categoryList = result.data['CASE_CATEGORY'];
+      this.divisionList = result.data['SR_DIVISION'];
+      this.categoryList = result.data['SR_CATEGORY'];
 
-      this.typeList = result.data['CASE_TYPE'];
-      this.priorityList = result.data['CASE_PRIORITY'];
+      this.typeList = result.data['SR_TYPE'];
+      this.priorityList = result.data['SR_PRIORITY'];
 
-      this.caseChannelList = result.data['CASE_CHANNEL'];
-      this.caseStatuslList = result.data['CASE_STATUS'];
+      this.caseChannelList = result.data['SR_CHANNEL'];
+      this.caseStatuslList = result.data['SR_STATUS'];
       this.titleNameList = result.data['TITLE_NAME'];
-      this.subTypeList = result.data['CASE_SUBTYPE'];
+      this.subTypeList = result.data['SR_SUBTYPE'];
 
     });
     this.maxDate = new Date();
@@ -87,7 +87,7 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
-      caseNumber: [''],
+      srNumber: [''],
       division: [''],
       type: [''],
       subType: [''],
@@ -105,7 +105,7 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
 
 
     this.createForm = this.formBuilder.group({
-      caseNumber: [''],
+      srNumber: [''],
       division: [''],
       type: [''],
       subType: [''],
@@ -151,7 +151,7 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
 
     };
     //return;
-    this.caseService.getCaseList({
+    this.srService.getSrList({
       pageSize: this.tableControl.pageSize,
       pageNo: this.tableControl.pageNo,
       data: param
@@ -174,36 +174,28 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onCaseEdit(e) {
-
-    console.log("onCaseEdit :" + e.caseNumber + " =" + sessionStorage.getItem('caseNumber'));
-    this.caseStore.updateCaseDetail(e.caseNumber);
-
-    this.gotoCaseDetail();
-
-
+  onSrEdit(e) {
+    this.srStore.updateSrDetail(e.srNumber);
+    this.gotoSrDetail();
   }
 
-  gotoCaseDetail() {
+  gotoSrDetail() {
     this.router.navigate([
-      "/casedetails",
+      "/srdetails",
     ]);
   }
 
-  onCaseCreate() {
-    sessionStorage.removeItem('caseNumber');
-    this.caseStore.clearCaseDetail();
+  onSrCreate() {
+    sessionStorage.removeItem('srNumber');
+    this.srStore.clearSrDetail();
   }
 
-  onSelectRow(row: Case) {
+  onSelectRow(row) {
     this.selectedRow = row;
     this.customerForm.patchValue(row);
     this.createForm.patchValue(row);
   }
 
-  onSave() {
-
-  }
 
   onSearch() {
     this.submitted = true;
@@ -214,7 +206,7 @@ export class ServiceRequestComponent extends BaseComponent implements OnInit {
   }
 
   getCaseTypeId(caseTypeId: Event) {
-    const data = `CASE_SUBTYPE,${caseTypeId}`;
+    const data = `SR_SUBTYPE,${caseTypeId}`;
     this.api.getCodebookByCodeTypeAndParentId({ data: data }).then(result => { this.subTypeList = result.data; });
   }
 

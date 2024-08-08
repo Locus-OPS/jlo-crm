@@ -92,6 +92,8 @@ export class TabManageService {
   }
 
   updateNavTitleByIndex(index: number) {
+    console.log("updateNavTitleByIndex :" + index);
+
     if (index !== -1) {
       try {
         this.updateNavTitle(this.tabsComponents[index].title, this.tabsComponents[index].titleParam);
