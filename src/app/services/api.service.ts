@@ -101,9 +101,6 @@ export class ApiService {
     return this.http.post(this.rootPath + '/common/selector/getParentMenu', {}).toPromise();
   }
 
-  getProgram(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/api/selector/getProgram', {}).toPromise();
-  }
 
   getProvince(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.http.post(this.rootPath + '/api/selector/getProvince', param).toPromise();

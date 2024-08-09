@@ -81,7 +81,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   districtList = [];
   subDistrictList = [];
   postCodeList = [];
-  programList: Dropdown[];
+  // programList: Dropdown[];
 
   get c() { return this.createForm.controls; }
 
@@ -123,10 +123,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       }
     );
 
-    // Load program list.
-    this.api.getProgram().then(result => {
-      this.programList = result.data;
-    });
+
   }
 
   ngOnInit() {

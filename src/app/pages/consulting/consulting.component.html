@@ -158,7 +158,7 @@
           <form [formGroup]="searchFormCase" (ngSubmit)="onSearch()" novalidate>
             <div class="material-datatables table-responsive">
 
-              <table mat-table [dataSource]="dataSourceSr" class="mat-elevation-z8 table-responsive"
+              <table mat-table [dataSource]="dataSourceSr" class="mat-elevation-z8"
                 (matSortChange)="tableControlCase.onSort($event)" matSort matSortDirection="asc" matSortDisableClear>
 
                 <ng-container matColumnDef="action">
