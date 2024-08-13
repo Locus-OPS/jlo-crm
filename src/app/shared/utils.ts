@@ -34,9 +34,17 @@ export default class Utils {
     //   ...options
     // }).show();
 
+    // return Swal.fire({
+    //   icon: 'success',
+    //   customClass: 'btn btn-success',
+    //   ...options
+    // });
+
     return Swal.fire({
       icon: 'success',
-      customClass: 'btn btn-success',
+      customClass: {
+        confirmButton: 'btn btn-info'
+      },
       ...options
     });
   }
@@ -94,11 +102,20 @@ export default class Utils {
     //   ...options
     // }).show();
 
+    // return Swal.fire({
+    //   icon: 'error',
+    //   customClass: 'btn btn-info',
+    //   ...options
+    // });
+
     return Swal.fire({
       icon: 'error',
-      customClass: 'btn btn-info',
+      customClass: {
+        confirmButton: 'btn btn-info'
+      },
       ...options
     });
+
   }
 
   static assign(target: object, ...sources: object[]) {
