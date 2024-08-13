@@ -262,13 +262,13 @@
                 </app-customer-address>
               </mat-tab>
 
-              <mat-tab [label]="'case.title' | translate">
+              <mat-tab [label]="'case.title' | translate" *ngIf="IS_ROLE('CRM_PACKAGE') || IS_ROLE('SUPER_ADMIN')">
                 <app-customer-case #customerCase *ngIf="this.customerId != null" [customerIdParam]="this.customerId">
                 </app-customer-case>
               </mat-tab>
 
-              <mat-tab [label]="'sr.title' | translate">
-                <app-customer-sr #customerSr *ngIf="this.customerId != null" [customerIdParam]="this.customerId">
+              <mat-tab [label]="'sr.title' | translate" *ngIf="IS_ROLE('CRM_SLF') || IS_ROLE('SUPER_ADMIN')">
+                <app-customer-sr #customerSr *ngIf=" this.customerId !=null" [customerIdParam]="this.customerId">
                 </app-customer-sr>
               </mat-tab>
 
