@@ -420,11 +420,11 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
         this.customerForm.patchValue(result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Case has been saved.',
+          text: 'Service Request has been saved.',
         });
       } else {
         Utils.alertError({
-          text: 'Case has not been saved.',
+          text: 'Service Request has not been saved.',
         });
       }
     }, () => {
