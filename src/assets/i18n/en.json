@@ -5,7 +5,8 @@
       "role": "Role",
       "position": "Position",
       "codebook": "Codebook",
-      "business-unit": "Business Unit"
+      "business-unit": "Business Unit",
+      "้holiday": "holiday"
     }
   },
   "paging": {
