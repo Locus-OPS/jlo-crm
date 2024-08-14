@@ -21,13 +21,14 @@ import { ContactHistoryTlComponent } from './tab/contact-history-tl/contact-hist
 import { CustomerCaseComponent } from "./tab/customer-case/customer-case.component";
 import { CustomerAddressComponent } from './tab/customer-address/customer-address.component';
 import { CustomerAuditLogComponent } from './tab/customer-audit-log/customer-audit-log.component';
+import { CustomerSrComponent } from './tab/customer-sr/customer-sr.component';
 
 @Component({
   selector: 'app-customer-detail',
   templateUrl: './customer-detail.component.html',
   styleUrls: ['./customer-detail.component.scss'],
   standalone: true,
-  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent, CustomerCaseComponent, CustomerAddressComponent, CustomerAuditLogComponent]
+  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent, CustomerCaseComponent, CustomerSrComponent, CustomerAddressComponent, CustomerAuditLogComponent]
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 
@@ -36,6 +37,9 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
   @ViewChild("customerCase", { static: false })
   customerCaseComponent: CustomerCaseComponent;
+
+  @ViewChild("customerSr", { static: false })
+  customerSrComponent: CustomerSrComponent;
 
   @ViewChild("customerAddress", { static: false })
   customerAddressComponent: CustomerAddressComponent;
@@ -188,9 +192,14 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.customer', { name: 'New' });
     }
 
-    this.newCaseSubscription = this.appStore.observeNewCase().subscribe(newCase => {
-      if (newCase.customerId === this.createForm.controls['customerId'].value) {
+    this.newCaseSubscription = this.appStore.observeNewCase().subscribe(val => {
+
+      if (val.customerId === this.createForm.controls['customerId'].value) {
         this.customerCaseComponent.searchCase();
+      }
+
+      if (val.customerId === this.createForm.controls['customerId'].value) {
+        this.customerSrComponent.searchSr();
       }
     });
 

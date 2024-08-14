@@ -101,6 +101,7 @@
                     </mat-form-field>
                   </div>
                   <div class="row" *ngIf="createForm.controls['customerType'].value">
+
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.nationality' | translate }}</mat-label>
                       <mat-select formControlName="nationality" (valueChange)="onChangeNationality($event)">
@@ -131,16 +132,16 @@
                       <mat-datepicker-toggle matSuffix [for]="birthDateRef"></mat-datepicker-toggle>
                       <mat-datepicker #birthDateRef></mat-datepicker>
                     </mat-form-field>
-                    <div class="col-md-3" *ngIf="createForm.controls['customerType'].value">
-                      <div matLabel>
-                        {{ 'member.gender' | translate }}
-                      </div>
-                      <mat-radio-group class="no-label" formControlName="gender">
-                        <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList">{{ item.etc1 | translate
-                          }} &nbsp;&nbsp;</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
+                    <mat-form-field class="col-md-3">
+                      <mat-label>{{ 'member.maritalStatus' | translate }}</mat-label>
+                      <mat-select formControlName="maritalStatus">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
                   </div>
+
                 </div>
               </div>
 
@@ -158,33 +159,15 @@
                   <input matInput type="text" formControlName="taxId" maxlength="13" />
                 </mat-form-field>
               </div>
-              <div class="row">
-                <mat-form-field class="col-md-3" *ngIf="!createForm.controls['customerType'].value">
+
+              <div class="row" *ngIf="!createForm.controls['customerType'].value">
+                <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.companyRegisterDate' | translate }}</mat-label>
                   <input matInput [matDatepicker]="birthDateRef" formControlName="birthDate" />
                   <mat-datepicker-toggle matSuffix [for]="birthDateRef"></mat-datepicker-toggle>
                   <mat-datepicker #birthDateRef></mat-datepicker>
                 </mat-form-field>
-
-
-
-                <mat-form-field class="col-md-3" *ngIf="createForm.controls['customerType'].value">
-                  <mat-label>{{ 'member.maritalStatus' | translate }}</mat-label>
-                  <mat-select formControlName="maritalStatus">
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col-md-3" *ngIf="createForm.controls['customerType'].value">
-                  <mat-label>{{ 'member.occupation' | translate }}</mat-label>
-                  <mat-select formControlName="occupation">
-                    <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field class="col-md-3" *ngIf="!createForm.controls['customerType'].value">
+                <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.businessType' | translate }}</mat-label>
                   <mat-select formControlName="businessType">
                     <mat-option>--</mat-option>
@@ -193,6 +176,28 @@
                   </mat-select>
                 </mat-form-field>
               </div>
+
+              <div class="row" *ngIf="createForm.controls['customerType'].value">
+                <div class="col-md-3">
+                  <div matLabel>
+                    {{ 'member.gender' | translate }}
+                  </div>
+                  <mat-radio-group class="no-label" formControlName="gender">
+                    <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList">{{ item.etc1 | translate
+                      }} &nbsp;&nbsp;</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'member.occupation' | translate }}</mat-label>
+                  <mat-select formControlName="occupation">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
               <div class="row">
                 <div class="col-md-12">
                   <mat-card>
@@ -257,9 +262,14 @@
                 </app-customer-address>
               </mat-tab>
 
-              <mat-tab [label]="'case.title' | translate">
+              <mat-tab [label]="'case.title' | translate" *ngIf="IS_ROLE('CRM_PACKAGE') || IS_ROLE('SUPER_ADMIN')">
                 <app-customer-case #customerCase *ngIf="this.customerId != null" [customerIdParam]="this.customerId">
                 </app-customer-case>
+              </mat-tab>
+
+              <mat-tab [label]="'sr.title' | translate" *ngIf="IS_ROLE('CRM_SLF') || IS_ROLE('SUPER_ADMIN')">
+                <app-customer-sr #customerSr *ngIf=" this.customerId !=null" [customerIdParam]="this.customerId">
+                </app-customer-sr>
               </mat-tab>
 
               <mat-tab [label]="'contact.history' | translate">

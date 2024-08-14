@@ -90,4 +90,8 @@ export class CustomerService {
     });
     return this.http.request(req);
   }
+
+  getCustomerSrList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/customer/getCustomerSrList', param);
+  }
 }

@@ -17,7 +17,7 @@ export class BaseComponent {
     public globals: Globals
   ) {
     let url = this.router.url;
-    if(url.indexOf(";") != -1){
+    if (url.indexOf(";") != -1) {
       url = url.split(";")[0];
     }
     this.menuResp = this.globals.profile.menuRespList.find(item => item.link === url);
@@ -35,6 +35,14 @@ export class BaseComponent {
 
   public CAN_EXTRA() {
     return this.menuResp.respFlag && this.menuResp.respFlag.indexOf('X') > -1;
+  }
+
+  public IS_ROLE(roleName: string) {
+    try {
+      return this.globals.profile.roleCode.indexOf(roleName) == 0;
+    } catch (e) {
+      return false;
+    }
   }
 
 }
