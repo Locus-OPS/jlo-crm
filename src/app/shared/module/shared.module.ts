@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { QuillModule } from 'ngx-quill'
 import { QuillConfigModule } from 'ngx-quill/config';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 @NgModule({
   imports: [
     ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' }),
@@ -55,7 +56,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
           ['link', 'image', 'video']                         // link and image, video
         ]
       }
-    }),
+    })
   ],
   exports: [
     CommonModule,
