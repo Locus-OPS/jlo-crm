@@ -29,6 +29,7 @@ import { EventColor } from 'calendar-utils';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CodebookData } from '../codebook/codebook.model';
+import { HolidayServiceService } from './holiday-service.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -60,6 +61,8 @@ interface Holiday {
   styleUrl: './holiday.component.scss'
 })
 export class HolidayComponent extends BaseComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['date', 'name'];
+  holidayData: any[] = [];
 
   constructor(
     public api: ApiService,
@@ -70,7 +73,8 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private modal: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private holidayService: HolidayServiceService
   ) {
     super(router, globals);
     this.getCodebook();
@@ -78,14 +82,10 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
       date: ['', Validators.required],
       name: ['', Validators.required],
     });
+    this.getHolidayList();
   }
 
-  displayedColumns: string[] = ['date', 'name'];
-  holidayData: Holiday[] = [
-    { date: new Date('01/01/2016'), name: 'วันปีใหม่' },
-    { date: new Date('02/22/2016'), name: 'วันมาฆบูชา' },
-    // Add more initial data as needed
-  ];
+
 
   holidayForm: FormGroup;
 
@@ -102,6 +102,18 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
       this.holidayData.push(this.holidayForm.value);
       this.holidayForm.reset();
     }
+  }
+
+  getHolidayList() {
+    this.holidayService.getHolidayList({
+      pageSize: 50,
+      pageNo: 0,
+      data: { year: 2024 }
+    }).then(result => {
+      if (result.status) {
+        this.holidayData = result.data;
+      }
+    });
   }
 
 
