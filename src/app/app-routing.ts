@@ -103,6 +103,16 @@ const routes: Routes = [
         loadComponent: () => import('./pages/system/email-template/email-template.component').then(m => m.EmailTemplateComponent)
       },
       {
+        path: 'system/questionnaire',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/questionnaire/questionnaire.component').then(m => m.QuestionnaireComponent)
+      },
+      {
+        path: 'system/questionnaire-details',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/questionnaire/questionnaire-details/questionnaire-details.component').then(m => m.QuestionnaireDetailsComponent)
+      },
+      {
         path: 'advertising',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/advertising/advertising.component').then(m => m.AdvertisingComponent)
