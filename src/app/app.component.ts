@@ -5,8 +5,7 @@ import { filter, tap } from "rxjs/operators";
 import { SharedModule } from "./shared/module/shared.module";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { Subscription } from "rxjs";
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -14,7 +13,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
   imports: [
     SharedModule
     , NgxSpinnerModule
-    , CalendarModule
+    , FullCalendarModule
   ]
 })
 export class AppComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,42 +9,11 @@ import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from 'src/app/shared/base.component';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
-import { EventColor } from 'calendar-utils';
-import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CodebookData } from '../codebook/codebook.model';
 import { HolidayServiceService } from './holiday-service.service';
+import moment from 'moment';
 
-const colors: Record<string, EventColor> = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
-};
 
 interface Holiday {
   date: Date;
@@ -60,9 +29,15 @@ interface Holiday {
   templateUrl: './holiday.component.html',
   styleUrl: './holiday.component.scss'
 })
-export class HolidayComponent extends BaseComponent implements OnInit, AfterViewInit {
+export class HolidayComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['date', 'name'];
   holidayData: any[] = [];
+  currentDate: string;
+  holidayForm: FormGroup;
+  holidayTypes: CodebookData[] = [];
+  selectedRow: any;
+
+  @ViewChild('holidayDateInput') holidayDateInputElement: ElementRef;
 
   constructor(
     public api: ApiService,
@@ -77,19 +52,25 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
     private holidayService: HolidayServiceService
   ) {
     super(router, globals);
+
+  }
+  ngOnInit(): void {
     this.getCodebook();
-    this.holidayForm = this.fb.group({
-      date: ['', Validators.required],
-      name: ['', Validators.required],
-    });
+    this.currentDate = this.getCurrentDate();
     this.getHolidayList();
+    this.initForm();
   }
 
-
-
-  holidayForm: FormGroup;
-
-  holidayTypes: CodebookData[] = [];
+  initForm() {
+    this.holidayForm = this.fb.group({
+      id: [''],
+      year: [''],
+      holidayDate: ['', Validators.required],
+      holidayName: ['', Validators.required],
+      typeCd: ['', Validators.required],
+      remark: ['']
+    });
+  }
 
   getCodebook() {
     this.api.getMultipleCodebookByCodeType({ data: ['HOLIDAY_TYPE'] }).then(result => {
@@ -106,8 +87,6 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
 
   getHolidayList() {
     this.holidayService.getHolidayList({
-      pageSize: 50,
-      pageNo: 0,
       data: { year: 2024 }
     }).then(result => {
       if (result.status) {
@@ -116,157 +95,57 @@ export class HolidayComponent extends BaseComponent implements OnInit, AfterView
     });
   }
 
-
-
-
-  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
-
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  ngAfterViewInit(): void {
-    console.log('Method not implemented.');
-  }
-
-  ngOnInit(): void {
-    // alert(JSON.stringify(this.view));
-  }
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors.red },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors.yellow },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors.blue },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors.yellow },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
-
-  activeDayIsOpen: boolean = true;
-
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
+  onSaveHoliday() {
+    if (!this.holidayForm.valid) {
+      return;
     }
-  }
+    const param = this.holidayForm.getRawValue();
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
+    this.holidayService.saveHoliday({ data: { ...param, year: 2024 } }).then((result) => {
+      if (result.status) {
+        this.holidayForm.reset();
+        this.getHolidayList();
+        this.holidayDateInputElement.nativeElement.focus();
       }
-      return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+  onEditHoliday() {
+    if (!this.holidayForm.valid) {
+      return;
+    }
+    const params = this.holidayForm.getRawValue();
+    this.holidayService.editHoliday({ data: params }).then((result) => {
+      if (result.status) {
+        this.getHolidayList();
+        this.holidayForm.reset();
+        this.holidayDateInputElement.nativeElement.focus();
+      }
+    });
   }
 
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
+  onDeleteHoliday() {
+    if (!this.holidayForm.valid) {
+      return;
+    }
+    const params = this.holidayForm.getRawValue();
+    this.holidayService.deleteHoliday({ data: params }).then((result) => {
+      if (result.status) {
+        this.getHolidayList();
+        this.holidayForm.reset();
+        this.holidayDateInputElement.nativeElement.focus();
+      }
+    });
   }
 
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+  getCurrentDate(): string {
+    return moment().format('MMMM yyyy');
   }
 
-  setView(view: CalendarView) {
-    this.view = view;
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.holidayForm.patchValue({ ...row });
+    this.holidayDateInputElement.nativeElement.focus();
   }
 
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
 }

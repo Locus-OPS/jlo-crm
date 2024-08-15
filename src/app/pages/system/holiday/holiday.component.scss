@@ -12,3 +12,13 @@ mat-form-field {
   width: 100%;
   margin-right: 20px;
 }
+
+/* styles.css หรือ CSS ของ Component */
+.button-margin {
+  margin-right: 10px; /* หรือระยะห่างที่คุณต้องการ */
+  color: azure;
+}
+
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}
