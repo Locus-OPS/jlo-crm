@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { QuillModule } from 'ngx-quill'
 import { QuillConfigModule } from 'ngx-quill/config';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
+import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   imports: [
     ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' }),
@@ -66,7 +66,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MaterialModule,
     RouterModule,
     QuillModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    FullCalendarModule
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

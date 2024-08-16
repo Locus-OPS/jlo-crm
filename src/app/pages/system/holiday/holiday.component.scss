@@ -12,3 +12,44 @@ mat-form-field {
   width: 100%;
   margin-right: 20px;
 }
+
+/* styles.css หรือ CSS ของ Component */
+.button-margin {
+  margin-right: 10px; /* หรือระยะห่างที่คุณต้องการ */
+  color: azure;
+}
+
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}
+
+/* Ensure the calendar takes up the full width of its container */
+.full-calendar-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.full-calendar-container .fc {
+  font-size: 14px; /* Base font size */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .full-calendar-container .fc {
+    font-size: 12px; /* Smaller font size on smaller screens */
+  }
+
+  .full-calendar-container .fc .fc-toolbar h2 {
+    font-size: 1.5em; /* Adjust the title size */
+  }
+
+  .full-calendar-container .fc-header-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .full-calendar-container .fc-header-toolbar .fc-toolbar-chunk {
+    margin-bottom: 10px; /* Add some space between toolbar items */
+    width: 100%;
+    text-align: center; /* Center the toolbar items */
+  }
+}
