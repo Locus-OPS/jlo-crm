@@ -15,7 +15,7 @@
               <i class="material-icons">person</i>
             </div>
             <h4 class="card-title">{{ 'case.contactdetail' | translate }}</h4>
-          </div>
+            </div>
           <div class="card-body">
             <div class="collapse" id="collapseExample">
               <form [formGroup]="contactForm">
@@ -208,18 +208,7 @@
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.category' | translate }}</mat-label>
-                      <mat-select formControlName="categoryTypeCode" (ngModelChange)="getCaseTypeByCategoryId($event)"
-                        required>
-                        <mat-option *ngFor="let type of categoryList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="createForm.controls['categoryTypeCode'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                    </mat-form-field> -->
+
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.type' | translate }}</mat-label>
                       <mat-select formControlName="type" (ngModelChange)="getCaseSubTypeByCaseTypeId($event)" required>
@@ -239,19 +228,6 @@
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <!--
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.area' | translate }}</mat-label>
-                      <mat-select formControlName="serviceAreaCode" required>
-                        <mat-option *ngFor="let type of serviceAreaList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="createForm.controls['serviceAreaCode'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                     -->
 
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.priority' | translate }}</mat-label>
