@@ -5,7 +5,6 @@ import { filter, tap } from "rxjs/operators";
 import { SharedModule } from "./shared/module/shared.module";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { Subscription } from "rxjs";
-import { FullCalendarModule } from '@fullcalendar/angular';
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -13,13 +12,13 @@ import { FullCalendarModule } from '@fullcalendar/angular';
   imports: [
     SharedModule
     , NgxSpinnerModule
-    , FullCalendarModule
   ]
 })
 export class AppComponent implements OnInit {
   private _router: Subscription;
 
-  constructor(private router: Router, private globals: Globals) { }
+  constructor(private router: Router, private globals: Globals) {
+  }
 
   async ngOnInit() {
     await this.globals.init().then((result) => {

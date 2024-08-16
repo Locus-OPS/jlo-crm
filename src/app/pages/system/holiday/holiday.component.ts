@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, signal, TemplateRef, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CodebookData } from '../codebook/codebook.model';
 import { HolidayServiceService } from './holiday-service.service';
 import moment from 'moment';
-
+import { CalendarOptions, EventApi, EventInput } from '@fullcalendar/core';
+// import { FullCalendarModule, } from '@fullcalendar/angular';
+// import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+// import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import listPlugin from '@fullcalendar/list';
+// import { INITIAL_EVENTS, createEventId } from './event-utils';
+// import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 interface Holiday {
   date: Date;
@@ -36,6 +45,9 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   holidayForm: FormGroup;
   holidayTypes: CodebookData[] = [];
   selectedRow: any;
+  events: { title: string; date: string }[] = [];
+  calendarEl = document.getElementById('calendar');
+  selectedYear: number;
 
   @ViewChild('holidayDateInput') holidayDateInputElement: ElementRef;
 
@@ -49,22 +61,32 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     private translate: TranslateService,
     private modal: NgbModal,
     private fb: FormBuilder,
-    private holidayService: HolidayServiceService
+    private holidayService: HolidayServiceService,
+    private changeDetector: ChangeDetectorRef
   ) {
     super(router, globals);
 
   }
+
+  // calendarOptions: CalendarOptions = {
+  //   initialView: 'dayGridMonth',
+  //   plugins: [dayGridPlugin]
+  // };
+
+
+
   ngOnInit(): void {
+    this.selectedYear = moment().year();
+    this.getHolidayList();
     this.getCodebook();
     this.currentDate = this.getCurrentDate();
-    this.getHolidayList();
     this.initForm();
   }
 
   initForm() {
     this.holidayForm = this.fb.group({
       id: [''],
-      year: [''],
+      year: [this.selectedYear],
       holidayDate: ['', Validators.required],
       holidayName: ['', Validators.required],
       typeCd: ['', Validators.required],
@@ -87,10 +109,20 @@ export class HolidayComponent extends BaseComponent implements OnInit {
 
   getHolidayList() {
     this.holidayService.getHolidayList({
-      data: { year: 2024 }
+      data: { year: this.selectedYear }
     }).then(result => {
       if (result.status) {
+        this.events = [];
         this.holidayData = result.data;
+        result.data.forEach(item => {
+          this.events.push({
+            title: item.holidayName,
+            date: moment(item.holidayDate).format('YYYY-MM-DD')
+          });
+        });
+        this.calendarOptions.events = [
+          ...this.events as any[],
+        ];
       }
     });
   }
@@ -147,5 +179,64 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     this.holidayForm.patchValue({ ...row });
     this.holidayDateInputElement.nativeElement.focus();
   }
+
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin, interactionPlugin],
+    // events: [
+    //   { title: 'Event 1', date: '2024-08-01' },
+    //   { title: 'Event 2', date: '2024-08-02' }
+    // ],
+    events: this.events,
+    dateClick: this.handleDateClick.bind(this),
+    eventClick: this.handleEventClick.bind(this),
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,dayGridWeek,dayGridDay'
+    },
+    height: 'auto',  // Ensures the calendar height adjusts automatically
+    contentHeight: 'auto',  // Ensures the calendar's content area adjusts automatically
+    aspectRatio: 1.5,  // Controls the width-to-height ratio, useful for responsiveness
+    weekends: true,  // Example of other options that can be used
+    datesSet: function (info) {
+      if (info.view.currentStart.getFullYear() != null) {
+        if (moment().year() != info.view.currentStart.getFullYear()) {
+
+        }
+
+      }
+
+      // const action = info.view.type;
+      // if (action === 'dayGridMonth' || action === 'dayGridWeek' || action === 'dayGridDay') {
+      //   if (info.view.title === 'Today') {
+      //     alert('Clicked Today');
+      //   } else if (info.view.title === 'Prev') {
+      //     alert('Clicked Prev');
+      //   } else if (info.view.title === 'Next') {
+      //     alert('Clicked Next');
+      //   }
+      // }
+    }
+  };
+
+  eventsPromise: Promise<EventInput[]>;
+
+  handleDateClick(arg: DateClickArg) {
+    this.holidayForm.reset();
+    this.holidayForm.patchValue({ holidayDate: arg.dateStr });
+  }
+
+  handleEventClick(clickInfo: { event: any }) {
+    alert('Event clicked: ' + clickInfo.event.title);
+  }
+
+  Test(year: any) {
+    this.selectedYear = year;
+    alert(this.selectedYear);
+  }
+
+
+
 
 }

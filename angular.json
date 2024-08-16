@@ -33,7 +33,8 @@
               "src/assets/css/custom-theme.scss",
               "node_modules/ngx-spinner/animations/ball-pulse-sync.css",
               "src/assets/css/jlo-crm.scss",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/angular-calendar/scss/angular-calendar.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
