@@ -14,14 +14,7 @@ import { CodebookData } from '../codebook/codebook.model';
 import { HolidayServiceService } from './holiday-service.service';
 import moment from 'moment';
 import { CalendarOptions, EventApi, EventInput } from '@fullcalendar/core';
-// import { FullCalendarModule, } from '@fullcalendar/angular';
-// import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-// import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import listPlugin from '@fullcalendar/list';
-// import { INITIAL_EVENTS, createEventId } from './event-utils';
-// import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { format, parseISO } from 'date-fns';
 import Utils from 'src/app/shared/utils';
@@ -235,10 +228,6 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
-    // events: [
-    //   { title: 'Event 1', date: '2024-08-01' },
-    //   { title: 'Event 2', date: '2024-08-02' }
-    // ],
     events: this.events,
     dateClick: this.handleDateClick.bind(this),
     eventClick: this.handleEventClick.bind(this),
@@ -264,8 +253,6 @@ export class HolidayComponent extends BaseComponent implements OnInit {
 
   handleEventClick(clickInfo: { event: any }) {
     this.getHolidayDetail(clickInfo.event.extendedProps.id);
-    //alert('Event clicked: ' + clickInfo.event.title + " id:" + clickInfo.event.extendedProps.id);
-
   }
 
 
