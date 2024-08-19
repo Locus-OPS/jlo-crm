@@ -24,6 +24,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 // import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { format, parseISO } from 'date-fns';
+import Utils from 'src/app/shared/utils';
 
 interface Holiday {
   date: Date;
@@ -105,11 +106,11 @@ export class HolidayComponent extends BaseComponent implements OnInit {
 
   getHolidayList() {
     this.holidayService.getHolidayList({
-      data: { year: this.holidayForm.get('year').value }
+      data: { year: this.currentYear }
     }).then(result => {
       if (result.status) {
         this.events = [];
-        this.holidayData = result.data;
+
         result.data.forEach(item => {
           this.events.push({
             title: item.holidayName,
@@ -122,6 +123,16 @@ export class HolidayComponent extends BaseComponent implements OnInit {
         this.calendarOptions.events = [
           ...this.events as any[],
         ];
+
+        this.holidayData = result.data.filter(item => item.year === this.currentYear);
+      }
+    });
+  }
+
+  getHolidayDetail(id: number) {
+    this.holidayService.getHolidayDetail({ data: { id: id } }).then((result) => {
+      if (result.status) {
+        this.holidayForm.patchValue({ ...result.data });
       }
     });
   }
@@ -132,14 +143,27 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     }
     const param = this.holidayForm.getRawValue();
     const year = moment(this.holidayForm.get('holidayDate').value).year();
-    this.holidayService.saveHoliday({ data: { ...param, year: year } }).then((result) => {
-      if (result.status) {
-        this.holidayForm.reset();
-        this.holidayForm.patchValue({ year: this.selectedYear });
-        this.getHolidayList();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.saveHoliday({ data: { ...param, year: year } }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been saved.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   onEditHoliday() {
@@ -147,14 +171,27 @@ export class HolidayComponent extends BaseComponent implements OnInit {
       return;
     }
     const params = this.holidayForm.getRawValue();
-    this.holidayService.editHoliday({ data: params }).then((result) => {
-      if (result.status) {
-        this.holidayForm.reset();
-        this.holidayForm.patchValue({ year: this.selectedYear });
-        this.getHolidayList();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.editHoliday({ data: params }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been updated.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          // ดำเนินการเมื่อผู้ใช้คลิกปุ่ม "Cancel"
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   onDeleteHoliday() {
@@ -162,15 +199,27 @@ export class HolidayComponent extends BaseComponent implements OnInit {
       return;
     }
     const params = this.holidayForm.getRawValue();
-    this.holidayService.deleteHoliday({ data: params }).then((result) => {
-      if (result.status) {
 
-        this.holidayForm.reset();
-        this.holidayForm.patchValue({ year: this.selectedYear });
-        this.getHolidayList();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.deleteHoliday({ data: params }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been deleted.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          // ดำเนินการเมื่อผู้ใช้คลิกปุ่ม "Cancel"
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   getCurrentDate(): string {
@@ -202,14 +251,6 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     contentHeight: 'auto',  // Ensures the calendar's content area adjusts automatically
     aspectRatio: 1.5,  // Controls the width-to-height ratio, useful for responsiveness
     weekends: true,  // Example of other options that can be used
-    // datesSet: function (info) {
-    //   if (info.view.currentStart.getFullYear() != null) {
-    //     if (moment().year() != info.view.currentStart.getFullYear()) {
-
-    //     }
-
-    //   }
-    // }
   };
 
   eventsPromise: Promise<EventInput[]>;
@@ -222,7 +263,8 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   }
 
   handleEventClick(clickInfo: { event: any }) {
-    alert('Event clicked: ' + clickInfo.event.title + " id:" + clickInfo.event.extendedProps.id);
+    this.getHolidayDetail(clickInfo.event.extendedProps.id);
+    //alert('Event clicked: ' + clickInfo.event.title + " id:" + clickInfo.event.extendedProps.id);
 
   }
 
