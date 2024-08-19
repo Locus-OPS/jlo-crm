@@ -85,12 +85,12 @@
                           {{ 'button.delete' | translate }}
                         </button>
                         <button mat-raised-button color="primary" class="button-margin" (click)="onEditHoliday()">
-                          {{ 'button.edit' | translate }}
+                          {{ 'button.save' | translate }}
                         </button>
                       </span>
                       <span *ngIf="!holidayForm.get('id').value">
                         <button mat-raised-button color="primary" class="button-margin" (click)="onSaveHoliday()">
-                          {{ 'button.add' | translate }}
+                          {{ 'button.save' | translate }}
                         </button>
                       </span>
                     </div>
