@@ -14,15 +14,10 @@ import { CodebookData } from '../codebook/codebook.model';
 import { HolidayServiceService } from './holiday-service.service';
 import moment from 'moment';
 import { CalendarOptions, EventApi, EventInput } from '@fullcalendar/core';
-// import { FullCalendarModule, } from '@fullcalendar/angular';
-// import { CalendarOptions, DateSelectArg, EventClickArg, EventApi } from '@fullcalendar/core';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-// import dayGridPlugin from '@fullcalendar/daygrid';
-// import timeGridPlugin from '@fullcalendar/timegrid';
-// import listPlugin from '@fullcalendar/list';
-// import { INITIAL_EVENTS, createEventId } from './event-utils';
-// import { CalendarEvent, CalendarModule, DateAdapter } from 'angular-calendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { format, parseISO } from 'date-fns';
+import Utils from 'src/app/shared/utils';
 
 interface Holiday {
   date: Date;
@@ -45,9 +40,10 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   holidayForm: FormGroup;
   holidayTypes: CodebookData[] = [];
   selectedRow: any;
-  events: { title: string; date: string }[] = [];
+  events: { title: string; date: string; color: string, textColor: string, extendedProps: { id: string } }[] = [];
   calendarEl = document.getElementById('calendar');
   selectedYear: number;
+  currentYear: number;
 
   @ViewChild('holidayDateInput') holidayDateInputElement: ElementRef;
 
@@ -68,19 +64,13 @@ export class HolidayComponent extends BaseComponent implements OnInit {
 
   }
 
-  // calendarOptions: CalendarOptions = {
-  //   initialView: 'dayGridMonth',
-  //   plugins: [dayGridPlugin]
-  // };
-
-
-
   ngOnInit(): void {
     this.selectedYear = moment().year();
-    this.getHolidayList();
+    this.currentYear = moment().year();
+    this.initForm();
     this.getCodebook();
     this.currentDate = this.getCurrentDate();
-    this.initForm();
+    this.getHolidayList();
   }
 
   initForm() {
@@ -109,20 +99,33 @@ export class HolidayComponent extends BaseComponent implements OnInit {
 
   getHolidayList() {
     this.holidayService.getHolidayList({
-      data: { year: this.selectedYear }
+      data: { year: this.currentYear }
     }).then(result => {
       if (result.status) {
         this.events = [];
-        this.holidayData = result.data;
+
         result.data.forEach(item => {
           this.events.push({
             title: item.holidayName,
-            date: moment(item.holidayDate).format('YYYY-MM-DD')
+            date: moment(item.holidayDate).format('YYYY-MM-DD'),
+            color: item.backgroundColor,
+            textColor: item.textColor,
+            extendedProps: { id: item.id }
           });
         });
         this.calendarOptions.events = [
           ...this.events as any[],
         ];
+
+        this.holidayData = result.data.filter(item => item.year === this.currentYear);
+      }
+    });
+  }
+
+  getHolidayDetail(id: number) {
+    this.holidayService.getHolidayDetail({ data: { id: id } }).then((result) => {
+      if (result.status) {
+        this.holidayForm.patchValue({ ...result.data });
       }
     });
   }
@@ -132,14 +135,28 @@ export class HolidayComponent extends BaseComponent implements OnInit {
       return;
     }
     const param = this.holidayForm.getRawValue();
+    const year = moment(this.holidayForm.get('holidayDate').value).year();
 
-    this.holidayService.saveHoliday({ data: { ...param, year: 2024 } }).then((result) => {
-      if (result.status) {
-        this.holidayForm.reset();
-        this.getHolidayList();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.saveHoliday({ data: { ...param, year: year } }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been saved.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   onEditHoliday() {
@@ -147,13 +164,27 @@ export class HolidayComponent extends BaseComponent implements OnInit {
       return;
     }
     const params = this.holidayForm.getRawValue();
-    this.holidayService.editHoliday({ data: params }).then((result) => {
-      if (result.status) {
-        this.getHolidayList();
-        this.holidayForm.reset();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.editHoliday({ data: params }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been updated.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          // ดำเนินการเมื่อผู้ใช้คลิกปุ่ม "Cancel"
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   onDeleteHoliday() {
@@ -161,13 +192,27 @@ export class HolidayComponent extends BaseComponent implements OnInit {
       return;
     }
     const params = this.holidayForm.getRawValue();
-    this.holidayService.deleteHoliday({ data: params }).then((result) => {
-      if (result.status) {
-        this.getHolidayList();
-        this.holidayForm.reset();
-        this.holidayDateInputElement.nativeElement.focus();
-      }
-    });
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.holidayService.deleteHoliday({ data: params }).then((res) => {
+            if (res.status) {
+              this.holidayForm.reset();
+              this.holidayForm.patchValue({ year: this.selectedYear });
+              this.getHolidayList();
+              this.holidayDateInputElement.nativeElement.focus();
+              Utils.alertSuccess({ text: 'Holiday has been deleted.' });
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          // ดำเนินการเมื่อผู้ใช้คลิกปุ่ม "Cancel"
+          console.log('Cancelled');
+        }
+      });
+
   }
 
   getCurrentDate(): string {
@@ -183,10 +228,6 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
-    // events: [
-    //   { title: 'Event 1', date: '2024-08-01' },
-    //   { title: 'Event 2', date: '2024-08-02' }
-    // ],
     events: this.events,
     dateClick: this.handleDateClick.bind(this),
     eventClick: this.handleEventClick.bind(this),
@@ -199,41 +240,19 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     contentHeight: 'auto',  // Ensures the calendar's content area adjusts automatically
     aspectRatio: 1.5,  // Controls the width-to-height ratio, useful for responsiveness
     weekends: true,  // Example of other options that can be used
-    datesSet: function (info) {
-      if (info.view.currentStart.getFullYear() != null) {
-        if (moment().year() != info.view.currentStart.getFullYear()) {
-
-        }
-
-      }
-
-      // const action = info.view.type;
-      // if (action === 'dayGridMonth' || action === 'dayGridWeek' || action === 'dayGridDay') {
-      //   if (info.view.title === 'Today') {
-      //     alert('Clicked Today');
-      //   } else if (info.view.title === 'Prev') {
-      //     alert('Clicked Prev');
-      //   } else if (info.view.title === 'Next') {
-      //     alert('Clicked Next');
-      //   }
-      // }
-    }
   };
 
   eventsPromise: Promise<EventInput[]>;
 
   handleDateClick(arg: DateClickArg) {
     this.holidayForm.reset();
-    this.holidayForm.patchValue({ holidayDate: arg.dateStr });
+    const date = parseISO(arg.dateStr);
+    const formattedDateStr = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    this.holidayForm.patchValue({ holidayDate: formattedDateStr, year: moment(arg.date).year() });
   }
 
   handleEventClick(clickInfo: { event: any }) {
-    alert('Event clicked: ' + clickInfo.event.title);
-  }
-
-  Test(year: any) {
-    this.selectedYear = year;
-    alert(this.selectedYear);
+    this.getHolidayDetail(clickInfo.event.extendedProps.id);
   }
 
 

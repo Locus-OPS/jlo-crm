@@ -15,9 +15,15 @@ export class HolidayServiceService {
   getHolidayList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/holiday/getholidaylist', param);
   }
+
+  getHolidayDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/holiday/getholidaydetail', param);
+  }
+
   saveHoliday(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/holiday/saveholiday', param);
   }
+
 
   editHoliday(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/holiday/editholiday', param);
