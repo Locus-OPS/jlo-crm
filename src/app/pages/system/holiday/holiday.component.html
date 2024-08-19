@@ -67,7 +67,11 @@
                     <mat-form-field>
                       <mat-label>ประเภทวันหยุด</mat-label>
                       <mat-select formControlName="typeCd">
-                        <mat-option *ngFor="let type of holidayTypes" [value]="type.codeId">
+                        <mat-option
+                          *ngFor="let type of holidayTypes"
+                          [value]="type.codeId"
+                          [ngStyle]="{ 'background-color': type.etc1, color: type.etc2 }"
+                        >
                           {{ type.codeName }}
                         </mat-option>
                       </mat-select>
