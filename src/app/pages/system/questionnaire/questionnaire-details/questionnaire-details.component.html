@@ -1,1 +1,151 @@
-<p>questionnaire-details works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="pull-right">
+                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire1" class="collapsed">
+                                <span>
+                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
+                                </span>
+                            </a> -->
+                        </div>
+                        <div class="card-icon">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <h4 class="card-title">{{ 'questionnaire.detail' | translate }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="collapse" id="collapseQuestionnaire1"> -->
+
+
+                        <form #createFormDirective="ngForm" [formGroup]="createFormHeader" (ngSubmit)="onSave($event)"
+                            novalidate>
+
+                            <div class="row">
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'questionnaire.id' | translate}}</mat-label>
+                                    <input matInput type="text" formControlName="id" readonly />
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{ 'questionnaire.type' | translate }}</mat-label>
+                                    <mat-select formControlName="questionnaireType" required>
+                                        <mat-option *ngFor="let type of questionnaireTypeList" [value]="type.codeId">
+                                            {{ type.codeName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="createFormHeader.controls['questionnaireType'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{ 'questionnaire.formName' | translate }}</mat-label>
+                                    <input matInput type="text" formControlName="formName" required />
+                                    <mat-error *ngIf="createFormHeader.controls['formName'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{ 'questionnaire.sectionHeaderText' | translate }}</mat-label>
+                                    <input matInput type="text" formControlName="sectionHeaderText" required />
+                                    <mat-error
+                                        *ngIf="createFormHeader.controls['sectionHeaderText'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'questionnaire.activeYn' | translate }}</mat-label>
+                                    <mat-select formControlName="statusCd" required>
+                                        <mat-option *ngFor="let type of statusList" [value]="type.codeId">
+                                            {{ type.codeName }}
+                                        </mat-option>
+                                        <mat-error *ngIf="createFormHeader.controls['statusCd'].hasError('required')">
+                                            {{ 'error.required' | translate }}
+                                        </mat-error>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <app-created-by [createdBy]="createFormHeader.controls['createdByName'].value"
+                                [createdDate]="createFormHeader.controls['createdDate'].value"
+                                [updatedBy]="createFormHeader.controls['updatedByName'].value"
+                                [updatedDate]="createFormHeader.controls['updatedDate'].value">
+                            </app-created-by>
+
+
+                            <div class="pull-right">
+                                <button mat-raised-button type="button" class="btn btn-fill btn-default"
+                                    (click)="backClicked()">
+                                    {{ 'button.back' | translate }}
+                                    <mat-icon>undo</mat-icon>
+                                </button>
+
+                                <button mat-raised-button type="button" class="btn btn-fill btn-primary"
+                                    (click)="createQheader()">
+                                    {{ 'button.create' | translate }}
+                                </button>
+
+                                <button mat-raised-button type="button" (click)="saveQheader()"
+                                    class="btn btn-fill btn-rose">
+                                    {{ 'button.save' | translate }}
+                                </button>
+
+                                <button mat-raised-button type="button" class="btn btn-fill btn-default"
+                                    (click)="resetQheader()">
+                                    {{ 'button.clear' | translate }}
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- </div> -->
+                    </div>
+
+
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="pull-right">
+                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire2" class="collapsed">
+                                <span>
+                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
+                                </span>
+                            </a> -->
+                        </div>
+                        <div class="card-icon">
+                            <i class="material-icons">quiz</i>
+                        </div>
+                        <h4 class="card-title">{{ 'questionnaire.detail.question' | translate }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="collapse" id="collapseQuestionnaire2"> -->
+
+                        <!-- </div> -->
+                    </div>
+
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="pull-right">
+                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire3" class="collapsed">
+                                <span>
+                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
+                                </span>
+                            </a> -->
+                        </div>
+                        <div class="card-icon">
+                            <i class="material-icons">dynamic_form</i>
+                        </div>
+
+                        <h4 class="card-title">{{ 'questionnaire.detail.answer' | translate }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <div class="collapse" id="collapseQuestionnaire3"> -->
+
+                        <!-- </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
