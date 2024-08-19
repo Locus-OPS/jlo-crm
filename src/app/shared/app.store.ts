@@ -10,6 +10,13 @@ export interface NewSr {
   srNumber: string;
   customerId: string;
 }
+
+
+export interface NewQuestionnaire {
+  headerId: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +40,16 @@ export class AppStore {
 
   broadcastNewSr(newSr: NewSr) {
     this.newSrSubject.next(newSr);
+  }
+
+
+  private newQuestionSubject = new Subject<NewQuestionnaire>();
+  observeNewQuestionnaire(): Observable<NewQuestionnaire> {
+    return this.newQuestionSubject.asObservable();
+  }
+
+  broadcastNewQuestionnaire(newQuestionnaire: NewQuestionnaire) {
+    this.newQuestionSubject.next(newQuestionnaire);
   }
 
 }

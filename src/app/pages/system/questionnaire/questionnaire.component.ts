@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { QuestionnaireService } from './questionnaire.service';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
+import { QuestionnaireStore } from './questionnaire.store';
 
 @Component({
   selector: 'app-questionnaire',
@@ -37,7 +38,8 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private questionnaireService: QuestionnaireService,
     public router: Router,
-    public globals: Globals
+    public globals: Globals,
+    private questionnaireStore: QuestionnaireStore,
   ) {
     super(router, globals);
 
@@ -81,7 +83,9 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
   }
 
   onQuestionnaireCreate() {
-
+    sessionStorage.removeItem('headerId');
+    this.questionnaireStore.clearQuestionnaireHeaderDetail();
   }
+
 
 }

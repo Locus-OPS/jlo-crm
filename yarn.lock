@@ -191,10 +191,10 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "@angular/common@^18.0.0", "@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.0.2", "@angular/common@>=12.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@>=16.0.0", "@angular/common@>=17.1.0", "@angular/common@>=9.0.0", "@angular/common@12 - 18", "@angular/common@18.1.3":
-  version "18.1.3"
-  resolved "https://registry.npmjs.org/@angular/common/-/common-18.1.3.tgz"
-  integrity sha512-TC71jVph4L+QaXlyJTrW27nbqis4sWwr9hD/RDSNkfY9XCvYDb2MjYjKrpbN03FWiv7lmcKT9zgse1fYENFsKQ==
+"@angular/common@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "@angular/common@^18.0.0", "@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.0.2", "@angular/common@>=12.0.0", "@angular/common@>=14.0.0", "@angular/common@>=15.0.0", "@angular/common@>=16.0.0", "@angular/common@>=17.0.0", "@angular/common@>=9.0.0", "@angular/common@12 - 18", "@angular/common@18.0.2":
+  version "18.0.2"
+  resolved "https://registry.npmjs.org/@angular/common/-/common-18.0.2.tgz"
+  integrity sha512-7CK5sFptUFWE3ZrKl8MjgoKjYKC20SN089F4xQIYtP2qM3IoJH/X7qa+5Eidk4PovS1SuCJHrB5AoREWwtWJHA==
   dependencies:
     tslib "^2.3.0"
 
@@ -219,10 +219,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "@angular/core@^18.0.0", "@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.0.2", "@angular/core@>=12.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16.0.0", "@angular/core@>=17.1.0", "@angular/core@>=9.0.0", "@angular/core@18.1.3":
-  version "18.1.3"
-  resolved "https://registry.npmjs.org/@angular/core/-/core-18.1.3.tgz"
-  integrity sha512-1tFTyGLwio5oYAP2sMVDiOvy5wl/v0a4om7RTCpP2Bjro0ynuYe8FK7ilcmdyPXR1DF7GVdo/0R/eCIQJZ2PwA==
+"@angular/core@^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "@angular/core@^18.0.0", "@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.0.2", "@angular/core@>=12.0.0", "@angular/core@>=15.0.0", "@angular/core@>=16.0.0", "@angular/core@>=17.0.0", "@angular/core@>=9.0.0", "@angular/core@12 - 18", "@angular/core@18.0.2":
+  version "18.0.2"
+  resolved "https://registry.npmjs.org/@angular/core/-/core-18.0.2.tgz"
+  integrity sha512-5VtFaYz97X9sQpxRuFUBKu2gqgFVU/Obgk/Q8ZRw+TBhFnU4e9NFod7dtAJH9scCOWZYnU07+aeI6ChiRSKrZw==
   dependencies:
     tslib "^2.3.0"
 
@@ -1412,145 +1412,55 @@
   resolved "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-5.12.1.tgz"
   integrity sha512-k3MwRFFUhyL4cuCJSaHDA0YNYMELDXX0h8JKtWYxO5XD3Dn+maXOMrVAAiNGooUyM2v/wz/TOaM0jxYVKeXX7g==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.2.36"
+    "@fortawesome/fontawesome-common-types" "^0.2.27"
 
-"@inquirer/checkbox@^2.3.7":
-  version "2.4.7"
-  resolved "https://registry.npmjs.org/@inquirer/checkbox/-/checkbox-2.4.7.tgz"
-  integrity sha512-5YwCySyV1UEgqzz34gNsC38eKxRBtlRDpJLlKcRtTjlYA/yDKuc1rfw+hjw+2WJxbAZtaDPsRl5Zk7J14SBoBw==
+"@fullcalendar/angular@^6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/angular/-/angular-6.1.15.tgz"
+  integrity sha512-4QUwYt5X/BQIz+Y6EnRIC9el4MyLPFQ/Yq6ZDPdStH9EGOu+8mDMMCvQFj0RApIgs+uOLe9Vz92Jd4ajTBrymA==
   dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/figures" "^1.0.5"
-    "@inquirer/type" "^1.5.2"
-    ansi-escapes "^4.3.2"
-    yoctocolors-cjs "^2.1.2"
+    tslib "^2.3.0"
 
-"@inquirer/confirm@^3.1.11", "@inquirer/confirm@3.1.11":
-  version "3.1.11"
-  resolved "https://registry.npmjs.org/@inquirer/confirm/-/confirm-3.1.11.tgz"
-  integrity sha512-3wWw10VPxQP279FO4bzWsf8YjIAq7NdwATJ4xS2h1uwsXZu/RmtOVV95rZ7yllS1h/dzu+uLewjMAzNDEj8h2w==
+"@fullcalendar/core@^6.1.15", "@fullcalendar/core@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/core/-/core-6.1.15.tgz"
+  integrity sha512-BuX7o6ALpLb84cMw1FCB9/cSgF4JbVO894cjJZ6kP74jzbUZNjtwffwRdA+Id8rrLjT30d/7TrkW90k4zbXB5Q==
   dependencies:
-    "@inquirer/core" "^8.2.4"
-    "@inquirer/type" "^1.3.3"
+    preact "~10.12.1"
 
-"@inquirer/core@^8.2.4":
-  version "8.2.4"
-  resolved "https://registry.npmjs.org/@inquirer/core/-/core-8.2.4.tgz"
-  integrity sha512-7vsXSfxtrrbwMTirfaKwPcjqJy7pzeuF/bP62yo1NQrRJ5HjmMlrhZml/Ljm9ODc1RnbhJlTeSnCkjtFddKjwA==
+"@fullcalendar/daygrid@^6.1.15", "@fullcalendar/daygrid@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-6.1.15.tgz"
+  integrity sha512-j8tL0HhfiVsdtOCLfzK2J0RtSkiad3BYYemwQKq512cx6btz6ZZ2RNc/hVnIxluuWFyvx5sXZwoeTJsFSFTEFA==
+
+"@fullcalendar/interaction@^6.1.15", "@fullcalendar/interaction@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/interaction/-/interaction-6.1.15.tgz"
+  integrity sha512-DOTSkofizM7QItjgu7W68TvKKvN9PSEEvDJceyMbQDvlXHa7pm/WAVtAc6xSDZ9xmB1QramYoWGLHkCYbTW1rQ==
+
+"@fullcalendar/list@^6.1.15", "@fullcalendar/list@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/list/-/list-6.1.15.tgz"
+  integrity sha512-U1bce04tYDwkFnuVImJSy2XalYIIQr6YusOWRPM/5ivHcJh67Gm8CIMSWpi3KdRSNKFkqBxLPkfZGBMaOcJYug==
+
+"@fullcalendar/multimonth@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/multimonth/-/multimonth-6.1.15.tgz"
+  integrity sha512-sEZY6jbOYkeF9TwhUldG+UUVv+hiPlGkS8zZEgPR7ypcjhipyA03c5rPjx7N6huOHqh6lCMH59zlohLooQRlaw==
   dependencies:
-    "@inquirer/figures" "^1.0.3"
-    "@inquirer/type" "^1.3.3"
-    "@types/mute-stream" "^0.0.4"
-    "@types/node" "^20.14.9"
-    "@types/wrap-ansi" "^3.0.0"
-    ansi-escapes "^4.3.2"
-    cli-spinners "^2.9.2"
-    cli-width "^4.1.0"
-    mute-stream "^1.0.0"
-    picocolors "^1.0.1"
-    signal-exit "^4.1.0"
-    strip-ansi "^6.0.1"
-    wrap-ansi "^6.2.0"
+    "@fullcalendar/daygrid" "~6.1.15"
 
-"@inquirer/core@^9.0.10":
-  version "9.0.10"
-  resolved "https://registry.npmjs.org/@inquirer/core/-/core-9.0.10.tgz"
-  integrity sha512-TdESOKSVwf6+YWDz8GhS6nKscwzkIyakEzCLJ5Vh6O3Co2ClhCJ0A4MG909MUWfaWdpJm7DE45ii51/2Kat9tA==
+"@fullcalendar/timegrid@^6.1.15", "@fullcalendar/timegrid@~6.1.15":
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/@fullcalendar/timegrid/-/timegrid-6.1.15.tgz"
+  integrity sha512-61ORr3A148RtxQ2FNG7JKvacyA/TEVZ7z6I+3E9Oeu3dqTf6M928bFcpehRTIK6zIA6Yifs7BeWHgOE9dFnpbw==
   dependencies:
-    "@inquirer/figures" "^1.0.5"
-    "@inquirer/type" "^1.5.2"
-    "@types/mute-stream" "^0.0.4"
-    "@types/node" "^22.1.0"
-    "@types/wrap-ansi" "^3.0.0"
-    ansi-escapes "^4.3.2"
-    cli-spinners "^2.9.2"
-    cli-width "^4.1.0"
-    mute-stream "^1.0.0"
-    signal-exit "^4.1.0"
-    strip-ansi "^6.0.1"
-    wrap-ansi "^6.2.0"
-    yoctocolors-cjs "^2.1.2"
+    "@fullcalendar/daygrid" "~6.1.15"
 
-"@inquirer/editor@^2.1.11":
-  version "2.1.22"
-  resolved "https://registry.npmjs.org/@inquirer/editor/-/editor-2.1.22.tgz"
-  integrity sha512-K1QwTu7GCK+nKOVRBp5HY9jt3DXOfPGPr6WRDrPImkcJRelG9UTx2cAtK1liXmibRrzJlTWOwqgWT3k2XnS62w==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/type" "^1.5.2"
-    external-editor "^3.1.0"
-
-"@inquirer/expand@^2.1.11":
-  version "2.1.22"
-  resolved "https://registry.npmjs.org/@inquirer/expand/-/expand-2.1.22.tgz"
-  integrity sha512-wTZOBkzH+ItPuZ3ZPa9lynBsdMp6kQ9zbjVPYEtSBG7UulGjg2kQiAnUjgyG4SlntpTce5bOmXAPvE4sguXjpA==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/type" "^1.5.2"
-    yoctocolors-cjs "^2.1.2"
-
-"@inquirer/figures@^1.0.3", "@inquirer/figures@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@inquirer/figures/-/figures-1.0.5.tgz"
-  integrity sha512-79hP/VWdZ2UVc9bFGJnoQ/lQMpL74mGgzSYX1xUqCVk7/v73vJCMw1VuyWN1jGkZ9B3z7THAbySqGbCNefcjfA==
-
-"@inquirer/input@^2.1.11":
-  version "2.2.9"
-  resolved "https://registry.npmjs.org/@inquirer/input/-/input-2.2.9.tgz"
-  integrity sha512-7Z6N+uzkWM7+xsE+3rJdhdG/+mQgejOVqspoW+w0AbSZnL6nq5tGMEVASaYVWbkoSzecABWwmludO2evU3d31g==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/type" "^1.5.2"
-
-"@inquirer/password@^2.1.11":
-  version "2.1.22"
-  resolved "https://registry.npmjs.org/@inquirer/password/-/password-2.1.22.tgz"
-  integrity sha512-5Fxt1L9vh3rAKqjYwqsjU4DZsEvY/2Gll+QkqR4yEpy6wvzLxdSgFhUcxfDAOtO4BEoTreWoznC0phagwLU5Kw==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/type" "^1.5.2"
-    ansi-escapes "^4.3.2"
-
-"@inquirer/prompts@>= 3 < 6", "@inquirer/prompts@5.0.7":
-  version "5.0.7"
-  resolved "https://registry.npmjs.org/@inquirer/prompts/-/prompts-5.0.7.tgz"
-  integrity sha512-GFcigCxJTKCH3aECzMIu4FhgLJWnFvMXzpI4CCSoELWFtkOOU2P+goYA61+OKpGrB8fPE7q6n8zAXBSlZRrHjQ==
-  dependencies:
-    "@inquirer/checkbox" "^2.3.7"
-    "@inquirer/confirm" "^3.1.11"
-    "@inquirer/editor" "^2.1.11"
-    "@inquirer/expand" "^2.1.11"
-    "@inquirer/input" "^2.1.11"
-    "@inquirer/password" "^2.1.11"
-    "@inquirer/rawlist" "^2.1.11"
-    "@inquirer/select" "^2.3.7"
-
-"@inquirer/rawlist@^2.1.11":
-  version "2.2.4"
-  resolved "https://registry.npmjs.org/@inquirer/rawlist/-/rawlist-2.2.4.tgz"
-  integrity sha512-pb6w9pWrm7EfnYDgQObOurh2d2YH07+eDo3xQBsNAM2GRhliz6wFXGi1thKQ4bN6B0xDd6C3tBsjdr3obsCl3Q==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/type" "^1.5.2"
-    yoctocolors-cjs "^2.1.2"
-
-"@inquirer/select@^2.3.7":
-  version "2.4.7"
-  resolved "https://registry.npmjs.org/@inquirer/select/-/select-2.4.7.tgz"
-  integrity sha512-JH7XqPEkBpNWp3gPCqWqY8ECbyMoFcCZANlL6pV9hf59qK6dGmkOlx1ydyhY+KZ0c5X74+W6Mtp+nm2QX0/MAQ==
-  dependencies:
-    "@inquirer/core" "^9.0.10"
-    "@inquirer/figures" "^1.0.5"
-    "@inquirer/type" "^1.5.2"
-    ansi-escapes "^4.3.2"
-    yoctocolors-cjs "^2.1.2"
-
-"@inquirer/type@^1.3.3", "@inquirer/type@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.npmjs.org/@inquirer/type/-/type-1.5.2.tgz"
-  integrity sha512-w9qFkumYDCNyDZmNQjf/n6qQuvQ4dMC3BJesY4oF+yr0CxR5vxujflAVeIcS6U336uzi9GM0kAfZlLrZ9UTkpA==
-  dependencies:
-    mute-stream "^1.0.0"
+"@inquirer/figures@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@inquirer/figures/-/figures-1.0.3.tgz"
+  integrity sha512-ErXXzENMH5pJt5/ssXV0DfWUZqly8nGzf0UcBV9xTnP+KyffE2mqyxIMBrZ8ijQck2nU0TQm40EQB53YreyWHw==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -5160,16 +5070,16 @@ fs.realpath@^1.0.0:
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8= sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
 fullcalendar@^6.1.14:
-  version "6.1.14"
-  resolved "https://registry.npmjs.org/fullcalendar/-/fullcalendar-6.1.14.tgz"
-  integrity sha512-uGaJrhafNE50VwHRkIROxXMKDZUr7yXgCJ+8VZ561oL5kx2sSWaDsa9WrSYH/NedNJIklUP5XczhIVtcT3aiaQ==
+  version "6.1.15"
+  resolved "https://registry.npmjs.org/fullcalendar/-/fullcalendar-6.1.15.tgz"
+  integrity sha512-CFnh1yswjRh9puJVDk8VGwTlyZ6eXxr4qLI7QCA0+bozyAm+BluP1US5mOtgk0gEq23nQxGSNDoBvAraz++saQ==
   dependencies:
-    "@fullcalendar/core" "~6.1.14"
-    "@fullcalendar/daygrid" "~6.1.14"
-    "@fullcalendar/interaction" "~6.1.14"
-    "@fullcalendar/list" "~6.1.14"
-    "@fullcalendar/multimonth" "~6.1.14"
-    "@fullcalendar/timegrid" "~6.1.14"
+    "@fullcalendar/core" "~6.1.15"
+    "@fullcalendar/daygrid" "~6.1.15"
+    "@fullcalendar/interaction" "~6.1.15"
+    "@fullcalendar/list" "~6.1.15"
+    "@fullcalendar/multimonth" "~6.1.15"
+    "@fullcalendar/timegrid" "~6.1.15"
 
 function-bind@^1.1.2:
   version "1.1.2"
@@ -7331,7 +7241,17 @@ postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
     picocolors "^1.0.0"
     source-map-js "^1.2.0"
 
-proc-log@^4.0.0, proc-log@^4.1.0, proc-log@^4.2.0:
+preact@~10.12.1:
+  version "10.12.1"
+  resolved "https://registry.npmjs.org/preact/-/preact-10.12.1.tgz"
+  integrity sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==
+
+proc-log@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/proc-log/-/proc-log-3.0.0.tgz"
+  integrity sha512-++Vn7NS4Xf9NacaU9Xq3URUuqZETPsf8L4j5/ckhaRYsfPeRyzGw+iDjFhV/Jr3uNmTvvddEJFWh5R1gRgUH8A==
+
+proc-log@^4.0.0, proc-log@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npmjs.org/proc-log/-/proc-log-4.2.0.tgz"
   integrity sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==

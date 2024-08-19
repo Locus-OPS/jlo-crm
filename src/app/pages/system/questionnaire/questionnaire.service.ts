@@ -16,4 +16,12 @@ export class QuestionnaireService {
     return this.api.call('/api/questionnaire/getQuestionnaireById', param);
   }
 
+  createHeaderQuestionnaire(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/questionnaire/createHeaderQuestionnaire', param);
+  }
+
+  updateHeaderQuestionnaire(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/questionnaire/updateHeaderQuestionnaire', param);
+  }
+
 }
