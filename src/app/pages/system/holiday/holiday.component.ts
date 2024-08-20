@@ -44,6 +44,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
   calendarEl = document.getElementById('calendar');
   selectedYear: number;
   currentYear: number;
+  eventsPromise: Promise<EventInput[]>;
 
   @ViewChild('holidayDateInput') holidayDateInputElement: ElementRef;
 
@@ -242,7 +243,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     weekends: true,  // Example of other options that can be used
   };
 
-  eventsPromise: Promise<EventInput[]>;
+
 
   handleDateClick(arg: DateClickArg) {
     this.holidayForm.reset();
