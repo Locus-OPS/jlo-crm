@@ -196,8 +196,10 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsCase; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsCase;"
-                  [ngClass]="{ 'selected-row': selectedRow == row }">
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsCase;" (click)="onSelectRowCase(row)"
+                  [ngClass]="{ 'selected-row': selectedRowCase == row }">
+
+
                 </tr>
 
               </table>

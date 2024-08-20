@@ -16,6 +16,7 @@ import { ConsultingModel } from './consulting.model';
 import { CaseStore } from '../case/case.store';
 import { CreatedByComponent } from '../common/created-by/created-by.component';
 import { SharedModule } from 'src/app/shared/module/shared.module';
+import { Case } from '../case/case.model';
 
 @Component({
   selector: 'app-consulting',
@@ -40,6 +41,7 @@ export class ConsultingComponent extends BaseComponent implements OnInit {
 
   searchFormCase: FormGroup;
   selectedRow: ConsultingModel;
+  selectedRowCase: Case;
   dataSourceSr: any[];
   displayedColumnsCase: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'action'];
   tableControlCase: TableControl = new TableControl(() => { this.searchCase(); });
@@ -240,5 +242,11 @@ export class ConsultingComponent extends BaseComponent implements OnInit {
   onCaseEdit(e) {
     this.caseStore.updateCaseDetail(e.caseNumber);
   }
+
+  onSelectRowCase(row?: Case) {
+    console.log(row);
+    this.selectedRowCase = row;
+  }
+
 
 }
