@@ -14,3 +14,7 @@ mat-form-field {
   display: flex;
   justify-content: center;
 }
+
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}

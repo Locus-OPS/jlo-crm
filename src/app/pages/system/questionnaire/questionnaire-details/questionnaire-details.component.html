@@ -120,6 +120,13 @@
                         <mat-checkbox formControlName="requiredFlg" class="col-md-1"> Required </mat-checkbox>
                       </div>
 
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
+                          <mat-label>คำอธิบาย</mat-label>
+                          <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+                      </div>
+
                       <!-- แสดงข้อมูลที่เป็นลักษณะ Check -->
 
                       <div class="row" *ngIf="multichoice.includes(createFormQuestion.get('answerType').value)">
@@ -150,7 +157,7 @@
                         </div>
                       </div>
                       <div class="pull-right">
-                        <button mat-raised-button type="button" (click)="onSubmitQuestionnaire()" class="btn btn-fill btn-primary">
+                        <button mat-raised-button type="button" (click)="onClickSaveBtnQuestionnaireQst()" class="btn btn-fill btn-primary">
                           {{ 'button.save' | translate }}
                         </button>
                       </div>
@@ -173,8 +180,18 @@
                     matSortDisableClear
                   >
                     <ng-container matColumnDef="action">
-                      <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let element"></td>
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let element">
+                        <button
+                          class="btn btn-danger btn-round btn-fab mat-raised-button"
+                          *ngIf="CAN_WRITE()"
+                          (click)="onDeleteQuestionnaireQuestion(element)"
+                        >
+                          <span class="mat-button-wrapper">
+                            <i class="material-icons">remove</i>
+                          </span>
+                        </button>
+                      </td>
                     </ng-container>
                     <ng-container matColumnDef="seqNo">
                       <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.sequence' | translate }}</th>
@@ -184,26 +201,29 @@
                       <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.question' | translate }}</th>
                       <td mat-cell *matCellDef="let element">{{ element.question }}</td>
                     </ng-container>
-
-                    <ng-container matColumnDef="answerType">
-                      <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.answerType' | translate }}</th>
-                      <td mat-cell *matCellDef="let element">{{ element.answerType }}</td>
-                    </ng-container>
-
                     <ng-container matColumnDef="description">
-                      <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'questionnaire.description' | translate }}</th>
+                      <th mat-header-cell *matHeaderCellDef class="text-left">{{ 'questionnaire.description' | translate }}</th>
                       <td mat-cell *matCellDef="let element">{{ element.description }}</td>
                     </ng-container>
+                    <ng-container matColumnDef="requiredFlg">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'questionnaire.requiredFlg' | translate }}</th>
+                      <td mat-cell *matCellDef="let element" class="text-center">{{ element.requiredFlg }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="answerType">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.answerType' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.answerTypeName }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="options">
+                      <th mat-header-cell *matHeaderCellDef class="text-left">{{ 'questionnaire.options' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.options }}</td>
+                    </ng-container>
+
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                    <tr
-                      mat-row
-                      *matRowDef="let row; columns: displayedColumns"
-                      (click)="onSelectRow(row)"
-                      [ngClass]="{ 'selected-row': selectedRow == row }"
-                    ></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.selected]="selectedRow === row" (click)="onRowClick(row)"></tr>
                   </table>
                 </div>
-                <mat-paginator
+                <!-- <mat-paginator
                   class="mat-paginator-sticky"
                   (page)="tableControl.onPage($event)"
                   [length]="tableControl.total"
@@ -212,7 +232,7 @@
                   [pageSizeOptions]="tableControl.pageSizeOptions"
                   showFirstLastButtons
                 >
-                </mat-paginator>
+                </mat-paginator> -->
               </div>
             </div>
           </div>
@@ -233,7 +253,77 @@
           </div>
           <div class="card-body">
             <!-- <div class="collapse" id="collapseQuestionnaire3"> -->
+            <div class="row">
+              <div class="col-md-8">
+                <mat-card>
+                  <mat-card-content>
+                    <form [formGroup]="answerForm">
+                      <h3>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h3>
+                      <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+                      <hr />
+                      <br />
+                      <div *ngFor="let question of questionnaireQuestionList; let i = index">
+                        <div *ngIf="question.componentType === 'text'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="question.componentType === 'radio'" class="radio-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-radio-group [formControlName]="question.id">
+                            <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
+                              {{ option }}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <div *ngFor="let option of question.options.split(' , ')">
+                            <mat-checkbox [formControlName]="question.id" value="{{ option }}">{{ option }}</mat-checkbox>
+                          </div>
+                        </div>
+                        <div *ngIf="question.componentType === 'select'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <mat-select [formControlName]="question.id">
+                              <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
+                                {{ option }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
 
+                        <div *ngIf="question.componentType === 'textarea'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
+                          </mat-form-field>
+                        </div>
+
+                        <div *ngIf="question.componentType === 'date'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field style="width: 50%">
+                            <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+
+                        <br />
+                      </div>
+                      <button (click)="ShowData()">Submit</button>
+                    </form>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
             <!-- </div> -->
           </div>
         </div>

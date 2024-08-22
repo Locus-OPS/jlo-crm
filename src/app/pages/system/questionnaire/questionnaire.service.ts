@@ -38,5 +38,9 @@ export class QuestionnaireService {
     return this.api.call('/api/questionnaire/getquestionairequestionlist', param);
   }
 
+  updateQuestionnaireQuestion(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/questionnaire/updateQuestionnaireQuestion', param);
+  }
+
 
 }
