@@ -349,18 +349,21 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
   onClickSaveBtnQuestionnaireQst() {
-    // alert(this.createFormQuestion.get("id").value);
     if (this.createFormQuestion.get("id").value != null) {
       // Edit
+      console.log("Edit");
       this.updateQuestionnaireQuestion();
     } else {
       // Save
+      console.log("Save");
       this.createQuestionnaireQuestion();
     }
   }
 
   createQuestionnaireQuestion() {
     if (!this.createFormQuestion.valid) {
+      console.log(JSON.stringify(this.createFormQuestion.getRawValue()))
+      console.log("Invalid");
       return;
     }
     const choiceStr = this.items.value.join(' , ');
@@ -381,7 +384,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
               this.getHeaderQuestionnaireDetail();
               this.handleSuccess("Questionnaire has been created.");
               this.createFormQuestion.reset();
-              this.createFormQuestion.patchValue({ headerid: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
+              this.resetQuestionnaireQuestionForm();
               this.items.clear();
             } else {
               this.handleError(res.message);
@@ -494,6 +497,12 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
   private handleError(message: string): void {
     Utils.alertError({ text: message });
+  }
+
+  resetQuestionnaireQuestionForm(): void {
+    this.createFormQuestion.reset();
+    console.log("header id: " + this.id);
+    this.createFormQuestion.patchValue({ headerId: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
   }
 
 }

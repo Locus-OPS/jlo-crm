@@ -157,6 +157,9 @@
                         </div>
                       </div>
                       <div class="pull-right">
+                        <button mat-raised-button type="button" (click)="resetQuestionnaireQuestionForm()" class="btn btn-fill btn-default">
+                          {{ 'button.clear' | translate }}
+                        </button>
                         <button mat-raised-button type="button" (click)="onClickSaveBtnQuestionnaireQst()" class="btn btn-fill btn-primary">
                           {{ 'button.save' | translate }}
                         </button>
@@ -262,6 +265,7 @@
                       <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
                       <hr />
                       <br />
+                      <!-- TextBox -->
                       <div *ngFor="let question of questionnaireQuestionList; let i = index">
                         <div *ngIf="question.componentType === 'text'">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
@@ -270,6 +274,7 @@
                             <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
                           </mat-form-field>
                         </div>
+                        <!-- Radio -->
                         <div *ngIf="question.componentType === 'radio'" class="radio-group">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
@@ -279,6 +284,7 @@
                             </mat-radio-button>
                           </mat-radio-group>
                         </div>
+                        <!-- CheckBox -->
                         <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
@@ -286,6 +292,7 @@
                             <mat-checkbox [formControlName]="question.id" value="{{ option }}">{{ option }}</mat-checkbox>
                           </div>
                         </div>
+                        <!-- Select -->
                         <div *ngIf="question.componentType === 'select'">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
@@ -297,7 +304,7 @@
                             </mat-select>
                           </mat-form-field>
                         </div>
-
+                        <!-- TextArea -->
                         <div *ngIf="question.componentType === 'textarea'">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
@@ -305,7 +312,7 @@
                             <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
                           </mat-form-field>
                         </div>
-
+                        <!-- Date -->
                         <div *ngIf="question.componentType === 'date'">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
