@@ -1,151 +1,333 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="pull-right">
-                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire1" class="collapsed">
-                                <span>
-                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
-                                </span>
-                            </a> -->
-                        </div>
-                        <div class="card-icon">
-                            <i class="material-icons">person</i>
-                        </div>
-                        <h4 class="card-title">{{ 'questionnaire.detail' | translate }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <!-- <div class="collapse" id="collapseQuestionnaire1"> -->
-
-
-                        <form #createFormDirective="ngForm" [formGroup]="createFormHeader" (ngSubmit)="onSave($event)"
-                            novalidate>
-
-                            <div class="row">
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{'questionnaire.id' | translate}}</mat-label>
-                                    <input matInput type="text" formControlName="id" readonly />
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{ 'questionnaire.type' | translate }}</mat-label>
-                                    <mat-select formControlName="questionnaireType" required>
-                                        <mat-option *ngFor="let type of questionnaireTypeList" [value]="type.codeId">
-                                            {{ type.codeName }}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error
-                                        *ngIf="createFormHeader.controls['questionnaireType'].hasError('required')">
-                                        {{ 'error.required' | translate }}
-                                    </mat-error>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{ 'questionnaire.formName' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="formName" required />
-                                    <mat-error *ngIf="createFormHeader.controls['formName'].hasError('required')">
-                                        {{ 'error.required' | translate }}
-                                    </mat-error>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{ 'questionnaire.sectionHeaderText' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="sectionHeaderText" required />
-                                    <mat-error
-                                        *ngIf="createFormHeader.controls['sectionHeaderText'].hasError('required')">
-                                        {{ 'error.required' | translate }}
-                                    </mat-error>
-                                </mat-form-field>
-
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{'questionnaire.activeYn' | translate }}</mat-label>
-                                    <mat-select formControlName="statusCd" required>
-                                        <mat-option *ngFor="let type of statusList" [value]="type.codeId">
-                                            {{ type.codeName }}
-                                        </mat-option>
-                                        <mat-error *ngIf="createFormHeader.controls['statusCd'].hasError('required')">
-                                            {{ 'error.required' | translate }}
-                                        </mat-error>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-
-                            <app-created-by [createdBy]="createFormHeader.controls['createdByName'].value"
-                                [createdDate]="createFormHeader.controls['createdDate'].value"
-                                [updatedBy]="createFormHeader.controls['updatedByName'].value"
-                                [updatedDate]="createFormHeader.controls['updatedDate'].value">
-                            </app-created-by>
-
-
-                            <div class="pull-right">
-                                <button mat-raised-button type="button" class="btn btn-fill btn-default"
-                                    (click)="backClicked()">
-                                    {{ 'button.back' | translate }}
-                                    <mat-icon>undo</mat-icon>
-                                </button>
-
-                                <!-- <button mat-raised-button type="button" class="btn btn-fill btn-primary"
-                                    (click)="createQheader()">
-                                    {{ 'button.create' | translate }}
-                                </button> -->
-
-                                <button mat-raised-button type="button" (click)="saveQheader()"
-                                    class="btn btn-fill btn-rose">
-                                    {{ 'button.save' | translate }}
-                                </button>
-
-                                <button mat-raised-button type="button" class="btn btn-fill btn-default"
-                                    (click)="resetQheader()">
-                                    {{ 'button.clear' | translate }}
-                                </button>
-                            </div>
-                        </form>
-
-                        <!-- </div> -->
-                    </div>
-
-
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="pull-right">
-                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire2" class="collapsed">
-                                <span>
-                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
-                                </span>
-                            </a> -->
-                        </div>
-                        <div class="card-icon">
-                            <i class="material-icons">quiz</i>
-                        </div>
-                        <h4 class="card-title">{{ 'questionnaire.detail.question' | translate }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <!-- <div class="collapse" id="collapseQuestionnaire2"> -->
-
-                        <!-- </div> -->
-                    </div>
-
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="pull-right">
-                            <!-- <a data-toggle="collapse" href="#collapseQuestionnaire3" class="collapsed">
-                                <span>
-                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
-                                </span>
-                            </a> -->
-                        </div>
-                        <div class="card-icon">
-                            <i class="material-icons">dynamic_form</i>
-                        </div>
-
-                        <h4 class="card-title">{{ 'questionnaire.detail.answer' | translate }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <!-- <div class="collapse" id="collapseQuestionnaire3"> -->
-
-                        <!-- </div> -->
-                    </div>
-
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="pull-center"></div>
+            <div class="card-icon">
+              <i class="material-icons">person</i>
             </div>
+            <h4 class="card-title">{{ 'questionnaire.detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div class="collapse" id="collapseQuestionnaire1"> -->
+
+            <form #createFormDirective="ngForm" [formGroup]="createFormHeader" (ngSubmit)="onSave($event)" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'questionnaire.id' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="id" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'questionnaire.type' | translate }}</mat-label>
+                  <mat-select formControlName="questionnaireType" required>
+                    <mat-option *ngFor="let type of questionnaireTypeList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createFormHeader.controls['questionnaireType'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'questionnaire.formname' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="formName" required />
+                  <mat-error *ngIf="createFormHeader.controls['formName'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'questionnaire.sectionHeaderText' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="sectionHeaderText" required />
+                  <mat-error *ngIf="createFormHeader.controls['sectionHeaderText'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'questionnaire.activeYn' | translate }}</mat-label>
+                  <mat-select formControlName="statusCd" required>
+                    <mat-option *ngFor="let type of statusList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                    <mat-error *ngIf="createFormHeader.controls['statusCd'].hasError('required')">
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <app-created-by
+                [createdBy]="createFormHeader.controls['createdByName'].value"
+                [createdDate]="createFormHeader.controls['createdDate'].value"
+                [updatedBy]="createFormHeader.controls['updatedByName'].value"
+                [updatedDate]="createFormHeader.controls['updatedDate'].value"
+              >
+              </app-created-by>
+
+              <div class="pull-right">
+                <button mat-raised-button type="button" (click)="onSaveQheder()" class="btn btn-fill btn-primary">
+                  {{ 'button.save' | translate }}
+                </button>
+              </div>
+            </form>
+
+            <!-- </div> -->
+          </div>
+
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="pull-right"></div>
+            <div class="card-icon">
+              <i class="material-icons">quiz</i>
+            </div>
+            <h4 class="card-title">{{ 'questionnaire.detail.question' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <mat-card>
+                  <mat-card-content>
+                    <form [formGroup]="createFormQuestion" (ngSubmit)="(onCreateQuestion)">
+                      <div class="row">
+                        <mat-form-field class="col-md-3">
+                          <mat-label>{{ 'questionnaire.question' | translate }}</mat-label>
+                          <input matInput formControlName="question" />
+                          <mat-error *ngIf="createFormQuestion.get('question').invalid && createFormQuestion.get('question').touched">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                          <mat-label>ประเภทวันหยุด</mat-label>
+                          <mat-select formControlName="answerType">
+                            <mat-option *ngFor="let type of answerType" [value]="type.codeId">
+                              {{ type.codeName }}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="createFormQuestion.get('answerType').invalid && createFormQuestion.get('answerType').touched">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-1">
+                          <mat-label>{{ 'questionnaire.sequence' | translate }}</mat-label>
+                          <input type="number" matInput formControlName="seqNo" />
+                          <mat-error *ngIf="createFormQuestion.get('seqNo').invalid && createFormQuestion.get('seqNo').touched">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-checkbox formControlName="requiredFlg" class="col-md-1"> Required </mat-checkbox>
+                      </div>
+
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
+                          <mat-label>คำอธิบาย</mat-label>
+                          <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+                      </div>
+
+                      <!-- แสดงข้อมูลที่เป็นลักษณะ Check -->
+
+                      <div class="row" *ngIf="multichoice.includes(createFormQuestion.get('answerType').value)">
+                        <div class="col-md-4">
+                          <form [formGroup]="addListForm">
+                            <div>
+                              <labe>ตัวเลือกคำตอบ</labe>
+                              <mat-form-field>
+                                <mat-label>Enter text</mat-label>
+                                <input matInput formControlName="itemText" />
+                                <button mat-icon-button matSuffix (click)="addItem()" type="button">
+                                  <mat-icon>add</mat-icon>
+                                </button>
+                              </mat-form-field>
+                            </div>
+
+                            <div>
+                              <mat-list>
+                                <mat-list-item *ngFor="let item of items.controls; let i = index">
+                                  <button mat-icon-button color="warn" (click)="removeItem(i)" type="button">
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                  {{ i + 1 + '. ' + item.value }}
+                                </mat-list-item>
+                              </mat-list>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="pull-right">
+                        <button mat-raised-button type="button" (click)="onClickSaveBtnQuestionnaireQst()" class="btn btn-fill btn-primary">
+                          {{ 'button.save' | translate }}
+                        </button>
+                      </div>
+                    </form>
+                  </mat-card-content>
+                </mat-card>
+                <br />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="material-datatables table-responsive">
+                  <table
+                    mat-table
+                    [dataSource]="questionnaireQuestionList"
+                    class="mat-elevation-z8"
+                    (matSortChange)="tableControl.onSort($event)"
+                    matSort
+                    matSortDirection="asc"
+                    matSortDisableClear
+                  >
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let element">
+                        <button
+                          class="btn btn-danger btn-round btn-fab mat-raised-button"
+                          *ngIf="CAN_WRITE()"
+                          (click)="onDeleteQuestionnaireQuestion(element)"
+                        >
+                          <span class="mat-button-wrapper">
+                            <i class="material-icons">remove</i>
+                          </span>
+                        </button>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="seqNo">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.sequence' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.seqNo }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="question">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.question' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.question }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef class="text-left">{{ 'questionnaire.description' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="requiredFlg">
+                      <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'questionnaire.requiredFlg' | translate }}</th>
+                      <td mat-cell *matCellDef="let element" class="text-center">{{ element.requiredFlg }}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="answerType">
+                      <th mat-header-cell *matHeaderCellDef>{{ 'questionnaire.answerType' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.answerTypeName }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="options">
+                      <th mat-header-cell *matHeaderCellDef class="text-left">{{ 'questionnaire.options' | translate }}</th>
+                      <td mat-cell *matCellDef="let element">{{ element.options }}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" [class.selected]="selectedRow === row" (click)="onRowClick(row)"></tr>
+                  </table>
+                </div>
+                <!-- <mat-paginator
+                  class="mat-paginator-sticky"
+                  (page)="tableControl.onPage($event)"
+                  [length]="tableControl.total"
+                  [pageIndex]="tableControl.pageNo"
+                  [pageSize]="tableControl.pageSize"
+                  [pageSizeOptions]="tableControl.pageSizeOptions"
+                  showFirstLastButtons
+                >
+                </mat-paginator> -->
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="pull-right">
+              <!-- <a data-toggle="collapse" href="#collapseQuestionnaire3" class="collapsed">
+                                <span>
+                                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
+                                </span>
+                            </a> -->
+            </div>
+            <div class="card-icon">
+              <i class="material-icons">dynamic_form</i>
+            </div>
+
+            <h4 class="card-title">{{ 'questionnaire.detail.answer' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <!-- <div class="collapse" id="collapseQuestionnaire3"> -->
+            <div class="row">
+              <div class="col-md-8">
+                <mat-card>
+                  <mat-card-content>
+                    <form [formGroup]="answerForm">
+                      <h3>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h3>
+                      <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+                      <hr />
+                      <br />
+                      <div *ngFor="let question of questionnaireQuestionList; let i = index">
+                        <div *ngIf="question.componentType === 'text'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
+                          </mat-form-field>
+                        </div>
+                        <div *ngIf="question.componentType === 'radio'" class="radio-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-radio-group [formControlName]="question.id">
+                            <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
+                              {{ option }}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <div *ngFor="let option of question.options.split(' , ')">
+                            <mat-checkbox [formControlName]="question.id" value="{{ option }}">{{ option }}</mat-checkbox>
+                          </div>
+                        </div>
+                        <div *ngIf="question.componentType === 'select'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <mat-select [formControlName]="question.id">
+                              <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
+                                {{ option }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div *ngIf="question.componentType === 'textarea'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
+                          </mat-form-field>
+                        </div>
+
+                        <div *ngIf="question.componentType === 'date'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field style="width: 50%">
+                            <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+
+                        <br />
+                      </div>
+                      <button (click)="ShowData()">Submit</button>
+                    </form>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+</div>

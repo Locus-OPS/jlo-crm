@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormGroupDirective, UntypedFormGroup, Validators } from '@angular/forms';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { QuestionnaireService } from '../questionnaire.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { QuestionnaireStore } from '../questionnaire.store';
@@ -13,9 +13,13 @@ import { Subscription } from 'rxjs';
 import { AppStore } from 'src/app/shared/app.store';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Location } from '@angular/common';
-import { QuestionnaireHeaderModel } from '../questionnaire.model';
+import { QuestionnaireHeaderModel, QuestionnaireQuestionModel } from '../questionnaire.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import Utils from 'src/app/shared/utils';
+import { CodebookData } from '../../codebook/codebook.model';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TableControl } from 'src/app/shared/table-control';
 
 @Component({
   selector: 'app-questionnaire-details',
@@ -41,17 +45,29 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   statusList: Dropdown[];
   questionnaireTypeList: Dropdown[];
   questionnaireDetailSubscription: Subscription;
+  id: number;
+  answerType: CodebookData[] = [];
+  addListForm: FormGroup;
+  textList: string[] = [];
+  multichoice = ['03', '04', '05'];
+  questionnaireQuestionList: any[];
+  selectedRow: any;
+  headerQuestionnaire: any;
+  answerForm: FormGroup;
 
+  tableControl: TableControl = new TableControl(() => { this.getQuestionnaireQuestionList(); });
+  displayedColumns: string[] = ['seqNo', 'question', 'description', 'requiredFlg', 'answerType', 'options', 'action'];
   constructor(
     private formBuilder: FormBuilder,
     public api: ApiService,
     private questionnaireService: QuestionnaireService,
     public router: Router,
+    private route: ActivatedRoute,
     public questionnaireStore: QuestionnaireStore,
     public globals: Globals,
     private _location: Location,
     private appStore: AppStore,
-    private spinner: NgxSpinnerService,
+    private spinner: NgxSpinnerService
   ) {
     super(router, globals);
 
@@ -71,13 +87,37 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit() {
+    const params = this.route.firstChild.snapshot.params;
+    const { id } = params;
+    this.id = id;
+    this.initForm();
+    this.getCodeBook();
+    this.getHeaderQuestionnaireDetail();
+    // this.create();
 
+
+    // this.questionnaireDetailSubscription = this.questionnaireStore.getQuestionHeaderDetail().subscribe(detail => {
+    //   console.log(detail);
+
+    //   if (detail) {
+    //     sessionStorage.setItem('headerId', detail.id);
+    //     this.updateFormValue(detail);
+    //     console.log("update from value session headerId" + sessionStorage.getItem('headerId'));
+    //   } else {
+    //     this.create();
+    //   }
+    // });
+
+  }
+
+  initForm() {
+    //ฟอร์มสำหรับสร้าง Header
     this.createFormHeader = this.formBuilder.group({
-      id: [''],
+      id: [this.id],
       questionnaireType: ['', Validators.required],
       formName: ['', Validators.required],
       sectionHeaderText: ['', Validators.required],
-      statusCd: ['', Validators.required],
+      statusCd: ['Y', Validators.required],
       createdByName: [''],
       createdBy: [''],
       createdDate: [''],
@@ -86,24 +126,29 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       updatedDate: [''],
     });
 
-
-    this.create();
-
-
-    this.questionnaireDetailSubscription = this.questionnaireStore.getQuestionHeaderDetail().subscribe(detail => {
-      console.log(detail);
-
-      if (detail) {
-        sessionStorage.setItem('headerId', detail.id);
-        this.updateFormValue(detail);
-        console.log("update from value session headerId" + sessionStorage.getItem('headerId'));
-      } else {
-        this.create();
-      }
+    //ฟอร์มสำหรับสร้างคำถาม
+    this.createFormQuestion = this.formBuilder.group({
+      id: [],
+      headerId: ['', Validators.required],
+      question: ['', Validators.required],
+      answerType: ['01', Validators.required],
+      options: [''],
+      description: [''],
+      imageUrl: [],
+      statusCd: ['Y'],
+      requiredFlg: [true],
+      seqNo: [1, Validators.required]
     });
 
+    this.addListForm = this.formBuilder.group({
+      itemText: ['', Validators.required], // Text input field
+      items: this.formBuilder.array([]) // FormArray to hold the list items
+    });
   }
 
+  get items(): FormArray {
+    return this.addListForm.get('items') as FormArray;
+  }
 
   create() {
     this.created = true;
@@ -112,6 +157,30 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     this.createFormHeader.patchValue({ statusCd: 'Y' });
   }
 
+  getCodeBook() {
+    this.api.getMultipleCodebookByCodeType({ data: ['ANSWER_TYPE'] }).then(result => {
+      this.answerType = result.data['ANSWER_TYPE'];
+    });
+  }
+
+  getHeaderQuestionnaireDetail() {
+    if (this.id != null) {
+      this.questionnaireService.getQuestionnaireById({ data: { id: this.id } }).then((res) => {
+        if (res.status) {
+          this.createFormHeader.patchValue({ ...res.data });
+          this.headerQuestionnaire = res.data;
+          this.questionnaireQuestionList = res.data.questionnaireList;
+          // this.getQuestionnaireQuestionList();
+          this.createAnswerForm();
+        } else {
+          Utils.alertError({ text: res.message });
+        }
+      });
+      this.createFormQuestion.patchValue({ headerId: this.id });
+    }
+  }
+
+
   updateFormValue(header: QuestionnaireHeaderModel) {
     console.log(header);
     this.created = false;
@@ -119,13 +188,66 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
 
-  createQheader() {
-
+  onSaveQheder() {
+    if (this.createFormHeader.get('id').value != null && this.createFormHeader.get('id').value != '') {
+      //Edit
+      this.editQheader();
+    } else {
+      //Save
+      this.saveQheader();
+    }
   }
 
   saveQheader() {
+    if (!this.createFormHeader.valid) {
+      return;
+    }
+    const params = this.createFormHeader.getRawValue();
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.createHeaderQuestionnaire({ data: params }).then((res) => {
+            if (res.status) {
+              this.id = res.data.id;
+              Utils.alertSuccess({ text: 'Header questionnaire has been added.' });
+              // this.getHeaderQuestionnaireDetail();
+              this.getHeaderQuestionnaireDetail();
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
 
   }
+
+  editQheader() {
+    if (!this.createFormHeader.valid) {
+      return;
+    }
+    const params = this.createFormHeader.getRawValue();
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.updateHeaderQuestionnaire({ data: params }).then((res) => {
+            if (res.status) {
+              this.createFormHeader.patchValue({ ...res.data });
+              Utils.alertSuccess({ text: "Header questionnaire has been updated." })
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
+  }
+
 
   onSave(event: Event) {
     this.submitted = true;
@@ -175,23 +297,16 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
         this.created = false;
 
         this.createFormHeader.patchValue(result.data);
-        Utils.alertSuccess({
-          text: 'Questionnaire has been saved.',
-        });
+        this.handleSuccess("Questionnaire has been saved.");
       } else {
-        Utils.alertError({
-          text: 'Questionnaire has not been saved.',
-        });
+        this.handleError("Questionnaire has not been saved.");
+
       }
     }, () => {
-      Utils.alertError({
-        text: 'Please, try again later',
-      });
+      this.handleError("Please, try again later");
     });
 
   }
-
-
 
   resetQheader() {
     console.log("resetQheader ");
@@ -205,6 +320,180 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   backClicked() {
     this.questionnaireStore.clearQuestionnaireHeaderDetail();
     this._location.back();
+  }
+
+  addItem(): void {
+    const itemText = this.addListForm.get('itemText').value;
+    if (itemText) {
+      this.items.push(this.formBuilder.control(itemText));
+      this.addListForm.get('itemText').reset(); // Clear the input field after adding
+    }
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index); // Remove the item at the specified index
+  }
+
+  onCreateQuestion() {
+
+  }
+
+  getQuestionnaireQuestionList() {
+    if (this.id != null) {
+      this.questionnaireService.getQuestionnaireQuestionList({ data: { headerId: this.id } }).then((res) => {
+        if (res.status) {
+          this.questionnaireQuestionList = res.data;
+        }
+      });
+    }
+  }
+
+  onClickSaveBtnQuestionnaireQst() {
+    // alert(this.createFormQuestion.get("id").value);
+    if (this.createFormQuestion.get("id").value != null) {
+      // Edit
+      this.updateQuestionnaireQuestion();
+    } else {
+      // Save
+      this.createQuestionnaireQuestion();
+    }
+  }
+
+  createQuestionnaireQuestion() {
+    if (!this.createFormQuestion.valid) {
+      return;
+    }
+    const choiceStr = this.items.value.join(' , ');
+    if (this.multichoice.includes(this.createFormQuestion.get('answerType').value)) {
+      if (choiceStr == "" || choiceStr == null) {
+        this.handleError("Please fill data.");
+        return;
+      }
+      this.createFormQuestion.patchValue({ options: choiceStr });
+    }
+    const params = this.createFormQuestion.getRawValue();
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.createQuestionnaireQuestion({ data: params }).then((res) => {
+            if (res.status) {
+              // this.getQuestionnaireQuestionList();
+              this.getHeaderQuestionnaireDetail();
+              this.handleSuccess("Questionnaire has been created.");
+              this.createFormQuestion.reset();
+              this.createFormQuestion.patchValue({ headerid: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
+              this.items.clear();
+            } else {
+              this.handleError(res.message);
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
+  }
+
+  updateQuestionnaireQuestion() {
+    if (!this.createFormQuestion.valid) {
+      return;
+    }
+    const choiceStr = this.items.value.join(' , ');
+    if (this.multichoice.includes(this.createFormQuestion.get('answerType').value)) {
+      if (choiceStr == "" || choiceStr == null) {
+        this.handleError("Please fill data.");
+        return;
+      }
+      this.createFormQuestion.patchValue({ options: choiceStr });
+
+    }
+
+    const params = this.createFormQuestion.getRawValue();
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.updateQuestionnaireQuestion({ data: params }).then((res) => {
+            if (res.status) {
+              // this.getQuestionnaireQuestionList();
+              this.getHeaderQuestionnaireDetail();
+              this.handleSuccess("Questionnaire has been updated.");
+            } else {
+              this.handleError(res.message);
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
+
+
+  }
+
+  onDeleteQuestionnaireQuestion(questionnaireQuestion: any) {
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.updateQuestionnaireQuestion({ data: { ...questionnaireQuestion, statusCd: 'N' } }).then((res) => {
+            if (res.status) {
+              // this.getQuestionnaireQuestionList();
+              this.getHeaderQuestionnaireDetail();
+              this.handleSuccess("Questionnaire has been deleted.");
+            } else {
+              this.handleError(res.message);
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+  }
+
+
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.createFormQuestion.patchValue({ ...row });
+    const optionsArray = row.options.split(',').map(item => item.trim());
+    this.items.clear();
+    optionsArray.forEach(item => {
+      this.items.push(this.formBuilder.control(item));
+      this.addListForm.get('itemText').reset();
+    });
+  }
+
+  createAnswerForm() {
+    const group = {};
+    this.questionnaireQuestionList.forEach(q => {
+
+      if (q.componentType === 'text') {
+        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
+      } else if (q.componentType === 'checkbox') {
+        // group[q.id] = this.formBuilder.array([false]);
+        group[q.id] = [''];
+      } else {
+        group[q.id] = [''];
+      }
+    });
+    this.answerForm = this.formBuilder.group(group);
+    //alert(JSON.stringify(this.answerForm.getRawValue()));
+  }
+
+  ShowData() {
+    alert(JSON.stringify(this.answerForm.getRawValue()));
+    Object.keys(this.answerForm.controls).forEach(key => {
+      const value = this.answerForm.get(key)?.value;
+      console.log(`Name: ${key}, Value: ${value}`);
+    });
+  }
+
+  private handleSuccess(message: string): void {
+    Utils.alertSuccess({ text: message });
+  }
+
+  private handleError(message: string): void {
+    Utils.alertError({ text: message });
   }
 
 }

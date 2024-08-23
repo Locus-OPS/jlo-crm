@@ -32,7 +32,7 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
 
   selectedRow: QuestionnaireHeaderModel;
   dataSource: QuestionnaireHeaderModel[];
-  displayedColumns: string[] = ['id', 'buName', 'activeYn'];
+  displayedColumns: string[] = ['formname', 'questionnaireType', 'status', 'action'];
 
   constructor(
     public api: ApiService,
@@ -53,18 +53,19 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.searchForm = this.formBuilder.group({
-      formname: [''],
-      activeYn: [null],
+      formName: [''],
+      statusCd: ['Y'],
       questionnaireType: [null],
     });
 
     this.createForm = this.formBuilder.group({
       id: [null],
-      formname: ['', [Validators.required, Validators.maxLength(100)]],
-      activeYn: ['N'],
+      formName: [''],
+      statusCd: ['Y'],
       questionnaireType: [''],
-
+      sectionHeaderText: [],
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
@@ -76,16 +77,54 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.tableControl.resetPage();
+    this.search();
   }
 
   search() {
+    const params = this.searchForm.getRawValue();
+    this.questionnaireService.getHeaderQuestionnaireList({ data: params, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
+      if (res.status) {
+        this.dataSource = res.data;
+        this.tableControl.total = res.total;
+      } else {
+        Utils.alertError({ text: res.message });
+      }
+    });
+  }
+
+  onDeleteheaderQuestionaire(headerQuestionaire: any) {
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.updateHeaderQuestionnaire({ data: { ...headerQuestionaire, statusCd: 'N' } }).then((res) => {
+            if (res.status) {
+              this.search();
+              Utils.alertSuccess({ text: 'Header questionaire has been deleted.' })
+            } else {
+              Utils.alertError({ text: res.message });
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
 
   }
 
   onQuestionnaireCreate() {
     sessionStorage.removeItem('headerId');
     this.questionnaireStore.clearQuestionnaireHeaderDetail();
+  }
+
+  onClickQuestionnaireDetail(headerQuestionnaire: any) {
+    this.router.navigate(["/system/questionnaire-details", { id: headerQuestionnaire.id }]);
+  }
+
+  onReset() {
+    this.searchForm.reset();
+    this.searchForm.patchValue({ statusCd: 'Y' });
   }
 
 

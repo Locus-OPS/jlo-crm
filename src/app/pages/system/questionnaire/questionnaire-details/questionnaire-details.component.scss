@@ -1,0 +1,20 @@
+.checkbox-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Ensure the container takes the full height of the parent */
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}
