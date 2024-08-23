@@ -128,4 +128,25 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
   }
 
 
+
+  onGenerateLink() {
+    // if (this.createForm.invalid) {
+    //   return true;
+    // }
+
+    this.questionnaireService.generateSmartLink({
+      data: this.createForm.value
+    }).then(result => {
+      if (result.status) {
+        this.createForm.patchValue({
+          linkUrl: result.data
+        });
+      } else {
+        Utils.alertError({
+          text: result.message
+        });
+      }
+    });
+  }
+
 }
