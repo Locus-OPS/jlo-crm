@@ -24,4 +24,9 @@ export class QuestionnaireService {
     return this.api.call('/api/questionnaire/updateHeaderQuestionnaire', param);
   }
 
+  /****** Smart Link ******/
+  generateSmartLink(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/smartlink/generate', param);
+  }
+
 }

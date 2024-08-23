@@ -11,6 +11,7 @@ import { QuestionnaireService } from './questionnaire.service';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
 import { QuestionnaireStore } from './questionnaire.store';
+import Utils from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-questionnaire',
@@ -87,5 +88,26 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
     this.questionnaireStore.clearQuestionnaireHeaderDetail();
   }
 
+
+
+  onGenerateLink() {
+    // if (this.createForm.invalid) {
+    //   return true;
+    // }
+
+    this.questionnaireService.generateSmartLink({
+      data: this.createForm.value
+    }).then(result => {
+      if (result.status) {
+        this.createForm.patchValue({
+          linkUrl: result.data
+        });
+      } else {
+        Utils.alertError({
+          text: result.message
+        });
+      }
+    });
+  }
 
 }

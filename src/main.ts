@@ -46,7 +46,9 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptorsFromDi()),
     importProvidersFrom(
       BrowserAnimationsModule,
-      RouterModule.forRoot(routes),
+      RouterModule.forRoot(routes, {
+        useHash: true
+      }),
       JwtModule.forRoot({
         jwtOptionsProvider: {
           provide: JWT_OPTIONS,
