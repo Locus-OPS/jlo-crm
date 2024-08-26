@@ -289,14 +289,14 @@
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
                           <div *ngFor="let option of question.options.split(' , ')">
-                            <mat-checkbox [formControlName]="question.id" value="{{ option }}">{{ option }}</mat-checkbox>
+                            <mat-checkbox [formControlName]="question.id" [checked]="option">{{ option }}</mat-checkbox>
                           </div>
                         </div>
                         <!-- Select -->
                         <div *ngIf="question.componentType === 'select'">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
-                          <mat-form-field>
+                          <mat-form-field style="width: 50%">
                             <mat-select [formControlName]="question.id">
                               <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
                                 {{ option }}
@@ -325,7 +325,7 @@
 
                         <br />
                       </div>
-                      <button (click)="ShowData()">Submit</button>
+                      <button (click)="saveQuestionnaireAnswer()">Submit</button>
                     </form>
                   </mat-card-content>
                 </mat-card>
