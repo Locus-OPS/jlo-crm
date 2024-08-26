@@ -47,5 +47,9 @@ export class QuestionnaireService {
     return this.api.call('/api/questionnaire/updateQuestionnaireQuestion', param);
   }
 
+  createQuestionnaireAnswer(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/questionnaire/createQuestionnaireAnswer', param);
+  }
+
 
 }

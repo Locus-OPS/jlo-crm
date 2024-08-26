@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormGroupDirective, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, UntypedFormGroup, Validators } from '@angular/forms';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -349,18 +349,21 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
   onClickSaveBtnQuestionnaireQst() {
-    // alert(this.createFormQuestion.get("id").value);
     if (this.createFormQuestion.get("id").value != null) {
       // Edit
+      console.log("Edit");
       this.updateQuestionnaireQuestion();
     } else {
       // Save
+      console.log("Save");
       this.createQuestionnaireQuestion();
     }
   }
 
   createQuestionnaireQuestion() {
     if (!this.createFormQuestion.valid) {
+      console.log(JSON.stringify(this.createFormQuestion.getRawValue()))
+      console.log("Invalid");
       return;
     }
     const choiceStr = this.items.value.join(' , ');
@@ -381,7 +384,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
               this.getHeaderQuestionnaireDetail();
               this.handleSuccess("Questionnaire has been created.");
               this.createFormQuestion.reset();
-              this.createFormQuestion.patchValue({ headerid: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
+              this.resetQuestionnaireQuestionForm();
               this.items.clear();
             } else {
               this.handleError(res.message);
@@ -470,22 +473,38 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       if (q.componentType === 'text') {
         group[q.id] = ['', q.requiredFlg ? Validators.required : null];
       } else if (q.componentType === 'checkbox') {
-        // group[q.id] = this.formBuilder.array([false]);
-        group[q.id] = [''];
+        // group[q.id] = this.formBuilder.array([]);
+        //console.log("options : " + JSON.stringify(q.options.split(' , ')));
+        //group[q.id] = new FormArray(q.options.split(' , ').map((ops) => new FormControl(ops)));
+        //group[q.id] = new FormArray(q.options.split(' , ').map(() => new FormControl(false)));
+        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
       } else {
-        group[q.id] = [''];
+        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
       }
     });
     this.answerForm = this.formBuilder.group(group);
     //alert(JSON.stringify(this.answerForm.getRawValue()));
   }
 
-  ShowData() {
-    alert(JSON.stringify(this.answerForm.getRawValue()));
-    Object.keys(this.answerForm.controls).forEach(key => {
-      const value = this.answerForm.get(key)?.value;
-      console.log(`Name: ${key}, Value: ${value}`);
-    });
+  ShowData(param: any) {
+    alert(param);
+    //alert(JSON.stringify(this.answerForm.getRawValue()));
+    // Object.keys(this.answerForm.controls).forEach(key => {
+    //   const value = this.answerForm.get(key)?.value;
+    //   console.log(`Name: ${key}, Value: ${value}`);
+    // });
+  }
+
+  saveQuestionnaireAnswer() {
+    this.questionnaireService.createQuestionnaireAnswer({
+      data: { headerId: this.id, answerJson: JSON.stringify(this.answerForm.getRawValue()), statusCd: 'Y' }
+    }).then((res => {
+      if (res.status) {
+        this.handleSuccess("Answer has been submitted.")
+      } else {
+        this.handleError(res.message);
+      }
+    }));
   }
 
   private handleSuccess(message: string): void {
@@ -494,6 +513,12 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
   private handleError(message: string): void {
     Utils.alertError({ text: message });
+  }
+
+  resetQuestionnaireQuestionForm(): void {
+    this.createFormQuestion.reset();
+    console.log("header id: " + this.id);
+    this.createFormQuestion.patchValue({ headerId: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
   }
 
 }
