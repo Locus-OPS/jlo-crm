@@ -1,0 +1,142 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'questionnaire.template.preview' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <mat-card>
+                  <mat-card-content>
+                    <form [formGroup]="respondentForm">
+                      <h3>{{ 'questionaire.respondent.title' | translate }}</h3>
+                      <p>{{ 'questionaire.respondent.subtitle' | translate }}</p>
+                      <hr />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p>1. {{ 'questionnaire.respondent.name' | translate }}</p>
+                          <mat-form-field>
+                            <input matInput [formControlName]="'name'" [required]="true" />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <p>2. {{ 'questionnaire.respondent.age' | translate }}</p>
+                          <mat-form-field>
+                            <input matInput type="number" [formControlName]="'age'" [required]="true" />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <p>3. {{ 'questionnaire.respondent.gender' | translate }}</p>
+                          <mat-radio-group [formControlName]="'gender'">
+                            <mat-radio-button>
+                              {{ 'questionnaire.respondent.gender.male' | translate }}
+                            </mat-radio-button>
+                            <mat-radio-button>
+                              {{ 'questionnaire.respondent.gender.female' | translate }}
+                            </mat-radio-button>
+                            <mat-radio-button>
+                              {{ 'questionnaire.respondent.gender.others' | translate }}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p>4. {{ 'questionnaire.respondent.location' | translate }}</p>
+                          <mat-form-field>
+                            <textarea matInput [formControlName]="'location'" [rows]="3"></textarea>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="answerForm">
+                      <h3>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h3>
+                      <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+                      <hr />
+                      <br />
+                      <!-- TextBox -->
+                      <div *ngFor="let question of questionnaireQuestionList; let i = index">
+                        <div *ngIf="question.componentType === 'text'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
+                          </mat-form-field>
+                        </div>
+                        <!-- Radio -->
+                        <div *ngIf="question.componentType === 'radio'" class="radio-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-radio-group [formControlName]="question.id">
+                            <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
+                              {{ option }}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <!-- CheckBox -->
+                        <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <div *ngFor="let option of question.options.split(' , ')">
+                            <mat-checkbox [formControlName]="question.id" [checked]="option">{{ option }}</mat-checkbox>
+                          </div>
+                        </div>
+                        <!-- Select -->
+                        <div *ngIf="question.componentType === 'select'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field style="width: 50%">
+                            <mat-select [formControlName]="question.id">
+                              <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
+                                {{ option }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <!-- TextArea -->
+                        <div *ngIf="question.componentType === 'textarea'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field>
+                            <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
+                          </mat-form-field>
+                        </div>
+                        <!-- Date -->
+                        <div *ngIf="question.componentType === 'date'">
+                          <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                          <p>{{ question.description }}</p>
+                          <mat-form-field style="width: 50%">
+                            <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+
+                        <br />
+                      </div>
+                      <!-- <button (click)="saveQuestionnaireAnswer()">Submit</button> -->
+                      <div class="text-center">
+                        <button mat-raised-button type="button" class="btn btn-fill btn-primary">{{ 'questionnaire.submit' | translate }}</button>
+                      </div>
+                    </form>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

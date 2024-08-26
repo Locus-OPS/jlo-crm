@@ -112,6 +112,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/system/questionnaire/questionnaire-details/questionnaire-details.component').then(m => m.QuestionnaireDetailsComponent)
       },
+      {
+        path: 'system/questionnaire-preview',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/questionnaire/questionnaire-preview/questionnaire-preview.component').then(m => m.QuestionnairePreviewComponent)
+      },
       // {
       //   path: 'landing-page/:key',
       //   loadComponent: () => import('./pages/system/questionnaire/landing-page/landing-page.component').then(m => m.LandingPageComponent)

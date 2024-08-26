@@ -521,4 +521,12 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     this.createFormQuestion.patchValue({ headerId: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
   }
 
+  onQuestionnairePreview() {
+    this.router.navigate(["/system/questionnaire-preview", { id: this.id }]);
+  }
+
+  onGenerateLink() {
+
+  }
+
 }

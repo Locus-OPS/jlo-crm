@@ -149,4 +149,8 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onGotoQuestionnaireLandingPage(element) {
+    window.open(element.urlLink, "_blank");
+  }
+
 }
