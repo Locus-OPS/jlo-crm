@@ -124,6 +124,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       updatedBy: [''],
       updatedByName: [''],
       updatedDate: [''],
+      urlLink: [''],
+      hashKey: ['']
     });
 
     //ฟอร์มสำหรับสร้างคำถาม
@@ -526,7 +528,31 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
   onGenerateLink() {
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.questionnaireService.createSmartLink({ data: { headerId: this.id } }).then((res) => {
+            if (res.status) {
+              this.getHeaderQuestionnaireDetail();
+              this.handleSuccess("Smart link created successfully.");
+            } else {
+              this.handleError(res.message);
+            }
+          });
+        } else {
+          console.log('Cancelled');
+        }
+      });
+  }
 
+  onCopySmartlink() {
+    navigator.clipboard.writeText(this.createFormHeader.get('urlLink').value)
+      .then(() => {
+        alert(this.createFormHeader.get('urlLink').value);
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
   }
 
 }

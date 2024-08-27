@@ -51,5 +51,9 @@ export class QuestionnaireService {
     return this.api.call('/api/questionnaire/createQuestionnaireAnswer', param);
   }
 
+  createSmartLink(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/smartlink/generate', param);
+  }
+
 
 }

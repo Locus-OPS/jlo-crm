@@ -34,6 +34,11 @@ export class LandingPageService {
     return this.api.call('/api/landing/getLandingQuestionnaireMaster', param);
   }
 
+  //สร้างแบบสอบถาม
+  createQuestionnaire(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/landing/createquestionnaire', param);
+  }
+
 
 
 }

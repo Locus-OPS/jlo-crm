@@ -1,6 +1,161 @@
-{{expiredLink}} Landing page it work
-<BR />
+<!-- {{ expiredLink }} Landing page it work
+<BR /> -->
 
-<!-- <button mat-raised-button type="button" (click)="getLandingQuestionnaireMaster()"
-    class="btn btn-fill btn-rose">Smartlink
-    Generate</button> -->
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="respondentForm">
+              <h3>{{ 'questionaire.respondent.title' | translate }}</h3>
+              <p>{{ 'questionaire.respondent.subtitle' | translate }}</p>
+              <hr />
+              <div class="row">
+                <div class="col-md-6">
+                  <p>1. {{ 'questionnaire.respondent.name' | translate }} <span class="text-danger">*</span></p>
+                  <mat-form-field>
+                    <input matInput [formControlName]="'name'" [required]="true" />
+                  </mat-form-field>
+                  <span *ngIf="hasRequiredError('name')" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <p>2. {{ 'questionnaire.respondent.age' | translate }} <span class="text-danger">*</span></p>
+                  <mat-form-field>
+                    <input matInput type="number" [formControlName]="'age'" [required]="true" />
+                  </mat-form-field>
+                  <span *ngIf="hasRequiredError('age')" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <p>3. {{ 'questionnaire.respondent.gender' | translate }} <span class="text-danger">*</span></p>
+                  <mat-radio-group formControlName="gender">
+                    <mat-radio-button value="male">
+                      {{ 'questionnaire.respondent.gender.male' | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button value="female">
+                      {{ 'questionnaire.respondent.gender.female' | translate }}
+                    </mat-radio-button>
+                    <mat-radio-button value="others">
+                      {{ 'questionnaire.respondent.gender.others' | translate }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="hasRequiredError('gender')" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <p>4. {{ 'questionnaire.respondent.location' | translate }}</p>
+                  <mat-form-field>
+                    <textarea matInput [formControlName]="'location'" [rows]="3"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+            <form [formGroup]="answerForm">
+              <h3>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h3>
+              <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+              <hr />
+              <br />
+              <div *ngFor="let question of questionnaireQuestionList; let i = index">
+                <!-- TextBox -->
+                <div *ngIf="question.componentType === 'text'">
+                  <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <mat-form-field>
+                    <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
+                  </mat-form-field>
+                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+                <!-- Radio -->
+                <div *ngIf="question.componentType === 'radio'" class="radio-group">
+                  <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <mat-radio-group [formControlName]="question.id">
+                    <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
+                      {{ option }}
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+                <!-- CheckBox -->
+                <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <div *ngFor="let option of question.options.split(' , ')">
+                    <mat-checkbox (click)="checkboxConcatValue(option, question.id.toString())">{{ option }}</mat-checkbox>
+                  </div>
+                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+                <!-- Select -->
+                <div *ngIf="question.componentType === 'select'">
+                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <mat-form-field style="width: 50%">
+                    <mat-select [formControlName]="question.id">
+                      <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+                <!-- TextArea -->
+                <div *ngIf="question.componentType === 'textarea'">
+                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <mat-form-field>
+                    <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
+                  </mat-form-field>
+                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div>
+                </div>
+                <!-- Date -->
+                <div *ngIf="question.componentType === 'date'">
+                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                  <p>{{ question.description }}</p>
+                  <mat-form-field style="width: 50%">
+                    <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <!-- <div *ngIf="responseFormhasRequiredError(question.id)" class="text-danger">
+                    {{ 'error.required' | translate }}
+                  </div> -->
+                </div>
+
+                <br />
+              </div>
+              <!-- <button (click)="saveQuestionnaireAnswer()">Submit</button> -->
+              <div class="text-center">
+                <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onSubmitQuestionnaire()">
+                  {{ 'questionnaire.submit' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>
