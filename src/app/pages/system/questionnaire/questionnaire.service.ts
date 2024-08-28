@@ -1,17 +1,21 @@
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiPageRequest } from 'src/app/model/api-page-request.model';
 import { ApiPageResponse } from 'src/app/model/api-page-response.model';
 import { ApiRequest } from 'src/app/model/api-request.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionnaireService {
-
+  private rootPath = environment.endpoint;
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private http: HttpClient
   ) { }
 
   getQuestionnaireById(param: ApiRequest<any>): Promise<ApiResponse<any>> {
@@ -53,6 +57,17 @@ export class QuestionnaireService {
 
   createSmartLink(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/smartlink/generate', param);
+  }
+
+  uploadQuestionnaireImage(file: File, id: string): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('id', id);
+    const req = new HttpRequest('POST', this.rootPath + '/api/questionnaire/uploadImg', formdata, {
+      reportProgress: true,
+      responseType: 'text'
+    });
+    return this.http.request(req);
   }
 
 

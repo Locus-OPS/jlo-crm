@@ -20,6 +20,7 @@ import { CodebookData } from '../../codebook/codebook.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TableControl } from 'src/app/shared/table-control';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-questionnaire-details',
@@ -54,6 +55,10 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   selectedRow: any;
   headerQuestionnaire: any;
   answerForm: FormGroup;
+
+  selectedFiles: FileList;
+  imageSrc: string;
+  uploadProgress = 0;
 
   tableControl: TableControl = new TableControl(() => { this.getQuestionnaireQuestionList(); });
   displayedColumns: string[] = ['seqNo', 'question', 'description', 'requiredFlg', 'answerType', 'options', 'action'];
@@ -488,14 +493,6 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     //alert(JSON.stringify(this.answerForm.getRawValue()));
   }
 
-  ShowData(param: any) {
-    alert(param);
-    //alert(JSON.stringify(this.answerForm.getRawValue()));
-    // Object.keys(this.answerForm.controls).forEach(key => {
-    //   const value = this.answerForm.get(key)?.value;
-    //   console.log(`Name: ${key}, Value: ${value}`);
-    // });
-  }
 
   saveQuestionnaireAnswer() {
     this.questionnaireService.createQuestionnaireAnswer({
@@ -554,5 +551,43 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
         console.error('Failed to copy text: ', err);
       });
   }
+
+  selectFile(event) {
+    // alert(JSON.stringify(this.selectedRow));
+    this.selectedFiles = event.target.files;
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = <string>reader.result;
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  upload() {
+    this.uploadProgress = 0;
+    this.questionnaireService.uploadQuestionnaireImage(this.selectedFiles.item(0), this.selectedRow.id).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.uploadProgress = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        if (event.status === 200) {
+          Utils.alertSuccess({
+            title: 'Uploaded!',
+            text: 'Profile image has been updated.',
+          });
+          this.selectedRow.pictureUrl = <string>event.body;
+        } else {
+          Utils.alertError({
+            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+          });
+        }
+        this.uploadProgress = 0;
+        this.imageSrc = null;
+      }
+    });
+    this.selectedFiles = null;
+  }
+
 
 }
