@@ -147,9 +147,9 @@
                         <div class="col-md-4">
                           <form [formGroup]="addListForm">
                             <div>
-                              <labe>ตัวเลือกคำถาม</labe>
+                              <labe>{{ 'questionnaire.question.questionops' | translate }}</labe>
                               <mat-form-field>
-                                <mat-label>ตัวเลือกคำถาม</mat-label>
+                                <mat-label>{{ 'questionnaire.question.questionops' | translate }}</mat-label>
                                 <input matInput formControlName="itemText" />
                                 <button mat-icon-button matSuffix (click)="addItem()" type="button">
                                   <mat-icon>add</mat-icon>
@@ -179,7 +179,7 @@
 
                       <div class="row" *ngIf="selectedRow != null">
                         <div class="col-md-6">
-                          <label>อัพโหลดรูปภาพ</label>
+                          <label>{{ 'questionnaire.question.uploadimage' | translate }}</label>
                           <div class="card-questionnaire">
                             <a
                               ><img

@@ -220,7 +220,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
               this.id = res.data.id;
               Utils.alertSuccess({ text: 'Header questionnaire has been added.' });
 
-              let elm: any = document.querySelector(
+              let elm: HTMLElement | any = document.querySelector(
                 ".mat-tab-label-active .close-icon"
               );
               if (elm) {
