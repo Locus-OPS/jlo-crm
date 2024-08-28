@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, UntypedFormGroup, Validators } from '@angular/forms';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 import { ApiService } from 'src/app/services/api.service';
@@ -72,7 +72,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     public globals: Globals,
     private _location: Location,
     private appStore: AppStore,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private el: ElementRef
   ) {
     super(router, globals);
 
@@ -218,8 +219,22 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
             if (res.status) {
               this.id = res.data.id;
               Utils.alertSuccess({ text: 'Header questionnaire has been added.' });
-              // this.getHeaderQuestionnaireDetail();
-              this.getHeaderQuestionnaireDetail();
+
+              let elm: any = document.querySelector(
+                ".mat-tab-label-active .close-icon"
+              );
+              if (elm) {
+                elm.click();
+                // นำทางไปยังเส้นทางใหม่
+                setTimeout(() => {
+                  this.router.navigate([
+                    "system/questionnaire-details",
+                    { id: res.data.id },
+                  ]);
+                }, 10);
+              } else {
+                this.getHeaderQuestionnaireDetail();
+              }
             } else {
               Utils.alertError({ text: res.message });
             }
@@ -341,10 +356,6 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     this.items.removeAt(index); // Remove the item at the specified index
   }
 
-  onCreateQuestion() {
-
-  }
-
   getQuestionnaireQuestionList() {
     if (this.id != null) {
       this.questionnaireService.getQuestionnaireQuestionList({ data: { headerId: this.id } }).then((res) => {
@@ -369,14 +380,20 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
   createQuestionnaireQuestion() {
     if (!this.createFormQuestion.valid) {
-      console.log(JSON.stringify(this.createFormQuestion.getRawValue()))
-      console.log("Invalid");
+      this.createFormQuestion.markAllAsTouched();
+      for (const key of Object.keys(this.createFormQuestion.controls)) {
+        if (this.createFormQuestion.controls[key].invalid) {
+          const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+          invalidControl.focus();
+          break;
+        }
+      }
       return;
     }
     const choiceStr = this.items.value.join(' , ');
     if (this.multichoice.includes(this.createFormQuestion.get('answerType').value)) {
       if (choiceStr == "" || choiceStr == null) {
-        this.handleError("Please fill data.");
+        this.handleError("กรุณาเพิ่มตัวเลือกคำถาม");
         return;
       }
       this.createFormQuestion.patchValue({ options: choiceStr });
@@ -387,9 +404,10 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
         if (result.isConfirmed) {
           this.questionnaireService.createQuestionnaireQuestion({ data: params }).then((res) => {
             if (res.status) {
-              // this.getQuestionnaireQuestionList();
-              this.getHeaderQuestionnaireDetail();
+              this.getQuestionnaireQuestionList();
               this.handleSuccess("Questionnaire has been created.");
+
+              this.getHeaderQuestionnaireDetail();
               this.createFormQuestion.reset();
               this.resetQuestionnaireQuestionForm();
               this.items.clear();
@@ -406,12 +424,20 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
   updateQuestionnaireQuestion() {
     if (!this.createFormQuestion.valid) {
+      this.createFormQuestion.markAllAsTouched();
+      for (const key of Object.keys(this.createFormQuestion.controls)) {
+        if (this.createFormQuestion.controls[key].invalid) {
+          const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+          invalidControl.focus();
+          break;
+        }
+      }
       return;
     }
     const choiceStr = this.items.value.join(' , ');
     if (this.multichoice.includes(this.createFormQuestion.get('answerType').value)) {
       if (choiceStr == "" || choiceStr == null) {
-        this.handleError("Please fill data.");
+        this.handleError("กรุณาเพิ่มตัวเลือกคำถาม");
         return;
       }
       this.createFormQuestion.patchValue({ options: choiceStr });
@@ -427,6 +453,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
               // this.getQuestionnaireQuestionList();
               this.getHeaderQuestionnaireDetail();
               this.handleSuccess("Questionnaire has been updated.");
+              this.imageSrc = null;
+              this.selectedRow.imageUrl = res.data.imageUrl;
             } else {
               this.handleError(res.message);
             }
@@ -476,21 +504,9 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   createAnswerForm() {
     const group = {};
     this.questionnaireQuestionList.forEach(q => {
-
-      if (q.componentType === 'text') {
-        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
-      } else if (q.componentType === 'checkbox') {
-        // group[q.id] = this.formBuilder.array([]);
-        //console.log("options : " + JSON.stringify(q.options.split(' , ')));
-        //group[q.id] = new FormArray(q.options.split(' , ').map((ops) => new FormControl(ops)));
-        //group[q.id] = new FormArray(q.options.split(' , ').map(() => new FormControl(false)));
-        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
-      } else {
-        group[q.id] = ['', q.requiredFlg ? Validators.required : null];
-      }
+      group[q.id] = ['', q.requiredFlg ? Validators.required : null];
     });
     this.answerForm = this.formBuilder.group(group);
-    //alert(JSON.stringify(this.answerForm.getRawValue()));
   }
 
 
@@ -517,6 +533,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   resetQuestionnaireQuestionForm(): void {
     this.createFormQuestion.reset();
     console.log("header id: " + this.id);
+    this.selectedRow = null;
     this.createFormQuestion.patchValue({ headerId: this.id, statusCd: 'Y', answerType: '01', seqNo: 1, requiredFlg: true });
   }
 
@@ -576,7 +593,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
             title: 'Uploaded!',
             text: 'Profile image has been updated.',
           });
-          this.selectedRow.pictureUrl = <string>event.body;
+          // this.selectedRow.pictureUrl = <string>event.body;
+          this.selectedRow.imageUrl = <string>event.body;
         } else {
           Utils.alertError({
             text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
@@ -589,5 +607,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     this.selectedFiles = null;
   }
 
+  onCreateQuestion() {
+
+  }
 
 }

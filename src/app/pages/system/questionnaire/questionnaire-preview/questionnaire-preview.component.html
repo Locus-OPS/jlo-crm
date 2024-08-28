@@ -61,6 +61,10 @@
                 <div *ngIf="question.componentType === 'text'">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <mat-form-field>
                     <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
                   </mat-form-field>
@@ -69,6 +73,10 @@
                 <div *ngIf="question.componentType === 'radio'" class="radio-group">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <mat-radio-group [formControlName]="question.id">
                     <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
                       {{ option }}
@@ -79,6 +87,10 @@
                 <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <div *ngFor="let option of question.options.split(' , ')">
                     <mat-checkbox [formControlName]="question.id" [checked]="option">{{ option }}</mat-checkbox>
                   </div>
@@ -87,6 +99,10 @@
                 <div *ngIf="question.componentType === 'select'">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <mat-form-field style="width: 50%">
                     <mat-select [formControlName]="question.id">
                       <mat-option *ngFor="let option of question.options.split(' , ')" [value]="option">
@@ -99,6 +115,10 @@
                 <div *ngIf="question.componentType === 'textarea'">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <mat-form-field>
                     <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
                   </mat-form-field>
@@ -107,6 +127,10 @@
                 <div *ngIf="question.componentType === 'date'">
                   <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
                   <p>{{ question.description }}</p>
+                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                    <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
+                  </div>
+                  <br />
                   <mat-form-field style="width: 50%">
                     <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

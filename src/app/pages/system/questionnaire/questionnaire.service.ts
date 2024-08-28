@@ -70,5 +70,9 @@ export class QuestionnaireService {
     return this.http.request(req);
   }
 
+  getQuestionnaireImagePath(imageUrl: string) {
+    return this.rootPath + '/api/landing/questionnaire_image/' + imageUrl;
+  }
+
 
 }
