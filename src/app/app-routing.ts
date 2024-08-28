@@ -117,10 +117,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/system/questionnaire/questionnaire-preview/questionnaire-preview.component').then(m => m.QuestionnairePreviewComponent)
       },
-      // {
-      //   path: 'landing-page/:key',
-      //   loadComponent: () => import('./pages/system/questionnaire/landing-page/landing-page.component').then(m => m.LandingPageComponent)
-      // },
+      {
+        path: 'system/department',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/department/department.component').then(m => m.DepartmentComponent)
+      },
       {
         path: 'advertising',
         canActivate: [AuthGuard],
