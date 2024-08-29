@@ -1,52 +1,60 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
-
+import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { BaseComponent } from 'src/app/shared/base.component';
-import { FormBuilder, FormGroup, FormGroupDirective, UntypedFormBuilder, Validators } from '@angular/forms';
-import { RoleService } from '../role/role.service';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { Dropdown, DropdownModel } from 'src/app/model/dropdown.model';
+import { DepartmentService } from '../department/department.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Globals } from 'src/app/shared/globals';
-import { DepartmentModel } from './department.model';
-import { TableControl } from 'src/app/shared/table-control';
-import { DepartmentService } from './department.service';
-import Utils from 'src/app/shared/utils';
-import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
-import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { Globals } from 'src/app/shared/globals';
+import { DepartmentTeamService } from './department-team.service';
+import { DepartmentTeamModel } from './departmentTeam.model';
+import { TableControl } from 'src/app/shared/table-control';
+import Utils from 'src/app/shared/utils';
+import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 
 @Component({
-  selector: 'app-department',
-  templateUrl: './department.component.html',
-  styleUrl: './department.component.scss',
+  selector: 'app-department-team',
   standalone: true,
   imports: [SharedModule, CreatedByComponent],
-
+  templateUrl: './department-team.component.html',
+  styleUrl: './department-team.component.scss'
 })
-export class DepartmentComponent extends BaseComponent implements OnInit {
+export class DepartmentTeamComponent extends BaseComponent implements OnInit {
+
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
 
-  selectedRow: DepartmentModel;
-  dataSource: DepartmentModel[];
-  displayedColumns: string[] = ['id', 'departmentName', 'statusName', 'action'];
+  departmentId: string;
+
+  selectedRow: DepartmentTeamModel;
+  dataSource: DepartmentTeamModel[];
+  displayedColumns: string[] = ['id', 'teamName', 'statusName', 'departmentName', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  searchFormDept: FormGroup;
-  createDeptForm: FormGroup;
+
+  createDeptTeamForm: FormGroup;
+  searchFormTeamDept: FormGroup;
 
 
   deptStatusList: Dropdown[];
+  departmentList: Dropdown[];
 
   constructor(
     private formBuilder: FormBuilder,
-    private deptService: DepartmentService,
+    private deptTeamService: DepartmentTeamService,
     public dialog: MatDialog,
     public router: Router,
     public globals: Globals,
     public api: ApiService,
+    private tabParam: TabParam,
   ) {
     super(router, globals);
+
+    api.getDepartment().then(result => { this.departmentList = result.data; });
+
     api.getMultipleCodebookByCodeType({
       data: ['ACTIVE_FLAG']
     }).then(
@@ -59,14 +67,16 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
 
-    this.searchFormDept = this.formBuilder.group({
-      departmentName: [''],
+    this.searchFormTeamDept = this.formBuilder.group({
+      departmentId: [''],
+      teamName: [''],
       statusCd: ['']
     });
 
-    this.createDeptForm = this.formBuilder.group({
+    this.createDeptTeamForm = this.formBuilder.group({
       id: [''],
-      departmentName: ['', Validators.required],
+      teamName: ['', Validators.required],
+      departmentId: ['', Validators.required],
       statusCd: ['', Validators.required],
       description: [''],
       createdBy: [''],
@@ -78,12 +88,18 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     });
 
 
+    if (this.tabParam.params['departmentId']) {
+      this.departmentId = this.tabParam.params['departmentId'];
+      this.searchFormTeamDept.patchValue({ departmentId: this.departmentId });
+    }
 
     this.search();
-
-
-
   }
+
+
+
+
+
 
   onSearch() {
     this.tableControl.resetPage();
@@ -93,11 +109,11 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   search() {
     this.selectedRow = null;
     const param = {
-      ...this.searchFormDept.value
+      ...this.searchFormTeamDept.value
       , sortColumn: this.tableControl.sortColumn
       , sortDirection: this.tableControl.sortDirection
     };
-    this.deptService.getDepartmentList({
+    this.deptTeamService.getDepartmentTeamList({
       pageSize: this.tableControl.pageSize,
       pageNo: this.tableControl.pageNo,
       data: param
@@ -112,12 +128,9 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   }
 
 
-
-
-
   createDept() {
     this.selectedRow = {};
-    this.createDeptForm.reset();
+    this.createDeptTeamForm.reset();
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
@@ -127,12 +140,12 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
   onDelete(row) {
     Utils.confirmDelete().then(confirm => {
       if (confirm.value) {
-        this.deptService.deleteDepartment({
+        this.deptTeamService.deleteDepartmentTeam({
           data: row
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Department has been deleted.',
+              text: 'Team has been deleted.',
             });
             this.search();
           } else {
@@ -145,28 +158,30 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onSelectRow(row: DepartmentModel) {
+  onSelectRow(row: DepartmentTeamModel) {
     this.selectedRow = row;
     console.log(this.selectedRow);
-    this.createDeptForm.patchValue(this.selectedRow);
+    this.createDeptTeamForm.patchValue(this.selectedRow);
   }
 
 
   onSave() {
-    if (this.createDeptForm.invalid) {
+
+    if (this.createDeptTeamForm.invalid) {
       return;
     }
 
-    this.deptService.saveDepartment({
+
+    this.deptTeamService.saveDepartmentTeam({
       data: {
-        ...this.createDeptForm.value
+        ...this.createDeptTeamForm.value
       }
     }).then(result => {
       if (result.status) {
         Utils.assign(this.selectedRow, result.data);
-        this.createDeptForm.patchValue(result.data);
+        this.createDeptTeamForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Department has been saved.',
+          text: 'Team has been saved.',
         });
         this.search();
       }
@@ -177,15 +192,6 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
     });
   }
 
-  gotoDepartmentTeamPage() {
-    this.router.navigate([
-      "/system/department-team",
-      {
-        departmentId: this.createDeptForm.controls['id'].value,
-      },
-    ]);
 
-
-  }
 
 }

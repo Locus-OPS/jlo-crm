@@ -123,6 +123,11 @@ const routes: Routes = [
         loadComponent: () => import('./pages/system/department/department.component').then(m => m.DepartmentComponent)
       },
       {
+        path: 'system/department-team',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/department-team/department-team.component').then(m => m.DepartmentTeamComponent)
+      },
+      {
         path: 'advertising',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/advertising/advertising.component').then(m => m.AdvertisingComponent)

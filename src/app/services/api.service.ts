@@ -93,6 +93,11 @@ export class ApiService {
     return this.http.post(this.rootPath + '/common/selector/getPosition', {}).toPromise();
   }
 
+
+  getDepartment(): Promise<ApiResponse<Dropdown[]>> {
+    return this.http.post(this.rootPath + '/common/selector/getDepartment', {}).toPromise();
+  }
+
   getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/common/selector/getCodebookType', {}).toPromise();
   }

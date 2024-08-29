@@ -26,16 +26,6 @@ export class DepartmentService {
     return this.api.call('/api/department/deleteDepartment', param);
   }
 
-  getDepartmentTeamList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
-    return this.api.call('/api/department/getDepartmentTeamByDepartmentIdList', param);
-  }
 
-  saveDepartmentTeam(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/department/saveDepartmentTeam', param);
-  }
-
-  deleteDepartmentTeam(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/department/deleteDepartmentTeam', param);
-  }
 
 }
