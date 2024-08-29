@@ -20,6 +20,8 @@ export class LandingPageService {
     }
   };
 
+  private rootPath = environment.endpoint;
+
   constructor(
     private handler: HttpBackend,
     private api: ApiService
@@ -38,6 +40,12 @@ export class LandingPageService {
   createQuestionnaire(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/landing/createquestionnaire', param);
   }
+
+  getProfileImagePath(imageUrl: string) {
+    return this.rootPath + '/api/landing/questionnaire_image/' + imageUrl;
+  }
+
+
 
 
 

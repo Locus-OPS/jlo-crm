@@ -93,28 +93,34 @@
             <!-- </div> -->
           </div>
 
-          <div class="card-header card-header-primary card-header-icon">
+          <div
+            class="card-header card-header-primary card-header-icon"
+            *ngIf="createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''"
+          >
             <div class="pull-right"></div>
             <div class="card-icon">
               <i class="material-icons">quiz</i>
             </div>
             <h4 class="card-title">{{ 'questionnaire.detail.question' | translate }}</h4>
           </div>
-          <div class="card-body">
+          <div class="card-body" *ngIf="createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''">
             <div class="row">
               <div class="col-md-12">
                 <mat-card>
                   <mat-card-content>
                     <form [formGroup]="createFormQuestion" (ngSubmit)="(onCreateQuestion)">
                       <div class="row">
-                        <mat-form-field class="col-md-3">
+                        <mat-form-field class="col-md-6">
                           <mat-label>{{ 'questionnaire.question' | translate }}</mat-label>
                           <input matInput formControlName="question" />
                           <mat-error *ngIf="createFormQuestion.get('question').invalid && createFormQuestion.get('question').touched">
                             {{ 'error.required' | translate }}
                           </mat-error>
                         </mat-form-field>
-                        <mat-form-field class="col-md-3">
+                      </div>
+
+                      <div class="row">
+                        <mat-form-field class="col-md-4">
                           <mat-label>{{ 'questionnaire.question.datatype' | translate }}</mat-label>
                           <mat-select formControlName="answerType">
                             <mat-option *ngFor="let type of answerType" [value]="type.codeId">
@@ -135,29 +141,21 @@
                         <mat-checkbox formControlName="requiredFlg" class="col-md-1"> Required </mat-checkbox>
                       </div>
 
-                      <div class="row">
-                        <mat-form-field class="col-md-6">
-                          <mat-label>คำอธิบาย</mat-label>
-                          <textarea matInput formControlName="description"></textarea>
-                        </mat-form-field>
-                      </div>
-
                       <!-- แสดงข้อมูลที่เป็นลักษณะ Check -->
 
                       <div class="row" *ngIf="multichoice.includes(createFormQuestion.get('answerType').value)">
                         <div class="col-md-4">
                           <form [formGroup]="addListForm">
                             <div>
-                              <labe>ตัวเลือกคำตอบ</labe>
+                              <labe>{{ 'questionnaire.question.questionops' | translate }}</labe>
                               <mat-form-field>
-                                <mat-label>Enter text</mat-label>
+                                <mat-label>{{ 'questionnaire.question.questionops' | translate }}</mat-label>
                                 <input matInput formControlName="itemText" />
                                 <button mat-icon-button matSuffix (click)="addItem()" type="button">
                                   <mat-icon>add</mat-icon>
                                 </button>
                               </mat-form-field>
                             </div>
-
                             <div>
                               <mat-list>
                                 <mat-list-item *ngFor="let item of items.controls; let i = index">
@@ -171,6 +169,38 @@
                           </form>
                         </div>
                       </div>
+
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
+                          <mat-label>{{ 'questionnaire.question.description' | translate }}</mat-label>
+                          <textarea matInput formControlName="description"></textarea>
+                        </mat-form-field>
+                      </div>
+
+                      <div class="row" *ngIf="selectedRow != null">
+                        <div class="col-md-6">
+                          <label>{{ 'questionnaire.question.uploadimage' | translate }}</label>
+                          <div class="card-questionnaire">
+                            <a
+                              ><img
+                                class="questionnaire-img"
+                                (click)="fileUpload.click()"
+                                [src]="
+                                  imageSrc
+                                    ? imageSrc
+                                    : selectedRow.imageUrl
+                                    ? questionnaireService.getQuestionnaireImagePath(
+                                        selectedRow.imageUrl == null ? createFormQuestion.get('imageUrl').value : selectedRow.imageUrl
+                                      )
+                                    : './assets/img/image_not_found.png'
+                                "
+                            /></a>
+                          </div>
+                          <input type="file" hidden #fileUpload (change)="selectFile($event)" /><br />
+                          <div><a *ngIf="imageSrc" class="btn btn-info btn-round" (click)="upload()">Upload</a>&nbsp;</div>
+                        </div>
+                      </div>
+
                       <div class="pull-right">
                         <button mat-raised-button type="button" (click)="resetQuestionnaireQuestionForm()" class="btn btn-fill btn-default">
                           {{ 'button.clear' | translate }}
@@ -251,6 +281,7 @@
               </div>
             </div>
           </div>
+
           <br />
         </div>
       </div>

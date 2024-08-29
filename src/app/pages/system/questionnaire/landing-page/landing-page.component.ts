@@ -2,15 +2,11 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BaseComponent } from '@fullcalendar/core/internal';
-import { au } from '@fullcalendar/core/internal-common';
-import { RenderableProps, ComponentChild } from '@fullcalendar/core/preact';
-import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { LandingPageService } from './landing-page.service';
-import { ApiResponse } from 'src/app/model/api-response.model';
 import Utils from 'src/app/shared/utils';
 import { MatRadioModule } from '@angular/material/radio';
+import { QuestionnaireService } from '../questionnaire.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -27,6 +23,11 @@ export class LandingPageComponent implements OnInit {
   respondentForm: FormGroup;
   answerForm: FormGroup;
   questionnaireQuestionList: any[];
+  showForm: boolean = false;
+  errorCode: string;
+  errorMsg: string;
+  isSubmitted: boolean = false;
+
 
   constructor(
     //public router: Router,
@@ -35,8 +36,8 @@ export class LandingPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sanitized: DomSanitizer,
     private landingPageService: LandingPageService,
-    private el: ElementRef
-    //private titleService: Title,
+    private el: ElementRef,
+    private questionnaireService: QuestionnaireService
   ) {
     // this.titleService.setTitle('Jlo CRM : Locus telecom');
   }
@@ -65,6 +66,8 @@ export class LandingPageComponent implements OnInit {
     this.landingPageService.getLandingQuestionnaireMaster(params).then((result: any) => {
       if (result.status) {
         if (result.data) {
+          this.showForm = true;
+          this.isSubmitted = false;
           this.headerQuestionnaire = result.data;
           this.questionnaireQuestionList = result.data.questionnaireList;
           this.respondentForm.patchValue({ questionnaireHeaderId: result.data.id });
@@ -72,6 +75,7 @@ export class LandingPageComponent implements OnInit {
           this.createAnswerForm();
           // console.log(result.data);
           // this.expiredLink = "";
+
         } else {
           Utils.alertError({
             text: "Data not found",
@@ -80,14 +84,21 @@ export class LandingPageComponent implements OnInit {
         }
 
       } else {
-        this.expiredLink = result.message;
+        this.showForm = false;
+        this.isSubmitted = false;
+        this.errorCode = result.errorCode;
+        this.errorMsg = result.message;
 
       }
 
     }, (err: any) => {
-      Utils.alertError({
-        text: err.message,
-      });
+      this.showForm = false;
+      this.isSubmitted = false;
+      this.errorCode = "500";
+      this.errorMsg = err.message;
+      // Utils.alertError({
+      //   text: err.message,
+      // });
     }
 
     );
@@ -146,10 +157,12 @@ export class LandingPageComponent implements OnInit {
         if (result.isConfirmed) {
           this.landingPageService.createQuestionnaire({ data: { respodent: respondent, responses: responseList } }).then((res) => {
             if (res.status) {
+              this.showForm = false;
+              this.isSubmitted = true;
               setTimeout(() => {
                 location.reload(); // หรือใช้ window.location.reload();
-              }, 5000);
-              Utils.alertSuccess({ text: "Successfully submitted the answer." });
+              }, 10000);
+              //Utils.alertSuccess({ text: "Successfully submitted the answer." });
             } else {
               Utils.alertError({ text: res.message });
             }
@@ -173,13 +186,20 @@ export class LandingPageComponent implements OnInit {
 
   checkboxConcatValue(param: any, formName: any) {
     let allValue = this.answerForm.get([formName]).value;
-    let isHave = allValue.includes(param);
-    if (isHave) {
-      allValue = allValue.replace(param, "");
+    let array = allValue.trim().split(/\s*,\s*/);
+
+    let isFound = array.includes(param);
+    if (isFound) {
+      array = array.filter(item => item !== param);
     } else {
-      allValue = (allValue + " " + param).trim();
+      array.push(param);
     }
-    this.answerForm.patchValue({ [formName]: allValue });
+    let arrayStr = (array.join(" , ").replace(/^,\s*/, ""));
+    this.answerForm.patchValue({ [formName]: arrayStr });
+  }
+
+  contactAdmin() {
+    alert("Locus :: Tel:0856789101");
   }
 
 }
