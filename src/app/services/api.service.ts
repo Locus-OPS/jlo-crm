@@ -98,6 +98,11 @@ export class ApiService {
     return this.http.post(this.rootPath + '/common/selector/getDepartment', {}).toPromise();
   }
 
+  getTeamByDepartmentId(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
+    return this.http.post(this.rootPath + '/common/selector/getTeamByDepartmentId', param).toPromise();
+  }
+
+
   getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/common/selector/getCodebookType', {}).toPromise();
   }

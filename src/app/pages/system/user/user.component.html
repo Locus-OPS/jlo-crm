@@ -269,6 +269,28 @@
                       </div>
                       <div class="row">
                         <mat-form-field class="col-md-6">
+                          <mat-label>{{ 'dept.deptName' | translate }}</mat-label>
+                          <mat-select formControlName="divId" (ngModelChange)="getTeamByDepartmentId($event)">
+                            <mat-option *ngFor="let type of departmentList" [value]="type.codeId">
+                              {{ type.codeName}}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="submitted && createForm.controls['divId'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                          <mat-label>{{ 'dept.team.teamName' | translate }}</mat-label>
+                          <mat-select formControlName="teamId">
+                            <mat-option *ngFor="let type of teamList" [value]="type.codeId">{{ type.codeName
+                              }}</mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="submitted && createForm.controls['teamId'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
                           <mat-label>{{ 'user.position' | translate }}</mat-label>
                           <mat-select formControlName="posId">
                             <mat-option *ngFor="let type of posList" [value]="type.codeId">{{ type.codeName

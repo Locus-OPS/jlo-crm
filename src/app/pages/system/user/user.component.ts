@@ -43,6 +43,8 @@ export class UserComponent extends BaseComponent implements OnInit {
   businessUnitList: Dropdown[];
   roleList: Dropdown[];
   posList: Dropdown[];
+  departmentList: Dropdown[];
+  teamList: Dropdown[];
 
   selectedFiles: FileList;
   submitted = false;
@@ -69,6 +71,8 @@ export class UserComponent extends BaseComponent implements OnInit {
     api.getBusinessUnit().then(result => { this.businessUnitList = result.data; });
     api.getRole().then(result => { this.roleList = result.data; });
     api.getPosition().then(result => { this.posList = result.data; });
+    api.getDepartment().then(result => { this.departmentList = result.data; });
+
   }
 
   ngOnInit() {
@@ -96,6 +100,8 @@ export class UserComponent extends BaseComponent implements OnInit {
       posId: ['', Validators.required],
       buId: ['', Validators.required],
       roleCode: ['', Validators.required],
+      divId: ['', Validators.required],
+      teamId: ['', Validators.required],
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
@@ -260,6 +266,13 @@ export class UserComponent extends BaseComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
     });
+  }
+
+
+  getTeamByDepartmentId(departmentId: Event) {
+    console.log("getTeamByDepartmentId : " + departmentId);
+
+    this.api.getTeamByDepartmentId({ data: departmentId }).then(result => { this.teamList = result.data; });
   }
 
 }

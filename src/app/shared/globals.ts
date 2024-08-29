@@ -28,9 +28,11 @@ export class Globals {
       if (TokenUtils.getToken()) {
         this.translate.use('th');
         this.profile = <Profile>(this.jwtHelper.decodeToken(TokenUtils.getToken())['profile']);
+        console.log(this.jwtHelper.decodeToken(TokenUtils.getToken())['profile']);
+
         this.getMenuRespList().then(result => {
           if (result) {
-            const tmpMenuList = [...this.profile.menuRespList];
+            const tmpMenuList = result; //[...this.profile.menuRespList];
             this.profile.menuRespList = <MenuResp[]>tmpMenuList.map(menu => {
               const tmp = result.filter(item => item.id === menu.id)[0];
               return {

@@ -4,6 +4,10 @@ export interface Profile {
   lastName: string;
   pictureUrl: string;
   roleCode: string;
+  divId: string;
+  divName: string;
+  teamId: string;
+  teamName: string;
   menuRespList: MenuResp[];
 }
 
