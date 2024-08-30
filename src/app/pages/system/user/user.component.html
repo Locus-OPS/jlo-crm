@@ -210,7 +210,7 @@
                       <div class="row">
                         <mat-form-field class="col-md-6">
                           <mat-label>{{ 'user.loginType' | translate }}</mat-label>
-                          <mat-select formControlName="loginType">
+                          <mat-select formControlName="loginType" (selectionChange)="onSelectedLoginType()">
                             <mat-option *ngFor="let type of loginTypes" [value]="type.codeId">{{ type.codeName
                               }}</mat-option>
                           </mat-select>
