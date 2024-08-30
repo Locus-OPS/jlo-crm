@@ -11,6 +11,8 @@ import { RoleModel } from './role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { Dropdown } from 'src/app/model/dropdown.model';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-role',
@@ -32,7 +34,10 @@ export class RoleComponent extends BaseComponent implements OnInit {
   dataSource: RoleModel[];
   displayedColumns: string[] = ['roleName', 'useYn', 'respSetup', 'action'];
 
+  businessUnitList: Dropdown[];
+
   constructor(
+    public api: ApiService,
     private formBuilder: UntypedFormBuilder,
     private roleService: RoleService,
     public dialog: MatDialog,
@@ -40,6 +45,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
     public globals: Globals
   ) {
     super(router, globals);
+    api.getBusinessUnit().then(result => { this.businessUnitList = result.data; });
+
   }
 
   ngOnInit() {
@@ -47,6 +54,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
       id: [''],
       roleCode: ['', Validators.required],
       roleName: ['', Validators.required],
+      buId: ['', Validators.required],
       useYn: [''],
       createdBy: [''],
       createdDate: [''],
@@ -69,6 +77,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     this.selectedRow = row;
     this.createForm.patchValue({
       ...this.selectedRow
+      , buId: this.selectedRow.buId.toString()
       , useYn: this.selectedRow.useYn === 'Y' ? true : false
     });
   }
@@ -86,6 +95,9 @@ export class RoleComponent extends BaseComponent implements OnInit {
       if (result.status) {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
+        this.createForm.patchValue({
+          buId: this.selectedRow.buId.toString()
+        });
         Utils.alertSuccess({
           text: 'Role has been saved.',
         });
