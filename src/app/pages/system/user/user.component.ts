@@ -34,7 +34,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
   selectedRow: UserData;
   dataSource: UserData[];
-  displayedColumns: string[] = ['userId', 'firstName', 'lastName', 'buName', 'divName', 'roleName', 'posName', 'useYn'];
+  displayedColumns: string[] = ['userId', 'displayName', 'buName', 'divName', 'teamName', 'roleName', 'posName', 'useYn'];
 
   searchForm: UntypedFormGroup;
   createForm: UntypedFormGroup;
@@ -86,8 +86,11 @@ export class UserComponent extends BaseComponent implements OnInit {
       lastName: [''],
       status: [''],
       buId: [''],
+      divId: [''],
+      teamId: [''],
       roleCode: ['']
     });
+
     this.createForm = this.formBuilder.group({
       id: [''],
       useYn: [''],

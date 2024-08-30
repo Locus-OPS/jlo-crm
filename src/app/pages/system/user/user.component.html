@@ -40,6 +40,24 @@
                       }}</mat-option>
                   </mat-select>
                 </mat-form-field>
+
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'dept.deptName' | translate }}</mat-label>
+                  <mat-select formControlName="divId" (ngModelChange)="getTeamByDepartmentId($event)">
+                    <mat-option *ngFor="let type of departmentList" [value]="type.codeId">
+                      {{ type.codeName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'dept.team.teamName' | translate }}</mat-label>
+                  <mat-select formControlName="teamId">
+                    <mat-option *ngFor="let type of teamList" [value]="type.codeId">{{ type.codeName
+                      }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'user.role' | translate }}</mat-label>
                   <mat-select formControlName="roleCode">
@@ -80,14 +98,11 @@
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.userId' | translate }}</th>
                   <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
                 </ng-container>
-                <ng-container matColumnDef="firstName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.firstName' | translate }}</th>
-                  <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+                <ng-container matColumnDef="displayName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.displayname' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
                 </ng-container>
-                <ng-container matColumnDef="lastName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.lastName' | translate }}</th>
-                  <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
-                </ng-container>
+
                 <ng-container matColumnDef="buName">
                   <th mat-header-cell *matHeaderCellDef>{{ 'user.businessUnit' | translate }}</th>
                   <td mat-cell *matCellDef="let element">{{ element.buName }}</td>
@@ -95,6 +110,10 @@
                 <ng-container matColumnDef="divName">
                   <th mat-header-cell *matHeaderCellDef>{{ 'user.division' | translate }}</th>
                   <td mat-cell *matCellDef="let element">{{ element.divName }}</td>
+                </ng-container>
+                <ng-container matColumnDef="teamName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.teamName' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.teamName }}</td>
                 </ng-container>
                 <ng-container matColumnDef="roleName">
                   <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
