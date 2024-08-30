@@ -86,6 +86,16 @@
                     {{ 'error.required' | translate }}
                   </mat-error>
                 </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <mat-label>{{ 'user.businessUnit' | translate }}</mat-label>
+                  <mat-select formControlName="buId">
+                    <mat-option *ngFor="let type of businessUnitList" [value]="type.codeId">{{ type.codeName
+                      }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="submitted && createForm.controls['buId'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
                 <div class="col-md-2 active-flag">
                   <mat-checkbox formControlName="useYn" [checked]="">{{ 'role.active' | translate }}</mat-checkbox>
                 </div>

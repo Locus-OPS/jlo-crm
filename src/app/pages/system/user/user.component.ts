@@ -15,6 +15,7 @@ import { UserData } from './user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-user',
@@ -33,7 +34,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
   selectedRow: UserData;
   dataSource: UserData[];
-  displayedColumns: string[] = ['userId', 'firstName', 'lastName', 'buName', 'divName', 'roleName', 'posName', 'useYn'];
+  displayedColumns: string[] = ['userId', 'displayName', 'buName', 'divName', 'teamName', 'roleName', 'posName', 'useYn'];
 
   searchForm: UntypedFormGroup;
   createForm: UntypedFormGroup;
@@ -85,14 +86,17 @@ export class UserComponent extends BaseComponent implements OnInit {
       lastName: [''],
       status: [''],
       buId: [''],
+      divId: [''],
+      teamId: [''],
       roleCode: ['']
     });
+
     this.createForm = this.formBuilder.group({
       id: [''],
       useYn: [''],
       loginType: ['', Validators.required],
       userId: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -146,19 +150,38 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.selectedRow = {};
     this.imageSrc = null;
     this.createForm.reset();
+
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
     this.submitted = false;
+
+    this.createForm.controls['password'].setValidators([Validators.required]);
+    this.createForm.controls['password'].updateValueAndValidity();
+
+    setTimeout(() => {
+      this.onSelectedLoginType();
+    }, 500);
+
   }
 
   onSelectRow(row) {
     this.submitted = true;
     this.selectedRow = row;
+    if (this.selectedRow.divId) {
+      this.getTeamByDepartmentId(this.selectedRow.divId);
+    }
+
     this.createForm.patchValue({
       ...this.selectedRow
       , buId: this.selectedRow.buId.toString()
+      , password: ''
     });
+
+    setTimeout(() => {
+      this.onSelectedLoginType();
+    }, 10);
+    this.imageSrc = null;
   }
 
   onSave() {
@@ -166,6 +189,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     if (this.createForm.invalid) {
       return;
     }
+
     this.userService.saveUser({
       data: this.createForm.value
     }).then(result => {
@@ -176,6 +200,12 @@ export class UserComponent extends BaseComponent implements OnInit {
           ...this.selectedRow
           , buId: this.selectedRow.buId.toString()
         });
+
+        this.onSelectedLoginType();
+        this.createForm.patchValue({
+          password: ''
+        });
+
         Utils.alertSuccess({
           title: 'Updated!',
           text: 'User has been updated.',
@@ -269,10 +299,30 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
 
-  getTeamByDepartmentId(departmentId: Event) {
-    console.log("getTeamByDepartmentId : " + departmentId);
+  /**
+   * 1 = Active Directory 
+   * 2 = Password (Plain Text)
+   * 3 = Password (Encrypted)
+   */
+  onSelectedLoginType() {
+    console.log("this.createForm.controls['loginType'].value " + this.createForm.controls['loginType'].value);
+    if (this.createForm.controls['loginType'].value == '1') {
+      this.createForm.controls['password'].disable();
+    } else {
+      this.createForm.controls['password'].enable();
+    }
+    if (this.createForm.controls['id'].value != null) {
+      this.createForm.controls['password'].clearValidators();
+      this.createForm.controls['password'].updateValueAndValidity();
+    }
+  }
 
-    this.api.getTeamByDepartmentId({ data: departmentId }).then(result => { this.teamList = result.data; });
+
+  getTeamByDepartmentId(departmentId) {
+    if (departmentId != null && departmentId != undefined) {
+      this.api.getTeamByDepartmentId({ data: departmentId }).then(result => { this.teamList = result.data; });
+    }
+
   }
 
 }
