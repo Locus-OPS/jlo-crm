@@ -153,4 +153,8 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
     window.open(element.urlLink, "_blank");
   }
 
+  onGotoQuestionnaireDashboard(element) {
+    this.router.navigate(["/dashboard/questionnaire-dashboard-detail", { id: element.id }]);
+  }
+
 }

@@ -144,11 +144,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
       this.xAxisLabel = translation['dashboard.number'];
 
     });
-
-
-
-
-
   }
 
   ngOnInit() {

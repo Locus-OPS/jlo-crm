@@ -118,6 +118,11 @@ const routes: Routes = [
         loadComponent: () => import('./pages/system/questionnaire/questionnaire-preview/questionnaire-preview.component').then(m => m.QuestionnairePreviewComponent)
       },
       {
+        path: 'dashboard/questionnaire-dashboard-detail',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/questionnaire-dashboard/questionnaire-dashboard-detail/questionnaire-dashboard-detail.component').then(m => m.QuestionnaireDashboardDetailComponent)
+      },
+      {
         path: 'system/department',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/system/department/department.component').then(m => m.DepartmentComponent)

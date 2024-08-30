@@ -87,6 +87,15 @@
                         <i class="material-icons">link</i>
                       </span>
                     </button>
+                    <button
+                      class="btn btn-default btn-round btn-fab mat-raised-button"
+                      *ngIf="CAN_WRITE()"
+                      (click)="onGotoQuestionnaireDashboard(element); $event.stopPropagation()"
+                    >
+                      <span class="mat-button-wrapper">
+                        <i class="material-icons">link</i>
+                      </span>
+                    </button>
                   </td>
                 </ng-container>
 
