@@ -1,0 +1,30 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-md-12">Summary Data {{ id }}</div> -->
+      <div class="col-md-12">
+        <div *ngFor="let question of questionnaireQuestionList; let i = index">
+          <div *ngIf="question.componentType === 'text' || question.componentType === 'textarea' || question.componentType === 'date'">
+            <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+            <p>{{ question.description }}</p>
+            <h3>Data table</h3>
+          </div>
+
+          <div *ngIf="question.componentType === 'radio' || question.componentType === 'select'" class="radio-group">
+            <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+            <p>{{ question.description }}</p>
+            <h3>Pie Chart</h3>
+          </div>
+
+          <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+            <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+            <p>{{ question.description }}</p>
+            <h3>Bar Chart</h3>
+          </div>
+
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
