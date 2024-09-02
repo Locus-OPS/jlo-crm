@@ -28,6 +28,7 @@ import { CaseactivityComponent } from '../caseactivity/caseactivity.component';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 import { ModalEmailComponent } from '../../common/modal-email/modal-email.component';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalDepartmentComponent } from '../../common/modal-department/modal-department.component';
 
 
 
@@ -151,6 +152,10 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       status: [''],
       owner: [''],
       displayName: [''],
+
+      ownerDept: [''],
+      deptDisplayName: [''],
+
       workNote: [''],
       // dslnumber: [''],
       // incnumber: [''],
@@ -476,7 +481,56 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createForm.patchValue({ owner: result.id, displayName: result.displayName });
+        this.createForm.patchValue({
+          owner: result.id,
+          displayName: result.displayName,
+
+          ownerDept: result.divId,
+          deptDisplayName: result.divName
+
+        });
+
+        this.createForm.controls['owner'].setValidators([Validators.required]);
+        this.createForm.controls['owner'].updateValueAndValidity();
+
+        this.createForm.controls['displayName'].setValidators([Validators.required]);
+        this.createForm.controls['displayName'].updateValueAndValidity();
+      }
+    });
+  }
+
+  /**
+   * Set department and set owner is null
+   */
+  showOwnerDept() {
+    const dialogRef = this.dialog.open(ModalDepartmentComponent, {
+      height: '85%',
+      width: '90%',
+      panelClass: 'my-dialog',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log(result);
+      if (result) {
+        this.createForm.patchValue({
+          ownerDept: result.id,
+          deptDisplayName: result.departmentName
+        });
+
+        // Clear owner people
+        this.createForm.patchValue({
+          owner: null,
+          displayName: null
+        });
+
+        this.createForm.controls['owner'].clearValidators();
+        this.createForm.controls['owner'].updateValueAndValidity();
+
+        this.createForm.controls['displayName'].clearValidators();
+        this.createForm.controls['displayName'].updateValueAndValidity();
+
       }
     });
   }
