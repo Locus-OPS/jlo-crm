@@ -28,7 +28,7 @@ export class ModalDepartmentComponent extends BaseComponent implements OnInit {
 
   selectedRow: DepartmentModel;
   dataSource: DepartmentModel[];
-  displayedColumns: string[] = ['id', 'departmentName', 'statusName', 'action'];
+  displayedColumns: string[] = ['id', 'departmentName', 'statusName'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   searchForm: FormGroup;
