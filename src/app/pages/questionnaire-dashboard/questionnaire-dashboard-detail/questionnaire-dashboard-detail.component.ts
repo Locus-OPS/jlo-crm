@@ -26,6 +26,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
   questionnaireQuestionList: any[];
   headerQuestionnaire: any;
   individualList: any[];
+  selectedRow: any;
   displayedColumns: string[] = ['name', 'age', 'gender', 'createdDate'];
   tableControl: TableControl = new TableControl(() => { });
 
@@ -124,6 +125,17 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
 
   getIndividualDataList() {
     this.individualList = this.individualDataList;
+  }
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    //this.createFormQuestion.patchValue({ ...row });
+    // const optionsArray = row.options.split(',').map(item => item.trim());
+    // this.items.clear();
+    // optionsArray.forEach(item => {
+    //   this.items.push(this.formBuilder.control(item));
+    //   this.addListForm.get('itemText').reset();
+    // });
   }
 
 }

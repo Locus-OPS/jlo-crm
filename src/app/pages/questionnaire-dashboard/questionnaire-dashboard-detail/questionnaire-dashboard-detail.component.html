@@ -77,7 +77,7 @@
                               <div class="card">
                                 <div class="card-body" style="background-color: aquamarine">
                                   <div class="pull-right">export data btn</div>
-                                  <h3>Data table</h3>
+                                  <h3>Data table (First 10 Rows)</h3>
                                 </div>
                               </div>
                             </div>
@@ -91,6 +91,7 @@
                             <div class="col-md-6">
                               <div class="card">
                                 <div class="card-body" style="background-color: aquamarine">
+                                  <div class="pull-right">export data btn</div>
                                   <h3>Pie Chart</h3>
                                 </div>
                               </div>
@@ -101,10 +102,12 @@
                         <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
+
                           <div class="row">
                             <div class="col-md-6">
                               <div class="card">
                                 <div class="card-body" style="background-color: aquamarine">
+                                  <div class="pull-right">export data btn</div>
                                   <h3>Bar Chart</h3>
                                 </div>
                               </div>
@@ -117,6 +120,11 @@
                   </mat-tab>
                   <mat-tab label="Individual">
                     <div class="row" style="padding: 20px">
+                      <div class="col-md-12">
+                        <div class="pull-right">
+                          <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                        </div>
+                      </div>
                       <div class="col-md-12">
                         <div class="material-datatables table-responsive">
                           <table
@@ -151,7 +159,7 @@
                             <tr
                               mat-row
                               *matRowDef="let row; columns: displayedColumns"
-                              (click)="onSelectRow(row)"
+                              (click)="onRowClick(row)"
                               [ngClass]="{ 'selected-row': selectedRow == row }"
                             ></tr>
                           </table>

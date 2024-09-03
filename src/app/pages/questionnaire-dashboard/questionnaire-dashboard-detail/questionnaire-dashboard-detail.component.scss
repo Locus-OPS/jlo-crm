@@ -41,3 +41,19 @@ mat-tab-group {
 mat-tab-header {
   border-bottom: 1px solid #d3d3d3; /* Light gray border at the bottom of the tab header */
 }
+
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}
+
+mat-table {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* 3D shadow effect */
+  border-radius: 8px; /* Optional: Rounded corners for a softer look */
+  overflow: hidden; /* Ensure that content doesn't overflow the rounded corners */
+}
+
+/* Optional: Add some padding and background color */
+.mat-elevation-z8 {
+  padding: 16px;
+  background-color: white; /* White background to highlight the shadow */
+}
