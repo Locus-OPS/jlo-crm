@@ -157,7 +157,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       ownerDeptTeamName: [''],
 
       ownerDept: [''],
-      deptDisplayName: [''],
+      ownerDeptName: [''],
 
       workNote: [''],
       // dslnumber: [''],
@@ -492,7 +492,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
           ownerDeptTeamName: result.teamName,
 
           ownerDept: result.divId,
-          deptDisplayName: result.divName
+          ownerDeptName: result.divName
 
         });
 
@@ -522,7 +522,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       if (result) {
         this.createForm.patchValue({
           ownerDept: result.id,
-          deptDisplayName: result.departmentName
+          ownerDeptName: result.departmentName
         });
 
         // Clear owner people
