@@ -21,6 +21,8 @@ export interface UserData {
   buName?: string;
   posId?: string;
   posName?: string;
+  teamId?: string;
+  teamName?: string;
   divId?: string;
   divName?: string;
 }
