@@ -257,7 +257,7 @@
                           <input matInput type="text" formControlName="displayName" (click)="showOwner()" readonly
                             required />
                           <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
-                          <mat-error *ngIf="createForm.controls['type'].hasError('required')">
+                          <mat-error *ngIf="createForm.controls['displayName'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
                         </mat-form-field>
@@ -267,9 +267,6 @@
 
 
                   <div class="row">
-
-
-
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'case.dueDate' | translate }}</mat-label>
                       <input matInput type="text" formControlName="dueDate" readonly />
@@ -282,13 +279,26 @@
                       <mat-label>{{ 'case.closeDate' | translate }}</mat-label>
                       <input matInput type="text" formControlName="closedDate" readonly />
                     </mat-form-field>
+                    <div class="col-md-3">
+                      <div class="row">
+                        <mat-form-field class="col-md-12">
+                          <mat-label>{{ 'case.owner.dept' | translate }}</mat-label>
+                          <input matInput type="text" formControlName="deptDisplayName" (click)="showOwnerDept()"
+                            readonly required />
+                          <mat-icon matSuffix (click)="showOwnerDept()">person_search</mat-icon>
+                          <mat-error *ngIf="createForm.controls['deptDisplayName'].hasError('required')">
+                            {{ 'error.required' | translate }}
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <mat-form-field class="col-md-6">
                       <mat-label>{{ 'case.worknote' | translate }}</mat-label>
                       <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text"
                         formControlName="workNote">
-                        </textarea>
+                      </textarea>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                       <mat-label>{{ 'case.description' | translate }}</mat-label>

@@ -81,8 +81,6 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
 
     this.search();
 
-
-
   }
 
   onSearch() {
