@@ -13,7 +13,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-2 col-md-2 col-sm-12">
-                <mat-card class="chart-card">
+                <mat-card class="chart-card" style="background-color: #cfe3e8">
                   <mat-card-title class="chart-title">{{ 'จำนวน (คน)' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <div class="text-center">
@@ -23,7 +23,7 @@
                 </mat-card>
               </div>
               <div class="col-lg-5 col-md-5 col-sm-12">
-                <mat-card class="chart-card">
+                <mat-card class="chart-card" style="background-color: #cfe3e8">
                   <mat-card-title class="chart-title">{{ 'ผู้ตอบแบบสอบถามแยกตามเพศ' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <ngx-charts-pie-chart
@@ -42,7 +42,7 @@
                 </mat-card>
               </div>
               <div class="col-lg-5 col-md-5 col-sm-12">
-                <mat-card class="chart-card">
+                <mat-card class="chart-card" style="background-color: #cfe3e8">
                   <mat-card-title class="chart-title">{{ 'ผู้ตอบแบบสอบถามแยกตามช่วงอายุ' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <ngx-charts-pie-chart
@@ -75,13 +75,12 @@
                           <div class="row">
                             <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                <div class="card-body" style="background-color: #cfe3e8">
                                   <div class="pull-right">
                                     <button mat-raised-button type="button" class="btn btn-fill btn-default">Export Data</button>
                                   </div>
                                   <br />
                                   <br />
-                                  <!-- <h3>Data table (First 10 Rows)</h3> -->
                                   <div>
                                     <ul>
                                       <li *ngFor="let item of question.summaryDetail">
@@ -104,7 +103,7 @@
                           <div class="row">
                             <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                <div class="card-body" style="background-color: #cfe3e8">
                                   <div class="pull-right">
                                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="exportCharts(i)">
                                       Save image
@@ -136,7 +135,7 @@
                           <div class="row">
                             <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                <div class="card-body" style="background-color: #cfe3e8">
                                   <div class="pull-right">
                                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="exportCharts(i)">
                                       Save image
@@ -250,7 +249,7 @@
                       <div class="col-md-2"></div>
                       <div class="col-md-8">
                         <div class="card">
-                          <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                          <div class="card-body" style="background-color: #cfe3e8">
                             <div class="text-center card-title">
                               <h3>
                                 <strong>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</strong>
