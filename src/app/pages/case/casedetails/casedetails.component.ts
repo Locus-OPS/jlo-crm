@@ -153,8 +153,11 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       owner: [''],
       displayName: [''],
 
+      ownerDeptTeam: [''],
+      ownerDeptTeamName: [''],
+
       ownerDept: [''],
-      deptDisplayName: [''],
+      ownerDeptName: [''],
 
       workNote: [''],
       // dslnumber: [''],
@@ -485,8 +488,11 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
           owner: result.id,
           displayName: result.displayName,
 
+          ownerDeptTeam: result.teamId,
+          ownerDeptTeamName: result.teamName,
+
           ownerDept: result.divId,
-          deptDisplayName: result.divName
+          ownerDeptName: result.divName
 
         });
 
@@ -516,13 +522,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       if (result) {
         this.createForm.patchValue({
           ownerDept: result.id,
-          deptDisplayName: result.departmentName
+          ownerDeptName: result.departmentName
         });
 
         // Clear owner people
         this.createForm.patchValue({
           owner: null,
-          displayName: null
+          displayName: null,
+          ownerDeptTeam: null,
+          ownerDeptTeamName: null,
         });
 
         this.createForm.controls['owner'].clearValidators();

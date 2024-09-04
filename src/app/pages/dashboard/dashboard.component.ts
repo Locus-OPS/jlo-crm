@@ -147,14 +147,14 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   }
 
   ngOnInit() {
-
+    this.selViewBy = "01";
     this.searchForm = this.formBuilder.group({
-      viewBy: ["01"]
+      viewBy: [this.selViewBy]
     });
 
     this.searchFormCase = this.formBuilder.group({
-      viewBy: ["01"],
-      statusCd: [""],
+      viewBy: [this.selViewBy],
+      statusCd: [''],
     });
 
     this.searchFormAct = this.formBuilder.group({
@@ -162,7 +162,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     });
 
 
-    this.selViewBy = "01";
+
 
     this.getCountCaseEachStatus();
     this.getChartBarDataList();
@@ -192,7 +192,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
    */
   changeView(evt: MatSelectChange) {
     this.selViewBy = evt.value;
-    this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
+    this.searchFormCase.patchValue({ viewBy: this.selViewBy });
 
 
     this.getCountCaseEachStatus();
@@ -275,7 +275,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
 
   onSearchCase() {
-    this.searchFormCase.patchValue({ selViewBy: this.selViewBy });
     this.searchCase();
   }
 

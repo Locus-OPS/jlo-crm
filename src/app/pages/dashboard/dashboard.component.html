@@ -10,6 +10,7 @@
             <h4 class="card-title">{{ 'My Task' | translate }}</h4>
           </div>
           <div class="card-body">
+            <!-- {{searchFormCase.value|json}} -->
             <form [formGroup]="searchForm" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
@@ -21,6 +22,7 @@
                   </mat-select>
                 </mat-form-field>
               </div>
+
               <div class="row">
                 <div class="col-md-3" style="display: flex">
                   <mat-card style="width: 100%">
@@ -159,7 +161,7 @@
                   </div>
 
                   <div class="card-body">
-                    <form [formGroup]="searchFormCase" (ngSubmit)="searchCase()" novalidate>
+                    <form [formGroup]="searchFormCase" novalidate>
                       <div class="material-datatables table-responsive">
                         <table mat-table [dataSource]="dataSourceCase" class="mat-elevation-z8"
                           (matSortChange)="tableControlCase.onSort($event)" matSort matSortDirection="asc"

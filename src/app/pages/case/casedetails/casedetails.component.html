@@ -254,8 +254,8 @@
                       <div class="row">
                         <mat-form-field class="col-md-12">
                           <mat-label>{{ 'case.owner' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="displayName" (click)="showOwner()" readonly
-                            required />
+                          <input matInput type="text" formControlName="displayName" (click)="showOwner()" required
+                            readonly />
                           <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
                           <mat-error *ngIf="createForm.controls['displayName'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -283,10 +283,10 @@
                       <div class="row">
                         <mat-form-field class="col-md-12">
                           <mat-label>{{ 'case.owner.dept' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="deptDisplayName" (click)="showOwnerDept()"
-                            readonly required />
+                          <input matInput type="text" formControlName="ownerDeptName" (click)="showOwnerDept()" readonly
+                            required />
                           <mat-icon matSuffix (click)="showOwnerDept()">person_search</mat-icon>
-                          <mat-error *ngIf="createForm.controls['deptDisplayName'].hasError('required')">
+                          <mat-error *ngIf="createForm.controls['ownerDeptName'].hasError('required')">
                             {{ 'error.required' | translate }}
                           </mat-error>
                         </mat-form-field>
