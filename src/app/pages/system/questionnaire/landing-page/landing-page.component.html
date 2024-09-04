@@ -55,7 +55,7 @@
                 <div class="col-md-2">
                   <p>2. {{ 'questionnaire.respondent.age' | translate }} <span class="text-danger">*</span></p>
                   <mat-form-field>
-                    <input matInput type="number" [formControlName]="'age'" [required]="true" />
+                    <input matInput type="number" [formControlName]="'age'" [required]="true" min="0" max="99" />
                   </mat-form-field>
                   <span *ngIf="hasRequiredError('age')" class="text-danger">
                     {{ 'error.required' | translate }}

@@ -76,17 +76,18 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     const params = this.route.firstChild.snapshot.params;
     const { id } = params;
     this.id = id;
+    this.initIndividualSearchForm();
     this.getHeaderQuestionnaireDetail();
     this.getQuestionSummary();
     this.getIndividualDataList();
     this.getMainDashBoard();
     this.getRespondentList();
-    this.initIndividualSearchForm();
+
   }
 
   initIndividualSearchForm() {
     this.individualSearchForm = this.formBuilder.group({
-      name: []
+      name: ['']
     });
   }
 
@@ -128,8 +129,15 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     });
   }
 
+  onGetRepondentList() {
+    this.selectedRow = null;
+    this.tableControl.resetPage();
+    this.getRespondentList();
+  }
+
   getRespondentList() {
-    this.qtnDashboardService.getRespondentList({ data: { questionnaireHeaderId: this.id }, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
+    const name = this.individualSearchForm.get('name').value;
+    this.qtnDashboardService.getRespondentList({ data: { name: name, questionnaireHeaderId: this.id }, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
       if (res.status) {
         this.respondentDataList = res.data;
         this.tableControl.total = res.total;
