@@ -37,5 +37,10 @@ export class QuestionnaireDashboardService {
     return this.api.call('/api/questionnairedashboard/getquestionresponsesummary', param);
   }
 
+  //ดึงข้อมูลคำตอบ
+  getQuestionnaireResponseDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/questionnairedashboard/getresponsedetail', param);
+  }
+
 
 }

@@ -1,7 +1,7 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="id != null">
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="pull-center"></div>
@@ -85,7 +85,10 @@
                                   <div>
                                     <ul>
                                       <li *ngFor="let item of question.summaryDetail">
-                                        {{ item.value }}
+                                        <span style="padding-right: 10px"
+                                          ><strong>{{ item.name }}</strong></span
+                                        >
+                                        <i>{{ item.value }}</i>
                                       </li>
                                     </ul>
                                   </div>
@@ -103,7 +106,9 @@
                               <div class="card">
                                 <div class="card-body" style="background-color: rgb(246, 252, 250)">
                                   <div class="pull-right">
-                                    <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                                    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="exportCharts(i)">
+                                      Save image
+                                    </button>
                                   </div>
                                   <ngx-charts-pie-chart
                                     [view]="viewQuestion"
@@ -114,6 +119,7 @@
                                     [legendTitle]="''"
                                     [doughnut]="doughnut"
                                     [explodeSlices]="explodeSlices"
+                                    [id]="'chart' + i"
                                     (select)="onSelect($event)"
                                   >
                                   </ngx-charts-pie-chart>
@@ -132,7 +138,9 @@
                               <div class="card">
                                 <div class="card-body" style="background-color: rgb(246, 252, 250)">
                                   <div class="pull-right">
-                                    <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                                    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="exportCharts(i)">
+                                      Save image
+                                    </button>
                                   </div>
                                   <br /><br />
                                   <ngx-charts-bar-horizontal
@@ -150,6 +158,7 @@
                                     [legendTitle]="'ชนิด'"
                                     [xAxisLabel]="'จำนวน (คน)'"
                                     [yAxisLabel]="'ชนิด'"
+                                    [id]="'chart' + i"
                                   >
                                   </ngx-charts-bar-horizontal>
                                 </div>
@@ -162,101 +171,104 @@
                     </div>
                   </mat-tab>
                   <mat-tab label="Individual">
-                    <div class="row" style="padding: 20px">
-                      <div class="col-md-12">
-                        <div class="pull-right">
-                          <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                    <div style="padding: 20px">
+                      <!-- <form [formGroup]="individualSearchForm">
+                        <div class="row">
+                          <mat-form-field class="col-md-6">
+                            <mat-label>{{ 'ชื่อ' | translate }}</mat-label>
+                            <input matInput rows="2" formControlName="name" maxlength="100" />
+                          </mat-form-field>
                         </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="material-datatables table-responsive">
-                          <table
-                            mat-table
-                            [dataSource]="respondentDataList"
-                            class="mat-elevation-z8"
-                            (matSortChange)="tableControl.onSort($event)"
-                            matSort
-                            matSortDirection="asc"
-                            matSortDisableClear
+                      </form> -->
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="pull-right">
+                            <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <div class="material-datatables table-responsive">
+                            <table
+                              mat-table
+                              [dataSource]="respondentDataList"
+                              class="mat-elevation-z8"
+                              (matSortChange)="tableControl.onSort($event)"
+                              matSort
+                              matSortDirection="asc"
+                              matSortDisableClear
+                            >
+                              <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>{{ 'ชื่อ' }}</th>
+                                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="age">
+                                <th mat-header-cell *matHeaderCellDef>{{ 'อายุ' }}</th>
+                                <td mat-cell *matCellDef="let element">{{ element.age }}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="gender">
+                                <th mat-header-cell *matHeaderCellDef>{{ 'เพศ' }}</th>
+                                <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+                              </ng-container>
+
+                              <ng-container matColumnDef="createdDate">
+                                <th mat-header-cell *matHeaderCellDef>{{ 'วันที่ส่งคำตอบ' }}</th>
+                                <td mat-cell *matCellDef="let element">{{ element.createdDate }}</td>
+                              </ng-container>
+                              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                              <tr
+                                mat-row
+                                *matRowDef="let row; columns: displayedColumns"
+                                (click)="onRowClick(row)"
+                                [ngClass]="{ 'selected-row': selectedRow == row }"
+                              ></tr>
+                            </table>
+                          </div>
+                          <mat-paginator
+                            class="mat-paginator-sticky"
+                            (page)="tableControl.onPage($event)"
+                            [length]="tableControl.total"
+                            [pageIndex]="tableControl.pageNo"
+                            [pageSize]="tableControl.pageSize"
+                            [pageSizeOptions]="tableControl.pageSizeOptions"
+                            showFirstLastButtons
                           >
-                            <ng-container matColumnDef="name">
-                              <th mat-header-cell *matHeaderCellDef>{{ 'ชื่อ' }}</th>
-                              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="age">
-                              <th mat-header-cell *matHeaderCellDef>{{ 'อายุ' }}</th>
-                              <td mat-cell *matCellDef="let element">{{ element.age }}</td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="gender">
-                              <th mat-header-cell *matHeaderCellDef>{{ 'เพศ' }}</th>
-                              <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="createdDate">
-                              <th mat-header-cell *matHeaderCellDef>{{ 'วันที่ส่งคำตอบ' }}</th>
-                              <td mat-cell *matCellDef="let element">{{ element.createdDate }}</td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr
-                              mat-row
-                              *matRowDef="let row; columns: displayedColumns"
-                              (click)="onRowClick(row)"
-                              [ngClass]="{ 'selected-row': selectedRow == row }"
-                            ></tr>
-                          </table>
+                          </mat-paginator>
                         </div>
-                        <mat-paginator
-                          class="mat-paginator-sticky"
-                          (page)="tableControl.onPage($event)"
-                          [length]="tableControl.total"
-                          [pageIndex]="tableControl.pageNo"
-                          [pageSize]="tableControl.pageSize"
-                          [pageSizeOptions]="tableControl.pageSizeOptions"
-                          showFirstLastButtons
-                        >
-                        </mat-paginator>
                       </div>
                     </div>
+
+                    <hr />
                     <div class="row" style="padding: 20px">
                       <div class="col-md-12">
                         <div class="card">
-                          <div class="card-body" style="background-color: azure">
+                          <div class="card-body" style="background-color: rgb(246, 252, 250)">
                             <div class="text-center card-title">
-                              {{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}
+                              <h3>
+                                <strong>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</strong>
+                              </h3>
                             </div>
-                            <div *ngFor="let question of questionnaireQuestionList; let i = index">
-                              <div
-                                *ngIf="
-                                  question.componentType === 'text' || question.componentType === 'textarea' || question.componentType === 'date'
-                                "
-                              >
-                                <h5>{{ i + 1 + '. ' + question.question }}</h5>
+                            <div *ngFor="let question of questionnaireQuestionIdvList; let i = index">
+                              <div>
+                                <h5>
+                                  <strong>{{ i + 1 + '. ' + question.question }}</strong>
+                                </h5>
                                 <p>{{ question.description }}</p>
                                 <div class="row">
-                                  <div class="col-md-6">
-                                    <h5>คำตอบ</h5>
+                                  <div class="col-md-6 text-success">
+                                    <strong><u>คำตอบ</u></strong>
                                   </div>
                                 </div>
-                              </div>
-
-                              <div *ngIf="question.componentType === 'radio' || question.componentType === 'select'" class="radio-group">
-                                <h5>{{ i + 1 + '. ' + question.question }}</h5>
-                                <p>{{ question.description }}</p>
                                 <div class="row">
                                   <div class="col-md-6">
-                                    <h5>คำตอบ</h5>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
-                                <h5>{{ i + 1 + '. ' + question.question }}</h5>
-                                <p>{{ question.description }}</p>
-                                <div class="row">
-                                  <div class="col-md-6">
-                                    <h5>คำตอบ</h5>
+                                    <ul>
+                                      <div *ngFor="let reponse of question.responseDetail; let i = index">
+                                        <li class="text-success">
+                                          <strong>{{ reponse.value }}</strong>
+                                        </li>
+                                      </div>
+                                    </ul>
                                   </div>
                                 </div>
                               </div>

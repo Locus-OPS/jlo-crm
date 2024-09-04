@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +26,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
   id: number;
   totalRespondent: any;
   questionnaireQuestionList: any[];
+  questionnaireQuestionIdvList: any[];
   headerQuestionnaire: any;
   individualList: any[];
   selectedRow: any;
@@ -34,12 +35,28 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
 
   genderGroupData = [];
   ageGroupData = [];
-  respondentDataList = [
-    // { name: 'Elsa A', age: 20, gender: 'Female', createdDate: '2024-09-10' },
-    // { name: 'Monica B', age: 25, gender: 'Female', createdDate: '2024-09-11' },
-    // { name: 'Edward C', age: 25, gender: 'Male', createdDate: '2024-09-12' },
-    // { name: 'Pual D', age: 25, gender: 'Male', createdDate: '2024-09-13' }
-  ]
+  respondentDataList = [];
+  // Chart options
+  view: any[] = [550, 200];
+  viewQuestion: any[] = [550, 300];
+  showLegend = false;
+  showLabels = true;
+  explodeSlices = false;
+  doughnut = false;
+  legendPosition: string = 'below';
+  colorScheme = {
+    domain: [
+      '#3F51B5',  // Indigo
+      '#E91E63',  // Pink
+      '#FFC107',  // Amber
+      '#673AB7',  // Deep Purple
+      '#00BCD4',  // Cyan
+      '#009688',  // Teal
+      '#FF9800'   // Orange
+    ]
+  };
+
+  individualSearchForm: FormGroup;
 
   constructor(
     public api: ApiService,
@@ -64,29 +81,14 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     this.getIndividualDataList();
     this.getMainDashBoard();
     this.getRespondentList();
+    this.initIndividualSearchForm();
   }
 
-
-
-  // Chart options
-  view: any[] = [550, 200];
-  viewQuestion: any[] = [550, 300];
-  showLegend = false;
-  showLabels = true;
-  explodeSlices = false;
-  doughnut = false;
-  legendPosition: string = 'below';
-  colorScheme = {
-    domain: [
-      '#3F51B5',  // Indigo
-      '#E91E63',  // Pink
-      '#FFC107',  // Amber
-      '#673AB7',  // Deep Purple
-      '#00BCD4',  // Cyan
-      '#009688',  // Teal
-      '#FF9800'   // Orange
-    ]
-  };
+  initIndividualSearchForm() {
+    this.individualSearchForm = this.formBuilder.group({
+      name: []
+    });
+  }
 
 
   onSelect(event: any): void {
@@ -98,7 +100,6 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
       this.questionnaireService.getQuestionnaireById({ data: { id: this.id } }).then((res) => {
         if (res.status) {
           this.headerQuestionnaire = res.data;
-          // this.questionnaireQuestionList = res.data.questionnaireList;
         } else {
           console.log(res.message);
         }
@@ -112,6 +113,9 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
 
   onRowClick(row) {
     this.selectedRow = row;
+    if (this.selectedRow != null) {
+      this.getQuestionnaireResponseDetail(this.selectedRow);
+    }
   }
 
   getMainDashBoard() {
@@ -133,15 +137,6 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     });
   }
 
-  testTextList() {
-    const objectList = [
-      { name: 'Alice', value: 'Alice' },
-      { name: 'Bob', value: 'Alice' },
-      { name: 'Charlie', value: 'Alice' }
-    ];
-    return objectList;
-  }
-
   getQuestionSummary() {
     this.qtnDashboardService.getQuestionResponseSummaryList({ data: { id: this.id } }).then((res) => {
       if (res.status) {
@@ -161,6 +156,43 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
       }
 
     });
+  }
+
+  getQuestionnaireResponseDetail(respondent: any) {
+    this.qtnDashboardService.getQuestionnaireResponseDetail({ data: respondent }).then((res) => {
+      if (res.status) {
+        this.questionnaireQuestionIdvList = res.data.question;
+      }
+    });
+  }
+
+  exportCharts(chartId: number) {
+    const svgElement = document.getElementById('chart' + (chartId))?.querySelector('svg') as SVGElement;
+
+    if (svgElement) {
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svgElement);
+
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const image = new Image();
+
+      image.onload = () => {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.drawImage(image, 0, 0);
+        const imgURL = canvas.toDataURL('image/png');
+
+        const link = document.createElement('a');
+        link.href = imgURL;
+        link.download = `chart_${chartId}.png`;
+        link.click();
+      };
+
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+      image.src = url;
+    }
   }
 
 }
