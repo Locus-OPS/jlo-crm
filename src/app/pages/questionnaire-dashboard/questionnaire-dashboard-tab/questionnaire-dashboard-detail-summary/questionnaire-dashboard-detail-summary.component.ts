@@ -39,7 +39,7 @@ export class QuestionnaireDashboardDetailSummaryComponent extends BaseComponent 
     // this.getHeaderQuestionnaireDetail();
   }
   ngOnInit(): void {
-
+    this.questionnaireQuestionList = this.questionList;
   }
 
   // getHeaderQuestionnaireDetail() {

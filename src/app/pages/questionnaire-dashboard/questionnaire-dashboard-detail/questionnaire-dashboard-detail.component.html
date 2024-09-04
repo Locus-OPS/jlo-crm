@@ -17,7 +17,7 @@
                   <mat-card-title class="chart-title">{{ 'จำนวน (คน)' | translate }}</mat-card-title>
                   <mat-card-content class="chart-container">
                     <div class="text-center">
-                      <h2>{{ '500' }}</h2>
+                      <h2>{{ totalRespondent }}</h2>
                     </div>
                   </mat-card-content>
                 </mat-card>
@@ -29,7 +29,7 @@
                     <ngx-charts-pie-chart
                       [view]="view"
                       [scheme]="colorScheme"
-                      [results]="genderData"
+                      [results]="genderGroupData"
                       [legend]="showLegend"
                       [legendPosition]="legendPosition"
                       [labels]="showLabels"
@@ -73,11 +73,22 @@
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
                           <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: aquamarine">
-                                  <div class="pull-right">export data btn</div>
-                                  <h3>Data table (First 10 Rows)</h3>
+                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                  <div class="pull-right">
+                                    <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                                  </div>
+                                  <br />
+                                  <br />
+                                  <!-- <h3>Data table (First 10 Rows)</h3> -->
+                                  <div>
+                                    <ul>
+                                      <li *ngFor="let item of question.summaryDetail">
+                                        {{ item.value }}
+                                      </li>
+                                    </ul>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -88,11 +99,24 @@
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
                           <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: aquamarine">
-                                  <div class="pull-right">export data btn</div>
-                                  <h3>Pie Chart</h3>
+                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                  <div class="pull-right">
+                                    <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                                  </div>
+                                  <ngx-charts-pie-chart
+                                    [view]="viewQuestion"
+                                    [scheme]="colorScheme"
+                                    [results]="question.summaryDetail"
+                                    [legend]="true"
+                                    [labels]="showLabels"
+                                    [legendTitle]="''"
+                                    [doughnut]="doughnut"
+                                    [explodeSlices]="explodeSlices"
+                                    (select)="onSelect($event)"
+                                  >
+                                  </ngx-charts-pie-chart>
                                 </div>
                               </div>
                             </div>
@@ -104,11 +128,30 @@
                           <p>{{ question.description }}</p>
 
                           <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                               <div class="card">
-                                <div class="card-body" style="background-color: aquamarine">
-                                  <div class="pull-right">export data btn</div>
-                                  <h3>Bar Chart</h3>
+                                <div class="card-body" style="background-color: rgb(246, 252, 250)">
+                                  <div class="pull-right">
+                                    <button mat-raised-button type="button" class="btn btn-fill btn-default">Export All Data</button>
+                                  </div>
+                                  <br /><br />
+                                  <ngx-charts-bar-horizontal
+                                    class="chart-card"
+                                    [view]="viewQuestion"
+                                    [scheme]="colorScheme"
+                                    [animations]="true"
+                                    [results]="question.summaryDetail"
+                                    [gradient]="gradient"
+                                    [xAxis]="true"
+                                    [yAxis]="true"
+                                    [legend]="false"
+                                    [showXAxisLabel]="true"
+                                    [showYAxisLabel]="true"
+                                    [legendTitle]="'ชนิด'"
+                                    [xAxisLabel]="'จำนวน (คน)'"
+                                    [yAxisLabel]="'ชนิด'"
+                                  >
+                                  </ngx-charts-bar-horizontal>
                                 </div>
                               </div>
                             </div>
@@ -129,7 +172,7 @@
                         <div class="material-datatables table-responsive">
                           <table
                             mat-table
-                            [dataSource]="individualDataList"
+                            [dataSource]="respondentDataList"
                             class="mat-elevation-z8"
                             (matSortChange)="tableControl.onSort($event)"
                             matSort

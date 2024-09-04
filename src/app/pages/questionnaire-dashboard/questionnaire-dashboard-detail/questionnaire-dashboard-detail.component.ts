@@ -13,6 +13,7 @@ import { QuestionnaireDashboardDetailIndividualComponent } from 'src/app/pages/q
 import { QuestionnaireDashboardDetailSummaryComponent } from '../questionnaire-dashboard-tab/questionnaire-dashboard-detail-summary/questionnaire-dashboard-detail-summary.component';
 import { QuestionnaireService } from '../../system/questionnaire/questionnaire.service';
 import { TableControl } from 'src/app/shared/table-control';
+import { QuestionnaireDashboardService } from '../questionnaire-dashboard.service';
 
 @Component({
   selector: 'app-questionnaire-dashboard-detail',
@@ -23,12 +24,22 @@ import { TableControl } from 'src/app/shared/table-control';
 })
 export class QuestionnaireDashboardDetailComponent extends BaseComponent implements OnInit {
   id: number;
+  totalRespondent: any;
   questionnaireQuestionList: any[];
   headerQuestionnaire: any;
   individualList: any[];
   selectedRow: any;
   displayedColumns: string[] = ['name', 'age', 'gender', 'createdDate'];
-  tableControl: TableControl = new TableControl(() => { });
+  tableControl: TableControl = new TableControl(() => { this.getRespondentList() });
+
+  genderGroupData = [];
+  ageGroupData = [];
+  respondentDataList = [
+    // { name: 'Elsa A', age: 20, gender: 'Female', createdDate: '2024-09-10' },
+    // { name: 'Monica B', age: 25, gender: 'Female', createdDate: '2024-09-11' },
+    // { name: 'Edward C', age: 25, gender: 'Male', createdDate: '2024-09-12' },
+    // { name: 'Pual D', age: 25, gender: 'Male', createdDate: '2024-09-13' }
+  ]
 
   constructor(
     public api: ApiService,
@@ -40,6 +51,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     private spinner: NgxSpinnerService,
     private translate: TranslateService,
     private questionnaireService: QuestionnaireService,
+    private qtnDashboardService: QuestionnaireDashboardService
   ) {
     super(router, globals);
   }
@@ -48,13 +60,17 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     const { id } = params;
     this.id = id;
     this.getHeaderQuestionnaireDetail();
+    this.getQuestionSummary();
     this.getIndividualDataList();
+    this.getMainDashBoard();
+    this.getRespondentList();
   }
 
 
 
   // Chart options
   view: any[] = [550, 200];
+  viewQuestion: any[] = [550, 300];
   showLegend = false;
   showLabels = true;
   explodeSlices = false;
@@ -72,39 +88,6 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     ]
   };
 
-  //  Mock up data
-  genderData = [
-    {
-      "name": "Male",
-      "value": 150
-    },
-    {
-      "name": "Female",
-      "value": 130
-    }
-  ];
-
-  ageGroupData = [
-    {
-      "name": "น้อยกว่า 15 ปี",
-      "value": 50
-    },
-    {
-      "name": "อายุ 16-25 ปี",
-      "value": 120
-    },
-    {
-      "name": "มากกว่า 25 ปี",
-      "value": 110
-    }
-  ];
-
-  individualDataList = [
-    { name: 'Elsa A', age: 20, gender: 'Female', createdDate: '2024-09-10' },
-    { name: 'Monica B', age: 25, gender: 'Female', createdDate: '2024-09-11' },
-    { name: 'Edward C', age: 25, gender: 'Male', createdDate: '2024-09-12' },
-    { name: 'Pual D', age: 25, gender: 'Male', createdDate: '2024-09-13' }
-  ]
 
   onSelect(event: any): void {
     console.log(event);
@@ -115,7 +98,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
       this.questionnaireService.getQuestionnaireById({ data: { id: this.id } }).then((res) => {
         if (res.status) {
           this.headerQuestionnaire = res.data;
-          this.questionnaireQuestionList = res.data.questionnaireList;
+          // this.questionnaireQuestionList = res.data.questionnaireList;
         } else {
           console.log(res.message);
         }
@@ -124,18 +107,60 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
   }
 
   getIndividualDataList() {
-    this.individualList = this.individualDataList;
+    this.individualList = this.respondentDataList;
   }
 
   onRowClick(row) {
     this.selectedRow = row;
-    //this.createFormQuestion.patchValue({ ...row });
-    // const optionsArray = row.options.split(',').map(item => item.trim());
-    // this.items.clear();
-    // optionsArray.forEach(item => {
-    //   this.items.push(this.formBuilder.control(item));
-    //   this.addListForm.get('itemText').reset();
-    // });
+  }
+
+  getMainDashBoard() {
+    this.qtnDashboardService.getMainDashboard({ data: { headerId: this.id } }).then((res) => {
+      if (res.status) {
+        this.totalRespondent = res.data.totalRespondent;
+        this.genderGroupData = res.data.genderGroup;
+        this.ageGroupData = res.data.ageGroup;
+      }
+    });
+  }
+
+  getRespondentList() {
+    this.qtnDashboardService.getRespondentList({ data: { questionnaireHeaderId: this.id }, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
+      if (res.status) {
+        this.respondentDataList = res.data;
+        this.tableControl.total = res.total;
+      }
+    });
+  }
+
+  testTextList() {
+    const objectList = [
+      { name: 'Alice', value: 'Alice' },
+      { name: 'Bob', value: 'Alice' },
+      { name: 'Charlie', value: 'Alice' }
+    ];
+    return objectList;
+  }
+
+  getQuestionSummary() {
+    this.qtnDashboardService.getQuestionResponseSummaryList({ data: { id: this.id } }).then((res) => {
+      if (res.status) {
+        this.questionnaireQuestionList = res.data.question;
+      } else {
+        console.log(res.message);
+      }
+    });
+  }
+
+  getSummaryText(questionId: number) {
+    this.qtnDashboardService.getSummaryTextList({ data: { id: questionId, headerId: this.id } }).then((res) => {
+      if (res.status) {
+        return res.data;
+      } else {
+        return null;
+      }
+
+    });
   }
 
 }
