@@ -37,7 +37,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
   ageGroupData = [];
   respondentDataList = [];
   // Chart options
-  view: any[] = [550, 200];
+  view: any[] = [550, 300];
   viewQuestion: any[] = [550, 300];
   showLegend = false;
   showLabels = true;
@@ -174,7 +174,7 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
     });
   }
 
-  exportCharts(chartId: number) {
+  exportCharts(chartId: any) {
     const svgElement = document.getElementById('chart' + (chartId))?.querySelector('svg') as SVGElement;
 
     if (svgElement) {
@@ -201,6 +201,14 @@ export class QuestionnaireDashboardDetailComponent extends BaseComponent impleme
       const url = URL.createObjectURL(svgBlob);
       image.src = url;
     }
+  }
+
+  exportSummaryData(question: any) {
+    this.qtnDashboardService.exportQuestionnaireSummaryReport({ data: { id: question.id, headerId: question.headerId, componentType: question.componentType, question: question.question } });
+  }
+
+  exportAllData() {
+    this.qtnDashboardService.exportQuestionnaireSummaryListReport({ data: { id: this.id } });
   }
 
 }

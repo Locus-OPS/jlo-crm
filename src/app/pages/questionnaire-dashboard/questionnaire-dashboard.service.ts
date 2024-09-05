@@ -6,6 +6,7 @@ import { ApiRequest } from 'src/app/model/api-request.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { ApiService } from 'src/app/services/api.service';
 import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,18 @@ export class QuestionnaireDashboardService {
   //ดึงข้อมูลคำตอบ
   getQuestionnaireResponseDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/questionnairedashboard/getresponsedetail', param);
+  }
+
+  exportQuestionnaireSummaryReport(param: ApiRequest<any>) {
+    this.api.downloadExcelFile('/api/questionnairedashboard/exportQuestionnaireResponseSummary', param).subscribe((result) => {
+      saveAs(result, ("Report_Questionnaire.xlsx"));
+    });
+  }
+
+  exportQuestionnaireSummaryListReport(param: ApiRequest<any>) {
+    this.api.downloadExcelFile('/api/questionnairedashboard/exportquestionnaireresponselist', param).subscribe((result) => {
+      saveAs(result, ("Report_Questionnaire_List.xlsx"));
+    });
   }
 
 

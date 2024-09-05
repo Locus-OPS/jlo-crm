@@ -36,8 +36,13 @@
       <div class="col-md-8" *ngIf="showForm">
         <div class="card">
           <div class="card-body">
+            <div class="text-center">
+              <h2>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h2>
+              <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+            </div>
+
             <form [formGroup]="respondentForm">
-              <h3>{{ 'questionaire.respondent.title' | translate }}</h3>
+              <h3>1.{{ 'questionaire.respondent.title' | translate }}</h3>
               <p>{{ 'questionaire.respondent.subtitle' | translate }}</p>
               <hr />
               <div class="row">
@@ -91,8 +96,8 @@
               </div>
             </form>
             <form [formGroup]="answerForm">
-              <h3>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.formName }}</h3>
-              <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p>
+              <h3>2.{{ 'คำถาม' }}</h3>
+              <!-- <p>{{ headerQuestionnaire == null ? '' : headerQuestionnaire.sectionHeaderText }}</p> -->
               <hr />
               <br />
               <div *ngFor="let question of questionnaireQuestionList; let i = index">

@@ -6,7 +6,7 @@ import { DropdownModel } from '../model/dropdown.model';
 import { ApiRequest } from '../model/api-request.model';
 import { ApiPageRequest } from '../model/api-page-request.model';
 import { ApiPageResponse } from '../model/api-page-response.model';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from './../../environments/environment';
 
 @Injectable({
@@ -146,6 +146,14 @@ export class ApiService {
 
   getTableList(): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/api/selector/getTableList', {}).toPromise();
+  }
+
+  downloadExcelFile(path, param): any {
+    return this.http.post(this.rootPath + path, param, { responseType: "arraybuffer" }).pipe(
+      map((res) => {
+        return new Blob([res], { type: "application/vnd.openxmlformats-ficedocument.spreadsheetml.sheet" });
+      })
+    );
   }
 
 }
