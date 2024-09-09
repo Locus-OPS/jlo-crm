@@ -29,6 +29,7 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 import { ModalEmailComponent } from '../../common/modal-email/modal-email.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalDepartmentComponent } from '../../common/modal-department/modal-department.component';
+import { CasekbComponent } from '../casekb/casekb.component';
 
 
 
@@ -37,7 +38,7 @@ import { ModalDepartmentComponent } from '../../common/modal-department/modal-de
   templateUrl: './casedetails.component.html',
   styleUrls: ['./casedetails.component.scss'],
   standalone: true,
-  imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent]
+  imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent, CasekbComponent]
 })
 
 export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {
