@@ -114,9 +114,11 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       attId: [''],
       module: [''],
       moduleName: [''],
+
       fileName: [''],
       filePath: [''],
       fileExtension: [''],
+
       description: [''],
       templateHtmlCode: [''],
       createdByName: [''],
@@ -235,8 +237,9 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     this.createForm.patchValue({
       ...this.selectedRow
     });
-    this.fileName = this.createForm.controls['fileName'].value;
-    this.getAttachDisplay(this.createForm.controls['attId'].value);
+
+    // this.fileName = this.createForm.controls['fileName'].value;
+    // this.getAttachDisplay(this.createForm.controls['attId'].value);
   }
 
   getAttachDisplay(attId: number) {
@@ -260,9 +263,9 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
     }
 
     const formdata: FormData = new FormData();
-    if (this.file) {
-      formdata.append('file', this.file);
-    }
+    // if (this.file) {
+    //   formdata.append('file', this.file);
+    // }
 
     const emailModel: EmailTemplateModel = {
       id: this.createForm.controls['id'].value
