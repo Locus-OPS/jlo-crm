@@ -146,7 +146,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="row">
-                                <mat-form-field class="col-md-6">
+                                <!-- <mat-form-field class="col-md-6">
                                     <mat-label>{{ 'document.file' | translate }}</mat-label>
                                     <input type="file" hidden #fileUpload (change)="selectFile($event)" required
                                         accept="ftl/*" />
@@ -167,12 +167,12 @@
                                             <mat-icon>download</mat-icon></a>
                                     </button>
 
-                                </mat-form-field>
+                                </mat-form-field> -->
 
 
-                                <mat-form-field class="col-md-6">
+                                <mat-form-field class="col-md-12">
                                     <mat-label>{{ 'email.description' | translate }}</mat-label>
-                                    <textarea matInput matTextareaAutosize matAutosizeMinRows="4"
+                                    <textarea matInput matTextareaAutosize matAutosizeMinRows="4" rows="5"
                                         matAutosizeMaxRows="20" type="text" formControlName="description">
                                     </textarea>
                                 </mat-form-field>
