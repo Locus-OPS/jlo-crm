@@ -1,0 +1,68 @@
+<form #createFormDirective="ngForm" [formGroup]="createForm" novalidate>
+  <input formControlName="catId" type="hidden" />
+  <input formControlName="contentIdTemp" type="hidden" />
+  <div class="row">
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.contentId' | translate }}</mat-label>
+      <input formControlName="contentId" matInput type="text" readonly />
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.catId' | translate }}</mat-label>
+      <input formControlName="catName" matInput type="text" readonly />
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>{{ translatePrefix + '.contentTitle' | translate }}</mat-label>
+      <input formControlName="title" matInput type="text" maxlength="500" readonly />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.seq' | translate }}</mat-label>
+      <input formControlName="seq" matInput type="number" readonly />
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.display' | translate }}</mat-label>
+      <mat-select formControlName="display" [disabled]="true">
+        <mat-option *ngFor="let status of contentIconList" [value]="status.codeId">{{ status.codeName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.contentStatus' | translate }}</mat-label>
+      <mat-select formControlName="contentStatus" [disabled]="true">
+        <mat-option *ngFor="let status of contentStatusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="col-md-3 no-label">
+      <mat-checkbox formControlName="sendDocFlag" [disabled]="true">{{ translatePrefix + '.sendDocFlag' | translate }}</mat-checkbox>
+    </div>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.startDate' | translate }}</mat-label>
+      <input matInput [matDatepicker]="startDateFrom" formControlName="startDate" readonly />
+      <!-- <mat-datepicker-toggle matSuffix [for]="startDateFrom" readonly></mat-datepicker-toggle> -->
+      <mat-datepicker #startDateFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.startTime' | translate }}</mat-label>
+      <input matInput formControlName="startTime" type="time" readonly />
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.endDate' | translate }}</mat-label>
+      <input matInput [matDatepicker]="endDateFrom" formControlName="endDate" readonly />
+      <!-- <mat-datepicker-toggle matSuffix [for]="endDateFrom" readonly></mat-datepicker-toggle> -->
+      <mat-datepicker #endDateFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="col-md-3">
+      <mat-label>{{ translatePrefix + '.endTime' | translate }}</mat-label>
+      <input formControlName="endTime" matInput type="time" readonly />
+    </mat-form-field>
+  </div>
+  <app-created-by
+    [createdBy]="createForm.controls['createdBy'].value"
+    [createdDate]="createForm.controls['createdDate'].value"
+    [updatedBy]="createForm.controls['updatedBy'].value"
+    [updatedDate]="createForm.controls['updatedDate'].value"
+  >
+  </app-created-by>
+</form>
