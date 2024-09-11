@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-right">
+        <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onActCreate()">{{ 'button.create' | translate }}</button>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="material-datatables table-responsive">
+        <table
+          mat-table
+          [dataSource]="caseKBSource"
+          class="mat-elevation-z8"
+          (matSortChange)="tableControl.onSort($event)"
+          matSort
+          matSortDirection="asc"
+          matSortDisableClear
+        >
+          <ng-container matColumnDef="action" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="onActDelete(element)">
+                <span class="mat-button-wrapper"><i class="material-icons">delete_sweep</i></span>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="kbId" sticky>
+            <th mat-header-cell *matHeaderCellDef>{{ 'content.contentId' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.kbId }}</td>
+          </ng-container>
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>{{ 'content.contentTitle' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.kbTitle }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>{{ 'content.description' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="onSelectRow(row)"
+            [ngClass]="{ 'selected-row': selectedRow == row }"
+          ></tr>
+        </table>
+      </div>
+      <mat-paginator
+        class="mat-paginator-sticky"
+        (page)="tableControl.onPage($event)"
+        [length]="tableControl.total"
+        [pageIndex]="tableControl.pageNo"
+        [pageSize]="tableControl.pageSize"
+        [pageSizeOptions]="tableControl.pageSizeOptions"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="pull-center"></div>
+          <h4 class="card-title">{{ 'content.basicInfoTab' | translate }}</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="kbDetailForm" novalidate>
+            <input formControlName="kbId" type="hidden" />
+            <div class="row">
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'content.contentTitle' | translate }}</mat-label>
+                <input formControlName="kbTitle" matInput type="text" maxlength="500" readonly />
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'content.url' | translate }}</mat-label>
+                <input formControlName="url" matInput type="text" maxlength="500" readonly />
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'content.description' | translate }}</mat-label>
+                <textarea [disabled]="true" formControlName="description" matInput type="text" rows="5" maxlength="2000" readonly></textarea>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
