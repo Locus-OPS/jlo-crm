@@ -59,7 +59,7 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="selectedRow != null && caseKBSource.length > 0">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary card-header-icon">
@@ -84,7 +84,7 @@
             <div class="row">
               <mat-form-field class="col-md-12">
                 <mat-label>{{ 'content.description' | translate }}</mat-label>
-                <textarea [disabled]="true" formControlName="description" matInput type="text" rows="5" maxlength="2000" readonly></textarea>
+                <textarea [disabled]="true" formControlName="description" matInput type="text" rows="8" maxlength="2000" readonly></textarea>
               </mat-form-field>
             </div>
           </form>
