@@ -20,11 +20,13 @@ import { KbService } from '../../kb/kb.service';
 import { CasekbService } from '../../case/casekb/casekb.service';
 import Utils from 'src/app/shared/utils';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
+import { RatingComponent } from '../../kb/component/rating/rating.component';
+import { FavoriteComponent } from '../../kb/component/favorite/favorite.component';
 
 @Component({
   selector: 'app-modal-kb',
   standalone: true,
-  imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent],
+  imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent],
   templateUrl: './modal-kb.component.html',
   styleUrl: './modal-kb.component.scss'
 })

@@ -1,0 +1,4 @@
+<div class="star-rating">
+  <span class="star" *ngFor="let star of stars; let i = index" [class.filled]="i < rating" (click)="rate(i + 1)"> ★ </span>
+</div>
+<p><strong>Average Rating : </strong>{{ avgRating | number : '1.1-1' }} <strong>Reviewer : </strong>{{ totalReviewer }}</p>

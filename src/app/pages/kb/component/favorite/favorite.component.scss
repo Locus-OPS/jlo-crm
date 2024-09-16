@@ -1,0 +1,17 @@
+.heart-icon {
+  font-size: 2em; /* ปรับขนาดของไอคอน */
+  color: lightgray; /* สีเริ่มต้น */
+  cursor: pointer;
+  margin: 0; /* กำจัด margin เพื่อไม่ให้เกิดช่องว่าง */
+  padding: 0; /* กำจัด padding */
+  transition: color 0.3s ease;
+}
+
+.heart-icon.liked {
+  color: red; /* สีหัวใจเมื่อกด Like */
+}
+
+p {
+  margin: 0; /* กำจัด margin เพื่อให้บรรทัดชิดกัน */
+  padding: 0; /* กำจัด padding */
+}
