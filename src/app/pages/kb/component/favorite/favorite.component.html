@@ -1,0 +1,8 @@
+<div class="favorite">
+  <div style="display: flex; flex-direction: column; align-items: flex-end">
+    <!-- ไอคอนหัวใจ -->
+    <p class="heart-icon" [class.liked]="isLiked" style="margin: 0" (click)="toggleLike()">&#x2764;</p>
+    <!-- ข้อความ Liked/Like -->
+    <p style="margin: 0; padding-top: 5px">{{ isLiked ? 'Liked' : 'Like' }}</p>
+  </div>
+</div>

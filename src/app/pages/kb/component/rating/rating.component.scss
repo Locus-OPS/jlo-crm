@@ -1,0 +1,10 @@
+/* star-rating.component.css */
+.star-rating {
+  font-size: 2em; /* ขนาดของดาว */
+  color: lightgray; /* สีดาวเมื่อไม่ได้เลือก */
+  cursor: pointer;
+}
+
+.star.filled {
+  color: gold; /* สีดาวเมื่อถูกเลือก */
+}

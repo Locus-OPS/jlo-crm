@@ -10,70 +10,145 @@
             <h4 class="card-title">{{ 'content.title' | translate }}</h4>
           </div>
           <div class="card-body">
-            <div class="row">
-              <div class="col-md-4">
-                <kb-tree translatePrefix="content"></kb-tree>
-              </div>
-              <div class="col-md-8">
-                <mat-accordion multi="true">
-                  <mat-expansion-panel expanded="true">
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{ 'content.basicInfoTab' | translate }}
-                      </mat-panel-title>
-                      <mat-panel-description>
+            <mat-tab-group>
+              <!-- แท็บ All Content -->
+              <mat-tab label="All Content">
+                <div class="row">
+                  <div class="col-md-4">
+                    <kb-tree translatePrefix="content"></kb-tree>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <kb-rating></kb-rating>
+                      </div>
+                      <div class="col-md-6 pull-right" style="padding-right: 20px">
+                        <kb-favorite></kb-favorite>
+                      </div>
+                    </div>
 
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <kb-detail translatePrefix="content"></kb-detail>
-                  </mat-expansion-panel>
-                  <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{ 'content.detailInfoTab' | translate }}
-                      </mat-panel-title>
-                      <mat-panel-description>
+                    <mat-accordion multi="true">
+                      <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.basicInfoTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-detail translatePrefix="content"></kb-detail>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.detailInfoTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-detail-info translatePrefix="content"></kb-detail-info>
+                      </mat-expansion-panel>
+                      <!-- <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.mainDocTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description>
+    
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-main-document></kb-main-document>
+                      </mat-expansion-panel> -->
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.docTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-document></kb-document>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.keywordTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-keyword></kb-keyword>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </div>
+                </div>
+              </mat-tab>
 
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <kb-detail-info translatePrefix="content"></kb-detail-info>
-                  </mat-expansion-panel>
-                  <!-- <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{ 'content.mainDocTab' | translate }}
-                      </mat-panel-title>
-                      <mat-panel-description>
+              <!-- แท็บ My Favorite Content -->
+              <mat-tab label="My Favorite Content">
+                <div class="row">
+                  <div class="col-md-4">
+                    <kb-favtree translatePrefix="content"></kb-favtree>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <kb-rating></kb-rating>
+                      </div>
+                      <div class="col-md-6 pull-right" style="padding-right: 20px">
+                        <kb-favorite></kb-favorite>
+                      </div>
+                    </div>
 
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <kb-main-document></kb-main-document>
-                  </mat-expansion-panel> -->
-                  <mat-expansion-panel>
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{ 'content.docTab' | translate }}
-                        </mat-panel-title>
-                        <mat-panel-description>
-
-                        </mat-panel-description>
-                      </mat-expansion-panel-header>
-                      <kb-document></kb-document>
-                    </mat-expansion-panel>
-                  <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                      <mat-panel-title>
-                        {{ 'content.keywordTab' | translate }}
-                      </mat-panel-title>
-                      <mat-panel-description>
-
-                      </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <kb-keyword></kb-keyword>
-                  </mat-expansion-panel>
-                </mat-accordion>
-              </div>
-            </div>
+                    <mat-accordion multi="true">
+                      <mat-expansion-panel expanded="true">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.basicInfoTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-detail translatePrefix="content"></kb-detail>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.detailInfoTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-detail-info translatePrefix="content"></kb-detail-info>
+                      </mat-expansion-panel>
+                      <!-- <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.mainDocTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description>
+    
+                          </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-main-document></kb-main-document>
+                      </mat-expansion-panel> -->
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.docTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-document></kb-document>
+                      </mat-expansion-panel>
+                      <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                            {{ 'content.keywordTab' | translate }}
+                          </mat-panel-title>
+                          <mat-panel-description> </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <kb-keyword></kb-keyword>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </div>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
           </div>
         </div>
       </div>
