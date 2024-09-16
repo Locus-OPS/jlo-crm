@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="form-container" [ngClass]="{ show: isOpen, hidden: !isOpen }">
+    <div class="form-title">Task<mat-icon (click)="close()" class="close-icon"> cancel </mat-icon></div>
+    <div>
+      <mat-list>
+        @for (task of tasks; track task) {
+        <mat-list-item>
+          <mat-icon matListItemIcon [svgIcon]="task.type + '-icon'" [class]="task.type + '-icon'"></mat-icon>
+          <div matListItemTitle class="task-title">{{ task.title }}</div>
+          <div matListItemLine class="task-detail">{{ task.subTitle }}</div>
+          <div matListItemLine class="task-time">
+            <cd-timer format="user" [startTime]="task.time">[hours] ชัวโมง [minutes] นาที [seconds] วินาที</cd-timer>
+          </div>
+          <button mat-icon-button matListItemMeta class="accept-icon" (click)="acceptJob(task.type)">
+            <mat-icon>check</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        }
+      </mat-list>
+    </div>
+  </div>
+</div>

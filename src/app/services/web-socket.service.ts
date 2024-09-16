@@ -11,25 +11,26 @@ export class WebSocketService implements OnDestroy {
   private subscription: StompSubscription | undefined;
 
   constructor() {
-    var socket = new SockJS('http://localhost:8080/jlo-crm-backend/websocket');
-    this.connection = Stomp.over(socket);
-    this.connection.debug = () => { };
-    this.connection.connect({}, () => { });
-  }
-
-  public send(param: any): void {
-    console.log('this.connection.connected', this.connection.connected);
-    if (this.connection && this.connection.connected) {
-      this.connection.send('/app/message', {}, JSON.stringify(param));
+    try {
+      var socket = new SockJS('http://localhost:8080/jlo-crm-backend/message-channel');
+      this.connection = Stomp.over(socket);
+      this.connection.debug = () => { };
+      this.connection.connect({}, () => { });
+    } catch (error) {
+      console.error('WebSocketService.constructor', error);
     }
   }
 
-  public listen(callback: Function): void {
+  public send(destination: string, param: any): void {
+    if (this.connection && this.connection.connected) {
+      this.connection.send(destination, {}, JSON.stringify(param));
+    }
+  }
+
+  public listen(destination: string, callback: Function): void {
     if (this.connection) {
-      console.log('this.connection', this.connection);
       this.connection.connect({}, () => {
-        console.log('xxxxxxx');
-        this.subscription = this.connection!.subscribe('/topic/public', message => callback(JSON.parse(message.body)));
+        this.subscription = this.connection!.subscribe(destination, message => callback(JSON.parse(message.body)));
       });
     }
   }
