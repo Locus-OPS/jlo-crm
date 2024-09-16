@@ -44,14 +44,5 @@ export class ContentComponent extends BaseComponent implements OnInit {
     this.kbStore.loadKbContentType(contentType);
   }
 
-  onRatingUpdate(newRating: number) {
-    // this.rating = newRating;
-
-  }
-
-  // ฟังก์ชันที่ถูกเรียกเมื่อมีการกด Like/Unlike
-  onLikeToggled(event: { contentId: number, liked: boolean }) {
-    this.likedContent = event;  // อัปเดตสถานะการ like/unlike และ contentId ที่ถูกกด
-  }
 
 }
