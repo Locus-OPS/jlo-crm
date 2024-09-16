@@ -93,4 +93,10 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
   onSelectRow(row: any) {
     this.selectedRow = row;
   }
+
+
+
+  gotoEmailInboundDetailPage(emailIb: any) {
+    this.router.navigate(["/email-inbound-detail", { id: emailIb.id }]);
+  }
 }
