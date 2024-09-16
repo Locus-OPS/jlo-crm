@@ -1,0 +1,38 @@
+.background-highlight {
+  background-color: lightskyblue;
+}
+
+.fa-icon {
+  color: steelblue;
+}
+
+.treeControl {
+  text-align: right;
+}
+
+a.treeControlBtn {
+  color: #292929;
+  padding: 2px;
+}
+
+mat-tree-node {
+  .mat-mdc-icon-button {
+    // font-size: 14px;
+    width: 100%;
+    text-align: left;
+    height: fit-content;
+    border-radius: 0%;
+
+    mat-icon {
+      padding-top: 4px;
+    }
+  }
+}
+
+.yellow-icon {
+  color: #f8d775;
+}
+
+::ng-deep.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+  border-radius: 0% !important;
+}

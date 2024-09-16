@@ -20,6 +20,10 @@ export class KbService {
     return this.api.call('/api/kb/getKbTreeList', param);
   }
 
+  getFavKbTreeList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/kb/getFavKbTreeList', param);
+  }
+
   getKbTreeFolderList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/kb/getKbTreeFolderList', param);
   }

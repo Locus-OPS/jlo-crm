@@ -150,7 +150,16 @@ const routes: Routes = [
       {
         path: 'channel/chat',
         loadComponent: () => import('./pages/channel/chat/chat.component').then(m => m.ChatComponent)
-      }
+      },
+      {
+        path: 'email-inbound',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/email-inbound/email-inbound.component').then(m => m.EmailInboundComponent)
+      }, {
+        path: 'email-inbound-detail',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/email-inbound/email-inbound-detail/email-inbound-detail.component').then(m => m.EmailInboundDetailComponent)
+      },
     ]
   }, {
     path: '',
