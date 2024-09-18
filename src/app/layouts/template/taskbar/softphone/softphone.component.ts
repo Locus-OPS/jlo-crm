@@ -67,7 +67,6 @@ export class SoftphoneComponent implements OnInit {
   }
 
   close() {
-    console.log('close');
     this.taskbarService.setTaskbarEvent({ type: "phone", action: "close" });
   }
 

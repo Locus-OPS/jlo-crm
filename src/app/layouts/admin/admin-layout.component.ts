@@ -13,6 +13,7 @@ import { SidebarComponent } from '../template/sidebar/sidebar.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-layout',
@@ -56,6 +57,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private globals: Globals,
     private tabManageService: TabManageService,
     private spinner: NgxSpinnerService,
+    private webSocketService: WebSocketService,
     location: Location
   ) {
     this.location = location;
@@ -76,22 +78,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {
-    // const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-    // const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-
-    // this.location.subscribe((ev: PopStateEvent) => {
-    //   this.lastPoppedUrl = ev.url;
-    // });
-
-    // const html = document.getElementsByTagName('html')[0];
-    // if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-    //   let ps = new PerfectScrollbar(elemMainPanel);
-    //   ps = new PerfectScrollbar(elemSidebar);
-    //   html.classList.add('perfect-scrollbar-on');
-    // } else {
-    //   html.classList.add('perfect-scrollbar-off');
-    // }
-
+    this.initWebsocket();
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       tap((event: NavigationEnd) => {
@@ -166,6 +153,16 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this._router.unsubscribe();
     this.tabsComponentSubscription.unsubscribe();
+  }
+
+  initWebsocket() {
+    this.webSocketService.listen('/user/queue/' + this.globals.getProfile().userId, (message) => {
+      console.log('message', message);
+    });
+
+    setTimeout(() => {
+      this.webSocketService.send('/message-channel/message', { id: 2, name: 'xxxx' });
+    }, 2000);
   }
 
   async loadTab() {

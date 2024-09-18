@@ -3,17 +3,19 @@ import { SoftphoneService } from "./softphone/softphone.service";
 import { TaskbarService } from "./taskbar.service";
 import { SharedModule } from "src/app/shared/module/shared.module";
 import { SoftphoneComponent } from "./softphone/softphone.component";
+import { TaskQueueComponent } from "./task-queue/task-queue.component";
 
 @Component({
   selector: "app-taskbar-cmp",
   templateUrl: "./taskbar.component.html",
   styleUrls: ["./taskbar.component.scss"],
   standalone: true,
-  imports: [SharedModule, SoftphoneComponent]
+  imports: [SharedModule, SoftphoneComponent, TaskQueueComponent]
 })
 export class TaskbarComponent implements OnInit {
 
   isSoftphoneOpen = false;
+  isTaskQueueOpen = false;
 
   constructor(
     private softphoneService: SoftphoneService,
@@ -28,7 +30,18 @@ export class TaskbarComponent implements OnInit {
             this.isSoftphoneOpen = false;
             break;
           case "open":
+            this.isTaskQueueOpen = false;
             this.isSoftphoneOpen = true;
+            break;
+        }
+      } else if (event.type === "task-queue") {
+        switch (event.action) {
+          case "close":
+            this.isTaskQueueOpen = false;
+            break;
+          case "open":
+            this.isSoftphoneOpen = false;
+            this.isTaskQueueOpen = true;
             break;
         }
       }
@@ -36,7 +49,13 @@ export class TaskbarComponent implements OnInit {
   }
 
   toggleSoftphone() {
+    this.isTaskQueueOpen = false;
     this.isSoftphoneOpen = !this.isSoftphoneOpen;
+  }
+
+  toggleTaskQueue() {
+    this.isSoftphoneOpen = false;
+    this.isTaskQueueOpen = !this.isTaskQueueOpen;
   }
 
   pickup() {

@@ -2,7 +2,12 @@
   <div class="items">
     <div class="item-left">
       <a href="javascript:void(0)" (click)="toggleSoftphone()" [ngClass]="{ open: isSoftphoneOpen }"
-        ><i class="material-icons phone-icon">phone</i>&nbsp;&nbsp;Phone</a
+        ><i class="material-icons">phone</i>&nbsp;&nbsp;Phone</a
+      >
+    </div>
+    <div class="item-left">
+      <a href="javascript:void(0)" (click)="toggleTaskQueue()" [ngClass]="{ open: isTaskQueueOpen }"
+        ><i class="material-icons">format_list_bulleted</i>&nbsp;&nbsp;Task</a
       >
     </div>
 
@@ -22,3 +27,4 @@
 </div>
 
 <app-softphone-cmp [isOpen]="isSoftphoneOpen"></app-softphone-cmp>
+<app-task-queue-cmp [isOpen]="isTaskQueueOpen"></app-task-queue-cmp>

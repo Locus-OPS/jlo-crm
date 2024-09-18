@@ -9,7 +9,6 @@ import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsultingService } from 'src/app/pages/consulting/consulting.service';
-import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import Utils from 'src/app/shared/utils';
@@ -35,27 +34,9 @@ export class ContactHistoryTlComponent extends BaseComponent implements OnInit {
     public globals: Globals,
     public tabParam: TabParam,
     private dialog: MatDialog,
-    public iconRegistry: MatIconRegistry,
     public sanitizer: DomSanitizer,
   ) {
     super(router, globals);
-    /*https://github.com/seanyeh/fontawesome-svgs */
-    /**
- 01 Voice
-02 Email
-03 Web Chat
-04 Walk in
-05 Line
-06 Facebook
--->
-     */
-    iconRegistry.addSvgIcon('voice-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/phone-square-light.svg'));
-    iconRegistry.addSvgIcon('email-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/email.svg'));
-    iconRegistry.addSvgIcon('webchat-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/chat.svg'));
-    iconRegistry.addSvgIcon('walkin-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/walking-light.svg'));
-    iconRegistry.addSvgIcon('line-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/line-brands.svg'));
-    iconRegistry.addSvgIcon('fb-icon', sanitizer.bypassSecurityTrustResourceUrl('assets/img/icon/facebook-brands.svg'));
-
   }
 
   ngOnInit() {

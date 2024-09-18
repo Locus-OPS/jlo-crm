@@ -11,7 +11,7 @@ $taskbar-open-color: #005ea5;
   bottom: 43px;
   left: 0px;
   z-index: 1000000;
-  width: 320px;
+  width: 480px;
   height: 604px;
   padding: 0px;
   background-color: white;
@@ -36,10 +36,33 @@ $taskbar-open-color: #005ea5;
   cursor: pointer;
 }
 
-.genesys-frame {
-  height: calc(100% - 40px);
-  width: 100%;
-  border: 0;
+.task-title {
+  font-weight: 500;
+}
+
+.task-time {
+  font-size: 12px;
+  color: #666;
+}
+
+.line-icon {
+  color: green !important;
+}
+
+.facebook-icon {
+  color: blue !important;
+}
+
+.email-icon {
+  color: blue !important;
+}
+
+.accept-icon {
+  margin-top: 16px !important;
+
+  mat-icon {
+    line-height: 0.4;
+  }
 }
 
 .show {
