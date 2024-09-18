@@ -1,0 +1,17 @@
+<form [formGroup]="createForm" novalidate>
+  <mat-form-field>
+    <mat-chip-grid formControlName="keyword" #chipList aria-label="Keyword">
+      <mat-chip *ngFor="let keyword of keywords" (removed)="remove(keyword)">
+        {{ keyword.keyword }}
+        <!-- <mat-icon matChipRemove>cancel</mat-icon> -->
+      </mat-chip>
+      <input
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+        maxlength="50"
+        readonly
+      />
+    </mat-chip-grid>
+  </mat-form-field>
+</form>

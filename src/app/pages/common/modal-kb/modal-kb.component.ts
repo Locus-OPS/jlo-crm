@@ -22,11 +22,14 @@ import Utils from 'src/app/shared/utils';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 import { RatingComponent } from '../../kb/component/rating/rating.component';
 import { FavoriteComponent } from '../../kb/component/favorite/favorite.component';
+import { KbDetailDocumentComponent } from './kb-detail-document/kb-detail-document.component';
+import { KbDetailKeywordComponent } from './kb-detail-keyword/kb-detail-keyword.component';
+import { KbDetailSearchBykeywordComponent } from './kb-detail-search-bykeyword/kb-detail-search-bykeyword.component';
 
 @Component({
   selector: 'app-modal-kb',
   standalone: true,
-  imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent],
+  imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailSearchBykeywordComponent],
   templateUrl: './modal-kb.component.html',
   styleUrl: './modal-kb.component.scss'
 })
@@ -48,11 +51,6 @@ export class ModalKbComponent extends BaseComponent implements OnInit {
   ) {
     super(router, globals);
     this.initCreateForm();
-    // this.kbTreeSubscription = this.kbStore.observeKbContentType().subscribe(contentType => {
-    //   if (contentType) {
-    //     this.loadKbTree();
-    //   }
-    // });
 
     this.kbDetailSubscription = this.kbStore.observeKbDetail().subscribe(detail => {
       if (detail && detail.contentId) {
@@ -87,7 +85,6 @@ export class ModalKbComponent extends BaseComponent implements OnInit {
 
 
   onCreateRefKB() {
-    // alert(JSON.stringify(this.createForm.getRawValue()));
     const param = this.createForm.getRawValue();
     this.caseKbService.createRefKB({ data: { ...param } }).then((res) => {
       if (res.status) {

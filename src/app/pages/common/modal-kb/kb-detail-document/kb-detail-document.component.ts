@@ -1,29 +1,28 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
-import { KbService } from '../../kb.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { CreatedByComponent } from '../../created-by/created-by.component';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { FormGroupDirective, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { KbDetail, KbDocument } from 'src/app/pages/kb/kb.model';
 import { Subscription } from 'rxjs';
-import { KbStore } from '../../kb.store';
-import { KbDetail, KbDocument } from '../../kb.model';
+import { KbService } from 'src/app/pages/kb/kb.service';
+import { KbStore } from 'src/app/pages/kb/kb.store';
+import { Router } from '@angular/router';
+import { Globals } from 'src/app/shared/globals';
+import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/shared/utils';
 import { HttpResponse } from '@angular/common/http';
 import { ApiResponse } from 'src/app/model/api-response.model';
-import { BaseComponent } from 'src/app/shared/base.component';
-import { Router } from '@angular/router';
-import { Globals } from 'src/app/shared/globals';
-import { ModalContentFileComponent } from 'src/app/pages/common/modal-file/modal-file.component';
-import { MatDialog } from '@angular/material/dialog';
-import { SharedModule } from 'src/app/shared/module/shared.module';
-import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
+import { ModalContentFileComponent } from '../../modal-file/modal-file.component';
 
 @Component({
-  selector: 'kb-document',
-  templateUrl: './document.component.html',
-  styleUrls: ['./document.component.scss'],
+  selector: 'kb-detail-document',
   standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+  imports: [SharedModule, CreatedByComponent],
+  templateUrl: './kb-detail-document.component.html',
+  styleUrl: './kb-detail-document.component.scss'
 })
-export class DocumentComponent extends BaseComponent implements OnInit, OnDestroy {
-
+export class KbDetailDocumentComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
 

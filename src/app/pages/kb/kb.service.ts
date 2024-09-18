@@ -53,7 +53,7 @@ export class KbService {
   }
 
   getKbDocumentList(param: ApiRequest<any>): Promise<ApiResponse<any>> {
-    return this.api.call('/api/kb/getKbDocumentList', param);
+    return this.api.call('/api/kb/getKbDocumentList2', param);
   }
 
   getKbMainDocument(param: ApiRequest<any>): Promise<ApiResponse<any>> {

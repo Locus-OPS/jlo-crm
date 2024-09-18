@@ -4,7 +4,11 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button class="btn btn-danger btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()" (click)="onDelete(element); $event.stopPropagation();">
+          <button
+            class="btn btn-danger btn-round btn-fab mat-raised-button"
+            *ngIf="CAN_WRITE()"
+            (click)="onDelete(element); $event.stopPropagation()"
+          >
             <span class="mat-button-wrapper">
               <i class="material-icons">remove</i>
             </span>
@@ -13,7 +17,7 @@
       </ng-container>
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>{{ 'document.title' | translate }}</th>
-        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        <td mat-cell *matCellDef="let element">{{ element.title }}</td>
       </ng-container>
       <ng-container matColumnDef="mainFlag">
         <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'document.mainFlag' | translate }}</th>
@@ -23,14 +27,14 @@
       </ng-container>
       <ng-container matColumnDef="createdBy">
         <th mat-header-cell *matHeaderCellDef>{{ 'common.createdBy' | translate }}</th>
-        <td mat-cell *matCellDef="let element"> {{element.createdBy}} </td>
+        <td mat-cell *matCellDef="let element">{{ element.createdBy }}</td>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <th mat-header-cell *matHeaderCellDef>{{ 'common.createdDate' | translate }}</th>
-        <td mat-cell *matCellDef="let element"> {{element.createdDate}} </td>
+        <td mat-cell *matCellDef="let element">{{ element.createdDate }}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)" [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onSelectRow(row)" [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
     </table>
   </div>
 </div>
@@ -41,13 +45,19 @@
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="col-md-12">
-          <mat-label>{{'document.file' | translate}}</mat-label>
-          <input type="file" hidden #fileUpload (change)="selectFile($event)">
+          <mat-label>{{ 'document.file' | translate }}</mat-label>
+          <input type="file" hidden #fileUpload (change)="selectFile($event)" />
           <input disabled formControlName="fileName" matInput type="text" maxlength="200" readonly />
           <button type="button" *ngIf="kbDetail" matSuffix mat-button (click)="fileUpload.click()" class="file-icon">
             <mat-icon>attachment</mat-icon>
           </button>
-          <button type="button" *ngIf="kbDetail && createForm.controls['attId'].value" matSuffix mat-button (click)="openAttachmentDialog(createForm.controls['attId'].value)">
+          <button
+            type="button"
+            *ngIf="kbDetail && createForm.controls['attId'].value"
+            matSuffix
+            mat-button
+            (click)="openAttachmentDialog(createForm.controls['attId'].value)"
+          >
             <mat-icon>pageview</mat-icon>
           </button>
           <mat-error *ngIf="createForm.controls['fileName'].hasError('required')">
@@ -55,22 +65,40 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-12">
-          <mat-label>{{'document.description' | translate}}</mat-label>
-          <textarea [disabled]="!kbDetail" formControlName="descp" matInput type="text"
-            rows="5" maxlength="2000"></textarea>
+          <mat-label>{{ 'document.description' | translate }}</mat-label>
+          <textarea [disabled]="!kbDetail" formControlName="descp" matInput type="text" rows="5" maxlength="2000"></textarea>
         </mat-form-field>
       </div>
       <app-created-by
-          [createdBy]="createForm.controls['createdBy'].value"
-          [createdDate]="createForm.controls['createdDate'].value"
-          [updatedBy]="createForm.controls['updatedBy'].value"
-          [updatedDate]="createForm.controls['updatedDate'].value">
+        [createdBy]="createForm.controls['createdByName'].value"
+        [createdDate]="createForm.controls['createdDate'].value"
+        [updatedBy]="createForm.controls['updatedByName'].value"
+        [updatedDate]="createForm.controls['updatedDate'].value"
+      >
       </app-created-by>
     </div>
     <div *ngIf="kbDetail" class="pull-right">
-      <button mat-raised-button type="button" class="btn btn-fill btn-primary" *ngIf="CAN_WRITE() && !creatingContent && !creatingDocument" (click)="create()">{{ 'button.create' | translate }}</button>
-      <button mat-raised-button type="button" class="btn btn-fill btn-default" *ngIf="CAN_WRITE() && !creatingContent && creatingDocument" (click)="cancel()">{{ 'button.cancel' | translate }}</button>
-      <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="CAN_WRITE() && !creatingContent">{{ 'button.save' | translate }}</button>
+      <button
+        mat-raised-button
+        type="button"
+        class="btn btn-fill btn-primary"
+        *ngIf="CAN_WRITE() && !creatingContent && !creatingDocument"
+        (click)="create()"
+      >
+        {{ 'button.create' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        class="btn btn-fill btn-default"
+        *ngIf="CAN_WRITE() && !creatingContent && creatingDocument"
+        (click)="cancel()"
+      >
+        {{ 'button.cancel' | translate }}
+      </button>
+      <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="CAN_WRITE() && !creatingContent" (click)="onSave()">
+        {{ 'button.save' | translate }}
+      </button>
     </div>
   </form>
 </div>
