@@ -23,7 +23,7 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
 
   selectedRow: any;
   dataSource: any[];
-  displayedColumns: string[] = ['id', 'formEmail', 'toEmail', 'subjectEmail', 'statusCd', 'createdDate', 'action'];
+  displayedColumns: string[] = ['id', 'formEmail', /*'toEmail',*/ 'subjectEmail', 'statusName', 'createdDate', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   searchForm: FormGroup;
@@ -38,7 +38,7 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType({
-      data: ['ACTIVE_FLAG']
+      data: ['MAIL_IB_STATUS']
     }).then(
       result => {
 
