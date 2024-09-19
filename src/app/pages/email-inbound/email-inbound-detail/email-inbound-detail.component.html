@@ -16,11 +16,11 @@
                                     <mat-label>{{ 'email.inbound.id' | translate }}</mat-label>
                                     <input matInput type="text" formControlName="id" readonly />
                                 </mat-form-field>
-                                <mat-form-field class="col-md-7">
+                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.inbound.formEmail' | translate }}</mat-label>
                                     <input matInput type="text" formControlName="formEmail" readonly />
                                 </mat-form-field>
-                                <mat-form-field class="col-md-3">
+                                <mat-form-field class="col-md-7">
                                     <mat-label>{{'email.inbound.toEmail'| translate }}</mat-label>
                                     <input matInput type="text" formControlName="toEmail" readonly />
                                 </mat-form-field>
@@ -47,7 +47,6 @@
                                             </mat-label>
                                             <button type="button" matSuffix mat-button
                                                 (click)="openAttachmentDialog(item.attachmentId,item.fileExtension,item.fileName)">
-
                                                 <mat-icon>cloud_download</mat-icon>
                                             </button>
 

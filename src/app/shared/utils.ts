@@ -5,6 +5,7 @@ import { ApiResponse } from '../model/api-response.model';
 import * as _ from "lodash";
 
 export default class Utils {
+  static errorDuplicateMessage = 'There is duplicate information. <br/> Please recheck before proceeding.';
 
   static asyncDebounce(func, wait) {
     const debounced = _.debounce(async (resolve, reject, bindSelf, args) => {
@@ -92,6 +93,24 @@ export default class Utils {
       showCancelButton: true,
       confirmButtonText: btnText,
     });
+  }
+  static alertDuplicateError() {
+    // return new SwalComponent({
+    //   type: 'error',
+    //   confirmButtonClass: 'btn btn-info',
+    //   buttonsStyling: false,
+    //   html: this.errorDuplicateMessage
+    // }).show();
+
+    return Swal.fire({
+      icon: 'error',
+      html: this.errorDuplicateMessage,
+      showCancelButton: true,
+      didClose: () => {
+        return false;
+      }
+    });
+
   }
 
   static alertError(options: SweetAlertOptions) {

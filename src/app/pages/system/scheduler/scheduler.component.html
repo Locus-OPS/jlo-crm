@@ -1,0 +1,196 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <!-- <h4 class="card-title">{{ 'schduler.title' | translate }}</h4> -->
+                        <h4 class="card-title">{{'menu.scheduler' | translate}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+                            <!--
+                            <div class="row">
+                                 
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.name' | translate" rows="2" formControlName="schedulerName">
+                                </mat-form-field>
+                                <mat-form-field class="col-md-2">
+                                    <mat-select [placeholder]="'scheduler.enable' | translate" formControlName="useYn">
+                                        <mat-option *ngFor="let item of useYnList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            -->
+                            <div class="pull-right">
+                                <button mat-raised-button type="button" class="btn btn-fill btn-warning"
+                                    type="submit">{{ 'button.search' | translate }}</button>
+                                <button *ngIf="CAN_WRITE()" mat-raised-button type="button"
+                                    class="btn btn-fill btn-success" type="button" (click)="create()">{{ 'button.create'
+                                    | translate }}</button>
+                                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset"
+                                    (click)="clear()">{{ 'button.clear' | translate }}</button>
+                            </div>
+                        </form>
+                        <div class="material-datatables">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
+                                (matSortChange)="sortData($event)" matSort matSortDirection="asc" matSortDisableClear>
+
+                                <ng-container matColumnDef="schedulerName">
+                                    <th mat-header-cell *matHeaderCellDef sticky> {{ 'scheduler.name' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.schedulerName}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="expression">
+                                    <th mat-header-cell *matHeaderCellDef> {{ 'scheduler.expression' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.expression}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="priority">
+                                    <th mat-header-cell *matHeaderCellDef> {{ 'scheduler.priority' | translate }} </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="runonInstance">
+                                    <th mat-header-cell *matHeaderCellDef> {{ 'scheduler.runonInstance' | translate }}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.runonInstance}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="useYn">
+                                    <th mat-header-cell *matHeaderCellDef class="text-center"> {{ 'scheduler.enable' |
+                                        translate }} </th>
+                                    <td mat-cell *matCellDef="let element" class="text-center">
+                                        <mat-icon matSuffix *ngIf="element.useYn === 'Y'">done</mat-icon>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="active">
+                                    <th mat-header-cell *matHeaderCellDef> {{ 'scheduler.status' | translate }} </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
+                                    [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+
+                            </table>
+                            <mat-paginator class="mat-paginator-sticky" (page)="onPage($event)" [length]="total"
+                                [pageIndex]="pageNo" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                    <!-- end content-->
+                </div>
+                <!--  end card  -->
+                <div class="card" *ngIf="selectedRow">
+                    <div class="card-header card-header-primary card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">perm_identity</i>
+                        </div>
+                        <h4 class="card-title">Scheduler Detail</h4>
+                        <div class="pull-right">
+                            <a mat-raised-button class="btn btn-fill btn-info" (click)="gotoSchedulerHistoryLog()">View
+                                Scheduler History</a>
+                        </div>
+                        <!-- <div class="card-title">
+                            <button mat-raised-button class="btn btn-fill btn-default" [routerLink]="[ '/customer/member', {id:createForm.controls['id'].value} ]">View Schduler History</button>
+                        </div> -->
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
+                            <div class="row">
+                                <mat-form-field class="col-md-3">
+                                    <input type="hidden" formControlName="id" />
+                                    <input #firstFocus matInput [placeholder]="'scheduler.name' | translate" type="text"
+                                        formControlName="schedulerName" maxlength="300" required />
+                                    <mat-error *ngIf="createForm.controls['schedulerName'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.classPath' | translate" type="text"
+                                        formControlName="classpath" maxlength="300" required />
+                                    <mat-error *ngIf="createForm.controls['classpath'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.priority' | translate" type="text"
+                                        formControlName="priority" maxlength="3" required />
+                                    <mat-error *ngIf="createForm.controls['priority'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.runonInstance' | translate" type="text"
+                                        formControlName="runonInstance" maxlength="50" required />
+                                    <mat-error *ngIf="createForm.controls['runonInstance'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.expression' | translate" type="text"
+                                        formControlName="expression" maxlength="30" required />
+                                    <mat-error *ngIf="createForm.controls['expression'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.runonContextRoot' | translate" type="text"
+                                        formControlName="runonContextRoot" maxlength="30" required />
+                                    <mat-error *ngIf="createForm.controls['runonContextRoot'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <mat-select [placeholder]="'scheduler.enable' | translate" formControlName="useYn"
+                                        #useYn required>
+                                        <mat-option value=""></mat-option>
+                                        <mat-option *ngFor="let item of useYnList" [value]="item.codeId">
+                                            {{ item.codeName }}</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="createForm.controls['useYn'].hasError('required')">
+                                        {{ 'error.required' | translate }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'scheduler.seq' | translate" type="number"
+                                        formControlName="seq">
+                                </mat-form-field>
+                            </div>
+                            <div class="row group-process-time">
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'common.createdBy' | translate" type="text"
+                                        formControlName="createdBy" readonly>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'common.createdDate' | translate" type="text"
+                                        formControlName="createdDate" readonly>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'common.updatedBy' | translate" type="text"
+                                        formControlName="updatedBy" readonly>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <input matInput [placeholder]="'common.updatedDate' | translate" type="text"
+                                        formControlName="updatedDate" readonly>
+                                </mat-form-field>
+                            </div>
+                            <div class="pull-left"><a
+                                    href="https://www.freeformatter.com/cron-expression-generator-quartz.html"
+                                    target="_blank">expression generator.</a></div>
+                            <button *ngIf="CAN_WRITE()" mat-raised-button type="submit"
+                                class="btn btn-primary pull-right">{{ 'button.save' | translate }}</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- end col-md-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+</div>

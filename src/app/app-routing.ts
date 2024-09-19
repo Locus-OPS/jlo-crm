@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthGuard } from './guard/auth.guard';
+import { SchedulerComponent } from './pages/system/scheduler/scheduler.component';
+import { SchedulerHistoryLogComponent } from './pages/system/scheduler/scheduler-history-log/scheduler-history-log.component';
 
 const routes: Routes = [
   {
@@ -86,6 +88,15 @@ const routes: Routes = [
         path: 'system/business-unit',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/system/business-unit/business-unit.component').then(m => m.BusinessUnitComponent)
+      },
+      {
+        path: 'system/scheduler',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/system/scheduler/scheduler.component').then(m => m.SchedulerComponent)
+      },
+      {
+        path: 'system/scheduler-log',
+        loadComponent: () => import('./pages/system/scheduler/scheduler-history-log/scheduler-history-log.component').then(m => m.SchedulerHistoryLogComponent)
       },
       {
         path: 'system/sla',
