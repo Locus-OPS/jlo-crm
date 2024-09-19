@@ -2,70 +2,82 @@
 <div mat-dialog-content class="flex-container">
   <div class="main-content">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4">
-          <kb-tree translatePrefix="content"></kb-tree>
-        </div>
-
-        <div class="col-md-8">
-          <div class="row">
-            <div class="col-md-6">
-              <kb-rating></kb-rating>
+      <mat-tab-group>
+        <!-- แท็บ All Content -->
+        <mat-tab label="All Content">
+          <div class="row" style="padding: 10px">
+            <div class="col-md-4">
+              <kb-tree translatePrefix="content"></kb-tree>
             </div>
-            <div class="col-md-6 pull-right" style="padding-right: 20px">
-              <kb-favorite></kb-favorite>
+
+            <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-6">
+                  <kb-rating></kb-rating>
+                </div>
+                <div class="col-md-6 pull-right" style="padding-right: 20px">
+                  <kb-favorite></kb-favorite>
+                </div>
+              </div>
+              <mat-accordion multi="true">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ 'content.basicInfoTab' | translate }}
+                    </mat-panel-title>
+                    <mat-panel-description> </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <modal-kb-detail translatePrefix="content"></modal-kb-detail>
+                  <!-- <kb-detail translatePrefix="content"></kb-detail> -->
+                </mat-expansion-panel>
+
+                <mat-expansion-panel expanded="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ 'content.detailInfoTab' | translate }}
+                    </mat-panel-title>
+                    <mat-panel-description> </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <modal-kb-detail-info translatePrefix="content"></modal-kb-detail-info>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ 'content.docTab' | translate }}
+                    </mat-panel-title>
+                    <mat-panel-description> </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <kb-detail-document></kb-detail-document>
+                </mat-expansion-panel>
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{ 'content.keywordTab' | translate }}
+                    </mat-panel-title>
+                    <mat-panel-description> </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <kb-detail-keyword></kb-detail-keyword>
+                </mat-expansion-panel>
+              </mat-accordion>
+              <br />
+              <div class="pull-right" *ngIf="this.createForm.get('kbId').value != null">
+                <button mat-raised-button type="button" (click)="onCreateRefKB(); $event.stopPropagation()" class="btn btn-fill btn-primary">
+                  {{ 'button.select' | translate }}
+                </button>
+              </div>
             </div>
           </div>
-          <mat-accordion multi="true">
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ 'content.basicInfoTab' | translate }}
-                </mat-panel-title>
-                <mat-panel-description> </mat-panel-description>
-              </mat-expansion-panel-header>
-              <modal-kb-detail translatePrefix="content"></modal-kb-detail>
-              <!-- <kb-detail translatePrefix="content"></kb-detail> -->
-            </mat-expansion-panel>
-
-            <mat-expansion-panel expanded="true">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ 'content.detailInfoTab' | translate }}
-                </mat-panel-title>
-                <mat-panel-description> </mat-panel-description>
-              </mat-expansion-panel-header>
-              <modal-kb-detail-info translatePrefix="content"></modal-kb-detail-info>
-            </mat-expansion-panel>
-
-            <div class="pull-right" *ngIf="this.createForm.get('kbId').value != null">
-              <button mat-raised-button type="button" (click)="onCreateRefKB(); $event.stopPropagation()" class="btn btn-fill btn-primary">
-                {{ 'button.select' | translate }}
-              </button>
+        </mat-tab>
+        <!-- แท็บ Search keyword -->
+        <mat-tab label="Search by Keyword">
+          <div class="row">
+            <div class="col-md-12">
+              <kb-detail-search-bykeyword [data]="data" (returnEvent)="close($event)"></kb-detail-search-bykeyword>
             </div>
-
-            <!-- <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ 'content.docTab' | translate }}
-                </mat-panel-title>
-                <mat-panel-description> </mat-panel-description>
-              </mat-expansion-panel-header>
-              <kb-document></kb-document>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ 'content.keywordTab' | translate }}
-                </mat-panel-title>
-                <mat-panel-description> </mat-panel-description>
-              </mat-expansion-panel-header>
-              <kb-keyword></kb-keyword>
-            </mat-expansion-panel> -->
-          </mat-accordion>
-        </div>
-      </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <form [formGroup]="searchForm" (ngSubmit)="onGetKBbyKeyword()">
+          <div class="row">
+            <mat-form-field class="col-md-6">
+              <mat-label>{{ 'content.keyword' | translate }}</mat-label>
+              <input matInput formControlName="keyword" />
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-12">
+        <div class="material-datatables table-responsive">
+          <table
+            mat-table
+            [dataSource]="datasorce"
+            class="mat-elevation-z8"
+            (matSortChange)="tableControl.onSort($event)"
+            matSort
+            matSortDirection="asc"
+            matSortDisableClear
+          >
+            <ng-container matColumnDef="keyword">
+              <th mat-header-cell *matHeaderCellDef>{{ 'content.keyword' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.keyword }}</td>
+            </ng-container>
+            <ng-container matColumnDef="title" sticky>
+              <th mat-header-cell *matHeaderCellDef>{{ 'content.title' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>{{ 'content.description' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="url">
+              <th mat-header-cell *matHeaderCellDef>{{ 'content.url' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.url }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              (click)="onSelectRow(row)"
+              [ngClass]="{ 'selected-row': selectedRow == row }"
+            ></tr>
+          </table>
+        </div>
+        <mat-paginator
+          class="mat-paginator-sticky"
+          (page)="tableControl.onPage($event)"
+          [length]="tableControl.total"
+          [pageIndex]="tableControl.pageNo"
+          [pageSize]="tableControl.pageSize"
+          [pageSizeOptions]="tableControl.pageSizeOptions"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+
+      <div class="card" *ngIf="selectedRow != null" style="margin: 10px">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="pull-center"></div>
+          <h4 class="card-title" style="padding-left: 10px">{{ 'case.kb.tab' | translate }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <kb-rating></kb-rating>
+              </div>
+              <div class="col-md-6 pull-right" style="padding-right: 20px">
+                <kb-favorite></kb-favorite>
+              </div>
+            </div>
+            <mat-accordion multi="true">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.basicInfoTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <modal-kb-detail translatePrefix="content"></modal-kb-detail>
+                <!-- <kb-detail translatePrefix="content"></kb-detail> -->
+              </mat-expansion-panel>
+
+              <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.detailInfoTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <modal-kb-detail-info translatePrefix="content"></modal-kb-detail-info>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.docTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <kb-detail-document></kb-detail-document>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.keywordTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <kb-detail-keyword></kb-detail-keyword>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <br />
+          <div class="pull-right" *ngIf="selectedRow != null">
+            <button mat-raised-button type="button" (click)="onCreateRefKB(); $event.stopPropagation()" class="btn btn-fill btn-primary">
+              {{ 'button.select' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

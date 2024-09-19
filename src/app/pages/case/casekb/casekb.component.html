@@ -67,27 +67,57 @@
           <h4 class="card-title">{{ 'content.basicInfoTab' | translate }}</h4>
         </div>
         <div class="card-body">
-          <form [formGroup]="kbDetailForm" novalidate>
-            <input formControlName="kbId" type="hidden" />
+          <div class="col-md-12">
             <div class="row">
-              <mat-form-field class="col-md-12">
-                <mat-label>{{ 'content.contentTitle' | translate }}</mat-label>
-                <input formControlName="kbTitle" matInput type="text" maxlength="500" readonly />
-              </mat-form-field>
+              <div class="col-md-6">
+                <kb-rating></kb-rating>
+              </div>
+              <div class="col-md-6 pull-right" style="padding-right: 20px">
+                <kb-favorite></kb-favorite>
+              </div>
             </div>
-            <div class="row">
-              <mat-form-field class="col-md-12">
-                <mat-label>{{ 'content.url' | translate }}</mat-label>
-                <input formControlName="url" matInput type="text" maxlength="500" readonly />
-              </mat-form-field>
-            </div>
-            <div class="row">
-              <mat-form-field class="col-md-12">
-                <mat-label>{{ 'content.description' | translate }}</mat-label>
-                <textarea [disabled]="true" formControlName="description" matInput type="text" rows="8" maxlength="2000" readonly></textarea>
-              </mat-form-field>
-            </div>
-          </form>
+            <mat-accordion multi="true">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.basicInfoTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <modal-kb-detail translatePrefix="content"></modal-kb-detail>
+                <!-- <kb-detail translatePrefix="content"></kb-detail> -->
+              </mat-expansion-panel>
+
+              <mat-expansion-panel expanded="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.detailInfoTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <modal-kb-detail-info translatePrefix="content"></modal-kb-detail-info>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.docTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <kb-detail-document></kb-detail-document>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{ 'content.keywordTab' | translate }}
+                  </mat-panel-title>
+                  <mat-panel-description> </mat-panel-description>
+                </mat-expansion-panel-header>
+                <kb-detail-keyword></kb-detail-keyword>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
         </div>
       </div>
     </div>

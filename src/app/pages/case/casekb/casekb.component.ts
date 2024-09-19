@@ -12,11 +12,18 @@ import Utils from 'src/app/shared/utils';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ModalKbComponent } from '../../common/modal-kb/modal-kb.component';
 import { MatDialog } from '@angular/material/dialog';
+import { KbStore } from '../../kb/kb.store';
+import { RatingComponent } from '../../kb/component/rating/rating.component';
+import { FavoriteComponent } from '../../kb/component/favorite/favorite.component';
+import { KbDetailDocumentComponent } from '../../common/modal-kb/kb-detail-document/kb-detail-document.component';
+import { KbDetailKeywordComponent } from '../../common/modal-kb/kb-detail-keyword/kb-detail-keyword.component';
+import { KbDetailComponent } from '../../common/modal-kb/kb-detail/kb-detail.component';
+import { KbDetailInfoComponent } from '../../common/modal-kb/kb-detail-info/kb-detail-info.component';
 
 @Component({
   selector: 'tab-casekb-content',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailComponent, KbDetailInfoComponent],
   templateUrl: './casekb.component.html',
   styleUrl: './casekb.component.scss'
 })
@@ -35,8 +42,8 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
     public globals: Globals,
     private caseStore: CaseStore,
     private caseKBservice: CasekbService,
-    public dialog: MatDialog
-
+    public dialog: MatDialog,
+    private kbStore: KbStore,
   ) {
     super(router, globals);
   }
@@ -123,6 +130,7 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
           this.caseKBservice.deleteRefKB({ data: element }).then((res) => {
             if (res.status) {
               this.searchKB();
+              this.selectedRow = null;
             }
           });
         } else {
@@ -133,7 +141,8 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
 
   onSelectRow(element: any) {
     this.selectedRow = element;
-    this.kbDetailForm.patchValue({ kbId: element.kbId, url: element.url, kbTitle: element.kbTitle, description: element.description });
+    //this.kbDetailForm.patchValue({ kbId: element.kbId, url: element.url, kbTitle: element.kbTitle, description: element.description });
+    this.kbStore.updateKbDetail(parseInt(element.kbId, 10));
   }
 
 
