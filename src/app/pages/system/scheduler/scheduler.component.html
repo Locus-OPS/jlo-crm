@@ -102,6 +102,7 @@
                             <div class="row">
                                 <mat-form-field class="col-md-3">
                                     <input type="hidden" formControlName="id" />
+                                    <mat-label>{{'scheduler.name' | translate}}</mat-label>
                                     <input #firstFocus matInput [placeholder]="'scheduler.name' | translate" type="text"
                                         formControlName="schedulerName" maxlength="300" required />
                                     <mat-error *ngIf="createForm.controls['schedulerName'].hasError('required')">
@@ -109,6 +110,7 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.classPath' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.classPath' | translate" type="text"
                                         formControlName="classpath" maxlength="300" required />
                                     <mat-error *ngIf="createForm.controls['classpath'].hasError('required')">
@@ -116,6 +118,7 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.priority' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.priority' | translate" type="text"
                                         formControlName="priority" maxlength="3" required />
                                     <mat-error *ngIf="createForm.controls['priority'].hasError('required')">
@@ -123,6 +126,7 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.runonInstance' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.runonInstance' | translate" type="text"
                                         formControlName="runonInstance" maxlength="50" required />
                                     <mat-error *ngIf="createForm.controls['runonInstance'].hasError('required')">
@@ -132,6 +136,7 @@
                             </div>
                             <div class="row">
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.expression' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.expression' | translate" type="text"
                                         formControlName="expression" maxlength="30" required />
                                     <mat-error *ngIf="createForm.controls['expression'].hasError('required')">
@@ -139,6 +144,7 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.runonContextRoot' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.runonContextRoot' | translate" type="text"
                                         formControlName="runonContextRoot" maxlength="30" required />
                                     <mat-error *ngIf="createForm.controls['runonContextRoot'].hasError('required')">
@@ -146,6 +152,7 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.enable' | translate}}</mat-label>
                                     <mat-select [placeholder]="'scheduler.enable' | translate" formControlName="useYn"
                                         #useYn required>
                                         <mat-option value=""></mat-option>
@@ -157,28 +164,17 @@
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
+                                    <mat-label>{{'scheduler.seq' | translate}}</mat-label>
                                     <input matInput [placeholder]="'scheduler.seq' | translate" type="number"
                                         formControlName="seq">
                                 </mat-form-field>
                             </div>
-                            <div class="row group-process-time">
-                                <mat-form-field class="col-md-3">
-                                    <input matInput [placeholder]="'common.createdBy' | translate" type="text"
-                                        formControlName="createdBy" readonly>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <input matInput [placeholder]="'common.createdDate' | translate" type="text"
-                                        formControlName="createdDate" readonly>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <input matInput [placeholder]="'common.updatedBy' | translate" type="text"
-                                        formControlName="updatedBy" readonly>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <input matInput [placeholder]="'common.updatedDate' | translate" type="text"
-                                        formControlName="updatedDate" readonly>
-                                </mat-form-field>
-                            </div>
+                            <app-created-by [createdBy]="createForm.controls['createdByName'].value"
+                                [createdDate]="createForm.controls['createdDate'].value"
+                                [updatedBy]="createForm.controls['updatedByName'].value"
+                                [updatedDate]="createForm.controls['updatedDate'].value">
+                            </app-created-by>
+
                             <div class="pull-left"><a
                                     href="https://www.freeformatter.com/cron-expression-generator-quartz.html"
                                     target="_blank">expression generator.</a></div>
