@@ -65,6 +65,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   submitted = false;
   isReadOnly = false;
   created = false;
+  caseNumber: String = '';
 
   cusInfo = {
     customerId: '',
@@ -92,6 +93,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private _location: Location,
     private caseStore: CaseStore,
     public router: Router,
+    private route: ActivatedRoute,
     public globals: Globals,
     public dialog: MatDialog,
     private tabParam: TabParam,
@@ -138,7 +140,9 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
-
+    const params = this.route.firstChild.snapshot.params;
+    const { caseNumber } = params;
+    this.caseNumber = caseNumber;
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
       consultingNumber: [''],
@@ -204,26 +208,22 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       email: [''],
     });
 
-
-
-
-
     this.create();
+    this.getCaseDetail();
+    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
+    //   console.log("caseDetailSubscription");
+    //   console.log(detail);
+    //   if (detail) {
 
-    this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
-      console.log("caseDetailSubscription");
-      console.log(detail);
-      if (detail) {
-
-        sessionStorage.setItem('caseNumber', detail.caseNumber);
-        this.updateFormValue(detail);
-        console.log("update from value session caseNumber" + sessionStorage.getItem('caseNumber'));
-      } else {
-        console.log("resetCustomer")
-        this.resetCustomer();
-        this.create();
-      }
-    });
+    //     sessionStorage.setItem('caseNumber', detail.caseNumber);
+    //     this.updateFormValue(detail);
+    //     console.log("update from value session caseNumber" + sessionStorage.getItem('caseNumber'));
+    //   } else {
+    //     console.log("resetCustomer")
+    //     this.resetCustomer();
+    //     this.create();
+    //   }
+    // });
 
 
     if (ConsultingUtils.isConsulting()) {
@@ -285,14 +285,26 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   }
 
+  getCaseDetail() {
+    this.caseService.getCaseByCaseNumber({
+      data: this.caseNumber
+    }).then(result => {
+      if (result.status) {
+        if (result.data) {
+          this.updateFormValue(result.data);
+        } else {
+          this.resetCustomer();
+          this.create();
+        }
+      }
+    });
+  }
+
 
   onCaseCreate() {
     sessionStorage.removeItem('caseNumber');
     this.caseStore.clearCaseDetail();
   }
-
-
-
 
   setConsultingCase() {
     if (ConsultingUtils.isConsulting()) {
@@ -425,6 +437,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         , customerId: this.cusInfo.customerId
       });
       if (result.status) {
+        this.caseNumber = result.data.caseNumber;
         sessionStorage.setItem('caseNumber', result.data.caseNumber);
         this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
         this.created = false;
