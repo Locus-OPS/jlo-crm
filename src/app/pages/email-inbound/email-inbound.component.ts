@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-email-inbound',
@@ -21,6 +22,7 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 })
 export class EmailInboundComponent extends BaseComponent implements OnInit {
 
+  mailIbStatuslList: Dropdown[];
   selectedRow: any;
   dataSource: any[];
   displayedColumns: string[] = ['id', 'formEmail', /*'toEmail',*/ 'subjectEmail', 'statusName', 'createdDate', 'action'];
@@ -28,6 +30,9 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
 
   searchForm: FormGroup;
   deptStatusList: Dropdown[];
+
+  maxDate: Date;
+
   constructor(
     private formBuilder: FormBuilder,
     private emailIbService: EmailInboundService,
@@ -41,11 +46,12 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
       data: ['MAIL_IB_STATUS']
     }).then(
       result => {
-
+        this.mailIbStatuslList = result.data['MAIL_IB_STATUS'];
 
       }
     );
 
+    this.maxDate = new Date();
 
   }
 
@@ -57,10 +63,15 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
       subjectEmail: [''],
       startDate: [""],
       endDate: [""],
-      plainContent: [""]
+      plainContent: [""],
+      statusCd: [""]
     });
 
     this.search();
+  }
+
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+
   }
 
   onSearch() {
@@ -70,6 +81,11 @@ export class EmailInboundComponent extends BaseComponent implements OnInit {
 
   search() {
     this.selectedRow = null;
+
+    this.searchForm.patchValue({
+      startDate: Utils.getDateTimeString(this.searchForm.value['startDate'], '')
+      , endDate: Utils.getDateTimeString(this.searchForm.value['endDate'], '')
+    });
     const param = {
       ...this.searchForm.value
       , sortColumn: this.tableControl.sortColumn

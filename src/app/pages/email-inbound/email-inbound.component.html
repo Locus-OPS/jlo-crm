@@ -10,6 +10,7 @@
                         <h4 class="card-title">{{ 'email.inbound.list' | translate }}</h4>
                     </div>
                     <div class="card-body">
+
                         <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
                             <div class="row">
                                 <mat-form-field class="col-md-3">
@@ -22,21 +23,38 @@
                                     <input matInput type="text" formControlName="subjectEmail">
                                 </mat-form-field>
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>{{'common.start' | translate}}</mat-label>
-                                    <input matInput formControlName="startDate" [matDatepicker]="startDate" />
-                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #startDate></mat-datepicker>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{'common.end' | translate}}</mat-label>
-                                    <input matInput formControlName="endDate" [matDatepicker]="endDate" />
-                                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                                    <mat-datepicker #endDate></mat-datepicker>
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'email.inbound.plainContent' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="plainContent">
                                 </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{ 'email.inbound.status' | translate }}</mat-label>
+                                    <mat-select formControlName="statusCd">
+                                        <mat-option *ngFor="let type of mailIbStatuslList" [value]="type.codeId">
+                                            {{ type.codeName }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <mat-form-field class="col-md-6">
+                                            <mat-label>{{ 'common.start' | translate }}</mat-label>
+                                            <input matInput [matDatepicker]="startDateRef" [max]="maxDate" readonly
+                                                formControlName="startDate" (dateChange)="addEvent('change', $event)" />
+                                            <mat-datepicker-toggle matSuffix
+                                                [for]="startDateRef"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDateRef></mat-datepicker>
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-6">
+                                            <mat-label>{{ 'common.end' | translate }}</mat-label>
+                                            <input matInput [matDatepicker]="endDateRef" [max]="maxDate" readonly
+                                                formControlName="endDate" (dateChange)="addEvent('change', $event)" />
+                                            <mat-datepicker-toggle matSuffix [for]="endDateRef"></mat-datepicker-toggle>
+                                            <mat-datepicker #endDateRef></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                             <div class="pull-right">
                                 <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.search'
