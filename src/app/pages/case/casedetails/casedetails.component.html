@@ -355,7 +355,7 @@
               </div>
             </div>
 
-            <div class="card">
+            <div class="card" *ngIf="this.caseNumber != '' && this.caseNumber != null">
               <div class="card-header card-header-icon card-header-rose">
                 <div class="card-icon">
                   <i class="material-icons">local_activity</i>
@@ -366,13 +366,13 @@
                 <div class="mat-app-background basic-container">
                   <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
                     <mat-tab label="{{ 'case.activity.tab' | translate }}">
-                      <tab-caseactivity-content></tab-caseactivity-content>
+                      <tab-caseactivity-content [caseNumber]="this.caseNumber"></tab-caseactivity-content>
                     </mat-tab>
                     <mat-tab label="{{ 'case.attachment.tab' | translate }}">
-                      <tab-caseatt-content></tab-caseatt-content>
+                      <tab-caseatt-content [caseNumber]="this.caseNumber"></tab-caseatt-content>
                     </mat-tab>
                     <mat-tab label="{{ 'case.kb.tab' | translate }}">
-                      <tab-casekb-content></tab-casekb-content>
+                      <tab-casekb-content [caseNumber]="this.caseNumber"></tab-casekb-content>
                     </mat-tab>
                   </mat-tab-group>
                 </div>

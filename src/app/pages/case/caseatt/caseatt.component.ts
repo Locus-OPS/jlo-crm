@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, OnDestroy, Input } from '@angular/core';
 import { FormGroupDirective, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { TableControl } from 'src/app/shared/table-control';
 import { Caseatt } from './caseatt.model';
@@ -29,7 +29,8 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
   imports: [SharedModule, CreatedByComponent]
 })
 export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy {
-  caseNumber: string;
+  @Input() caseNumber!: string;
+  //caseNumber: string;
   caseDetailcom: CasedetailsComponent;
   caseDetailSubscription: Subscription;
 
@@ -95,19 +96,21 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
     // }
 
 
-    this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
-      if (resultDetail) {
-        console.log(resultDetail);
-        this.caseNumber = resultDetail.caseNumber;
-        this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
-        this.search();
+    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
+    //   if (resultDetail) {
+    //     console.log(resultDetail);
+    //     this.caseNumber = resultDetail.caseNumber;
+    //     this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
+    //     this.search();
 
-      } else {
-        this.searchForm.reset();
-        this.searchForm.patchValue({ caseNumber: null });
-        this.search();
-      }
-    });
+    //   } else {
+    //     this.searchForm.reset();
+    //     this.searchForm.patchValue({ caseNumber: null });
+    //     this.search();
+    //   }
+    // });
+    this.searchForm.patchValue({ caseNumber: this.caseNumber });
+    this.search();
   }
 
   ngOnInit() {

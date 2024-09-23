@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -28,6 +28,7 @@ import { KbDetailInfoComponent } from '../../common/modal-kb/kb-detail-info/kb-d
   styleUrl: './casekb.component.scss'
 })
 export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy {
+  @Input() caseNumber!: string;
   searchForm: FormGroup;
   kbDetailForm: FormGroup;
   caseDetailSubscription: Subscription;
@@ -73,15 +74,17 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   getKBList() {
-    this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe((result) => {
-      if (result) {
-        this.searchForm.patchValue({ caseNumber: result.caseNumber });
-        this.searchKB();
-      } else {
-        this.searchForm.patchValue({ caseNumber: null });
-        this.searchKB();
-      }
-    });
+    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe((result) => {
+    //   if (result) {
+    //     this.searchForm.patchValue({ caseNumber: result.caseNumber });
+    //     this.searchKB();
+    //   } else {
+    //     this.searchForm.patchValue({ caseNumber: null });
+    //     this.searchKB();
+    //   }
+    // });
+    this.searchForm.patchValue({ caseNumber: this.caseNumber });
+    this.searchKB();
   }
 
   searchKB() {

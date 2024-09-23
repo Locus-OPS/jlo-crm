@@ -27,7 +27,8 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 
 export class CaseactivityComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  caseNumber: string;
+  @Input() caseNumber!: string;
+  //caseNumber: string;
 
   caseDetailcom: CasedetailsComponent;
 
@@ -80,20 +81,22 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
     // }
 
 
-    this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
-      if (resultDetail) {
-        // console.log(resultDetail);
-        this.caseNumber = resultDetail.caseNumber;
-        this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
-        this.search();
-      } else {
-        // console.log("Create CASE > caseNumber is null");
-        this.searchForm.reset();
-        this.searchForm.patchValue({ caseNumber: null });
-        this.search();
-      }
-    });
+    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
+    //   if (resultDetail) {
+    //     // console.log(resultDetail);
+    //     this.caseNumber = resultDetail.caseNumber;
+    //     this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
+    //     this.search();
+    //   } else {
+    //     // console.log("Create CASE > caseNumber is null");
+    //     this.searchForm.reset();
+    //     this.searchForm.patchValue({ caseNumber: null });
+    //     this.search();
+    //   }
+    // });
 
+    this.searchForm.patchValue({ caseNumber: this.caseNumber });
+    this.search();
 
   }
 

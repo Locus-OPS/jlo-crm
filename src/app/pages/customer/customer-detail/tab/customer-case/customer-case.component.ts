@@ -93,6 +93,9 @@ export class CustomerCaseComponent extends BaseComponent implements OnInit {
 
   onCaseEdit(e) {
     this.caseStore.updateCaseDetail(e.caseNumber);
+    this.router.navigate([
+      "/casedetails", { caseNumber: e.caseNumber }
+    ]);
   }
 
   onSelectCaseRow(row) {
