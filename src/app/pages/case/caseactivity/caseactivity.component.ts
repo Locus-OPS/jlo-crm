@@ -26,7 +26,7 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 
 export class CaseactivityComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  @Input() caseNumber!: string;
+  @Input() caseNumber: string;
   //caseNumber: string;
 
   caseDetailcom: CasedetailsComponent;
@@ -76,7 +76,6 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
   }
 
   ngOnInit() {
-    // alert (sessionStorage.getItem('caseNumber'));
 
     this.searchForm = this.formBuilder.group({
       caseNumber: [this.caseNumber],
@@ -161,7 +160,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
     this.selectedRow = {};
     this.actCreateForm.reset();
 
-    this.actCreateForm.patchValue({ caseNumber: sessionStorage.getItem('caseNumber') });
+    this.actCreateForm.patchValue({ caseNumber: this.caseNumber });
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
