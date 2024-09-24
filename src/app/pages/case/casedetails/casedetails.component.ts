@@ -8,7 +8,6 @@ import { Case } from '../case.model';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { Subscription, from } from 'rxjs';
-import { CaseStore } from '../case.store';
 import { Globals } from 'src/app/shared/globals';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -65,7 +64,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   submitted = false;
   isReadOnly = false;
   created = false;
-  caseNumber: String = '';
+
+  caseNumberParam: String = '';
 
   cusInfo = {
     customerId: '',
@@ -91,7 +91,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     private formBuilder: UntypedFormBuilder,
     private caseService: CaseService,
     private _location: Location,
-    private caseStore: CaseStore,
     public router: Router,
     private route: ActivatedRoute,
     public globals: Globals,
@@ -135,14 +134,14 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   ngOnDestroy() {
     console.log("ngOnDestroy");
-    this.caseDetailSubscription.unsubscribe();
-    sessionStorage.removeItem('caseNumber');
+
   }
 
   ngOnInit() {
     const params = this.route.firstChild.snapshot.params;
     const { caseNumber } = params;
-    this.caseNumber = caseNumber;
+    this.caseNumberParam = caseNumber;
+
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
       consultingNumber: [''],
@@ -209,37 +208,22 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     });
 
     this.create();
-    this.getCaseDetail();
-    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(detail => {
-    //   console.log("caseDetailSubscription");
-    //   console.log(detail);
-    //   if (detail) {
+    //this.getCaseDetail();
 
-    //     sessionStorage.setItem('caseNumber', detail.caseNumber);
-    //     this.updateFormValue(detail);
-    //     console.log("update from value session caseNumber" + sessionStorage.getItem('caseNumber'));
-    //   } else {
-    //     console.log("resetCustomer")
-    //     this.resetCustomer();
-    //     this.create();
-    //   }
-    // });
 
 
     if (ConsultingUtils.isConsulting()) {
 
       if (this.tabParam.params.customerId) {
-        sessionStorage.removeItem('caseNumber');
+
         this.getCustomerInfo(this.tabParam.params);
-        this.caseStore.clearCaseDetail();
         this.setConsultingCase();
+
       } else {
 
-        console.log("Session Casenumber : " + sessionStorage.getItem('caseNumber'));
-        if (sessionStorage.getItem('caseNumber') != null) {
-
-          //this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
-          console.log("ngOnInit updateCaseDetail");
+        if (this.tabParam.params.caseNumber != null) {
+          console.log("ngOnInit caseNumber" + caseNumber);
+          this.getCaseDetail();
 
         } else {
 
@@ -249,9 +233,8 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
             this.custParam['customerId'] = contData.customerId;
             this.getCustomerInfo(this.custParam);
-          }
 
-          this.caseStore.clearCaseDetail();
+          }
           this.setConsultingCase();
 
         }
@@ -263,19 +246,14 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
       if (this.tabParam.params.customerId) {
-        sessionStorage.removeItem('caseNumber');
-        this.getCustomerInfo(this.tabParam.params);
-        this.caseStore.clearCaseDetail();
         //"from customer page"
+        this.getCustomerInfo(this.tabParam.params);
       } else {
-        console.log("195 else sessionStorage.getItem('caseNumber') " + sessionStorage.getItem('caseNumber'))
-        if (sessionStorage.getItem('caseNumber')) {
-
-          this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
-          //"Case edit "
+        if (this.tabParam.params.caseNumber) {
+          this.getCaseDetail();
         } else {
           //"clearCaseDetail"
-          this.caseStore.clearCaseDetail();
+          this.createForm.reset();
         }
       }
     }
@@ -287,7 +265,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   getCaseDetail() {
     this.caseService.getCaseByCaseNumber({
-      data: this.caseNumber
+      data: this.caseNumberParam
     }).then(result => {
       if (result.status) {
         if (result.data) {
@@ -302,8 +280,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
 
   onCaseCreate() {
-    sessionStorage.removeItem('caseNumber');
-    this.caseStore.clearCaseDetail();
+    this.createForm.reset();
   }
 
   setConsultingCase() {
@@ -311,7 +288,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       const contData = JSON.parse(ConsultingUtils.getConsultingData());
       this.createForm.patchValue({ consultingNumber: contData.consultingNumber });
       this.createForm.patchValue({ channel: contData.channelCd });
-      //alert(contData.channelCd);
     }
 
   }
@@ -326,7 +302,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
   }
 
   backClicked() {
-    this.caseStore.clearCaseDetail();
     this._location.back();
   }
 
@@ -335,8 +310,6 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.submitted = false;
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
-
-
   }
 
   getCaseTypeByCategoryId(categoryId) {
@@ -394,8 +367,9 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     console.log("resetForm ")
     this.createForm.reset();
     this.createForm.patchValue({ status: '01', priority: '04', channel: '01' });
-    if (sessionStorage.getItem('caseNumber')) {
-      this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+
+    if (this.caseNumberParam) {
+      this.getCaseDetail();
     }
   }
 
@@ -437,9 +411,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         , customerId: this.cusInfo.customerId
       });
       if (result.status) {
-        this.caseNumber = result.data.caseNumber;
-        sessionStorage.setItem('caseNumber', result.data.caseNumber);
-        this.caseStore.updateCaseDetail(sessionStorage.getItem('caseNumber'));
+        this.caseNumberParam = result.data.caseNumber;
         this.created = false;
         this.customerForm.patchValue(result.data);
         this.createForm.patchValue(result.data);

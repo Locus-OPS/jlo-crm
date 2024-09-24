@@ -252,7 +252,8 @@
                       <div class="row">
                         <mat-form-field class="col-md-12">
                           <mat-label>{{ 'case.owner' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="displayName" (click)="showOwner()" required readonly />
+                          <input matInput type="text" formControlName="displayName" (click)="showOwner()" required
+                            readonly />
                           <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
                           <mat-error *ngIf="createForm.controls['displayName'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -279,7 +280,8 @@
                       <div class="row">
                         <mat-form-field class="col-md-12">
                           <mat-label>{{ 'case.owner.dept' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="ownerDeptName" (click)="showOwnerDept()" readonly required />
+                          <input matInput type="text" formControlName="ownerDeptName" (click)="showOwnerDept()" readonly
+                            required />
                           <mat-icon matSuffix (click)="showOwnerDept()">person_search</mat-icon>
                           <mat-error *ngIf="createForm.controls['ownerDeptName'].hasError('required')">
                             {{ 'error.required' | translate }}
@@ -291,12 +293,14 @@
                   <div class="row">
                     <mat-form-field class="col-md-6">
                       <mat-label>{{ 'case.worknote' | translate }}</mat-label>
-                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="workNote">
+                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text"
+                        formControlName="workNote">
                       </textarea>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                       <mat-label>{{ 'case.description' | translate }}</mat-label>
-                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="detail">
+                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text"
+                        formControlName="detail">
                       </textarea>
                     </mat-form-field>
 
@@ -313,12 +317,10 @@
                       <input matInput type="text" formControlName="dslstatus" readonly />
                     </mat-form-field> -->
                   </div>
-                  <app-created-by
-                    [createdBy]="createForm.controls['createdByName'].value"
+                  <app-created-by [createdBy]="createForm.controls['createdByName'].value"
                     [createdDate]="createForm.controls['createdDate'].value"
                     [updatedBy]="createForm.controls['updatedByName'].value"
-                    [updatedDate]="createForm.controls['updatedDate'].value"
-                  >
+                    [updatedDate]="createForm.controls['updatedDate'].value">
                   </app-created-by>
                   <div class="pull-right">
                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
@@ -335,18 +337,14 @@
                       <mat-icon>restart_alt</mat-icon>
                     </button>
 
-                    <button
-                      mat-raised-button
-                      type="button"
-                      (click)="onCaseCreate()"
-                      class="btn btn-fill btn-primary"
-                      routerLinkActive="router-link-active"
-                    >
+                    <button mat-raised-button type="button" (click)="onCaseCreate()" class="btn btn-fill btn-primary"
+                      routerLinkActive="router-link-active">
                       {{ 'button.create' | translate }}
                       <mat-icon>add_circle</mat-icon>
                     </button>
 
-                    <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="openModalSendEmail('CASE')">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-primary"
+                      (click)="openModalSendEmail('CASE')">
                       {{ 'btn.email.send' | translate }}
                       <mat-icon>email</mat-icon>
                     </button>
@@ -355,7 +353,7 @@
               </div>
             </div>
 
-            <div class="card" *ngIf="this.caseNumber != '' && this.caseNumber != null">
+            <div class="card" *ngIf="this.caseNumberParam != '' && this.caseNumberParam != null">
               <div class="card-header card-header-icon card-header-rose">
                 <div class="card-icon">
                   <i class="material-icons">local_activity</i>
@@ -364,15 +362,16 @@
               </div>
               <div class="card-body">
                 <div class="mat-app-background basic-container">
-                  <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
+                  <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false"
+                    mat-align-tabs="start">
                     <mat-tab label="{{ 'case.activity.tab' | translate }}">
-                      <tab-caseactivity-content [caseNumber]="this.caseNumber"></tab-caseactivity-content>
+                      <tab-caseactivity-content [caseNumber]="this.caseNumberParam"></tab-caseactivity-content>
                     </mat-tab>
                     <mat-tab label="{{ 'case.attachment.tab' | translate }}">
-                      <tab-caseatt-content [caseNumber]="this.caseNumber"></tab-caseatt-content>
+                      <tab-caseatt-content [caseNumber]="this.caseNumberParam"></tab-caseatt-content>
                     </mat-tab>
                     <mat-tab label="{{ 'case.kb.tab' | translate }}">
-                      <tab-casekb-content [caseNumber]="this.caseNumber"></tab-casekb-content>
+                      <tab-casekb-content [caseNumber]="this.caseNumberParam"></tab-casekb-content>
                     </mat-tab>
                   </mat-tab-group>
                 </div>

@@ -8,7 +8,6 @@ import { Globals } from 'src/app/shared/globals';
 import { ConsultingService } from '../consulting/consulting.service';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { TableControl } from 'src/app/shared/table-control';
-import { CaseStore } from '../case/case.store';
 import Utils from 'src/app/shared/utils';
 import { CaseactivityService } from '../case/caseactivity/caseactivity.service';
 import { DashboardService } from './dashboard.service';
@@ -122,7 +121,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     public formBuilder: FormBuilder,
     private caseactivityService: CaseactivityService,
     private consulting: ConsultingService,
-    private caseStore: CaseStore,
     private dashboardService: DashboardService,
     private spinner: NgxSpinnerService,
     private translate: TranslateService
@@ -173,11 +171,11 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
 
 
-    this.caseStore.getCaseDetail().subscribe(detail => {
-      console.log("Dashboad caseDetailSubscription");
-      console.log(detail);
+    // this.caseStore.getCaseDetail().subscribe(detail => {
+    //   console.log("Dashboad caseDetailSubscription");
+    //   console.log(detail);
 
-    });
+    // });
 
   }
 
@@ -305,16 +303,16 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   }
 
   onCaseEdit(e) {
-    this.caseStore.updateCaseDetail(e.caseNumber);
-    this.gotoCaseDetail();
+    this.gotoCaseDetail(e);
+
   }
 
-  gotoCaseDetail() {
+  gotoCaseDetail(element) {
+    console.log(element.caseNumber)
     this.router.navigate([
-      "/casedetails",
+      "/casedetails", { caseNumber: element.caseNumber }
     ]);
   }
-
 
 
   onSelectRow(row: Case) {

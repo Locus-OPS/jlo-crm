@@ -13,7 +13,6 @@ import { ConsultingService } from './consulting.service';
 import Utils from 'src/app/shared/utils';
 import { ModalConsultingComponent } from '../common/modal-consulting/modal-consulting.component';
 import { ConsultingModel } from './consulting.model';
-import { CaseStore } from '../case/case.store';
 import { CreatedByComponent } from '../common/created-by/created-by.component';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { Case } from '../case/case.model';
@@ -55,7 +54,6 @@ export class ConsultingComponent extends BaseComponent implements OnInit {
     public globals: Globals,
     public formBuilder: FormBuilder,
     private consulting: ConsultingService,
-    private caseStore: CaseStore,
   ) {
     super(router, globals);
 
@@ -240,7 +238,7 @@ export class ConsultingComponent extends BaseComponent implements OnInit {
   }
 
   onCaseEdit(e) {
-    this.caseStore.updateCaseDetail(e.caseNumber);
+    // this.caseStore.updateCaseDetail(e.caseNumber);
     this.router.navigate([
       "/casedetails", { caseNumber: e.caseNumber }
     ]);

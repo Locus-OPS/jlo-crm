@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
-import { CaseStore } from '../case.store';
 import { FormGroup, UntypedFormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CasekbService } from './casekb.service';
@@ -31,7 +30,6 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
   @Input() caseNumber!: string;
   searchForm: FormGroup;
   kbDetailForm: FormGroup;
-  caseDetailSubscription: Subscription;
   tableControl: TableControl = new TableControl(() => { this.searchKB(); });
   displayedColumns: string[] = ['kbId', 'title', 'description', 'action'];
   caseKBSource: any[];
@@ -41,7 +39,6 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
     private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals,
-    private caseStore: CaseStore,
     private caseKBservice: CasekbService,
     public dialog: MatDialog,
     private kbStore: KbStore,
@@ -49,7 +46,7 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
     super(router, globals);
   }
   ngOnDestroy(): void {
-    this.caseDetailSubscription.unsubscribe();
+    //this.caseDetailSubscription.unsubscribe();
   }
   ngOnInit(): void {
     this.initialSearchForm();
@@ -74,15 +71,7 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   getKBList() {
-    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe((result) => {
-    //   if (result) {
-    //     this.searchForm.patchValue({ caseNumber: result.caseNumber });
-    //     this.searchKB();
-    //   } else {
-    //     this.searchForm.patchValue({ caseNumber: null });
-    //     this.searchKB();
-    //   }
-    // });
+
     this.searchForm.patchValue({ caseNumber: this.caseNumber });
     this.searchKB();
   }

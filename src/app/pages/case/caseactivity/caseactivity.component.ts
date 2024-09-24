@@ -9,7 +9,6 @@ import Utils from 'src/app/shared/utils';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { CasedetailsComponent } from '../casedetails/casedetails.component';
 import { Subscription } from 'rxjs';
-import { CaseStore } from '../case.store';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -54,7 +53,6 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
     private caseactivityService: CaseactivityService,
-    private caseStore: CaseStore,
     public router: Router,
     public globals: Globals,
     public dialog: MatDialog,
@@ -65,7 +63,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
   }
 
   ngOnDestroy() {
-    this.caseDetailSubscription.unsubscribe();
+    //this.caseDetailSubscription.unsubscribe();
   }
 
 

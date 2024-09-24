@@ -9,7 +9,6 @@ import Utils from 'src/app/shared/utils';
 import { ApiResponse } from 'src/app/model/api-response.model';
 import { CasedetailsComponent } from '../casedetails/casedetails.component';
 import { Subscription } from 'rxjs';
-import { CaseStore } from '../case.store';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
 import { BaseComponent } from 'src/app/shared/base.component';
@@ -71,7 +70,6 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
     public router: Router,
     public globals: Globals,
     public dialog: MatDialog,
-    private caseStore: CaseStore,
     public sanitizer: DomSanitizer,
 
   ) {
@@ -81,7 +79,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
   }
 
   ngOnDestroy() {
-    this.caseDetailSubscription.unsubscribe();
+    //this.caseDetailSubscription.unsubscribe();
   }
 
   getAttachmentListAll() {

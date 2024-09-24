@@ -5,7 +5,7 @@ import Utils from 'src/app/shared/utils';
 import { ApiService } from 'src/app/services/api.service';
 import { CaseService } from './case.service';
 import { Case } from './case.model';
-import { CaseStore } from './case.store';
+
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { Globals } from 'src/app/shared/globals';
 import { Router } from '@angular/router';
@@ -60,7 +60,6 @@ export class CaseComponent extends BaseComponent implements OnInit {
     public api: ApiService,
     private formBuilder: UntypedFormBuilder,
     private caseService: CaseService,
-    private caseStore: CaseStore,
     public dialog: MatDialog,
     public router: Router,
     public globals: Globals
@@ -178,8 +177,8 @@ export class CaseComponent extends BaseComponent implements OnInit {
 
   onCaseEdit(e) {
 
-    console.log("onCaseEdit :" + e.caseNumber + " =" + sessionStorage.getItem('caseNumber'));
-    this.caseStore.updateCaseDetail(e.caseNumber);
+    // console.log("onCaseEdit :" + e.caseNumber + " =" + sessionStorage.getItem('caseNumber'));
+    // this.caseStore.updateCaseDetail(e.caseNumber);
 
     this.gotoCaseDetail(e);
 
@@ -193,8 +192,9 @@ export class CaseComponent extends BaseComponent implements OnInit {
   }
 
   onCaseCreate() {
-    sessionStorage.removeItem('caseNumber');
-    this.caseStore.clearCaseDetail();
+    this.router.navigate([
+      "/casedetails"
+    ]);
   }
 
   onSelectRow(row: Case) {
