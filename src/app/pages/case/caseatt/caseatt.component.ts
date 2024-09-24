@@ -84,29 +84,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
 
   getAttachmentListAll() {
 
-    // if (sessionStorage.getItem('caseNumber')) {
 
-    //   this.caseNumber = sessionStorage.getItem('caseNumber');
-    //   this.searchForm.patchValue({ caseNumber: this.caseNumber });
-    //   this.search();
-    // } else {
-    //   this.searchForm.patchValue({ caseNumber: null });
-    // }
-
-
-    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
-    //   if (resultDetail) {
-    //     console.log(resultDetail);
-    //     this.caseNumber = resultDetail.caseNumber;
-    //     this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
-    //     this.search();
-
-    //   } else {
-    //     this.searchForm.reset();
-    //     this.searchForm.patchValue({ caseNumber: null });
-    //     this.search();
-    //   }
-    // });
     this.searchForm.patchValue({ caseNumber: this.caseNumber });
     this.search();
   }
