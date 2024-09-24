@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { AppStore } from 'src/app/shared/app.store';
 import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
-import { CaseStore } from 'src/app/pages/case/case.store';
 
 @Component({
   selector: 'app-customer-case',
@@ -40,7 +39,6 @@ export class CustomerCaseComponent extends BaseComponent implements OnInit {
     private appStore: AppStore,
     public api: ApiService,
     private formBuilder: FormBuilder,
-    private caseStore: CaseStore,
 
   ) {
     super(router, globals);
@@ -92,7 +90,6 @@ export class CustomerCaseComponent extends BaseComponent implements OnInit {
   }
 
   onCaseEdit(e) {
-    this.caseStore.updateCaseDetail(e.caseNumber);
     this.router.navigate([
       "/casedetails", { caseNumber: e.caseNumber }
     ]);
