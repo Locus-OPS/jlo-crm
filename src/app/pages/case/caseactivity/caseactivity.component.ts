@@ -68,30 +68,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
 
 
   getActivityListAll() {
-    // console.log("getActivityListAll : " + sessionStorage.getItem('caseNumber'));
 
-    // if(sessionStorage.getItem('caseNumber')){
-    //   this.caseNumber = sessionStorage.getItem('caseNumber');
-    //   this.searchForm.patchValue({ caseNumber: this.caseNumber });
-    //   this.search();
-    // }else{
-    //   this.searchForm.patchValue({ caseNumber: null });
-    // }
-
-
-    // this.caseDetailSubscription = this.caseStore.getCaseDetail().subscribe(resultDetail => {
-    //   if (resultDetail) {
-    //     // console.log(resultDetail);
-    //     this.caseNumber = resultDetail.caseNumber;
-    //     this.searchForm.patchValue({ caseNumber: resultDetail.caseNumber });
-    //     this.search();
-    //   } else {
-    //     // console.log("Create CASE > caseNumber is null");
-    //     this.searchForm.reset();
-    //     this.searchForm.patchValue({ caseNumber: null });
-    //     this.search();
-    //   }
-    // });
 
     this.searchForm.patchValue({ caseNumber: this.caseNumber });
     this.search();

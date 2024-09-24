@@ -170,13 +170,6 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
 
 
-
-    // this.caseStore.getCaseDetail().subscribe(detail => {
-    //   console.log("Dashboad caseDetailSubscription");
-    //   console.log(detail);
-
-    // });
-
   }
 
   ngAfterViewInit(): void {

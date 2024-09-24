@@ -176,13 +176,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
   }
 
   onCaseEdit(e) {
-
-    // console.log("onCaseEdit :" + e.caseNumber + " =" + sessionStorage.getItem('caseNumber'));
-    // this.caseStore.updateCaseDetail(e.caseNumber);
-
     this.gotoCaseDetail(e);
-
-
   }
 
   gotoCaseDetail(element) {
