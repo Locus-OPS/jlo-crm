@@ -35,6 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   isCollapsed = false;
 
+  hiddenNoti = false;
 
   private listTitles: any[];
   location: Location;
@@ -306,6 +307,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     window.location.href = "/";
   }
 
+
+  toggleBadgeVisibility() {
+    this.hiddenNoti = !this.hiddenNoti;
+  }
 
 
 }
