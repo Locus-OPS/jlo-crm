@@ -12,7 +12,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { filter, tap } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ConsultingInfoComponent } from '../consulting-info/consulting-info.component';
-import { Subscription } from 'rxjs';
+
+import { interval, Subscription } from 'rxjs';
+import { DashboardService } from 'src/app/pages/dashboard/dashboard.service';
+import Utils from 'src/app/shared/utils';
+import { Dropdown } from 'src/app/model/dropdown.model';
 
 const misc: any = {
   navbar_menu_visible: 0,
@@ -35,7 +39,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   isCollapsed = false;
 
+  subscription: Subscription;
+  intervalId: number;
   hiddenNoti = false;
+  countNew: number = 0;
+  countWorking: number = 0;
+  countEscalated: number = 0;
+  countClosed: number = 0;
+  systemConfigList: Dropdown[];
+  systemConfigTempList: Dropdown[];
+  systemConfigFilter: Dropdown;
+  intervalSouce: number = 10000;
+  selViewBy: any;
+
 
   private listTitles: any[];
   location: Location;
@@ -67,6 +83,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
+    private dashboardService: DashboardService,
 
   ) {
     this.location = location;
@@ -75,6 +92,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.selViewBy = "01";
+
     this.listTitles = this.globals.menuItems;
 
     const navbar: HTMLElement = this.element.nativeElement;
@@ -110,10 +129,39 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
 
     // this.loadProfile();
+
+    this.api.getMultipleCodebookByCodeType(
+      { data: ['SYS_CONFIG'] }
+    ).then(result => {
+      this.systemConfigList = result.data['SYS_CONFIG'];
+      this.systemConfigList = this.systemConfigList.filter(vl => vl.codeId == '01');
+
+      if (this.systemConfigList.length > 0) {
+        this.systemConfigFilter = this.systemConfigList[0];
+        this.intervalSouce = Number(this.systemConfigFilter.etc1);
+        console.log("1intervalSouce : " + this.intervalSouce);
+      } else {
+        this.intervalSouce = this.intervalSouce;
+      }
+
+      const source = interval(this.intervalSouce);
+      const text = 'get count case number every ' + this.intervalSouce + ' milliseconds ';
+      this.getCountCaseEachStatus(text);
+      // This is get count case number
+
+      this.subscription = source.subscribe((val) => this.getCountCaseEachStatus(text));
+
+    });
+
+
+
   }
 
   ngOnDestroy() {
     this.navTitleSubscription.unsubscribe();
+
+    // For method 1
+    this.subscription && this.subscription.unsubscribe();
   }
 
   changeLanguage(event) {
@@ -310,6 +358,31 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleBadgeVisibility() {
     this.hiddenNoti = !this.hiddenNoti;
+  }
+
+
+
+
+
+  getCountCaseEachStatus(text) {
+    console.log("getCountCaseEachStatus : " + text)
+    const params = { data: { viewBy: this.selViewBy } };
+
+    this.dashboardService.getCountCaseEachStatus(params).then((result: any) => {
+      //this.spinner.hide("approve_process_spinner");
+      if (result.status) {
+        console.log(result.data);
+        this.countNew = result.data.countNew;
+        this.countWorking = result.data.countWorking;
+        this.countEscalated = result.data.countEscalated;
+        this.countClosed = result.data.countClosed;
+      } else {
+
+      }
+    }, (err: any) => {
+      console.log(err.message);
+    });
+
   }
 
 

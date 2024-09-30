@@ -18,19 +18,22 @@
       <span class="navbar-toggler-icon icon-bar"></span>
       <span class="navbar-toggler-icon icon-bar"></span>
     </button>
+
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
+
         <div class="row">
+
           <li class="nav-item">
-            <mat-icon matBadge="15" class="notification" [matBadgeHidden]="hiddenNoti"
-              (click)="toggleBadgeVisibility()">notifications</mat-icon>
+            <mat-icon [matBadge]="countNew" class="notification" [matBadgeHidden]="hiddenNoti"
+              (click)="toggleBadgeVisibility()" style="cursor: hand;">notifications</mat-icon>
           </li>
-          &nbsp;&nbsp;&nbsp;&nbsp;
+
           <li class="nav-item">
             <app-consulting-info> </app-consulting-info>
           </li>
 
-          <div class="clearfix">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+          <div class="clearfix"></div>
           <!-- <li class="nav-item">
             <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
               <mat-button-toggle value="th" aria-label="ไทย">
