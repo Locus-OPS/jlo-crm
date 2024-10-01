@@ -23,17 +23,14 @@
       <ul class="navbar-nav">
 
         <div class="row">
-
           <li class="nav-item">
-            <mat-icon [matBadge]="countNew" class="notification" [matBadgeHidden]="hiddenNoti"
-              (click)="toggleBadgeVisibility()" style="cursor: hand;">notifications</mat-icon>
+            <app-notification-info> </app-notification-info>
           </li>
-
+          <div class="clearfix">&nbsp;</div>
           <li class="nav-item">
             <app-consulting-info> </app-consulting-info>
           </li>
-
-          <div class="clearfix"></div>
+          <div class="clearfix">&nbsp;</div>
           <!-- <li class="nav-item">
             <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
               <mat-button-toggle value="th" aria-label="ไทย">
