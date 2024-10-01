@@ -50,7 +50,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
   isUpdate = false;
   selectedRow: Case;
   dataSource: Case[];
-  displayedColumns: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'customerId'];
+  displayedColumns: string[] = ['caseNumber', 'typeName', 'fullName', 'subTypeName', 'priorityName', 'channelName', 'customerId'];
   custParam: Object = {};
   owner: Object = {};
 

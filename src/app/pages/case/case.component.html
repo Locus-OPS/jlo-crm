@@ -93,6 +93,16 @@
                   <mat-icon matSuffix (click)="searchCustomer()">search</mat-icon>
                   <mat-icon matSuffix (click)="removeCustomer()">remove_circle_outline</mat-icon>
                 </mat-form-field>
+
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.channel' | translate }}</mat-label>
+                  <mat-select formControlName="channel">
+                    <mat-option *ngFor="let type of caseChannelList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
               </div>
               <div class="pull-right">
                 <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.search' | translate
@@ -146,6 +156,11 @@
                   <th mat-header-cell *matHeaderCellDef>{{ 'case.priority' | translate }}</th>
                   <td mat-cell *matCellDef="let element">{{ element.priorityName }}</td>
                 </ng-container>
+                <ng-container matColumnDef="channelName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'case.channel' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.channelName }}</td>
+                </ng-container>
+
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onSelectRow(row)"

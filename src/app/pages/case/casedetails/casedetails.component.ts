@@ -646,7 +646,10 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       customerName = this.customerForm.value['firstName'] + ' ' + this.customerForm.value['lastName'];
     }
 
-
+    const caseSubject = this.createForm.value['subject'];
+    const caseNumber = this.createForm.value['caseNumber'];
+    const subjectEmail = 'Case [#' + caseNumber + '] -' + caseSubject;
+    const emailCust = this.customerForm.value['email'];
     const dialogRef = this.dialog.open(ModalEmailComponent, {
       height: '85%',
       width: '80%',
@@ -656,8 +659,9 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         parentModule: module,
         customerName: customerName,
         caseNumber: this.createForm.value['caseNumber'],
-        subjectEmail: 'เรื่องที่ให้บริการ ',
-        subject: this.createForm.value['subject'],
+        subjectEmail: subjectEmail,
+        subject: caseSubject,
+        toEmail: emailCust
       }
     });
 

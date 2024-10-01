@@ -88,7 +88,6 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
     this.parentModule = this.dataIn.parentModule;
     this.customerName = this.dataIn.customerName;
-
     Quill.register('modules/imageHandler', ImageHandler);
     Quill.register('modules/videoHandler', VideoHandler);
 
@@ -151,6 +150,13 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       this.subjectEmail = this.dataIn.subjectEmail;
       this.subject = this.dataIn.subject;
     }
+
+    if (this.dataIn.toEmail != null) {
+      this.toEmails.push({
+        email: this.dataIn.toEmail
+      });
+    }
+
 
     this.sendEmailForm = this.formBuilder.group({
 
