@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
 import { interval, Subscription } from 'rxjs';
+import { NotificationInfoService } from './notification-info.service';
 @Component({
   selector: 'app-notification-info',
   standalone: true,
@@ -36,7 +37,8 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
   countEscalated: number = 0;
   countClosed: number = 0;
 
-
+  caseNotificationList: any[] = [];
+  activityNotificationList: any[] = [];
   private navTitleSubscription: Subscription;
 
   constructor(
@@ -49,7 +51,7 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private dashboardService: DashboardService,
-
+    private notificationService: NotificationInfoService
   ) {
 
   }
@@ -82,9 +84,12 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
       this.getCountCaseEachStatus(text);
       // This is get count case number
 
-      this.subscription = source.subscribe((val) => this.getCountCaseEachStatus(text));
+      // this.subscription = source.subscribe((val) => this.getCountCaseEachStatus(text));
+      this.subscription = source.subscribe((val) => this.getNotificationList());
 
     });
+
+
   }
 
 
@@ -100,7 +105,7 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
       //this.spinner.hide("approve_process_spinner");
       if (result.status) {
         console.log(result.data);
-        this.countNew = result.data.countNew;
+        //this.countNew = result.data.countNew;
         this.countWorking = result.data.countWorking;
         this.countEscalated = result.data.countEscalated;
         this.countClosed = result.data.countClosed;
@@ -112,5 +117,34 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
     });
 
   }
+
+  getNotificationList() {
+    this.notificationService.getCaseNotiList({ data: { userId: this.globals.profile.userId } }).then((res) => {
+      if (res.status) {
+        this.caseNotificationList = res.data.caseNotilogList;
+        this.activityNotificationList = res.data.caseActNotilogList;
+        this.countNew = res.data.total;
+        this.countNew = res.data.total;
+      }
+    });
+  }
+
+  onSelectNotification(element: any) {
+    this.updateReadStatus(element);
+  }
+
+  updateReadStatus(element: any) {
+    this.notificationService.updateReadStatus({ data: element }).then((res) => {
+      if (res.status) {
+        this.getNotificationList();
+        this.router.navigate([
+          "/casedetails", { caseNumber: element.caseNumber }
+        ]);
+      } else {
+        alert('Error');
+      }
+    });
+  }
+
 
 }

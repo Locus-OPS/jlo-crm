@@ -1,74 +1,101 @@
 .pull-center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 .btn-group {
-    margin-top: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  button {
+    margin-top: 1px;
     margin-bottom: 0px;
+  }
 
-    button {
-        margin-top: 1px;
-        margin-bottom: 0px;
+  .dropdown-menu {
+    form {
+      width: 400px;
+      max-width: 300px;
     }
-
-    .dropdown-menu {
-        form {
-            width: 400px;
-            max-width: 300px;
-        }
-    }
+  }
 }
 
 @media (max-width: 991px) {
-    .btn-group {
-        .dropdown-menu-right {
-            transform: translateX(-100px);
-            right: 0px !important;
-            left: 0px !important;
-            width: 80vw;
-            max-width: 300px;
+  .btn-group {
+    .dropdown-menu-right {
+      transform: translateX(-100px);
+      right: 0px !important;
+      left: 0px !important;
+      width: 80vw;
+      max-width: 300px;
 
-            form {
-                width: 80vw;
-                max-width: 300px;
-            }
-        }
+      form {
+        width: 80vw;
+        max-width: 300px;
+      }
     }
+  }
 }
 
 .btnnotification {
-    position: relative;
-    // top: 17px;
-    border: 1px solid #FFF;
-    // right: 290px;
-    //font-size: 18px;
-    background: #f9f9f9;
-    color: blueviolet;
-    // min-width: 35px;
-    //padding: 10px 8px 9px 12px;
-    // height: 33px;
-    // border-radius: 30px;
-    // text-align: center;
-    //   line-height: 28px;
-    display: block;
+  position: relative;
+  // top: 17px;
+  border: 1px solid #fff;
+  // right: 290px;
+  //font-size: 18px;
+  background: #f9f9f9;
+  color: blueviolet;
+  // min-width: 35px;
+  //padding: 10px 8px 9px 12px;
+  // height: 33px;
+  // border-radius: 30px;
+  // text-align: center;
+  //   line-height: 28px;
+  display: block;
 }
 
-
 .btnnotifications {
-    position: absolute;
-    top: 17px;
-    border: 1px solid #FFF;
-    right: 290px;
-    font-size: 18px;
-    background: #f9f9f9;
-    color: blueviolet;
-    min-width: 35px;
-    padding: 2px 7px 4px 8px;
-    height: 33px;
-    border-radius: 30px;
-    text-align: center;
-    line-height: 28px;
-    display: block;
+  position: absolute;
+  top: 17px;
+  border: 1px solid #fff;
+  right: 290px;
+  font-size: 18px;
+  background: #f9f9f9;
+  color: blueviolet;
+  min-width: 35px;
+  padding: 2px 7px 4px 8px;
+  height: 33px;
+  border-radius: 30px;
+  text-align: center;
+  line-height: 28px;
+  display: block;
+}
+
+.list-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.blue-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.list-container {
+  max-height: 300px; /* กำหนดความสูงของ ListView */
+  width: 300px;
+  overflow-y: auto; /* เพิ่ม Scrollbar เมื่อมีรายการเกิน */
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.list-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }

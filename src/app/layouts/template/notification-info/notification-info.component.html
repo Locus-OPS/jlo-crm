@@ -1,50 +1,95 @@
 <div class="btn-group">
-    <!-- <mat-icon [matBadge]="countNew" class="notification" [matBadgeHidden]="hiddenNoti" (click)="toggleBadgeVisibility()"
+  <!-- <mat-icon [matBadge]="countNew" class="notification" [matBadgeHidden]="hiddenNoti" (click)="toggleBadgeVisibility()"
         style="cursor: hand;">notifications</mat-icon> -->
 
-    <button mat-icon-button [matBadge]="countNew" [matBadgeHidden]="hiddenNoti" class="btnnotification"
-        aria-label="Example icon-button with heart icon" data-toggle="dropdown" data-display="static"
-        aria-expanded="false" (click)="toggleBadgeVisibility()">
-        <mat-icon>notifications</mat-icon>
-    </button>
-    <!-- 
+  <button
+    mat-icon-button
+    [matBadge]="countNew"
+    [matBadgeHidden]="hiddenNoti"
+    class="btnnotification"
+    aria-label="Example icon-button with heart icon"
+    data-toggle="dropdown"
+    data-display="static"
+    aria-expanded="false"
+    (click)="toggleBadgeVisibility()"
+  >
+    <mat-icon>notifications</mat-icon>
+  </button>
+  <!-- 
     <button type="button" [matBadge]="countNew" [matBadgeHidden]="hiddenNoti" class="btnnotification"
         data-toggle="dropdown" data-display="static" aria-expanded="false">
         <i class="material-icons">notifications</i>
     </button> -->
 
-
-    <div class="dropdown-menu dropdown-menu-right" width="200">
-        <div mat-dialog-content class="flex-container">
-            <div class="main-content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header card-header-primary card-header-icon">
-                                    <div class="card-icon">
-                                        <i class="material-icons">notifications</i>
-                                    </div>
-                                    <h4 class="card-title">notification</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
-                                        <mat-form-field class="form-group">
-                                            <mat-label
-                                                for="txtConsultingNumber">{{'consulting.header.number'|translate}}</mat-label>
-                                            <input matInput formControlName="consultingNumber" class="form-control"
-                                                id="txtConsultingNumber" type="text"
-                                                style="color: blue; font-size: medium;">
-                                        </mat-form-field>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  <div class="dropdown-menu dropdown-menu-right" width="200">
+    <div mat-dialog-content class="flex-container">
+      <div class="main-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">notifications</i>
+                  </div>
+                  <h4 class="card-title">notification</h4>
                 </div>
+                <div class="card-body">
+                  <!-- <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
+                    <mat-form-field class="form-group">
+                      <mat-label for="txtConsultingNumber">{{ 'consulting.header.number' | translate }}</mat-label>
+                      <input
+                        matInput
+                        formControlName="consultingNumber"
+                        class="form-control"
+                        id="txtConsultingNumber"
+                        type="text"
+                        style="color: blue; font-size: medium"
+                      />
+                    </mat-form-field>
+                  </form> -->
+                  <mat-tab-group>
+                    <mat-tab label="Case">
+                      <div class="list-container">
+                        <div *ngFor="let item of caseNotificationList">
+                          <div class="list-item" (click)="onSelectNotification(item)">
+                            <h5>
+                              <strong>{{ item.caseNumber }} </strong><span *ngIf="!item.read" class="blue-dot"></span>
+                            </h5>
+                            <p>
+                              {{ item.description + ' ' }}
+                            </p>
+                            <p>
+                              <i>{{ 'เวลา ' + item.createdDate }}</i>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+                    <mat-tab label="Activity">
+                      <div class="list-container">
+                        <div *ngFor="let item of activityNotificationList">
+                          <div class="list-item" (click)="onSelectNotification(item)">
+                            <h5>
+                              <strong>{{ item.caseNumber }}</strong> <span *ngIf="!item.read" class="blue-dot"></span>
+                            </h5>
+                            <p>
+                              {{ item.description }}
+                            </p>
+                            <p>
+                              <i>{{ 'เวลา ' + item.createdDate }}</i>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
-
+  </div>
 </div>
