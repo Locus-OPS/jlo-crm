@@ -44,7 +44,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
   isUpdate = false;
   selectedRow: Caseactivity;
   dataSource: Caseactivity[];
-  displayedColumns: string[] = ['activityNumber', 'typeName', 'statusName', 'createdBy', 'updatedBy', 'action'];
+  displayedColumns: string[] = ['activityNumber', 'typeName', 'statusName', 'createdByName', 'updatedByName', 'action'];
 
   caseDetailSubscription: Subscription;
 
@@ -92,18 +92,20 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
       deptCode: [''],
       ownerName: ['', Validators.required],
       deptName: [''],
+      createdByName: [''],
       createdBy: [''],
       createdDate: [''],
       updatedBy: [''],
+      updatedByName: [''],
       updatedDate: ['']
     });
 
 
     this.CHECK_FORM_PERMISSION(this.actCreateForm);
     if (this.CAN_WRITE()) {
-      this.displayedColumns = ['activityNumber', 'typeName', 'statusName', 'createdDate', 'createdBy', 'updatedBy', 'action'];
+      this.displayedColumns = ['activityNumber', 'typeName', 'statusName', 'createdDate', 'createdByName', 'updatedByName', 'action'];
     } else {
-      this.displayedColumns = ['activityNumber', 'typeName', 'statusName', 'createdDate', 'createdBy', 'updatedBy'];
+      this.displayedColumns = ['activityNumber', 'typeName', 'statusName', 'createdDate', 'createdByName', 'updatedByName'];
     }
 
     this.getActivityListAll();

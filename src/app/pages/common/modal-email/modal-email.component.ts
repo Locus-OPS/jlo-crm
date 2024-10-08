@@ -151,17 +151,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       this.subject = this.dataIn.subject;
     }
 
-    if (this.dataIn.toEmail != null) {
-      this.toEmails.push({
-        email: this.dataIn.toEmail
-      });
-    }
 
 
     this.sendEmailForm = this.formBuilder.group({
 
       fromEmail: [],
-      toEmail: ['apichathot@gmail.com', Validators.required],
+      toEmail: ['', Validators.required],
       ccEmail: [''],
       subjectEmail: [this.subjectEmail],
       bodyEmail: [this.emailTemplate],
@@ -170,6 +165,16 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
     });
 
+
+    if (this.dataIn.toEmail != null) {
+      // this.toEmails.push({
+      //   email: this.dataIn.toEmail
+      // });
+
+      this.sendEmailForm.patchValue({
+        toEmail: this.dataIn.toEmail
+      });
+    }
   }
 
 
@@ -237,7 +242,8 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
       , bodyEmail: this.sendEmailForm.controls['bodyEmail'].value
       , parentModule: this.sendEmailForm.controls['parentModule'].value
     };
-
+    console.log(this.sendEmailForm.controls['toEmail'].value);
+    //return false;
     this.emailService.sendEmailWithAttachedFile(this.file, emailModel).subscribe(event => {
       if (event instanceof HttpResponse) {
         if (event.status === 200) {
