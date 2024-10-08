@@ -53,7 +53,7 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
     private dashboardService: DashboardService,
     private notificationService: NotificationInfoService
   ) {
-
+    this.getNotificationList();
   }
   ngOnDestroy() {
     this.navTitleSubscription.unsubscribe();

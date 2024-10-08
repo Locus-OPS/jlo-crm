@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
 
 const IGNORE_LOADING = [
-
+  '/api/casenoti/getcasenotilist'
 ];
 const IGNORE_AUTH_LIST = [
   '/common/auth/refreshToken'
