@@ -145,6 +145,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     this.createForm = this.formBuilder.group({
       caseNumber: [''],
       consultingNumber: [''],
+      consultingNumberNewFW: [''],
       divisionTypeCode: ['', Validators.required],
       // categoryTypeCode: ['', Validators.required],
       type: ['', Validators.required],
@@ -281,6 +282,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
   onCaseCreate() {
     this.createForm.reset();
+    this.create();
+
+    const contData = JSON.parse(ConsultingUtils.getConsultingData());
+    if (contData.customerId != null && contData.customerId != undefined) {
+      this.custParam['customerId'] = contData.customerId;
+      this.getCustomerInfo(this.custParam);
+    }
+    this.setConsultingCase();
+
   }
 
   setConsultingCase() {
@@ -387,6 +397,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       return;
     }
 
+    if (ConsultingUtils.isConsulting()) {
+      const contData = JSON.parse(ConsultingUtils.getConsultingData());
+      const consultingNumber = this.createForm.controls['consultingNumber'].value;
+
+      if (contData.consultingNumber != consultingNumber) {
+        this.createForm.patchValue({ consultingNumberNewFW: contData.consultingNumber });
+      }
+    }
+
     let response: Promise<ApiResponse<any>>;
     const param = {
       ...this.createForm.value
@@ -400,6 +419,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       param.updatedDate = '';
       param.openedDate = '';
       param.closedDate = '';
+
       response = this.caseService.updateCase({
         data: param
       });
@@ -418,6 +438,25 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         Utils.alertSuccess({
           text: 'Case has been saved.',
         });
+
+
+
+        let elm: HTMLElement | any = document.querySelector(
+          ".mdc-tab--active .close-icon"
+        );
+
+        console.log("elm :" + elm);
+        if (elm) {
+          elm.click();
+
+          setTimeout(() => {
+            this.router.navigate([
+              "/casedetails", { caseNumber: this.caseNumberParam }
+            ]);
+          }, 10);
+        }
+
+
       } else {
         Utils.alertError({
           text: 'Case has not been saved.',
