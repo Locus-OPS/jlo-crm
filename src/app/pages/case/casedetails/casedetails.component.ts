@@ -404,6 +404,15 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       if (contData.consultingNumber != consultingNumber) {
         this.createForm.patchValue({ consultingNumberNewFW: contData.consultingNumber });
       }
+    } else {
+
+      if (this.created) {
+        Utils.alertError({
+          text: 'กรุณา สร้างการติดต่อ',
+        });
+        return;
+      }
+
     }
 
     let response: Promise<ApiResponse<any>>;
