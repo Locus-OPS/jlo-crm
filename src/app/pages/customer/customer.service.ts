@@ -94,4 +94,8 @@ export class CustomerService {
   getCustomerSrList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/customer/getCustomerSrList', param);
   }
+
+  getCustomerAuditLogList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/customer/getCustomerAuditLogList', param);
+  }
 }
