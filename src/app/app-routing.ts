@@ -171,6 +171,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/email-inbound/email-inbound-detail/email-inbound-detail.component').then(m => m.EmailInboundDetailComponent)
       },
+      {
+        path: 'workflow/workflow-mgmt',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/workflow-mgmt/workflow-mgmt.component').then(m => m.WorkflowMgmtComponent)
+      },
+
     ]
   }, {
     path: '',
