@@ -1,1 +1,62 @@
-<p>workflow-mgmt-detail works!</p>
+<div class="main-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'workflow.detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="createForm" (ngSubmit)="onSaveWorkflow()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'workflow.id' | translate }}</mat-label>
+                  <input matInput formControlName="workflowId" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-6">
+                  <mat-label>{{ 'workflow.name' | translate }}</mat-label>
+                  <input matInput formControlName="workflowName" maxlength="255" />
+                  <mat-hint align="end">{{ createForm.get('workflowName')?.value?.length || 0 }}/255</mat-hint>
+                  <mat-error *ngIf="createForm.controls['workflowName'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-9">
+                  <mat-label>{{ 'workflow.description' | translate }}</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'workflow.priority' | translate }}</mat-label>
+                  <input type="number" matInput formControlName="priority" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'workflow.status' | translate }}</mat-label>
+                  <input matInput formControlName="status" readonly />
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="pull-right">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-rose">{{ 'button.cancel' | translate }}</button>
+                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <app-workflow-business-rule *ngIf="mode == 'EDIT'"></app-workflow-business-rule>
+    <app-workflow-task *ngIf="mode == 'EDIT'"></app-workflow-task>
+    <app-workflow-task-assign *ngIf="mode == 'EDIT'"></app-workflow-task-assign>
+  </div>
+</div>
