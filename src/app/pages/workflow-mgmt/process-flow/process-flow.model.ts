@@ -2,7 +2,7 @@ import { BaseModel } from "src/app/shared/base.model";
 
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 
-export const nodes: Node[] = [
+export const nodes_1: Node[] = [
     {
         id: 'first',
         label: 'Allowance Approval'
@@ -16,6 +16,13 @@ export const nodes: Node[] = [
         id: 'c2',
         label: 'C2'
     }
+];
+
+export const nodes: Node[] = [
+    { id: 'first', label: 'Start' },
+    { id: 'second', label: 'Task 1: Approval' },
+    { id: 'c1', label: 'Task 2: Review' },
+    { id: 'c2', label: 'End' }
 ];
 
 export const clusters: ClusterNode[] = [
