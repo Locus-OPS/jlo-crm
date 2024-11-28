@@ -21,8 +21,10 @@ export const nodes_1: Node[] = [
 export const nodes: Node[] = [
     { id: 'first', label: 'Start' },
     { id: 'second', label: 'Task 1: Approval' },
+    { id: 'fourth', label: 'fourth-node' },
     { id: 'c1', label: 'Task 2: Review' },
-    { id: 'c2', label: 'End' }
+    { id: 'c2', label: 'End' },
+
 ];
 
 export const clusters: ClusterNode[] = [
@@ -31,6 +33,11 @@ export const clusters: ClusterNode[] = [
         label: 'C',
         childNodeIds: ['c1', 'c2']
     }
+    // , {
+    //     id: 'fourth',
+    //     label: 'fourth',
+    //     childNodeIds: ['fourth']
+    // }
 ]
 
 export const links: Edge[] = [
@@ -43,16 +50,22 @@ export const links: Edge[] = [
         id: 'b',
         source: 'first',
         target: 'c1',
-        label: 'custom label'
+        label: 'custom label b'
     }, {
         id: 'c',
         source: 'first',
         target: 'c1',
-        label: 'custom label'
+        label: 'custom label c'
     }, {
         id: 'd',
         source: 'first',
         target: 'c2',
-        label: 'custom label'
+        label: 'custom label d'
+    }
+    , {
+        id: 'e',
+        source: 'second',
+        target: 'fourth',
+        label: 'second fourth  label'
     }
 ];
