@@ -20,9 +20,9 @@ export const nodes_1: Node[] = [
 
 export const nodes: Node[] = [
     { id: 'first', label: 'Start' },
-    { id: 'second', label: 'Task 1: Approval' },
-    { id: 'fourth', label: 'fourth-node' },
-    { id: 'c1', label: 'Task 2: Review' },
+    { id: 'second', label: 'Task 1: Review' },
+    { id: 'fourth', label: 'Task 3: Approval' },
+    { id: 'c1', label: 'Task 2: Reject' },
     { id: 'c2', label: 'End' },
 
 ];
@@ -66,6 +66,6 @@ export const links: Edge[] = [
         id: 'e',
         source: 'second',
         target: 'fourth',
-        label: 'second fourth  label'
+        label: 'Review to approval'
     }
 ];
