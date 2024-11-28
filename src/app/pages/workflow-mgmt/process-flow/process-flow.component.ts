@@ -1,67 +1,143 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-// import mermaid from 'mermaid';
 import { ProcessFlowService } from './process-flow.service';
+import { SharedModule } from 'src/app/shared/module/shared.module';
+import { BaseComponent } from 'src/app/shared/base.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Globals } from 'src/app/shared/globals';
+import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
+import { nodes, clusters, links } from './process-flow.model';
+import * as shape from 'd3-shape';
+import { Subject } from 'rxjs';
+
+
 @Component({
   selector: 'app-process-flow',
   standalone: true,
-  imports: [],
+  imports: [SharedModule],
   templateUrl: './process-flow.component.html',
   styleUrl: './process-flow.component.scss'
 })
-export class ProcessFlowComponent implements OnInit, AfterViewInit {
-  workflowData: any;
+export class ProcessFlowComponent extends BaseComponent implements OnInit {
 
-  constructor(private processFlowService: ProcessFlowService) { }
-
-  ngOnInit(): void {
-    // การตั้งค่าเบื้องต้นสำหรับ Mermaid
-    // mermaid.initialize({
-    //   startOnLoad: false // ไม่ให้โหลดอัตโนมัติ, ต้องการควบคุมเอง
-    // });
-
-    // ดึงข้อมูล workflow จาก API
-    this.processFlowService.getWorkflowData().subscribe(data => {
-      this.workflowData = data;
-      this.createFlowDiagram();
-    });
+  constructor(
+    public dialog: MatDialog,
+    public router: Router,
+    public globals: Globals,
+    private processFlowService: ProcessFlowService) {
+    super(router, globals);
   }
 
-  ngAfterViewInit(): void {
-    // mermaid.contentLoaded();
+  name = 'NGX-Graph Demo';
+
+  nodes: Node[] = nodes;
+  clusters: ClusterNode[] = clusters;
+
+  links: Edge[] = links;
+
+  layout: String | Layout = 'dagreCluster';
+  layouts: any[] = [
+    {
+      label: 'Dagre',
+      value: 'dagre',
+    },
+    {
+      label: 'Dagre Cluster',
+      value: 'dagreCluster',
+      isClustered: true,
+    },
+    {
+      label: 'Cola Force Directed',
+      value: 'colaForceDirected',
+      isClustered: true,
+    },
+    {
+      label: 'D3 Force Directed',
+      value: 'd3ForceDirected',
+    },
+  ];
+
+
+  // line interpolation
+  curveType: string = 'Bundle';
+  curve: any = shape.curveLinear;
+  interpolationTypes = [
+    'Bundle',
+    'Cardinal',
+    'Catmull Rom',
+    'Linear',
+    'Monotone X',
+    'Monotone Y',
+    'Natural',
+    'Step',
+    'Step After',
+    'Step Before'
+  ];
+
+  draggingEnabled: boolean = true;
+  panningEnabled: boolean = true;
+  zoomEnabled: boolean = true;
+
+  zoomSpeed: number = 0.1;
+  minZoomLevel: number = 0.1;
+  maxZoomLevel: number = 4.0;
+  panOnZoom: boolean = true;
+
+  autoZoom: boolean = false;
+  autoCenter: boolean = false;
+
+  update$: Subject<boolean> = new Subject();
+  center$: Subject<boolean> = new Subject();
+  zoomToFit$: Subject<boolean> = new Subject();
+
+  ngOnInit() {
+    this.setInterpolationType(this.curveType);
   }
 
-  createFlowDiagram(): void {
-    // สร้าง string diagram จากข้อมูลที่ได้รับ
-    let diagram = 'graph TD;\n';
-    this.workflowData.tasks.forEach((task: any) => {
-      diagram += `  ${task.id}[${task.name}];\n`;
-      if (task.nextTask) {
-        diagram += `  ${task.id} --> ${task.nextTask};\n`;
-      }
-    });
-
-    // แสดง Diagram
-    const diagramContainer = document.querySelector('.mermaid');
-    if (diagramContainer) {
-      diagramContainer.innerHTML = diagram;
+  setInterpolationType(curveType) {
+    this.curveType = curveType;
+    if (curveType === 'Bundle') {
+      this.curve = shape.curveBundle.beta(1);
     }
+    if (curveType === 'Cardinal') {
+      this.curve = shape.curveCardinal;
+    }
+    if (curveType === 'Catmull Rom') {
+      this.curve = shape.curveCatmullRom;
+    }
+    if (curveType === 'Linear') {
+      this.curve = shape.curveLinear;
+    }
+    if (curveType === 'Monotone X') {
+      this.curve = shape.curveMonotoneX;
+    }
+    if (curveType === 'Monotone Y') {
+      this.curve = shape.curveMonotoneY;
+    }
+    if (curveType === 'Natural') {
+      this.curve = shape.curveNatural;
+    }
+    if (curveType === 'Step') {
+      this.curve = shape.curveStep;
+    }
+    if (curveType === 'Step After') {
+      this.curve = shape.curveStepAfter;
+    }
+    if (curveType === 'Step Before') {
+      this.curve = shape.curveStepBefore;
+    }
+  }
 
-    // รัน Mermaid เพื่อแสดง Diagram
-    // mermaid.contentLoaded();
+  setLayout(layoutName: string): void {
+    const layout = this.layouts.find(l => l.value === layoutName);
+    this.layout = layoutName;
+    if (!layout.isClustered) {
+      this.clusters = undefined;
+    } else {
+      this.clusters = clusters;
+    }
   }
 
 }
 
-/*
-{
-  "workflowId": 1,
-  "workflowName": "Invoice Processing",
-  "tasks": [
-    { "id": "A", "name": "Start Workflow", "nextTask": "B" },
-    { "id": "B", "name": "Approve Invoice", "nextTask": "C" },
-    { "id": "C", "name": "Process Payment", "nextTask": "D" },
-    { "id": "D", "name": "Complete Workflow" }
-  ]
-}
 
-*/

@@ -8,6 +8,9 @@ import { QuillModule } from 'ngx-quill'
 import { QuillConfigModule } from 'ngx-quill/config';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   imports: [
     ReactiveFormsModule.withConfig({ callSetDisabledState: 'whenDisabledForLegacyCode' }),
@@ -67,7 +70,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     RouterModule,
     QuillModule,
     NgxMatSelectSearchModule,
-    FullCalendarModule
+    FullCalendarModule,
+    NgxGraphModule,         // โมดูลของ ngx-graph
+    // BrowserAnimationsModule, // สำหรับ Animation ใน Graph
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

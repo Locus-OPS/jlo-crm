@@ -47,6 +47,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@sweetalert2/ngx-sweetalert2": "^12.3.0",
     "@swimlane/ngx-charts": "^20.5.0",
+    "@swimlane/ngx-graph": "^9.0.1",
     "@types/bootstrap": "^4.3.1",
     "@types/dompurify": "^3.2.0",
     "@types/sockjs-client": "^1.5.4",
