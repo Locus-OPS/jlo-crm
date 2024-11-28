@@ -28,14 +28,17 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
     super(router, globals);
   }
 
-  name = 'NGX-Graph Demo';
 
-  nodes: Node[] = nodes;
-  clusters: ClusterNode[] = clusters;
 
-  links: Edge[] = links;
 
-  layout: String | Layout = 'dagreCluster';
+  name = 'Tracking workflow';
+
+  nodes: Node[] = nodes; //รายการของ Node ที่จะแสดงในกราฟ
+  clusters: ClusterNode[] = clusters; //(ไม่บังคับ) ใช้สำหรับจัดกลุ่มของ Nodes
+
+  links: Edge[] = links; //รายการของลิงก์ (edges) ระหว่าง Nodes
+
+  layout: String | Layout = 'dagreCluster'; //ใช้กำหนดรูปแบบการจัดวาง (เช่น dagre, dagreCluster)
   layouts: any[] = [
     {
       label: 'Dagre',
@@ -59,7 +62,7 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
 
 
   // line interpolation
-  curveType: string = 'Bundle';
+  curveType: string = 'Bundle'; //ใช้กำหนดรูปแบบของเส้นลิงก์
   curve: any = shape.curveLinear;
   interpolationTypes = [
     'Bundle',
@@ -74,24 +77,28 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
     'Step Before'
   ];
 
-  draggingEnabled: boolean = true;
-  panningEnabled: boolean = true;
-  zoomEnabled: boolean = true;
+  draggingEnabled: boolean = true; //เปิดหรือปิดความสามารถในการลาก Nodes
+  panningEnabled: boolean = true; //เปิดหรือปิดความสามารถในการเลื่อนกราฟ
+  zoomEnabled: boolean = true;  //เปิดหรือปิดความสามารถในการซูมกราฟ
 
-  zoomSpeed: number = 0.1;
-  minZoomLevel: number = 0.1;
-  maxZoomLevel: number = 4.0;
-  panOnZoom: boolean = true;
+  zoomSpeed: number = 0.1;  //ความเร็วในการซูม
+  minZoomLevel: number = 0.1; //ระดับการซูมต่ำสุดและสูงสุด
+  maxZoomLevel: number = 4.0; //ระดับการซูมต่ำสุดและสูงสุด
+  panOnZoom: boolean = true; //เปิดหรือปิดการเลื่อนกราฟระหว่างซูม
 
-  autoZoom: boolean = false;
-  autoCenter: boolean = false;
+  autoZoom: boolean = false;  //ซูมอัตโนมัติเพื่อให้กราฟทั้งหมดแสดงในพื้นที่ที่กำหนด
+  autoCenter: boolean = false;  //จัดตำแหน่งกราฟให้อยู่ตรงกลาง
 
-  update$: Subject<boolean> = new Subject();
-  center$: Subject<boolean> = new Subject();
-  zoomToFit$: Subject<boolean> = new Subject();
+
+  // เป็น Observable สำหรับรีเฟรชหรืออัปเดตกราฟในเหตุการณ์เฉพาะ:
+  update$: Subject<boolean> = new Subject();  //รีเฟรชกราฟเมื่อมีการเปลี่ยนแปลง
+  center$: Subject<boolean> = new Subject();  //จัดตำแหน่งกราฟให้อยู่ตรงกลาง
+  zoomToFit$: Subject<boolean> = new Subject(); //ซูมให้กราฟทั้งหมดแสดงผลในพื้นที่
 
   ngOnInit() {
     this.setInterpolationType(this.curveType);
+
+
   }
 
   setInterpolationType(curveType) {
