@@ -180,6 +180,10 @@ const routes: Routes = [
         path: 'workflow/workflow-mgmt-detail',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/workflow-mgmt/workflow-mgmt-detail/workflow-mgmt-detail.component').then(m => m.WorkflowMgmtDetailComponent)
+      }, {
+        path: 'workflow/process-flow',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/workflow-mgmt/process-flow/process-flow.component').then(m => m.ProcessFlowComponent)
       },
 
     ]
