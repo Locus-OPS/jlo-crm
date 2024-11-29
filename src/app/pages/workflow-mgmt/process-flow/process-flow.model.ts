@@ -31,5 +31,14 @@ export const links: Edge[] = [
     { source: '2', target: '3', label: 'Next' },
     { source: '3', target: '4', label: 'Next' },
     { source: '4', target: '5', label: 'Next' },
-    { id: 'end', source: '5', target: 'end', label: 'Next' }
+    { id: 'end', source: '5', target: 'end', label: 'Next' },
+    { id: 'summary', source: 'start', target: 'end', label: 'Locus Approval workflow for travel allowance requests' }
 ];
+
+/*
+การออกแบบระบบให้รองรับการติดตาม สถานะระดับ Transaction และ ระบบที่เชื่อมโยงหลายระบบ ควรพิจารณา:
+
+1.เพิ่มฟิลด์ SYSTEM_ID เพื่อแยกระบบที่เรียกใช้งาน
+2.บันทึกทุกการเปลี่ยนแปลงสถานะของแต่ละขั้นตอน
+3.ใช้ API หรือ Integration ในการส่งข้อมูลจากระบบต่าง ๆ มาบันทึกใน tb_workflow_tracking
+*/
