@@ -18,54 +18,51 @@ export const nodes_1: Node[] = [
     }
 ];
 
+/**Task of workflow รายการของ Node ที่จะแสดงในกราฟ*/
 export const nodes: Node[] = [
-    { id: 'first', label: 'Start' },
-    { id: 'second', label: 'Task 1: Review' },
-    { id: 'fourth', label: 'Task 3: Approval' },
-    { id: 'c1', label: 'Task 2: Reject' },
-    { id: 'c2', label: 'End' },
-
+    { id: 'start', label: 'Start' },
+    { id: 'second', label: 'Task 1: Review Request' },
+    { id: 'third', label: 'Task 2: Approve Payment' },
+    { id: 'fourth', label: 'Task 3: Send Notification' },
+    { id: 'end', label: 'End' }
 ];
 
+/*//(ไม่บังคับ) ใช้สำหรับจัดกลุ่มของ Nodes*/
 export const clusters: ClusterNode[] = [
-    {
-        id: 'third',
-        label: 'C',
-        childNodeIds: ['c1', 'c2']
-    }
-    // , {
-    //     id: 'fourth',
-    //     label: 'fourth',
-    //     childNodeIds: ['fourth']
+    // {
+    //     id: 'third',
+    //     label: 'C',
+    //     childNodeIds: ['c1', 'c2']
     // }
-]
 
+]
+/**รายการของลิงก์ (edges) ระหว่าง Nodes */
 export const links: Edge[] = [
     {
         id: 'a',
-        source: 'first',
+        source: 'start',
         target: 'second',
-        label: 'is parent of'
+        label: 'Start Review the submitted.'
     }, {
         id: 'b',
-        source: 'first',
-        target: 'c1',
-        label: 'custom label b'
+        source: 'second',
+        target: 'third',
+        label: 'Approve the payment.'
     }, {
         id: 'c',
-        source: 'first',
-        target: 'c1',
-        label: 'custom label c'
+        source: 'third',
+        target: 'fourth',
+        label: 'Send approval notification.'
     }, {
         id: 'd',
-        source: 'first',
-        target: 'c2',
+        source: 'fourth',
+        target: 'end',
         label: 'custom label d'
     }
     , {
         id: 'e',
-        source: 'second',
-        target: 'fourth',
-        label: 'Review to approval'
+        source: 'start',
+        target: 'end',
+        label: 'Allowance Approval Workflow'
     }
 ];
