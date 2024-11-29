@@ -22,8 +22,33 @@ export class WorkflowMgmtService {
     return this.api.call('/api/workflow/getWorkflowPageList', param);
   }
 
+  //ดึงรายละเอียด workflow
+  getWorkflowDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/getWorkflowDetail', param);
+  }
+
   //สร้าง Workflow
   createWorkflow(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/workflow/createWorkflow', param);
+  }
+
+  //แก้ไข workflow
+  updateWorkflow(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/updateWorkflow', param)
+  }
+
+  //ดึง ฺBusiness Rule
+  getBusinessRulePageList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/workflow/getBusinessRulePageList', param)
+  }
+
+  //บันทึก Business Rule
+  createBusinessRule(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/createBusinessRule', param)
+  }
+
+  //แก้ไข ฺBusiness Rule
+  updateBusinessRule(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/updateBusinessRule', param);
   }
 }

@@ -9,11 +9,12 @@ import { Globals } from 'src/app/shared/globals';
 import { WorkflowModel } from './workflow-mgmt.model';
 import { TableControl } from 'src/app/shared/table-control';
 import { WorkflowMgmtService } from './workflow-mgmt.service';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-workflow-mgmt',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, MatTabsModule],
   templateUrl: './workflow-mgmt.component.html',
   styleUrl: './workflow-mgmt.component.scss'
 })
@@ -57,6 +58,10 @@ export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
         this.tableControl.total = res.total;
       }
     });
+  }
+
+  gotoWorkflowDetail(element: any) {
+    this.router.navigate(["/workflow/workflow-mgmt-detail", { workflowId: element.workflowId }]);
   }
 
 

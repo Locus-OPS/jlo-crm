@@ -1,18 +1,29 @@
-<div class="row" style="margin-top: -50px">
+<!-- <div class="row">
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-primary card-header-icon">
         <h4 class="card-title">{{ 'Business Rule' | translate }}</h4>
       </div>
       <div class="card-body">
+
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="row" style="padding-left: 50px; padding-right: 50px">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
         <div class="row">
           <div class="col-md-12">
             <div class="pull-right">
-              <button mat-raised-button type="button" class="btn btn-fill btn-primary">{{ 'button.add' | translate }}</button>
+              <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onToggleOpenAddSection()">
+                {{ 'button.add' | translate }}
+              </button>
             </div>
           </div>
         </div>
-
         <div class="material-datatables table-responsive">
           <table
             mat-table
@@ -26,9 +37,14 @@
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef class="text-left">Actions</th>
               <td mat-cell *matCellDef="let element" class="text-left">
-                <button class="btn btn-primary btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()">
+                <button class="btn btn-danger btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()" (click)="onDeleteBusinessRule(element)">
                   <span class="mat-button-wrapper">
-                    <i class="material-icons">search</i>
+                    <i class="material-icons">delete</i>
+                  </span>
+                </button>
+                <button class="btn btn-primary btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()" (click)="onSelectedRowEdit(element)">
+                  <span class="mat-button-wrapper">
+                    <i class="material-icons">edit</i>
                   </span>
                 </button>
               </td>
@@ -46,11 +62,11 @@
 
             <ng-container matColumnDef="conditionValue1">
               <th mat-header-cell *matHeaderCellDef>{{ 'workflow.conditionValue1' | translate }}</th>
-              <td mat-cell *matCellDef="let element">{{ element.conditionValue1 }}</td>
+              <td mat-cell *matCellDef="let element">{{ element.conditionValue1 | number : '1.2-2' }}</td>
             </ng-container>
             <ng-container matColumnDef="conditionValue2">
               <th mat-header-cell *matHeaderCellDef>{{ 'workflow.conditionValue2' | translate }}</th>
-              <td mat-cell *matCellDef="let element">{{ element.conditionValue2 }}</td>
+              <td mat-cell *matCellDef="let element">{{ element.conditionValue2 | number : '1.2-2' }}</td>
             </ng-container>
             <ng-container matColumnDef="priority">
               <th mat-header-cell *matHeaderCellDef>{{ 'workflow.priority' | translate }}</th>
@@ -79,6 +95,78 @@
           showFirstLastButtons
         >
         </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="padding-left: 50px; padding-right: 50px" *ngIf="this.toggleOpenAddSection">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">assignment</i>
+        </div>
+        <h4 class="card-title">{{ 'Business Rule Detail' | translate }}</h4>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="createform" (submit)="onSaveBusinessRule()" novalidate>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <mat-label>{{ 'Rule ID' | translate }}</mat-label>
+              <input matInput formControlName="ruleId" readonly />
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <mat-label>{{ 'Condition Type' | translate }}</mat-label>
+              <mat-select formControlName="conditionType" (selectionChange)="onConditionTypeChange()">
+                <mat-option value="greater_than">{{ 'Greater Than' | translate }}</mat-option>
+                <mat-option value="less_than">{{ 'Less Than' | translate }}</mat-option>
+                <mat-option value="between">{{ 'Between' | translate }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="createform.controls['conditionType'].hasError('required')">
+                {{ 'error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-4">
+              <mat-label>{{ 'Value 1' | translate }}</mat-label>
+              <input type="number" matInput formControlName="conditionValue1" />
+              <mat-error *ngIf="createform.controls['conditionValue1'].hasError('required')">
+                {{ 'error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="col-md-4" *ngIf="this.createform.get('conditionType').value == 'between'">
+              <mat-label>{{ 'Value 2' | translate }}</mat-label>
+              <input type="number" matInput formControlName="conditionValue2" />
+              <mat-error *ngIf="createform.controls['conditionValue2'].hasError('required')">
+                {{ 'error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-4">
+              <mat-label>{{ 'workflow.priority' | translate }}</mat-label>
+              <input type="number" matInput formControlName="priority" />
+              <mat-error *ngIf="createform.controls['priority'].hasError('required')">
+                {{ 'error.required' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="pull-right">
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="onCloseAddSection()">
+                  {{ 'button.close' | translate }}
+                </button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-danger" (click)="onClearAddForm()">
+                  {{ 'button.clear' | translate }}
+                </button>
+                <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
