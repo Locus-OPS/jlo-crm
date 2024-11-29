@@ -2,21 +2,6 @@ import { BaseModel } from "src/app/shared/base.model";
 
 import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 
-export const nodes_1: Node[] = [
-    {
-        id: 'first',
-        label: 'Allowance Approval'
-    }, {
-        id: 'second',
-        label: 'B'
-    }, {
-        id: 'c1',
-        label: 'C1'
-    }, {
-        id: 'c2',
-        label: 'C2'
-    }
-];
 
 /**Task of workflow รายการของ Node ที่จะแสดงในกราฟ*/
 export const nodes: Node[] = [

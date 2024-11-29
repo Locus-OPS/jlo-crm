@@ -51,6 +51,7 @@
 
   <mat-drawer-content>
     <div class="page">
+
       <ngx-graph [links]="links" [nodes]="nodes" [clusters]="clusters" [layout]="layout" [curve]="curve"
         [draggingEnabled]="draggingEnabled" [panningEnabled]="panningEnabled" [enableZoom]="zoomEnabled"
         [zoomSpeed]="zoomSpeed" [minZoomLevel]="minZoomLevel" [maxZoomLevel]="maxZoomLevel" [panOnZoom]="panOnZoom"
@@ -71,7 +72,8 @@
         </ng-template>
 
         <ng-template #nodeTemplate let-node>
-          <svg:g class="node">
+          <svg:g class="node" (click)="onNodeClick($event)" [tooltipPlacement]="'top'" [tooltipType]="'tooltip'"
+            [tooltipTitle]="node.label">
             <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
               [attr.fill]="node.data.color" />
             <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}

@@ -103,6 +103,8 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
 
   setInterpolationType(curveType) {
     this.curveType = curveType;
+
+
     if (curveType === 'Bundle') {
       this.curve = shape.curveBundle.beta(1);
     }
@@ -145,6 +147,9 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onNodeClick(value: Event) {
+    //alert("dd" + '${ value }')
+  }
 }
 
 
