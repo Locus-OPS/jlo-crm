@@ -5,10 +5,13 @@ import { Edge, Node, ClusterNode } from '@swimlane/ngx-graph';
 
 /**Task of workflow รายการของ Node ที่จะแสดงในกราฟ*/
 export const nodes: Node[] = [
+
     { id: 'start', label: 'Start' },
-    { id: 'second', label: 'Task 1: Review Request' },
-    { id: 'third', label: 'Task 2: Approve Payment' },
-    { id: 'fourth', label: 'Task 3: Send Notification' },
+    { id: '1', label: 'Start: Review Request' },
+    { id: '2', label: 'Approve Payment' },
+    { id: '3', label: 'Send Notification' },
+    { id: '4', label: 'Validate Invoice' },
+    { id: '5', label: 'Issue Payment' },
     { id: 'end', label: 'End' }
 ];
 
@@ -21,33 +24,12 @@ export const clusters: ClusterNode[] = [
     // }
 
 ]
-/**รายการของลิงก์ (edges) ระหว่าง Nodes */
+/**เส้นรายการของลิงก์ (edges) ระหว่าง Nodes */
 export const links: Edge[] = [
-    {
-        id: 'a',
-        source: 'start',
-        target: 'second',
-        label: 'Start Review the submitted.'
-    }, {
-        id: 'b',
-        source: 'second',
-        target: 'third',
-        label: 'Approve the payment.'
-    }, {
-        id: 'c',
-        source: 'third',
-        target: 'fourth',
-        label: 'Send approval notification.'
-    }, {
-        id: 'd',
-        source: 'fourth',
-        target: 'end',
-        label: 'custom label d'
-    }
-    , {
-        id: 'e',
-        source: 'start',
-        target: 'end',
-        label: 'Allowance Approval Workflow'
-    }
+    { source: 'start', target: '1', label: 'Next' },
+    { source: '1', target: '2', label: 'Next' },
+    { source: '2', target: '3', label: 'Next' },
+    { source: '3', target: '4', label: 'Next' },
+    { source: '4', target: '5', label: 'Next' },
+    { id: 'end', source: '5', target: 'end', label: 'Next' }
 ];
