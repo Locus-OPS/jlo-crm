@@ -1,0 +1,35 @@
+ngx-graph {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+
+p {
+    font-family: Lato;
+}
+
+.sidebar {
+    background: #efefef;
+    padding: 10px;
+}
+
+.page {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+mat-form-field,
+mat-checkbox {
+    display: block;
+    width: 100%;
+}
+
+mat-checkbox {
+    margin-bottom: 10px;
+}
+
+.button {
+    margin: 3px;
+}
