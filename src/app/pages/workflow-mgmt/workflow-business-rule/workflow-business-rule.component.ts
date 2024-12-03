@@ -129,7 +129,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
     Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
       .then((result) => {
         if (result.isConfirmed) {
-          const param = this.createform.getRawValue();
+          //const param = this.createform.getRawValue();
           this.workflowMgmtService.updateBusinessRule({ data: { ...element, workflowId: this.workflowId, status: "InActive" } }).then((res) => {
             if (res.status) {
               Utils.alertSuccess({ text: "Business rule has been deleted." });

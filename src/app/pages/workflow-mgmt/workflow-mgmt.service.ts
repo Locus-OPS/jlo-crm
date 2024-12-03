@@ -51,4 +51,36 @@ export class WorkflowMgmtService {
   updateBusinessRule(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/workflow/updateBusinessRule', param);
   }
+
+  getWorkflowTaskPageList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/workflow/getWorkflowTaskPageList', param);
+  }
+
+  getWorkflowTaskDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/getWorkflowTaskDetail', param);
+  }
+
+  createWorkflowTask(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/createWorkflowTask', param);
+  }
+
+  updateWorkflowTask(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/updateWorkflowTask', param);
+  }
+
+  getWorkflowTaskAssignPageList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/workflow/getWorkflowTaskAssignPageList', param)
+  }
+
+  getWorkflowTaskAssignDetail(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/getWorkflowTaskAssignDetail', param);
+  }
+
+  createWorkflowTaskAssign(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/createWorkflowTaskAssign', param);
+  }
+
+  updateWorkflowtaskAssign(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/workflow/updateWorkflowTaskAssign', param);
+  }
 }

@@ -8,7 +8,168 @@
         <div class="row">
           <div class="col-md-12">
             <div class="pull-right">
-              <button mat-raised-button type="button" class="btn btn-fill btn-primary">{{ 'button.add' | translate }}</button>
+              <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onToggleOpenAddSection()">
+                {{ 'button.add' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="material-datatables table-responsive">
+              <table
+                mat-table
+                [dataSource]="datasource"
+                class="mat-elevation-z8"
+                (matSortChange)="tableControl.onSort($event)"
+                matSort
+                matSortDirection="asc"
+                matSortDisableClear
+              >
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef class="text-left">Actions</th>
+                  <td mat-cell *matCellDef="let element" class="text-left">
+                    <button
+                      class="btn btn-danger btn-round btn-fab mat-raised-button"
+                      *ngIf="CAN_WRITE()"
+                      (click)="onDeleteWorkflowTaskAssign(element)"
+                    >
+                      <span class="mat-button-wrapper">
+                        <i class="material-icons">delete</i>
+                      </span>
+                    </button>
+                    <button class="btn btn-primary btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()" (click)="onSelectedRowEdit(element)">
+                      <span class="mat-button-wrapper">
+                        <i class="material-icons">edit</i>
+                      </span>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="assignmentId">
+                  <th mat-header-cell *matHeaderCellDef class="text-right">{{ 'ID' | translate }}</th>
+                  <td mat-cell *matCellDef="let element" class="text-right">{{ element.assignmentId }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="userName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'workflow.assignee' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="backupUserName">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'workflow.assignee2' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.backupUserName }}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'workflow.status' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+                </ng-container>
+                <ng-container matColumnDef="priority">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'workflow.priority' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+                </ng-container>
+                <ng-container matColumnDef="duedate">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'workflow.duedate' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.dueDate | date : 'dd-MM-yyyy HH:mm' }}</td>
+                </ng-container>
+                <ng-container matColumnDef="sequence">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Sequence' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.sequence }}</td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  (click)="onSelectRow(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }"
+                ></tr>
+              </table>
+            </div>
+            <mat-paginator
+              class="mat-paginator-sticky"
+              (page)="tableControl.onPage($event)"
+              [length]="tableControl.total"
+              [pageIndex]="tableControl.pageNo"
+              [pageSize]="tableControl.pageSize"
+              [pageSizeOptions]="tableControl.pageSizeOptions"
+              showFirstLastButtons
+            >
+            </mat-paginator>
+          </div>
+        </div>
+        <div class="row" *ngIf="this.toggleOpenAddSection">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">assignment</i>
+                </div>
+                <h4 class="card-title">{{ 'Task Assignment Detail' | translate }}</h4>
+              </div>
+              <div class="card-body">
+                <form [formGroup]="createForm" (ngSubmit)="onSaveWfTaskAssign()" novalidate>
+                  <div class="row">
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'ID' | translate }}</mat-label>
+                      <input type="text" matInput formControlName="assignmentId" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.assignee' | translate }}</mat-label>
+                      <input matInput type="text" formControlName="userName" (click)="showUser()" required readonly />
+                      <mat-icon matSuffix (click)="showUser()">person_search</mat-icon>
+                      <mat-error *ngIf="createForm.controls['userName'].hasError('required')">
+                        {{ 'error.required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.assignee2' | translate }}</mat-label>
+                      <input matInput type="text" formControlName="backupUserName" (click)="showBackupUser()" required readonly />
+                      <mat-icon matSuffix (click)="showBackupUser()">person_search</mat-icon>
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.assignedat' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="assignAtpicker" #AssignedAtDateInput formControlName="assignedAt" />
+                      <mat-datepicker-toggle matSuffix [for]="assignAtpicker"></mat-datepicker-toggle>
+                      <mat-datepicker #assignAtpicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.status' | translate }}</mat-label>
+                      <input matInput formControlName="status" readonly />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.priority' | translate }}</mat-label>
+                      <input type="number" matInput formControlName="priority" />
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.duedate' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="dueDatepicker" #dueDateInput formControlName="dueDate" />
+                      <mat-datepicker-toggle matSuffix [for]="dueDatepicker"></mat-datepicker-toggle>
+                      <mat-datepicker #dueDatepicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                      <mat-label>{{ 'workflow.sequence' | translate }}</mat-label>
+                      <input type="number" matInput formControlName="sequence" />
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="pull-right">
+                        <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="onCloseAddSection()">
+                          {{ 'button.close' | translate }}
+                        </button>
+                        <button mat-raised-button type="button" class="btn btn-fill btn-danger" (click)="onClearAddForm()">
+                          {{ 'button.clear' | translate }}
+                        </button>
+                        <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

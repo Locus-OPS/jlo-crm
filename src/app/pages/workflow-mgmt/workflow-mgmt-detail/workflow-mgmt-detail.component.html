@@ -10,7 +10,6 @@
             <h4 class="card-title">{{ 'workflow.detail' | translate }}</h4>
           </div>
           <div class="card-body">
-            {{ this.workflowId + '  Rule Id:' + this.ruleId }}
             <form [formGroup]="createForm" (ngSubmit)="onSaveWorkflow()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
@@ -59,11 +58,11 @@
     </div>
 
     <div class="card">
-      <div class="card-header card-header-icon card-header-rose">
+      <div class="card-header card-header-icon card-header-primary">
         <div class="card-icon">
           <i class="material-icons">assignment</i>
         </div>
-        <h4 class="card-title">{{ 'Detail' | translate }}</h4>
+        <h4 class="card-title">{{ 'workflow.configure' | translate }}</h4>
       </div>
       <div class="card-body">
         <div class="mat-app-background basic-container">
@@ -75,9 +74,8 @@
                 (ruleIdEmitter)="onRuleIdReceived($event)"
               ></app-workflow-business-rule>
             </mat-tab>
-            <mat-tab label="{{ 'Task & Asigneee' | translate }}">
-              <app-workflow-task *ngIf="mode == 'EDIT'"></app-workflow-task>
-              <app-workflow-task-assign *ngIf="mode == 'EDIT'"></app-workflow-task-assign>
+            <mat-tab label="{{ 'Task' | translate }}">
+              <app-workflow-task *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
             </mat-tab>
           </mat-tab-group>
         </div>

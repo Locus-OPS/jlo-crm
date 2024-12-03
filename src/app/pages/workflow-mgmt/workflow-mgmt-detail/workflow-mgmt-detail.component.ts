@@ -15,7 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 @Component({
   selector: 'app-workflow-mgmt-detail',
   standalone: true,
-  imports: [SharedModule, MatTabsModule, WorkflowBusinessRuleComponent, WorkflowTaskComponent, WorkflowTaskAssignComponent],
+  imports: [SharedModule, MatTabsModule, WorkflowBusinessRuleComponent, WorkflowTaskComponent],
   templateUrl: './workflow-mgmt-detail.component.html',
   styleUrl: './workflow-mgmt-detail.component.scss'
 })
