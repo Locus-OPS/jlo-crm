@@ -98,6 +98,11 @@ export class ProcessFlowComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.setInterpolationType(this.curveType);
 
+    this.processFlowService.getAllTracking().subscribe((data) => {
+      this.nodes = data.nodes;
+      this.links = data.links;
+    });
+
 
   }
 

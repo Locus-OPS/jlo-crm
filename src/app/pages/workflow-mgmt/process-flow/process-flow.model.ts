@@ -35,6 +35,20 @@ export const links: Edge[] = [
     { id: 'summary', source: 'start', target: 'end', label: 'Locus Approval workflow for travel allowance requests' }
 ];
 
+
+export interface WorkflowTracking {
+    trackingId: number;
+    transactionId: number;
+    workflowId: number;
+    taskId: number;
+    assignmentId: number;
+    systemId: number;
+    eventType: string;
+    status: string;
+    timestamp: string;
+    notes?: string;
+}
+
 /*
 การออกแบบระบบให้รองรับการติดตาม สถานะระดับ Transaction และ ระบบที่เชื่อมโยงหลายระบบ ควรพิจารณา:
 
