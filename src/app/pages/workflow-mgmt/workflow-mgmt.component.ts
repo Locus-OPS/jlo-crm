@@ -23,7 +23,7 @@ export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
   searchForm: FormGroup;
   dataSource: WorkflowModel[];
   displayedColumns: string[] = ['workflowId', 'workflowName', 'description', 'status', 'action'];
-  tableControl: TableControl = new TableControl(() => { this.onSearch(); });
+  tableControl: TableControl = new TableControl(() => { this.search(); });
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,

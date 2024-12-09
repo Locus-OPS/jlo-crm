@@ -1,23 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ApiPageRequest } from 'src/app/model/api-page-request.model';
+import { ApiPageResponse } from 'src/app/model/api-page-response.model';
+import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkflowTrackingService {
 
-  private baseUrl = 'http://localhost:8080/api/workflows'; // เปลี่ยนเป็น URL ของ API จริง
+  private rootPath = environment.endpoint;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private api: ApiService,) { }
 
-  // ดึงข้อมูล Workflow ทั้งหมด
-  getAllWorkflows(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}`);
+
+  getWfTrackingByWorkflowId(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/workflow-tracking/getWftrackingByWorkflowId', param);
   }
 
-  // ดึงข้อมูล Transactions ภายใต้ Workflow
-  getTransactionsByWorkflow(workflowId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${workflowId}/transactions`);
+  getWfTrackingById(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/workflow-tracking/getWftrackingById', param);
   }
+
 }

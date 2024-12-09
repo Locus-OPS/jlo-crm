@@ -185,6 +185,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/workflow-mgmt/process-flow/process-flow.component').then(m => m.ProcessFlowComponent)
       },
+      {
+        path: 'workflow/workflow-tracking-log',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/workflow-tracking/workflow-tracking.component').then(m => m.WorkflowTrackingComponent)
+      },
 
     ]
   }, {
