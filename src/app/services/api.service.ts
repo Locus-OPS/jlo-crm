@@ -29,6 +29,10 @@ export class ApiService {
     return this.http.post(this.rootPath + path, param).toPromise();
   }
 
+  callGet(path: string, param?: ApiRequest<any> | ApiPageRequest<any>): Promise<ApiResponse<any>> | Promise<ApiPageResponse<any>> | Promise<any> {
+    return this.http.get(this.rootPath + path, { params: { ...param } }).toPromise();
+  }
+
   getProfileImagePath(pictureUrl: string) {
     return this.rootPath + '/api/user/profile_image/' + pictureUrl;
   }
@@ -110,7 +114,6 @@ export class ApiService {
   getParentMenu(): Promise<any> {
     return this.http.post(this.rootPath + '/common/selector/getParentMenu', {}).toPromise();
   }
-
 
   getProvince(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.http.post(this.rootPath + '/api/selector/getProvince', param).toPromise();

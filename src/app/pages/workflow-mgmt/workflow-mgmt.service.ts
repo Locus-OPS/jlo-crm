@@ -83,4 +83,8 @@ export class WorkflowMgmtService {
   updateWorkflowtaskAssign(param: ApiRequest<any>): Promise<ApiResponse<any>> {
     return this.api.call('/api/workflow/updateWorkflowTaskAssign', param);
   }
+
+  getWorkflowSystemList(): Promise<ApiResponse<any>> {
+    return this.api.callGet("/api/workflow/getWorkflowSystemList");
+  }
 }

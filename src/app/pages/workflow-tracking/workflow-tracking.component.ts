@@ -33,7 +33,7 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
   wflogDataSource: any[];
   tableLogControl: TableControl = new TableControl(() => { this.searchWfLog(); });
   trackingId: any = null;
-
+  wfTrackingLog: any = null;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -48,8 +48,6 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // this.loadWorkflows();
     this.initForm();
     this.onSearch();
   }
@@ -113,32 +111,7 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
 
   onSelectRow(element) {
     this.trackingId = element.trackingId;
+    this.wfTrackingLog = element;
   }
-
-  // // Load workflows
-  // loadWorkflows(): void {
-  //   this.workflowTrackingService.getAllWorkflows().subscribe(
-  //     (data) => {
-  //       this.workflows = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error loading workflows:', error);
-  //     }
-  //   );
-  // }
-
-
-  // // Load transactions for the selected workflow
-  // loadTransactions(workflow: any): void {
-  //   this.selectedWorkflow = workflow;
-  //   this.workflowTrackingService.getTransactionsByWorkflow(workflow.id).subscribe(
-  //     (data) => {
-  //       this.transactions = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error loading transactions:', error);
-  //     }
-  //   );
-  // }
 
 }

@@ -22,10 +22,11 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   @Output() taskIdEmitter = new EventEmitter<string>();
   tableControl: TableControl = new TableControl(() => { this.getWorkflowTaskList(); });
   datasource: any[];
-  displayedColumns: string[] = ['taskId', 'taskName', 'description', 'priority', 'status', 'action'];
+  displayedColumns: string[] = ['taskId', 'taskName', 'systemname', 'description', 'priority', 'status', 'action'];
   createForm: FormGroup;
   toggleOpenAddSection: boolean = true;
   selectedTaskId: any = null;
+  systemList: any[] = [];
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -38,6 +39,7 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getWorkflowSystemList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,7 +64,8 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
       status: ["Pending"],
       priority: ["", Validators.required],
       startDate: [""],
-      endDate: [""]
+      endDate: [""],
+      systemId: ["", Validators.required]
     });
   }
 
@@ -108,6 +111,7 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
     this.selectedTaskId = element.taskId;
     this.toggleOpenAddSection = true;
     this.createForm.patchValue(element);
+    // alert(JSON.stringify(element))
   }
 
   editWorkflowTask() {
@@ -150,7 +154,6 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
       });
   }
 
-
   onClearAddForm() {
     this.initForm();
   }
@@ -165,7 +168,13 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
     this.toggleOpenAddSection = false;
   }
 
-
+  getWorkflowSystemList() {
+    this.workflowMgmtService.getWorkflowSystemList().then((res) => {
+      if (res.status) {
+        this.systemList = res.data;
+      }
+    });
+  }
 
 
 

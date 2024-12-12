@@ -3,45 +3,148 @@
     <div class="card-icon">
       <i class="material-icons">assignment</i>
     </div>
-    <h4 class="card-title">{{ 'Workflow Tracking Log Detail' | translate }} {{ trackingId }}</h4>
+    <h4 class="card-title">{{ 'Workflow Tracking Log Detail' | translate }}</h4>
   </div>
-  <div class="card-body">
-    <div class="material-datatables table-responsive">
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        class="mat-elevation-z8"
-        (matSortChange)="tableControl.onSort($event)"
-        matSort
-        matSortDirection="asc"
-        matSortDisableClear
-      >
-        <ng-container matColumnDef="taskId">
-          <th mat-header-cell *matHeaderCellDef class="text-right">{{ 'workflow.id' | translate }}</th>
-          <td mat-cell *matCellDef="let element" class="text-right">{{ element.taskId }}</td>
-        </ng-container>
+  <div class="card-body" style="padding: 20px">
+    <form [formGroup]="wfTrackingLogForm">
+      <div class="row">
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'Workflow ID' | translate }}</mat-label>
+          <input matInput formControlName="workflowId" readonly />
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'Transaction ID' | translate }}</mat-label>
+          <input matInput formControlName="transactionId" readonly />
+        </mat-form-field>
+        <mat-form-field class="col-md-3">
+          <mat-label>{{ 'System Name' | translate }}</mat-label>
+          <input matInput formControlName="systemName" readonly />
+        </mat-form-field>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card" style="height: 100%">
+          <div class="card-header card-header-primary card-header-icon">
+            <h4 class="card-title">{{ 'Detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let data of dataSource">
+              <div class="card" [ngClass]="'material-gray-background'">
+                <div class="card-body task-details">
+                  <h4>{{ data.label }}</h4>
+                  <p><strong>Task:</strong> {{ data.taskName }}</p>
+                  <p><strong>Status:</strong> {{ data.status }}</p>
+                  <p><strong>Last Updated:</strong> {{ data.updatedDate }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card" style="height: 100%">
+          <div class="card-body">
+            <div class="card-header card-header-primary card-header-icon">
+              <h4 class="card-title">{{ 'Workflow' | translate }}</h4>
+            </div>
+            <mat-drawer-container class="example-container">
+              <mat-drawer-content>
+                <div class="page">
+                  <ngx-graph
+                    [links]="links"
+                    [nodes]="nodes"
+                    [clusters]="clusters"
+                    [layout]="layout"
+                    [curve]="curve"
+                    [draggingEnabled]="draggingEnabled"
+                    [panningEnabled]="panningEnabled"
+                    [enableZoom]="zoomEnabled"
+                    [zoomSpeed]="zoomSpeed"
+                    [minZoomLevel]="minZoomLevel"
+                    [maxZoomLevel]="maxZoomLevel"
+                    [panOnZoom]="panOnZoom"
+                    [autoZoom]="autoZoom"
+                    [autoCenter]="autoCenter"
+                    [update$]="update$"
+                    [center$]="center$"
+                    [zoomToFit$]="zoomToFit$"
+                    [layoutSettings]="layoutSettings"
+                  >
+                    <ng-template #defsTemplate>
+                      <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+                        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                      </svg:marker>
+                    </ng-template>
 
-        <ng-container matColumnDef="eventType">
-          <th mat-header-cell *matHeaderCellDef>{{ 'workflow.name' | translate }}</th>
-          <td mat-cell *matCellDef="let element">{{ element.eventTypeStr }}</td>
-        </ng-container>
+                    <ng-template #clusterTemplate let-cluster>
+                      <svg:g class="node cluster">
+                        <svg:rect
+                          rx="5"
+                          ry="5"
+                          [attr.width]="cluster.dimension.width"
+                          [attr.height]="cluster.dimension.height"
+                          [attr.fill]="cluster.data.color"
+                        />
+                      </svg:g>
+                    </ng-template>
 
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>{{ 'workflow.description' | translate }}</th>
-          <td mat-cell *matCellDef="let element">{{ element.statusStr }}</td>
-        </ng-container>
-        <ng-container matColumnDef="link">
-          <th mat-header-cell *matHeaderCellDef>{{ 'workflow.status' | translate }}</th>
-          <td mat-cell *matCellDef="let element">{{ element.links }}</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns"
-          (click)="onSelectRow(row)"
-          [ngClass]="{ 'selected-row': selectedRow == row }"
-        ></tr>
-      </table>
+                    <ng-template #nodeTemplate let-node>
+                      <svg:g
+                        class="node"
+                        (click)="onNodeClick($event)"
+                        [tooltipPlacement]="'top'"
+                        [tooltipType]="'tooltip'"
+                        [tooltipTitle]="node.label"
+                      >
+                        <!-- <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.color" /> -->
+                        <svg:rect
+                          [attr.width]="350"
+                          [attr.height]="60"
+                          [ngClass]="getLabelClass(node.status)"
+                          [attr.rx]="10"
+                          [attr.ry]="10"
+                          stroke="black"
+                          stroke-width="0.5"
+                        />
+                        <svg:image
+                          [attr.x]="5"
+                          [attr.y]="node.dimension.height / 2 - 15"
+                          [attr.width]="30"
+                          [attr.height]="30"
+                          [attr.href]="node.avatarUrl"
+                          [attr.clip-path]="'circle(15px at 15px 15px)'"
+                        ></svg:image>
+                        <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="node.dimension.height / 2" fill="white">
+                          <tspan x="40" dy="-10">{{ 'Step : ' + node.taskName }}</tspan>
+                          <tspan x="40" dy="20">{{ node.label }}</tspan>
+                        </svg:text>
+                      </svg:g>
+                    </ng-template>
+
+                    <ng-template #linkTemplate let-link>
+                      <svg:g class="edge">
+                        <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+                        <svg:text class="edge-label" text-anchor="middle" [ngStyle]="{ 'font-size': '14px' }">
+                          <textPath
+                            class="text-path"
+                            [attr.href]="'#' + link.id"
+                            [style.dominant-baseline]="link.dominantBaseline"
+                            startOffset="60%"
+                            [ngClass]="getLabelClass(link.label)"
+                          >
+                            {{ link.label }}
+                          </textPath>
+                        </svg:text>
+                      </svg:g>
+                    </ng-template>
+                  </ngx-graph>
+                </div>
+              </mat-drawer-content>
+            </mat-drawer-container>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

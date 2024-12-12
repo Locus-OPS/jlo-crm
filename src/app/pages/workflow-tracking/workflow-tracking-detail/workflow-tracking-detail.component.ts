@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,6 +9,11 @@ import { WorkflowTrackingService } from '../workflow-tracking.service';
 import { WorkflowMgmtService } from '../../workflow-mgmt/workflow-mgmt.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { TableControl } from 'src/app/shared/table-control';
+import * as shape from 'd3-shape';
+import { Subject } from 'rxjs';
+import { ClusterNode, Edge, Layout } from '@swimlane/ngx-graph';
+import { clusters, links, nodes } from '../../workflow-mgmt/process-flow/process-flow.model';
+// import { nodes, clusters, links } from 'src/app/pages/workflow-mgmt/process-flow/process-flow.model';
 
 @Component({
   selector: 'app-workflow-tracking-detail',
@@ -19,10 +24,12 @@ import { TableControl } from 'src/app/shared/table-control';
 })
 export class WorkflowTrackingDetailComponent extends BaseComponent implements OnInit {
 
-  @Input() trackingId: string = '';
+  @Input() wfTrackingLog: any = null;
   dataSource: any[];
-  displayedColumns: string[] = ['taskId', 'eventType', 'status', 'link'];
+  dataSource1: any[];
+  displayedColumns: string[] = ['taskName', 'approver', 'status', 'updatedDate'];
   tableControl: TableControl = new TableControl(() => { this.getWfTrackingDetail(); });
+  wfTrackingLogForm: FormGroup;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -30,38 +37,157 @@ export class WorkflowTrackingDetailComponent extends BaseComponent implements On
     public router: Router,
     public globals: Globals,
     private workflowTrackingService: WorkflowTrackingService,
-    private workflowMgmtService: WorkflowMgmtService
+    private workflowMgmtService: WorkflowMgmtService,
+    private cdr: ChangeDetectorRef
   ) {
     super(router, globals);
 
   }
 
+  name = 'Tracking workflow';
+  nodes: Node[] = []; //รายการของ Node ที่จะแสดงในกราฟ
+  clusters: ClusterNode[] = []; //(ไม่บังคับ) ใช้สำหรับจัดกลุ่มของ Nodes
+
+  links: Edge[] = []; //รายการของลิงก์ (edges) ระหว่าง Nodes
+
+  layout: String | Layout = 'dagreCluster'; //ใช้กำหนดรูปแบบการจัดวาง (เช่น dagre, dagreCluster)
+  layouts: any[] = [
+    {
+      label: 'Dagre',
+      value: 'dagre',
+    },
+    {
+      label: 'Dagre Cluster',
+      value: 'dagreCluster',
+      isClustered: true,
+    },
+    {
+      label: 'Cola Force Directed',
+      value: 'colaForceDirected',
+      isClustered: true,
+    },
+    {
+      label: 'D3 Force Directed',
+      value: 'd3ForceDirected',
+    },
+  ];
+
+
+  // line interpolation
+  curveType: string = 'Bundle'; //ใช้กำหนดรูปแบบของเส้นลิงก์
+  curve: any = shape.curveLinear;
+  interpolationTypes = [
+    'Bundle',
+    'Cardinal',
+    'Catmull Rom',
+    'Linear',
+    'Monotone X',
+    'Monotone Y',
+    'Natural',
+    'Step',
+    'Step After',
+    'Step Before'
+  ];
+
+  draggingEnabled: boolean = true; //เปิดหรือปิดความสามารถในการลาก Nodes
+  panningEnabled: boolean = true; //เปิดหรือปิดความสามารถในการเลื่อนกราฟ
+  zoomEnabled: boolean = true;  //เปิดหรือปิดความสามารถในการซูมกราฟ
+
+  zoomSpeed: number = 0.1;  //ความเร็วในการซูม
+  minZoomLevel: number = 0.1; //ระดับการซูมต่ำสุดและสูงสุด
+  maxZoomLevel: number = 4.0; //ระดับการซูมต่ำสุดและสูงสุด
+  panOnZoom: boolean = true; //เปิดหรือปิดการเลื่อนกราฟระหว่างซูม
+
+  autoZoom: boolean = false;  //ซูมอัตโนมัติเพื่อให้กราฟทั้งหมดแสดงในพื้นที่ที่กำหนด
+  autoCenter: boolean = false;  //จัดตำแหน่งกราฟให้อยู่ตรงกลาง
+
+
+  // เป็น Observable สำหรับรีเฟรชหรืออัปเดตกราฟในเหตุการณ์เฉพาะ:
+  update$: Subject<boolean> = new Subject();  //รีเฟรชกราฟเมื่อมีการเปลี่ยนแปลง
+  center$: Subject<boolean> = new Subject();  //จัดตำแหน่งกราฟให้อยู่ตรงกลาง
+  zoomToFit$: Subject<boolean> = new Subject(); //ซูมให้กราฟทั้งหมดแสดงผลในพื้นที่
+
+  layoutSettings = {
+    orientation: 'TB', // Top to Bottom for vertical flow
+  };
+
+  // layoutSettings = {
+  //   orientation: 'LR', // เรียงโหนดจากซ้ายไปขวา (Left to Right)
+  //   nodePadding: 20, // ระยะห่างระหว่างโหนด
+  //   rankPadding: 50, // ระยะห่างระหว่างระดับชั้น
+  // };
+
   ngOnInit(): void {
+    this.initForm();
     this.onSearch();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['trackingId']) {
-      if (this.trackingId != "") {
-        this.onSearch();
+    try {
+      if (changes['wfTrackingLog']) {
+        if (this.wfTrackingLog != null) {
+          this.onSearch();
+          this.wfTrackingLogForm.patchValue(this.wfTrackingLog);
+          this.cdr.detectChanges();
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
+
+  }
+
+  initForm() {
+    this.wfTrackingLogForm = this.formBuilder.group({
+      workflowId: [""],
+      transactionId: [""],
+      systemName: [""]
+    });
   }
 
   onSearch() {
-    this.tableControl.resetPage();
     this.getWfTrackingDetail();
   }
 
   getWfTrackingDetail() {
-    this.workflowTrackingService.getWfTrackingById({ data: { trackingId: this.trackingId }, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
+    this.workflowTrackingService.getWfTrackingGraph({ data: this.wfTrackingLog }).then((res) => {
       if (res.status) {
-        this.dataSource = res.data;
+        this.dataSource = res.data.node;
+        this.nodes = res.data.node;
+        this.links = res.data.link;
       }
     });
   }
 
   onSelectRow(row) {
 
+  }
+
+  getNodeClass(status: string): string {
+    switch (status) {
+      case 'Completed':
+        return 'node-approved';
+      case 'Pending':
+        return 'node-pending';
+      case 'Cancelled':
+        return 'node-rejected';
+      default:
+        return '';
+    }
+  }
+
+  getLabelClass(status: string): string {
+    switch (status) {
+      case 'Completed':
+        return 'label-approved';
+      case 'Pending':
+        return 'label-pending';
+      case 'In_Progress':
+        return 'label-inprogress';
+      case 'Cancelled':
+        return 'label-rejected';
+      default:
+        return '';
+    }
   }
 }

@@ -147,4 +147,6 @@ export class WorkflowMgmtDetailComponent extends BaseComponent implements OnInit
 
 
 
+
+
 }

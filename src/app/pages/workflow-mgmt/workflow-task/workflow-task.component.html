@@ -50,6 +50,11 @@
               <td mat-cell *matCellDef="let element">{{ element.taskName }}</td>
             </ng-container>
 
+            <ng-container matColumnDef="systemname">
+              <th mat-header-cell *matHeaderCellDef>{{ 'System Name' | translate }}</th>
+              <td mat-cell *matCellDef="let element">{{ element.systemName }}</td>
+            </ng-container>
+
             <ng-container matColumnDef="description">
               <th mat-header-cell *matHeaderCellDef>{{ 'workflow.description' | translate }}</th>
               <td mat-cell *matCellDef="let element">{{ element.description }}</td>
@@ -97,10 +102,21 @@
                       <mat-label>{{ 'workflow.taskid' | translate }}</mat-label>
                       <input type="text" matInput formControlName="taskId" readonly />
                     </mat-form-field>
-                    <mat-form-field class="col-md-8">
+                    <mat-form-field class="col-md-6">
                       <mat-label>{{ 'workflow.taskName' | translate }}</mat-label>
                       <input type="text" matInput formControlName="taskName" maxlength="255" />
                       <mat-error *ngIf="createForm.controls['taskName'].hasError('required')">
+                        {{ 'error.required' | translate }}
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-2">
+                      <mat-label>{{ 'System' | translate }}</mat-label>
+                      <mat-select formControlName="systemId" required>
+                        <mat-option *ngFor="let item of systemList" [value]="item.systemId">
+                          {{ item.systemName }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="createForm.controls['systemId'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
@@ -110,12 +126,6 @@
                       <mat-error *ngIf="createForm.controls['priority'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
-                    </mat-form-field>
-                  </div>
-                  <div class="row">
-                    <mat-form-field class="col-md-10">
-                      <mat-label>{{ 'workflow.description' | translate }}</mat-label>
-                      <textarea matInput formControlName="description"></textarea>
                     </mat-form-field>
                   </div>
                   <div class="row">
@@ -134,6 +144,12 @@
                     <mat-form-field class="col-md-4">
                       <mat-label>{{ 'workflow.status' | translate }}</mat-label>
                       <input matInput formControlName="status" readonly />
+                    </mat-form-field>
+                  </div>
+                  <div class="row">
+                    <mat-form-field class="col-md-10">
+                      <mat-label>{{ 'workflow.description' | translate }}</mat-label>
+                      <textarea matInput formControlName="description"></textarea>
                     </mat-form-field>
                   </div>
                   <div class="row">
