@@ -120,6 +120,7 @@ export class WorkflowTrackingDetailComponent extends BaseComponent implements On
   ngOnInit(): void {
     this.initForm();
     this.onSearch();
+    this.wfTrackingLogForm.patchValue(this.wfTrackingLog);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

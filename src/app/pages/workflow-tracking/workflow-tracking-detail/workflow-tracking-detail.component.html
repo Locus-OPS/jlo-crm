@@ -9,15 +9,15 @@
     <form [formGroup]="wfTrackingLogForm">
       <div class="row">
         <mat-form-field class="col-md-3">
-          <mat-label>{{ 'Workflow ID' | translate }}</mat-label>
+          <mat-label>{{ 'workflow.id' | translate }}</mat-label>
           <input matInput formControlName="workflowId" readonly />
         </mat-form-field>
         <mat-form-field class="col-md-3">
-          <mat-label>{{ 'Transaction ID' | translate }}</mat-label>
+          <mat-label>{{ 'transaction.transactionId' | translate }}</mat-label>
           <input matInput formControlName="transactionId" readonly />
         </mat-form-field>
         <mat-form-field class="col-md-3">
-          <mat-label>{{ 'System Name' | translate }}</mat-label>
+          <mat-label>{{ 'workflow.systemname' | translate }}</mat-label>
           <input matInput formControlName="systemName" readonly />
         </mat-form-field>
       </div>
@@ -26,16 +26,22 @@
       <div class="col-md-6">
         <div class="card" style="height: 100%">
           <div class="card-header card-header-primary card-header-icon">
-            <h4 class="card-title">{{ 'Detail' | translate }}</h4>
+            <h4 class="card-title">{{ 'workflow.detail' | translate }}</h4>
           </div>
           <div class="card-body">
             <div *ngFor="let data of dataSource">
               <div class="card" [ngClass]="'material-gray-background'">
                 <div class="card-body task-details">
                   <h4>{{ data.label }}</h4>
-                  <p><strong>Task:</strong> {{ data.taskName }}</p>
-                  <p><strong>Status:</strong> {{ data.status }}</p>
-                  <p><strong>Last Updated:</strong> {{ data.updatedDate }}</p>
+                  <p>
+                    <strong>{{ 'workflow.task' | translate }}:</strong> {{ data.taskName }}
+                  </p>
+                  <p>
+                    <strong>{{ 'workflow.status' | translate }}:</strong> {{ data.status }}
+                  </p>
+                  <p>
+                    <strong>{{ 'workflow.lastupdated' | translate }}:</strong> {{ data.updatedDate }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -46,7 +52,7 @@
         <div class="card" style="height: 100%">
           <div class="card-body">
             <div class="card-header card-header-primary card-header-icon">
-              <h4 class="card-title">{{ 'Workflow' | translate }}</h4>
+              <h4 class="card-title">{{ 'workflow.workflow' | translate }}</h4>
             </div>
             <mat-drawer-container class="example-container">
               <mat-drawer-content>

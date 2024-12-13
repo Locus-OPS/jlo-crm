@@ -22,7 +22,7 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   @Output() taskIdEmitter = new EventEmitter<string>();
   tableControl: TableControl = new TableControl(() => { this.getWorkflowTaskList(); });
   datasource: any[];
-  displayedColumns: string[] = ['taskId', 'taskName', 'systemname', 'description', 'priority', 'status', 'action'];
+  displayedColumns: string[] = ['taskId', 'systemname', 'taskName', 'description', 'priority', 'status', 'action'];
   createForm: FormGroup;
   toggleOpenAddSection: boolean = true;
   selectedTaskId: any = null;

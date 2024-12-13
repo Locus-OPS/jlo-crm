@@ -29,7 +29,7 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['workflowId', 'workflowName', 'description', 'status', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
-  displayedLogColumns: string[] = ['workflowId', 'transactionId', 'systemName', 'statusStr', 'updatedDate', 'action'];
+  displayedLogColumns: string[] = ['workflowId', 'transactionId', 'systemName', 'updatedDate', 'action'];
   wflogDataSource: any[];
   tableLogControl: TableControl = new TableControl(() => { this.searchWfLog(); });
   trackingId: any = null;
@@ -109,7 +109,7 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
     });
   }
 
-  onSelectRow(element) {
+  onWfTrackingSelectRow(element) {
     this.trackingId = element.trackingId;
     this.wfTrackingLog = element;
   }

@@ -25,7 +25,7 @@ export class WorkflowMgmtDetailComponent extends BaseComponent implements OnInit
   workflowId: any;
   ruleId: any;
   mode: any;
-
+  systemList: any[] = [];
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -56,6 +56,7 @@ export class WorkflowMgmtDetailComponent extends BaseComponent implements OnInit
       status: ["Active"],
       priority: ["1"]
     });
+    this.getWorkflowSystemList();
   }
 
   onSaveWorkflow() {
@@ -143,6 +144,14 @@ export class WorkflowMgmtDetailComponent extends BaseComponent implements OnInit
   //รับค่าจาก ฺBusiness Rule
   onRuleIdReceived(value: string) {
     this.ruleId = value;
+  }
+
+  getWorkflowSystemList() {
+    this.workflowMgmtService.getWorkflowSystemList().then((res) => {
+      if (res.status) {
+        this.systemList = res.data;
+      }
+    });
   }
 
 

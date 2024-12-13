@@ -22,12 +22,12 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
 
   tableControl: TableControl = new TableControl(() => { this.onSearch(); });
   datasource: any[];
-  displayedColumns: string[] = ['ruleId', 'conditionType', 'conditionValue1', 'conditionValue2', 'priority', 'status', 'action'];
+  displayedColumns: string[] = ['ruleId', 'systemName', 'conditionType', 'conditionValue1', 'conditionValue2', 'priority', 'status', 'action'];
   toggleOpenAddSection: boolean = true;
 
   createform: FormGroup;
   wfId: any;
-
+  systemList: any[] = [];
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -40,6 +40,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
 
   ngOnInit(): void {
     this.initForm();
+    this.getWorkflowSystemList();
   }
 
   initForm() {
@@ -50,7 +51,8 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
       conditionValue1: ["", Validators.required],
       conditionValue2: [""],
       priority: ["1", Validators.required],
-      status: ["Active"]
+      status: ["Active"],
+      systemId: ["", Validators.required]
     });
   }
 
@@ -151,6 +153,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   }
 
   onSelectedRowEdit(element: any) {
+    // alert(JSON.stringify(element));
     this.toggleOpenAddSection = true;
     this.createform.patchValue(element);
     //ส่งค้าที่ user select บน grid ไปยัง parent
@@ -173,6 +176,14 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
       this.createform.controls["conditionValue2"].setValidators(null);
       this.createform.patchValue({ conditionValue2: "" });
     }
+  }
+
+  getWorkflowSystemList() {
+    this.workflowMgmtService.getWorkflowSystemList().then((res) => {
+      if (res.status) {
+        this.systemList = res.data;
+      }
+    });
   }
 
 }
