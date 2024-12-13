@@ -16,7 +16,7 @@
                   <mat-label>{{ 'workflow.id' | translate }}</mat-label>
                   <input matInput formControlName="workflowId" readonly />
                 </mat-form-field>
-                <mat-form-field class="col-md-6">
+                <mat-form-field class="col-md-9">
                   <mat-label>{{ 'workflow.name' | translate }}</mat-label>
                   <input matInput formControlName="workflowName" maxlength="255" />
                   <mat-hint align="end">{{ createForm.get('workflowName')?.value?.length || 0 }}/255</mat-hint>
@@ -26,7 +26,7 @@
                 </mat-form-field>
               </div>
               <div class="row">
-                <mat-form-field class="col-md-9">
+                <mat-form-field class="col-md-12">
                   <mat-label>{{ 'workflow.description' | translate }}</mat-label>
                   <textarea matInput formControlName="description"></textarea>
                 </mat-form-field>
@@ -44,10 +44,12 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="pull-right">
-                    <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="inActiveWorkflow()" *ngIf="this.mode == 'EDIT'">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="inActiveWorkflow()"
+                      *ngIf="this.mode == 'EDIT'">
                       {{ 'button.cancel' | translate }}
                     </button>
-                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' |
+                      translate }}</button>
                   </div>
                 </div>
               </div>
@@ -68,14 +70,12 @@
         <div class="mat-app-background basic-container">
           <mat-tab-group animationDuration="200ms" [selectedIndex]="0" mat-stretch-tabs="false" mat-align-tabs="start">
             <mat-tab label="{{ 'Business Rule' | translate }}">
-              <app-workflow-business-rule
-                *ngIf="mode == 'EDIT'"
-                [workflowId]="this.createForm.get('workflowId').value"
-                (ruleIdEmitter)="onRuleIdReceived($event)"
-              ></app-workflow-business-rule>
+              <app-workflow-business-rule *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"
+                (ruleIdEmitter)="onRuleIdReceived($event)"></app-workflow-business-rule>
             </mat-tab>
             <mat-tab label="{{ 'Task' | translate }}">
-              <app-workflow-task *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
+              <app-workflow-task *ngIf="mode == 'EDIT'"
+                [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
             </mat-tab>
           </mat-tab-group>
         </div>
