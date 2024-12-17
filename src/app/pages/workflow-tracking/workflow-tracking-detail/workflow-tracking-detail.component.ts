@@ -154,8 +154,37 @@ export class WorkflowTrackingDetailComponent extends BaseComponent implements On
     this.workflowTrackingService.getWfTrackingGraph({ data: this.wfTrackingLog }).then((res) => {
       if (res.status) {
         this.dataSource = res.data.node;
+        if (!res.data.node.some(node => node.id === 'start')) {
+          res.data.node.unshift({ id: 'start', label: 'Start', status: '' }); // เพิ่มที่ตำแหน่งแรก
+        }
+        if (!res.data.node.some(node => node.id === 'end')) {
+          res.data.node.push({ id: 'end', label: 'End', status: '' }); // เพิ่มที่ตำแหน่งสุดท้าย
+        }
+        // ตรวจหา Node ตัวแรกที่ไม่ใช่ 'start' และ 'end'
+        const firstNode = res.data.node.find(node => node.id !== 'start' && node.id !== 'end');
+
+        // เพิ่ม link จาก start ไปหา firstNode
+        if (firstNode) {
+          res.data.link.push({
+            id: 'link_start',  // กำหนด ID ให้ลิงก์
+            source: 'start',   // ID ของโหนดต้นทาง
+            target: firstNode.id, // ID ของโหนดปลายทาง
+          });
+        }
+        // ตรวจหา Node ตัวสุดท้าย (เชื่อมกับ end)
+        const lastNode = [...res.data.node].reverse().find(node => node.id !== 'start' && node.id !== 'end');
+        if (lastNode) {
+          res.data.link.push({
+            id: 'link_end',
+            source: lastNode.id,
+            target: 'end',
+          });
+        }
+
         this.nodes = res.data.node;
         this.links = res.data.link;
+
+
       }
     });
   }
@@ -188,7 +217,7 @@ export class WorkflowTrackingDetailComponent extends BaseComponent implements On
       case 'Cancelled':
         return 'label-rejected';
       default:
-        return '';
+        return 'label-begin-end';
     }
   }
 }

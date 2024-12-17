@@ -97,19 +97,22 @@
               </div>
               <div class="card-body">
                 <form [formGroup]="createForm" (ngSubmit)="onSaveWorkflowTask()" novalidate>
+                  <!-- <div class="row">
+                    
+                  </div> -->
                   <div class="row">
-                    <mat-form-field class="col-md-2">
+                    <mat-form-field class="col-md-4">
                       <mat-label>{{ 'workflow.taskid' | translate }}</mat-label>
                       <input type="text" matInput formControlName="taskId" readonly />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
+                    <mat-form-field class="col-md-4">
                       <mat-label>{{ 'workflow.taskName' | translate }}</mat-label>
                       <input type="text" matInput formControlName="taskName" maxlength="255" />
                       <mat-error *ngIf="createForm.controls['taskName'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-2">
+                    <!-- <mat-form-field class="col-md-4">
                       <mat-label>{{ 'System' | translate }}</mat-label>
                       <mat-select formControlName="systemId" required>
                         <mat-option *ngFor="let item of systemList" [value]="item.systemId">
@@ -119,8 +122,8 @@
                       <mat-error *ngIf="createForm.controls['systemId'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-2">
+                    </mat-form-field> -->
+                    <mat-form-field class="col-md-4">
                       <mat-label>{{ 'workflow.priority' | translate }}</mat-label>
                       <input type="number" matInput formControlName="priority" max="100" />
                       <mat-error *ngIf="createForm.controls['priority'].hasError('required')">

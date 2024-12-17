@@ -104,9 +104,9 @@
                       <mat-label>{{ 'ID' | translate }}</mat-label>
                       <input matInput formControlName="ruleId" readonly />
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">
+                    <!-- <mat-form-field class="col-md-4">
                       <mat-label>{{ 'workflow.systemname' | translate }}</mat-label>
-                      <mat-select formControlName="systemId" required>
+                      <mat-select formControlName="systemId" required readonly>
                         <mat-option *ngFor="let item of systemList" [value]="item.systemId">
                           {{ item.systemName }}
                         </mat-option>
@@ -114,7 +114,7 @@
                       <mat-error *ngIf="createform.controls['systemId'].hasError('required')">
                         {{ 'error.required' | translate }}
                       </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                   </div>
                   <div class="row">
                     <mat-form-field class="col-md-4">

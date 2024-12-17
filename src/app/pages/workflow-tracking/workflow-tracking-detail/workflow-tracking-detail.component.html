@@ -30,7 +30,7 @@
           </div>
           <div class="card-body">
             <div *ngFor="let data of dataSource">
-              <div class="card" [ngClass]="'material-gray-background'">
+              <div class="card" [ngClass]="'material-gray-background'" *ngIf="data.label != 'Start' && data.label != 'End'">
                 <div class="card-body task-details">
                   <h4>{{ data.label }}</h4>
                   <p>
@@ -103,7 +103,6 @@
                         [tooltipType]="'tooltip'"
                         [tooltipTitle]="node.label"
                       >
-                        <!-- <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.color" /> -->
                         <svg:rect
                           [attr.width]="350"
                           [attr.height]="60"
@@ -121,7 +120,24 @@
                           [attr.href]="node.avatarUrl"
                           [attr.clip-path]="'circle(15px at 15px 15px)'"
                         ></svg:image>
-                        <svg:text alignment-baseline="central" [attr.x]="40" [attr.y]="node.dimension.height / 2" fill="white">
+                        <svg:text
+                          alignment-baseline="central"
+                          [attr.x]="40"
+                          [attr.y]="node.dimension.height / 2"
+                          fill="white"
+                          font-weight="bold"
+                          font-size="16px"
+                          *ngIf="node.label == 'Start' || node.label == 'End'"
+                        >
+                          <tspan x="10" dy="5">{{ node.label }}</tspan>
+                        </svg:text>
+                        <svg:text
+                          alignment-baseline="central"
+                          [attr.x]="40"
+                          [attr.y]="node.dimension.height / 2"
+                          fill="white"
+                          *ngIf="node.label != 'Start' && node.label != 'End'"
+                        >
                           <tspan x="40" dy="-10">{{ 'Step : ' + node.taskName }}</tspan>
                           <tspan x="40" dy="20">{{ node.label }}</tspan>
                         </svg:text>

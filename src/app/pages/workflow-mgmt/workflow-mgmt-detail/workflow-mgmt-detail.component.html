@@ -26,12 +26,6 @@
                 </mat-form-field>
               </div>
               <div class="row">
-                <mat-form-field class="col-md-12">
-                  <mat-label>{{ 'workflow.description' | translate }}</mat-label>
-                  <textarea matInput formControlName="description"></textarea>
-                </mat-form-field>
-              </div>
-              <div class="row">
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'workflow.priority' | translate }}</mat-label>
                   <input type="number" matInput formControlName="priority" />
@@ -40,16 +34,31 @@
                   <mat-label>{{ 'workflow.status' | translate }}</mat-label>
                   <input matInput formControlName="status" readonly />
                 </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'System' | translate }}</mat-label>
+                  <mat-select formControlName="systemId" required>
+                    <mat-option *ngFor="let item of systemList" [value]="item.systemId">
+                      {{ item.systemName }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['systemId'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-12">
+                  <mat-label>{{ 'workflow.description' | translate }}</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="pull-right">
-                    <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="inActiveWorkflow()"
-                      *ngIf="this.mode == 'EDIT'">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="inActiveWorkflow()" *ngIf="this.mode == 'EDIT'">
                       {{ 'button.cancel' | translate }}
                     </button>
-                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' |
-                      translate }}</button>
+                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
                   </div>
                 </div>
               </div>
@@ -70,12 +79,14 @@
         <div class="mat-app-background basic-container">
           <mat-tab-group animationDuration="200ms" [selectedIndex]="0" mat-stretch-tabs="false" mat-align-tabs="start">
             <mat-tab label="{{ 'Business Rule' | translate }}">
-              <app-workflow-business-rule *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"
-                (ruleIdEmitter)="onRuleIdReceived($event)"></app-workflow-business-rule>
+              <app-workflow-business-rule
+                *ngIf="mode == 'EDIT'"
+                [workflowId]="this.createForm.get('workflowId').value"
+                (ruleIdEmitter)="onRuleIdReceived($event)"
+              ></app-workflow-business-rule>
             </mat-tab>
             <mat-tab label="{{ 'Task' | translate }}">
-              <app-workflow-task *ngIf="mode == 'EDIT'"
-                [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
+              <app-workflow-task *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
             </mat-tab>
           </mat-tab-group>
         </div>

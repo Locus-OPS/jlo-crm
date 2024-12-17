@@ -54,7 +54,8 @@ export class WorkflowMgmtDetailComponent extends BaseComponent implements OnInit
       workflowName: ["", Validators.required],
       description: [""],
       status: ["Active"],
-      priority: ["1"]
+      priority: ["1"],
+      systemId: ["", Validators.required]
     });
     this.getWorkflowSystemList();
   }
