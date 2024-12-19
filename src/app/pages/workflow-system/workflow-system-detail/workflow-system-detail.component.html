@@ -1,0 +1,59 @@
+<div class="main-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'Workflow System Detail' }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="createForm" (ngSubmit)="onSaveWfSystem()">
+              <div class="row">
+                <mat-form-field class="col-md-4">
+                  <mat-label>{{ 'id' | translate }}</mat-label>
+                  <input matInput formControlName="systemId" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <mat-label>{{ 'workflow.systemname' | translate }}</mat-label>
+                  <input matInput formControlName="systemName" />
+                  <mat-error *ngIf="createForm.controls['systemName'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-4">
+                  <mat-label>{{ 'workflow.status' | translate }}</mat-label>
+                  <mat-select formControlName="isActive" required>
+                    <mat-option value="Active">Active</mat-option>
+                    <mat-option value="Inactive">Inactive</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['isActive'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-8">
+                  <mat-label>{{ 'workflow.description' | translate }}</mat-label>
+                  <textarea matInput formControlName="description"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="pull-right">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="inActiveWfSystem()" *ngIf="this.mode == 'EDIT'">
+                      {{ 'button.cancel' | translate }}
+                    </button>
+                    <button mat-raised-button type="submit" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

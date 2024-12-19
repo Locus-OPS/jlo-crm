@@ -21,7 +21,7 @@ export class WorkflowSystemComponent extends BaseComponent implements OnInit {
 
   searchForm: FormGroup;
   dataSource: any[];
-  displayedColumns: string[] = ['workflowId', 'workflowName', 'description', 'status', 'action'];
+  displayedColumns: string[] = ['systemId', 'systemName', 'description', 'status', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   constructor(
@@ -37,18 +37,30 @@ export class WorkflowSystemComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      workflowId: [""],
-      workflowName: [""],
+      systemId: [""],
+      systemName: [""],
       description: [""],
-      status: ["Active"]
+      isActive: ["Active"]
     });
     this.search();
   }
 
   onSearch() {
-    throw new Error('Method not implemented.');
+    this.tableControl.resetPage();
+    this.search();
   }
 
   search() {
+    let param = this.searchForm.getRawValue();
+    this.workflowSystemService.getWfSystemPageList({ data: param, pageNo: this.tableControl.pageNo, pageSize: this.tableControl.pageSize }).then((res) => {
+      if (res.status) {
+        this.dataSource = res.data;
+        this.tableControl.total = res.total;
+      }
+    });
+  }
+
+  gotoWorkflowSystemDetail(element: any) {
+    this.router.navigate(["/workflow/system-detail", { systemId: element.systemId }]);
   }
 }

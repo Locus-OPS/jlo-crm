@@ -193,6 +193,10 @@ const routes: Routes = [
         path: 'workflow/system',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/workflow-system/workflow-system.component').then(m => m.WorkflowSystemComponent)
+      }, {
+        path: 'workflow/system-detail',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/workflow-system/workflow-system-detail/workflow-system-detail.component').then(m => m.WorkflowSystemDetailComponent)
       },
 
     ]
