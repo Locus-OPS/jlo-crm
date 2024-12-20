@@ -1,0 +1,146 @@
+<div class="main-container">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'Workflow Preview' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="workflowForm">
+              <div class="row">
+                <mat-form-field class="col-md-4">
+                  <mat-label>{{ 'workflow.id' | translate }}</mat-label>
+                  <input matInput formControlName="workflowId" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-8">
+                  <mat-label>{{ 'workflow.name' | translate }}</mat-label>
+                  <input matInput formControlName="workflowName" readonly />
+                </mat-form-field>
+              </div>
+              <!-- <div class="row">
+                <mat-form-field class="col-md-8">
+                    <mat-label>{{'workflow.description' | translate}}</mat-label>
+                    <textarea matInput formControlName="description" readonly [rows]="5" >
+                </mat-form-field>
+              </div> -->
+            </form>
+            <mat-drawer-container class="example-container">
+              <mat-drawer-content>
+                <div class="page">
+                  <ngx-graph
+                    [links]="links"
+                    [nodes]="nodes"
+                    [clusters]="clusters"
+                    [layout]="layout"
+                    [curve]="curve"
+                    [draggingEnabled]="draggingEnabled"
+                    [panningEnabled]="panningEnabled"
+                    [enableZoom]="zoomEnabled"
+                    [zoomSpeed]="zoomSpeed"
+                    [minZoomLevel]="minZoomLevel"
+                    [maxZoomLevel]="maxZoomLevel"
+                    [panOnZoom]="panOnZoom"
+                    [autoZoom]="autoZoom"
+                    [autoCenter]="autoCenter"
+                    [update$]="update$"
+                    [center$]="center$"
+                    [zoomToFit$]="zoomToFit$"
+                    [layoutSettings]="layoutSettings"
+                  >
+                    <ng-template #defsTemplate>
+                      <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+                        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+                      </svg:marker>
+                    </ng-template>
+
+                    <ng-template #clusterTemplate let-cluster>
+                      <svg:g class="node cluster">
+                        <svg:rect
+                          rx="5"
+                          ry="5"
+                          [attr.width]="cluster.dimension.width"
+                          [attr.height]="cluster.dimension.height"
+                          [attr.fill]="cluster.data.color"
+                        />
+                      </svg:g>
+                    </ng-template>
+
+                    <ng-template #nodeTemplate let-node>
+                      <svg:g
+                        class="node"
+                        (click)="onNodeClick($event)"
+                        [tooltipPlacement]="'top'"
+                        [tooltipType]="'tooltip'"
+                        [tooltipTitle]="node.label"
+                      >
+                        <svg:rect
+                          [attr.width]="350"
+                          [attr.height]="60"
+                          [ngClass]="getLabelClass(node.status)"
+                          [attr.rx]="10"
+                          [attr.ry]="10"
+                          stroke="black"
+                          stroke-width="0.5"
+                        />
+                        <svg:image
+                          [attr.x]="5"
+                          [attr.y]="node.dimension.height / 2 - 15"
+                          [attr.width]="30"
+                          [attr.height]="30"
+                          [attr.href]="node.avatarUrl"
+                          [attr.clip-path]="'circle(15px at 15px 15px)'"
+                        ></svg:image>
+                        <svg:text
+                          alignment-baseline="central"
+                          [attr.x]="40"
+                          [attr.y]="node.dimension.height / 2"
+                          fill="white"
+                          font-weight="bold"
+                          font-size="16px"
+                          *ngIf="node.label == 'Start' || node.label == 'End'"
+                        >
+                          <tspan x="10" dy="5">{{ node.label }}</tspan>
+                        </svg:text>
+                        <svg:text
+                          alignment-baseline="central"
+                          [attr.x]="40"
+                          [attr.y]="node.dimension.height / 2"
+                          fill="white"
+                          *ngIf="node.label != 'Start' && node.label != 'End'"
+                        >
+                          <tspan x="40" dy="-10">{{ 'Step : ' + node.taskName }}</tspan>
+                          <tspan x="40" dy="20">{{ node.label }}</tspan>
+                        </svg:text>
+                      </svg:g>
+                    </ng-template>
+
+                    <ng-template #linkTemplate let-link>
+                      <svg:g class="edge">
+                        <svg:path class="line" stroke-width="2" marker-end="url(#arrow)"></svg:path>
+                        <svg:text class="edge-label" text-anchor="middle" [ngStyle]="{ 'font-size': '14px' }">
+                          <textPath
+                            class="text-path"
+                            [attr.href]="'#' + link.id"
+                            [style.dominant-baseline]="link.dominantBaseline"
+                            startOffset="60%"
+                            [ngClass]="getLabelClass(link.label)"
+                          >
+                            {{ link.label }}
+                          </textPath>
+                        </svg:text>
+                      </svg:g>
+                    </ng-template>
+                  </ngx-graph>
+                </div>
+              </mat-drawer-content>
+            </mat-drawer-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

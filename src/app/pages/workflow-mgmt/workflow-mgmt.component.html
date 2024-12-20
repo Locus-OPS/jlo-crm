@@ -68,6 +68,11 @@
                         <i class="material-icons">search</i>
                       </span>
                     </button>
+                    <button class="btn btn-warning btn-round btn-fab mat-raised-button" *ngIf="CAN_WRITE()" (click)="gotoWorkflowPreview(element)">
+                      <span class="mat-button-wrapper">
+                        <i class="material-icons">schema</i>
+                      </span>
+                    </button>
                   </td>
                 </ng-container>
 

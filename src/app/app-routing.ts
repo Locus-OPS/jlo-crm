@@ -197,6 +197,10 @@ const routes: Routes = [
         path: 'workflow/system-detail',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/workflow-system/workflow-system-detail/workflow-system-detail.component').then(m => m.WorkflowSystemDetailComponent)
+      }, {
+        path: 'workflow/workflow-preview',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/workflow-mgmt/workflow-preview/workflow-preview.component').then(m => m.WorkflowPreviewComponent)
       },
 
     ]

@@ -64,6 +64,10 @@ export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
     this.router.navigate(["/workflow/workflow-mgmt-detail", { workflowId: element.workflowId }]);
   }
 
+  gotoWorkflowPreview(element: any) {
+    this.router.navigate(["/workflow/workflow-preview", { workflowId: element.workflowId }]);
+  }
+
 
 
 }

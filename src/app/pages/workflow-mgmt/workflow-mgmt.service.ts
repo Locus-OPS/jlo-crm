@@ -87,4 +87,8 @@ export class WorkflowMgmtService {
   getWorkflowSystemList(): Promise<ApiResponse<any>> {
     return this.api.callGet("/api/workflow/getWorkflowSystemList");
   }
+
+  getWorkflowGraphReview(param: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call("/api/workflow/getWorkflowGraphPreview", param);
+  }
 }
