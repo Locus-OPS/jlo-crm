@@ -26,6 +26,7 @@ export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit
   createForm: FormGroup;
   toggleOpenAddSection: boolean = true;
   selectedTaskId: any = null;
+  selectedRow: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -202,5 +203,10 @@ export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit
   onToggleOpenAddSection() {
     this.initForm();
     this.toggleOpenAddSection = !this.toggleOpenAddSection;
+  }
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.onSelectedRowEdit(row);
   }
 }

@@ -34,6 +34,8 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
   tableLogControl: TableControl = new TableControl(() => { this.searchWfLog(); });
   trackingId: any = null;
   wfTrackingLog: any = null;
+  selectedRow: any;
+  selectedRow1: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -112,6 +114,12 @@ export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
   onWfTrackingSelectRow(element) {
     this.trackingId = element.trackingId;
     this.wfTrackingLog = element;
+    this.selectedRow1 = element;
+  }
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.onSelectedRow(row);
   }
 
 }

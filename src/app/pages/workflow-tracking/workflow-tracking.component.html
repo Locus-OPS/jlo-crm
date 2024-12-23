@@ -73,12 +73,7 @@
                     <td mat-cell *matCellDef="let element">{{ element.status }}</td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr
-                    mat-row
-                    *matRowDef="let row; columns: displayedColumns"
-                    (click)="onSelectRow(row)"
-                    [ngClass]="{ 'selected-row': selectedRow == row }"
-                  ></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)" [class.selected]="selectedRow === row"></tr>
                 </table>
               </div>
               <mat-paginator
@@ -194,7 +189,7 @@
                       mat-row
                       *matRowDef="let row; columns: displayedLogColumns"
                       (click)="onWfTrackingSelectRow(row)"
-                      [ngClass]="{ 'selected-row': selectedRow == row }"
+                      [class.selected]="selectedRow1 === row"
                     ></tr>
                   </table>
                 </div>

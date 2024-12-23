@@ -1,35 +1,3 @@
-// .material-datatables {
-//   display: block; /* บังคับให้เป็นบล็อกเพื่อจัด overflow */
-//   overflow-x: auto; /* เพิ่ม scrollbar แนวนอนเมื่อเนื้อหาเกิน */
-//   max-width: 100%; /* ป้องกันไม่ให้ล้นหน้าจอ */
-//   white-space: nowrap;
-// }
-
-// table {
-//   width: auto; /* ให้ตารางเต็มคอนเทนเนอร์ */
-// }
-
-// .mat-column-assignmentId {
-//   width: 10% !important;
-// }
-// .mat-column-userName {
-//   width: 20% !important;
-// }
-// .mat-column-backupUserName {
-//   width: 30% !important;
-// }
-// .mat-column-status {
-//   width: 20% !important;
-// }
-// .mat-column-priority {
-//   width: 30% !important;
-// }
-// .mat-column-duedate {
-//   width: 20% !important;
-// }
-// .mat-column-sequence {
-//   width: 20% !important;
-// }
-// .mat-column-action {
-//   width: 30% !important;
-// }
+tr.selected {
+  background-color: #add8e6; /* เปลี่ยนเป็นสีที่ต้องการ */
+}

@@ -27,6 +27,7 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   toggleOpenAddSection: boolean = true;
   selectedTaskId: any = null;
   systemList: any[] = [];
+  selectedRow: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -174,6 +175,11 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
         this.systemList = res.data;
       }
     });
+  }
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.onSelectedRowEdit(row);
   }
 
 

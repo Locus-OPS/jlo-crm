@@ -23,7 +23,7 @@ export class WorkflowSystemComponent extends BaseComponent implements OnInit {
   dataSource: any[];
   displayedColumns: string[] = ['systemId', 'systemName', 'description', 'status', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
-
+  selectedRow: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -62,5 +62,10 @@ export class WorkflowSystemComponent extends BaseComponent implements OnInit {
 
   gotoWorkflowSystemDetail(element: any) {
     this.router.navigate(["/workflow/system-detail", { systemId: element.systemId }]);
+  }
+
+
+  onRowClick(row) {
+    this.selectedRow = row;
   }
 }

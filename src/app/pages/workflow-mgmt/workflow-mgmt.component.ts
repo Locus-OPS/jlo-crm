@@ -24,6 +24,7 @@ export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
   dataSource: WorkflowModel[];
   displayedColumns: string[] = ['workflowId', 'workflowName', 'description', 'status', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
+  selectedRow: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -69,5 +70,8 @@ export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
   }
 
 
+  onRowClick(row) {
+    this.selectedRow = row;
+  }
 
 }

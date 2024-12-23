@@ -28,6 +28,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   createform: FormGroup;
   wfId: any;
   systemList: any[] = [];
+  selectedRow: any;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -150,6 +151,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   onToggleOpenAddSection() {
     this.initForm();
     this.toggleOpenAddSection = !this.toggleOpenAddSection;
+    this.selectedRow = null;
   }
 
   onSelectedRowEdit(element: any) {
@@ -184,6 +186,11 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
         this.systemList = res.data;
       }
     });
+  }
+
+  onRowClick(row) {
+    this.selectedRow = row;
+    this.onSelectedRowEdit(row);
   }
 
 }
