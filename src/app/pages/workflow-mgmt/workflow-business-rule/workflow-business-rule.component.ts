@@ -53,7 +53,7 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
       conditionValue2: [""],
       priority: ["1", Validators.required],
       status: ["Active"],
-      // systemId: ["", Validators.required]
+      financeFlg: [true]
     });
   }
 
