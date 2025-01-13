@@ -202,6 +202,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/workflow-mgmt/workflow-preview/workflow-preview.component').then(m => m.WorkflowPreviewComponent)
       },
+      {
+        path: 'chat',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
+      },
 
     ]
   }, {
