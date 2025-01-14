@@ -8,7 +8,27 @@
             <input type="text" placeholder="Search..." />
           </div>
         </div>
-        <div class="discussion message-active">
+
+        <div class="discussion-container" (scroll)="onScroll($event)">
+          <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
+            <div
+              class="photo"
+              [ngStyle]="{
+                'background-image':
+                  'url(' + (user.pictureUrl == null ? './assets/img/profile_image_not_found.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
+              }"
+            >
+              <div *ngIf="user.isOnline" class="online"></div>
+            </div>
+            <div class="desc-contact">
+              <p class="name">{{ user.firstName + ' ' + user.lastName }}</p>
+              <p class="message">{{ user.message }}</p>
+            </div>
+            <div class="timer">{{ user.time }}</div>
+          </div>
+        </div>
+
+        <!-- <div class="discussion message-active">
           <div
             class="photo"
             style="
@@ -102,12 +122,12 @@
             <p class="message">You can't see me</p>
           </div>
           <div class="timer">1 week</div>
-        </div>
+        </div> -->
       </section>
       <section class="chat">
         <div class="header-chat">
           <i class="icon fa fa-user-o" aria-hidden="true"></i>
-          <p class="name">Megan Leib</p>
+          <p class="name">{{ this.user == null ? '' : this.user.firstName + ' ' + this.user.lastName }}</p>
           <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
         </div>
         <div class="messages-chat">
