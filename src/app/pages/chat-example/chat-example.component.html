@@ -1,0 +1,35 @@
+<div class="chat-container">
+    <div class="connection">
+        <input type="text" placeholder="Enter your username" [(ngModel)]="username" />
+        <button (click)="connect()">Connect</button>
+    </div>
+
+    <div class="room-selection">
+        <input type="text" placeholder="Enter room name" [(ngModel)]="room" />
+        <button (click)="joinRoom()">Join Room</button>
+    </div>
+
+    <div class="message-input">
+        <input type="text" placeholder="Enter your message" [(ngModel)]="newMessage" />
+        <button mat-raised-button type="button" (click)="sendMessage();" class="btn btn-fill btn-primary">
+            Send to Room
+        </button>
+    </div>
+
+
+
+    <div class="private-message">
+        <input type="text" placeholder="Recipient Username" [(ngModel)]="recipient" />
+        <input type="text" placeholder="Enter private message" [(ngModel)]="newMessage" />
+        <button (click)="sendPrivateMessage()">Send Private</button>
+    </div>
+
+    <div class="messages">
+        <h3>Messages</h3>
+        <div *ngFor="let message of messages" class="message">
+            {{ message }}
+        </div>
+    </div>
+
+    <button (click)="disconnect()">Disconnect</button>
+</div>

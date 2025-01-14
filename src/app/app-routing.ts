@@ -206,6 +206,10 @@ const routes: Routes = [
         path: 'chat',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
+      }, {
+        path: 'chat-example',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/chat-example/chat-example.component').then(m => m.ChatExampleComponent)
       },
 
     ]
