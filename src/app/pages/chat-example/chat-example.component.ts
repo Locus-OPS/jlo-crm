@@ -50,6 +50,8 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
     }
   }
 
+
+
   joinRoom(): void {
     if (this.room.trim()) {
       this.chatService.sendMessage(`/join ${this.room}`);

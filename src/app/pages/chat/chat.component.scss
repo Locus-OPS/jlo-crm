@@ -176,7 +176,8 @@ body {
 }
 
 .chat {
-  width: calc(65% - 85px);
+  // width: calc(65% - 85px);
+  width: calc(65% - 15px);
 }
 
 .header-chat {
@@ -208,6 +209,7 @@ body {
 
 .chat .messages-chat {
   padding: 25px 35px;
+  height: 520px;
 }
 
 .chat .messages-chat .message {
