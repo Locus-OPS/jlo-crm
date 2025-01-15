@@ -57,7 +57,7 @@ body {
   height: 700px;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  background-color: #87a3ec;
+  // background-color: #87a3ec;
   display: inline-block;
 }
 
@@ -329,4 +329,10 @@ body {
 
 .clickable {
   cursor: pointer;
+}
+
+.discussion-container {
+  max-height: 700px; /* กำหนดความสูงคงที่ */
+  overflow-y: auto; /* เปิดใช้งาน scroll bar ในแนวตั้ง */
+  padding-right: 0px; /* เพิ่มพื้นที่สำหรับ scroll bar */
 }
