@@ -1,34 +1,37 @@
 <div class="chat-container">
     <div class="connection">
         <input type="text" placeholder="Enter your username" [(ngModel)]="username" />
-        <button mat-raised-button type="button" (click)="connect();" class="btn btn-fill btn-rose">
+        <button mat-raised-button type="button" (click)="connect()" class="btn btn-fill btn-rose">
             Connect
         </button>
     </div>
 
     <div class="room-selection">
         <input type="text" placeholder="Enter room name" [(ngModel)]="room" />
-
-        <button mat-raised-button type="button" (click)="joinRoom();" class="btn btn-fill btn-primary">
+        <button mat-raised-button type="button" (click)="joinRoom()" class="btn btn-fill btn-primary">
             Join Room
         </button>
     </div>
 
     <div class="message-input">
         <input type="text" placeholder="Enter your message" [(ngModel)]="newMessage" />
-        <button mat-raised-button type="button" (click)="sendMessage();" class="btn btn-fill btn-primary">
+        <button mat-raised-button type="button" (click)="sendMessage()" class="btn btn-fill btn-primary">
             Send to Room
         </button>
     </div>
 
-
-
     <div class="private-message">
         <input type="text" placeholder="Recipient Username" [(ngModel)]="recipient" />
-        <input type="text" placeholder="Enter private message" [(ngModel)]="newMessage" />
-
-        <button mat-raised-button type="button" (click)="sendPrivateMessage();" class="btn btn-fill btn-rose">
+        <input type="text" placeholder="Enter private message" [(ngModel)]="privateMessage" />
+        <button mat-raised-button type="button" (click)="sendPrivateMessage()" class="btn btn-fill btn-rose">
             Send Private
+        </button>
+    </div>
+
+    <div class="broadcast-message">
+        <input type="text" placeholder="Enter broadcast message" [(ngModel)]="broadcastMessage" />
+        <button mat-raised-button type="button" (click)="sendBroadcastMessage()" class="btn btn-fill btn-warning">
+            Broadcast to All
         </button>
     </div>
 
@@ -39,8 +42,7 @@
         </div>
     </div>
 
-
-    <button mat-raised-button type="button" (click)="disconnect();" class="btn btn-fill btn-danger">
+    <button mat-raised-button type="button" (click)="disconnect()" class="btn btn-fill btn-danger">
         Disconnect
     </button>
 </div>

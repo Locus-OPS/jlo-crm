@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
   standalone: true,
   imports: [SharedModule],
   templateUrl: './chat-example.component.html',
-  styleUrl: './chat-example.component.scss'
+  styleUrls: ['./chat-example.component.scss']
 })
 export class ChatExampleComponent extends BaseComponent implements OnInit, OnDestroy {
   username: string = '';
@@ -21,6 +21,8 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
   messages: string[] = [];
   newMessage: string = '';
   recipient: string = ''; // สำหรับการแชท 1:1
+  privateMessage: string = ''; // เพิ่ม privateMessage สำหรับการแชทส่วนตัว
+  broadcastMessage: string = ''; // สำหรับการ broadcast
   private subscription: Subscription | null = null;
 
   constructor(
@@ -39,8 +41,6 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
       this.messages.push(message);
     });
   }
-
-
 
   connect(): void {
     if (this.username.trim()) {
@@ -69,6 +69,15 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
       this.newMessage = '';
     } else {
       alert('Please provide a recipient and a message.');
+    }
+  }
+
+  sendBroadcastMessage(): void {
+    if (this.broadcastMessage.trim()) {
+      this.chatService.sendMessage(`/broadcast ${this.broadcastMessage}`);
+      this.broadcastMessage = '';
+    } else {
+      alert('Please enter a broadcast message.');
     }
   }
 
