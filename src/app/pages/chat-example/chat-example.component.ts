@@ -17,6 +17,7 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 })
 export class ChatExampleComponent extends BaseComponent implements OnInit, OnDestroy {
   username: string = '';
+  userId: number = this.globals.profile.id;
   room: string = 'general';
   messages: string[] = [];
   newMessage: string = '';
