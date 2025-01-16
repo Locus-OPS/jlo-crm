@@ -36,20 +36,20 @@
             </div>
           </div>
           <div *ngIf="activeTab === 'Group'">
-            <div *ngFor="let group of groups" class="discussion" (click)="onSelectGroup(group)">
+            <div *ngFor="let chatGroup of chatGroups" class="discussion" (click)="onSelectGroup(chatGroup)">
               <div
                 class="photo"
                 [ngStyle]="{
                   'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
                 }"
               >
-                <div *ngIf="group.isOnline" class="online"></div>
+                <div *ngIf="chatGroup.isOnline" class="online"></div>
               </div>
               <div class="desc-contact">
-                <p class="name">{{ group.roomName }}</p>
-                <p class="message">{{ group.message }}</p>
+                <p class="name">{{ chatGroup.roomName }}</p>
+                <p class="message">{{ chatGroup.message }}</p>
               </div>
-              <div class="timer">{{ group.time }}</div>
+              <div class="timer">{{ chatGroup.time }}</div>
             </div>
           </div>
         </div>
@@ -57,43 +57,86 @@
 
       <section class="chat">
         <div class="header-chat">
-          <i class="icon fa fa-user-o" aria-hidden="true"></i>
-          <p class="name">{{ this.user == null ? '' : this.user.userChatName }}</p>
+          <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers'"></i>
+          <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group'"></i>
+          <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}</p>
+          <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
           <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
         </div>
-        <div class="messages-chat">
-          <div *ngIf="user != null">
-            <div *ngFor="let message of messages">
-              <div class="message text-only" *ngIf="isUserMatch(message)">
-                <div class="response">
+
+        <div *ngIf="activeTab === 'AllUsers'">
+          <div class="messages-chat">
+            <div *ngIf="user != null">
+              <div *ngFor="let message of messages">
+                <div class="message text-only" *ngIf="isUserMatch(message)">
+                  <div class="response">
+                    <p class="text">{{ parseMessage(message).message }}</p>
+                  </div>
+                </div>
+                <div class="message" *ngIf="!isUserMatch(message)">
+                  <div
+                    class="photo"
+                    [ngStyle]="{
+                      'background-image':
+                        'url(' +
+                        (user.pictureUrl == null ? './assets/img/profile_image_not_found.png' : api.getProfileImagePath(user.pictureUrl)) +
+                        ')'
+                    }"
+                  >
+                    <div class="online"></div>
+                  </div>
                   <p class="text">{{ parseMessage(message).message }}</p>
                 </div>
               </div>
-              <div class="message" *ngIf="!isUserMatch(message)">
-                <div
-                  class="photo"
-                  [ngStyle]="{
-                    'background-image':
-                      'url(' + (user.pictureUrl == null ? './assets/img/profile_image_not_found.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
-                  }"
-                >
-                  <div class="online"></div>
+            </div>
+          </div>
+          <div class="footer-chat" *ngIf="user != null">
+            <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
+            <input
+              type="text"
+              class="write-message"
+              placeholder="Type your message here"
+              [(ngModel)]="newMessage"
+              (keydown.enter)="sendPrivateMessage()"
+            />
+            <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendPrivateMessage()"></i>
+          </div>
+        </div>
+
+        <div *ngIf="activeTab === 'Group'">
+          <div class="messages-chat">
+            <div *ngIf="chatGroup != null">
+              <div *ngFor="let message of messages">
+                <div class="message text-only" *ngIf="isUserMatchChatRoom(message)">
+                  <div class="response">
+                    <p class="text">{{ parseMessageChatGroup(message).message }}</p>
+                  </div>
                 </div>
-                <p class="text">{{ parseMessage(message).message }}</p>
+                <div class="message" *ngIf="!isUserMatchChatRoom(message)">
+                  <div
+                    class="photo"
+                    [ngStyle]="{
+                      'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
+                    }"
+                  >
+                    <div class="online"></div>
+                  </div>
+                  <p class="text">{{ parseMessageChatGroup(message).message }}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="footer-chat" *ngIf="user != null">
-          <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
-          <input
-            type="text"
-            class="write-message"
-            placeholder="Type your message here"
-            [(ngModel)]="newMessage"
-            (keydown.enter)="sendPrivateMessage()"
-          />
-          <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendPrivateMessage()"></i>
+          <div class="footer-chat" *ngIf="chatGroup != null">
+            <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
+            <input
+              type="text"
+              class="write-message"
+              placeholder="Type your message here"
+              [(ngModel)]="newMessage"
+              (keydown.enter)="sendMessagetoChatRoom()"
+            />
+            <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendMessagetoChatRoom()"></i>
+          </div>
         </div>
       </section>
     </div>

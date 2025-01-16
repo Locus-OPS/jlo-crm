@@ -18,9 +18,9 @@ import { Subscription } from 'rxjs';
 export class ChatComponent extends BaseComponent implements OnInit {
 
   users: any[] = [];
-  groups: any[] = [];
+  chatGroups: any[] = [];
   user: any;
-  group: any;
+  chatGroup: any;
   searchForm: FormGroup;
 
   username: string = '';
@@ -63,13 +63,15 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   joinRoom(): void {
-    if (this.room.trim()) {
+    if (this.room.toString().trim()) {
       this.chatService.sendMessage(`/join ${this.room}`);
     }
   }
 
-  sendMessage(): void {
+  sendMessagetoChatRoom(): void {
     if (this.newMessage.trim()) {
+      let msg = '[From ' + this.globals.profile.id + ']: ' + this.newMessage;
+      this.messages.push(msg);
       this.chatService.sendMessage(this.newMessage);
       this.newMessage = '';
     }
@@ -105,19 +107,17 @@ export class ChatComponent extends BaseComponent implements OnInit {
         this.users = res.data;
         console.log(res.data);
       }
-      console.log("Error");
     });
   }
 
   getChatGroupList() {
     this.users = [];
-    this.groups = [];
+    this.chatGroups = [];
     this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
-        this.groups = res.data;
+        this.chatGroups = res.data;
         console.log(res.data);
       }
-      console.log("Error");
     });
   }
 
@@ -133,13 +133,36 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.loadChatHistory();
   }
 
+  onSelectGroup(group: any) {
+    this.messages = [];
+    this.chatGroup = group;
+    this.room = group.roomId;
+    this.loadChatGroupHistory();
+    this.joinRoom();
+  }
+
   onScroll(event: any): void {
     console.log(event.target);
   }
 
   parseMessage(input) {
     console.log(input);
+    if (input == null) return;
     const regex = /^\[Private from ([^:]+)\]:\s(.+)$/;
+    const match = input.match(regex);
+    console.log(match);
+    if (match) {
+      const user = match[1];
+      const message = match[2];
+      return { user, message };
+    } else {
+      throw new Error("Invalid format");
+    }
+  }
+
+  parseMessageChatGroup(input) {
+    console.log(input);
+    const regex = /^\[From ([^:]+)\]:\s(.+)$/;
     const match = input.match(regex);
     console.log(match);
     if (match) {
@@ -154,6 +177,14 @@ export class ChatComponent extends BaseComponent implements OnInit {
   isUserMatch(message: any): boolean {
     const parsedUser = this.parseMessage(message).user;
     const profileUserId = '' + this.globals.profile.id.toString();
+    return parsedUser === profileUserId;
+  }
+
+  isUserMatchChatRoom(message: any): boolean {
+    if (message == null) return;
+    const parsedUser = this.parseMessageChatGroup(message).user.toString();
+    const profileUserId = '' + this.globals.profile.id.toString();
+    console.log(parsedUser + "=>" + profileUserId + " " + (parsedUser === profileUserId));
     return parsedUser === profileUserId;
   }
 
@@ -180,6 +211,20 @@ export class ChatComponent extends BaseComponent implements OnInit {
     }
   }
 
+  loadChatGroupHistory() {
+    this.chatService.getPublicChatMessages({ data: { roomId: this.chatGroup.roomId }, pageNo: 0, pageSize: 50 }).then((res) => {
+      if (res.status) {
+        let chatMsg = res.data.reverse();
+        for (let i = 0; i < chatMsg.length; i++) {
+          let msg = chatMsg[i].messageText;
+          let sender = chatMsg[i].senderId;
+          msg = '[From ' + sender + ']: ' + msg;
+          this.messages.push(msg);
+        }
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
     this.chatService.disconnect();
@@ -188,6 +233,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   setActiveTab(tabName: string): void {
     this.user = null;
+    this.chatGroup = null;
     this.activeTab = tabName; // ตั้งค่าแท็บที่ถูกเลือก
     console.log('Active Tab:', this.activeTab);
     if (tabName === 'AllUsers') {

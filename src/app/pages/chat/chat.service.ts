@@ -68,4 +68,9 @@ export class ChatService {
     return this.api.call('/api/chatweb/getprivatechatmessage', params);
   }
 
+  getPublicChatMessages(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/chatweb/getpublicchatmessage', params);
+  }
+
+
 }
