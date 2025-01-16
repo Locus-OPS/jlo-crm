@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ChatService {
   private rootPath = environment.endpoint;
+  private rootPathWebSocket = environment.endpointWebsocket;
   private webSocket: WebSocket | null = null;
   private messages: Subject<string> = new Subject<string>();
   constructor(private http: HttpClient, private api: ApiService) { }
@@ -22,8 +23,8 @@ export class ChatService {
       console.warn('WebSocket is already connected.');
       return;
     }
-
-    this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
+    this.webSocket = new WebSocket(`${this.rootPathWebSocket}?username=${username}`);
+    // this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
 
     this.webSocket.onmessage = (event: MessageEvent) => {
       console.log('WebSocket message:', event.data);
@@ -57,6 +58,14 @@ export class ChatService {
 
   getUserList(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/chatweb/getusers', params);
+  }
+
+  getChatRoomList(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/chatweb/getchatroomlist', params);
+  }
+
+  getPrivateChatMessages(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/chatweb/getprivatechatmessage', params);
   }
 
 }

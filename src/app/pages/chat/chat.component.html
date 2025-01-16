@@ -11,24 +11,50 @@
           </div>
         </form>
         <div class="discussion-container">
-          <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
-            <div
-              class="photo"
-              [ngStyle]="{
-                'background-image':
-                  'url(' + (user.pictureUrl == null ? './assets/img/profile_image_not_found.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
-              }"
-            >
-              <div *ngIf="user.isOnline" class="online"></div>
+          <div class="tabs">
+            <span class="tab" [class.active]="activeTab === 'Chat'" (click)="setActiveTab('Chat')"> Chats </span>
+            <span class="tab" [class.active]="activeTab === 'AllUsers'" (click)="setActiveTab('AllUsers')"> All Users </span>
+            <span class="tab" [class.active]="activeTab === 'Group'" (click)="setActiveTab('Group')"> Groups </span>
+          </div>
+
+          <div *ngIf="activeTab === 'AllUsers'">
+            <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
+              <div
+                class="photo"
+                [ngStyle]="{
+                  'background-image':
+                    'url(' + (user.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
+                }"
+              >
+                <div *ngIf="user.isOnline" class="online"></div>
+              </div>
+              <div class="desc-contact">
+                <p class="name">{{ user.userChatName }}</p>
+                <p class="message">{{ user.message }}</p>
+              </div>
+              <div class="timer">{{ user.time }}</div>
             </div>
-            <div class="desc-contact">
-              <p class="name">{{ user.userChatName }}</p>
-              <p class="message">{{ user.message }}</p>
+          </div>
+          <div *ngIf="activeTab === 'Group'">
+            <div *ngFor="let group of groups" class="discussion" (click)="onSelectGroup(group)">
+              <div
+                class="photo"
+                [ngStyle]="{
+                  'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
+                }"
+              >
+                <div *ngIf="group.isOnline" class="online"></div>
+              </div>
+              <div class="desc-contact">
+                <p class="name">{{ group.roomName }}</p>
+                <p class="message">{{ group.message }}</p>
+              </div>
+              <div class="timer">{{ group.time }}</div>
             </div>
-            <div class="timer">{{ user.time }}</div>
           </div>
         </div>
       </section>
+
       <section class="chat">
         <div class="header-chat">
           <i class="icon fa fa-user-o" aria-hidden="true"></i>
@@ -58,9 +84,15 @@
             </div>
           </div>
         </div>
-        <div class="footer-chat">
+        <div class="footer-chat" *ngIf="user != null">
           <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
-          <input type="text" class="write-message" placeholder="Type your message here" [(ngModel)]="newMessage" />
+          <input
+            type="text"
+            class="write-message"
+            placeholder="Type your message here"
+            [(ngModel)]="newMessage"
+            (keydown.enter)="sendPrivateMessage()"
+          />
           <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendPrivateMessage()"></i>
         </div>
       </section>

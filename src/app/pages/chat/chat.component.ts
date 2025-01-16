@@ -18,7 +18,9 @@ import { Subscription } from 'rxjs';
 export class ChatComponent extends BaseComponent implements OnInit {
 
   users: any[] = [];
+  groups: any[] = [];
   user: any;
+  group: any;
   searchForm: FormGroup;
 
   username: string = '';
@@ -27,6 +29,9 @@ export class ChatComponent extends BaseComponent implements OnInit {
   newMessage: string = '';
   recipient: string = ''; // สำหรับการแชท 1:1
   private subscription: Subscription | null = null;
+
+  //Tab สำหรับการ Chat
+  activeTab: string = 'AllUsers'; // ค่าเริ่มต้นของแท็บที่ active
 
   constructor(
     public api: ApiService,
@@ -49,15 +54,12 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   connect(): void {
-    const userId = this.globals.profile.userId;
+    const userId = this.globals.profile.id.toString();
     if (userId.trim()) {
-      // alert(userId);
       this.chatService.connect(userId);
     } else {
       alert('Please enter your username!');
     }
-
-    console.log("connected");
   }
 
   joinRoom(): void {
@@ -75,7 +77,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   sendPrivateMessage(): void {
     if (this.recipient.trim() && this.newMessage.trim()) {
-      let msg = '[Private from ' + this.globals.profile.userId + ']: ' + this.newMessage;
+      let msg = '[Private from ' + this.globals.profile.id + ']: ' + this.newMessage;
       this.messages.push(msg);
       console.log(msg);
       this.chatService.sendMessage(`/private ${this.recipient} ${this.newMessage}`);
@@ -107,10 +109,28 @@ export class ChatComponent extends BaseComponent implements OnInit {
     });
   }
 
+  getChatGroupList() {
+    this.users = [];
+    this.groups = [];
+    this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
+      if (res.status) {
+        this.groups = res.data;
+        console.log(res.data);
+      }
+      console.log("Error");
+    });
+  }
+
+  getChatMessageList() {
+
+  }
+
   onSelectUser(user: any) {
+    // alert(JSON.stringify(user));
     this.messages = [];
     this.user = user;
-    this.recipient = user.userId;
+    this.recipient = user.id.toString();
+    this.loadChatHistory();
   }
 
   onScroll(event: any): void {
@@ -133,13 +153,50 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   isUserMatch(message: any): boolean {
     const parsedUser = this.parseMessage(message).user;
-    const profileUserId = '' + this.globals.profile.userId;
+    const profileUserId = '' + this.globals.profile.id.toString();
     return parsedUser === profileUserId;
+  }
+
+  loadChatHistory() {
+    if (this.user != null) {
+      this.chatService.getPrivateChatMessages({ data: { senderId: this.globals.profile.id, targetId: this.user.id }, pageNo: 0, pageSize: 50 }).then((res) => {
+        if (res.status) {
+          let chatMsg = res.data.reverse();
+          for (let i = 0; i < chatMsg.length; i++) {
+            let msg = chatMsg[i].messageText;
+            let sender = chatMsg[i].senderId;
+            if (sender == this.globals.profile.id) {
+              msg = '[Private from ' + this.globals.profile.id + ']: ' + msg;
+            } else {
+              msg = '[Private from ' + this.user.targetId + ']: ' + msg;
+            }
+            this.messages.push(msg);
+          }
+
+          console.log(res.data);
+        }
+        console.log("Error");
+      });
+    }
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
     this.chatService.disconnect();
+  }
+
+
+  setActiveTab(tabName: string): void {
+    this.user = null;
+    this.activeTab = tabName; // ตั้งค่าแท็บที่ถูกเลือก
+    console.log('Active Tab:', this.activeTab);
+    if (tabName === 'AllUsers') {
+      this.getUserList();
+    } else if (tabName === 'Chat') {
+      //this.getChatGroupList();
+    } else if (tabName === 'Group') {
+      this.getChatGroupList();
+    }
   }
 
 }
