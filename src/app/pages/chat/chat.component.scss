@@ -57,8 +57,9 @@ body {
   height: 700px;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  // background-color: #87a3ec;
+  background-color: #fafafa;
   display: inline-block;
+  position: relative;
 }
 
 .discussions .discussion {
@@ -151,7 +152,7 @@ body {
   // height: 50px;
   // width: 50%;
   height: 50px;
-  width: 60%;
+  width: 70%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -174,7 +175,7 @@ body {
 .timer {
   margin-left: 15%;
   font-family: 'Open Sans', sans-serif;
-  font-size: 11px;
+  font-size: 8px;
   padding: 3px 8px;
   color: #bbb;
   background-color: #fff;
@@ -345,6 +346,7 @@ body {
   max-height: 700px; /* กำหนดความสูงคงที่ */
   overflow-y: auto; /* เปิดใช้งาน scroll bar ในแนวตั้ง */
   padding-right: 0px; /* เพิ่มพื้นที่สำหรับ scroll bar */
+  position: relative;
 }
 
 /* จัดการโครงสร้างพื้นฐานของแท็บ */
@@ -381,4 +383,105 @@ body {
 
 .tab:hover {
   background-color: #d9d9d9;
+}
+
+/* จัดการตำแหน่งของคอนเทนเนอร์ */
+.add-group-container {
+  display: flex;
+  justify-content: flex-end; /* จัดให้อยู่ชิดซ้าย */
+  align-items: center;
+  padding: 10px;
+}
+
+/* ปุ่ม Add Group */
+.add-group-btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #4caf50; /* สีเขียว */
+  border: none;
+  border-radius: 8px; /* มุมโค้ง */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* ไอคอนและข้อความภายในปุ่ม */
+.add-group-btn i {
+  margin-right: 8px; /* ระยะห่างระหว่างไอคอนและข้อความ */
+  font-size: 16px;
+}
+
+/* สไตล์เมื่อโฮเวอร์ */
+.add-group-btn:hover {
+  background-color: #45a049; /* เขียวเข้มขึ้น */
+  transform: translateY(-2px); /* ยกปุ่มขึ้นเล็กน้อย */
+}
+
+/* สไตล์เมื่อคลิก */
+.add-group-btn:active {
+  background-color: #3e8e41;
+  transform: translateY(0); /* กลับมาอยู่ระดับเดิม */
+}
+
+/* สไตล์สำหรับการเข้าถึง */
+.add-group-btn:focus {
+  outline: 2px solid #4caf50;
+  outline-offset: 2px;
+}
+
+/* ส่วนสำหรับ section */
+.content-section {
+  position: relative; /* ทำให้ section เป็นจุดอ้างอิงตำแหน่ง */
+  padding: 20px;
+  min-height: 300px; /* กำหนดความสูงขั้นต่ำสำหรับตัวอย่าง */
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+/* ปุ่ม Floating */
+.floating-btn {
+  position: absolute; /* ใช้ position สำหรับการยึดตำแหน่ง */
+  bottom: 20px; /* ระยะห่างจากด้านล่าง */
+  right: 20px; /* ระยะห่างจากด้านขวา */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #4caf50; /* สีเขียว */
+  border: none;
+  border-radius: 50px; /* ทรงรี */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* ไอคอนในปุ่ม */
+.floating-btn i {
+  margin-right: 8px; /* ระยะห่างระหว่างไอคอนและข้อความ */
+  font-size: 16px;
+}
+
+/* เอฟเฟกต์เมื่อโฮเวอร์ */
+.floating-btn:hover {
+  background-color: #45a049; /* สีเขียวเข้มขึ้น */
+  transform: translateY(-3px); /* เลื่อนขึ้นเล็กน้อย */
+}
+
+/* เอฟเฟกต์เมื่อคลิก */
+.floating-btn:active {
+  background-color: #3e8e41;
+  transform: translateY(0); /* กลับมาตำแหน่งเดิม */
+}
+
+/* สำหรับการเข้าถึง (Accessibility) */
+.floating-btn:focus {
+  outline: 2px solid #4caf50;
+  outline-offset: 2px;
 }

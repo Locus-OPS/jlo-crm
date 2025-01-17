@@ -72,5 +72,9 @@ export class ChatService {
     return this.api.call('/api/chatweb/getpublicchatmessage', params);
   }
 
+  getChatList(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/chatweb/getchatlist', params);
+  }
+
 
 }
