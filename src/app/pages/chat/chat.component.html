@@ -17,6 +17,25 @@
             <span class="tab" [class.active]="activeTab === 'Group'" (click)="setActiveTab('Group')"> Groups </span>
           </div>
 
+          <div *ngIf="activeTab === 'Chat'">
+            <div *ngFor="let chat of chatList" class="discussion" (click)="onSelectChat(chat)">
+              <div
+                class="photo"
+                [ngStyle]="{
+                  'background-image':
+                    'url(' + (chat.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
+                }"
+              >
+                <div *ngIf="chat.isOnline" class="online"></div>
+              </div>
+              <div class="desc-contact">
+                <p class="name">{{ chat.chatName }}</p>
+                <p class="message">{{ chat.messageText }}</p>
+              </div>
+              <!-- <div class="timer">{{ chat.createdAt | date : 'HH:mm' }}</div> -->
+            </div>
+          </div>
+
           <div *ngIf="activeTab === 'AllUsers'">
             <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
               <div
@@ -32,7 +51,7 @@
                 <p class="name">{{ user.userChatName }}</p>
                 <p class="message">{{ user.message }}</p>
               </div>
-              <div class="timer">{{ user.time }}</div>
+              <!-- <div class="timer">{{ user.time }}</div> -->
             </div>
           </div>
           <div *ngIf="activeTab === 'Group'">
@@ -49,22 +68,24 @@
                 <p class="name">{{ chatGroup.roomName }}</p>
                 <p class="message">{{ chatGroup.message }}</p>
               </div>
-              <div class="timer">{{ chatGroup.time }}</div>
+              <!-- <div class="timer">{{ chatGroup.time }}</div> -->
             </div>
           </div>
         </div>
+        <button class="floating-btn" *ngIf="activeTab === 'Group'"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
       </section>
 
       <section class="chat">
         <div class="header-chat">
-          <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers'"></i>
+          <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers' || messagetype === 'private'"></i>
           <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group'"></i>
           <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}</p>
+          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
           <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
           <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
         </div>
 
-        <div *ngIf="activeTab === 'AllUsers'">
+        <div *ngIf="activeTab === 'AllUsers' || messagetype === 'private'">
           <div class="messages-chat">
             <div *ngIf="user != null">
               <div *ngFor="let message of messages">

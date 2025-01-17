@@ -17,11 +17,13 @@ import { Subscription } from 'rxjs';
 })
 export class ChatComponent extends BaseComponent implements OnInit {
 
+  chatList: any[] = [];
   users: any[] = [];
   chatGroups: any[] = [];
   user: any;
   chatGroup: any;
   searchForm: FormGroup;
+  messagetype: string = '';
 
   username: string = '';
   room: string = 'general';
@@ -100,6 +102,14 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.chatService.disconnect();
   }
 
+  getChatList() {
+    this.chatService.getChatList({ data: { chatName: this.searchForm.get('userChatName').value }, pageNo: 0, pageSize: 100000 }).then((res) => {
+      if (res.status) {
+        this.chatList = res.data;
+      }
+    });
+  }
+
   getUserList() {
     const param = this.searchForm.getRawValue();
     this.chatService.getUserList({ data: param, pageNo: 0, pageSize: 100000 }).then((res) => {
@@ -127,6 +137,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   onSelectUser(user: any) {
     // alert(JSON.stringify(user));
+    this.messagetype = 'private';
     this.messages = [];
     this.user = user;
     this.recipient = user.id.toString();
@@ -135,6 +146,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   onSelectGroup(group: any) {
     this.messages = [];
+    this.messagetype = 'public';
     this.chatGroup = group;
     this.room = group.roomId;
     this.loadChatGroupHistory();
@@ -237,11 +249,23 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.activeTab = tabName; // ตั้งค่าแท็บที่ถูกเลือก
     console.log('Active Tab:', this.activeTab);
     if (tabName === 'AllUsers') {
+      this.messagetype = 'private';
       this.getUserList();
     } else if (tabName === 'Chat') {
-      //this.getChatGroupList();
+      this.getChatList();
     } else if (tabName === 'Group') {
+      this.messagetype = 'public';
       this.getChatGroupList();
+    }
+  }
+
+  onSelectChat(chat: any) {
+    this.messages = [];
+    this.user = chat;
+    if (chat.messageType == 'private') {
+      this.messagetype = 'private';
+      this.recipient = chat.id.toString();
+      this.loadChatHistory();
     }
   }
 
