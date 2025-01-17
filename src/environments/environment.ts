@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   endpoint: 'http://localhost:8080/jlo-crm-backend',
   whitelistedDomains: ['localhost:8080'],
-  endpointWebsocket: 'ws://localhost:8080/jlo-crm-backend/chat',
+  endpointWebsocket: 'wss://localhost:8080/jlo-crm-backend/chat',
   // endpoint: 'http://192.168.10.177:8080/JLOXG',
   // whitelistedDomains: ['192.168.10.177:8080']
   // endpoint: 'https://jlo.locus.co.th/jlo-crm-backend',
