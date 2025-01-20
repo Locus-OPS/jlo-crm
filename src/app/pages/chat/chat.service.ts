@@ -26,9 +26,17 @@ export class ChatService {
     this.webSocket = new WebSocket(`${this.rootPathWebSocket}?username=${username}`);
     // this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
 
+    this.webSocket.onopen = () => {
+      console.log("WebSocket connection established");
+    };
+
     this.webSocket.onmessage = (event: MessageEvent) => {
       console.log('WebSocket message:', event.data);
       this.messages.next(event.data); // ส่งข้อความใหม่เข้าสู่ Subject
+    };
+
+    this.webSocket.onerror = (error) => {
+      console.error("WebSocket error:", error);
     };
 
     this.webSocket.onclose = () => {

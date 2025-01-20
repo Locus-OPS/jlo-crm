@@ -24,8 +24,8 @@ export class ChatExampleService {
       console.warn('WebSocket is already connected.');
       return;
     }
-
-    this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
+    this.webSocket = new WebSocket(`wss://jlo.locus.co.th/jlo-crm-backend/chat?username=${username}`);
+    //this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
 
     this.webSocket.onmessage = (event: MessageEvent) => {
       console.log('WebSocket message:', event.data);
@@ -36,6 +36,10 @@ export class ChatExampleService {
       console.log('WebSocket connection closed.');
       this.webSocket = null;
     };
+
+    this.webSocket.onerror = (event: Event) => {
+      console.log('WebSocket error:', event);
+    }
   }
 
   sendMessage(message: string): void {
