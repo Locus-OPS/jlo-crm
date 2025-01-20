@@ -7,6 +7,9 @@ import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ChatService } from './chat.service';
 import { Subscription } from 'rxjs';
+import { ChatGroupComponent } from './chat-group/chat-group.component';
+import { MatDialog } from '@angular/material/dialog';
+import { BroadcastComponent } from './broadcast/broadcast.component';
 
 @Component({
   selector: 'app-chat',
@@ -40,7 +43,8 @@ export class ChatComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router,
     public globals: Globals,
-    public chatService: ChatService
+    public chatService: ChatService,
+    public dialog: MatDialog,
   ) {
     super(router, globals);
     this.connect();
@@ -83,7 +87,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     if (this.recipient.trim() && this.newMessage.trim()) {
       let msg = '[Private from ' + this.globals.profile.id + ']: ' + this.newMessage;
       this.messages.push(msg);
-      console.log(msg);
+      //console.log(msg);
       this.chatService.sendMessage(`/private ${this.recipient} ${this.newMessage}`);
       this.newMessage = '';
 
@@ -115,7 +119,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.chatService.getUserList({ data: param, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.users = res.data;
-        console.log(res.data);
+        //console.log(res.data);
       }
     });
   }
@@ -126,7 +130,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.chatGroups = res.data;
-        console.log(res.data);
+        //console.log(res.data);
       }
     });
   }
@@ -154,11 +158,11 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   onScroll(event: any): void {
-    console.log(event.target);
+    //console.log(event.target);
   }
 
   parseMessage(input) {
-    console.log(input);
+    //.log(input);
     if (input == null) return;
     const regex = /^\[Private from ([^:]+)\]:\s(.+)$/;
     const match = input.match(regex);
@@ -173,10 +177,10 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   parseMessageChatGroup(input) {
-    console.log(input);
+    // console.log(input);
     const regex = /^\[From ([^:]+)\]:\s(.+)$/;
     const match = input.match(regex);
-    console.log(match);
+    // console.log(match);
     if (match) {
       const user = match[1];
       const message = match[2];
@@ -196,7 +200,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     if (message == null) return;
     const parsedUser = this.parseMessageChatGroup(message).user.toString();
     const profileUserId = '' + this.globals.profile.id.toString();
-    console.log(parsedUser + "=>" + profileUserId + " " + (parsedUser === profileUserId));
+    // console.log(parsedUser + "=>" + profileUserId + " " + (parsedUser === profileUserId));
     return parsedUser === profileUserId;
   }
 
@@ -216,7 +220,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
             this.messages.push(msg);
           }
 
-          console.log(res.data);
+          //console.log(res.data);
         }
         console.log("Error");
       });
@@ -247,7 +251,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.user = null;
     this.chatGroup = null;
     this.activeTab = tabName; // ตั้งค่าแท็บที่ถูกเลือก
-    console.log('Active Tab:', this.activeTab);
+    // console.log('Active Tab:', this.activeTab);
     if (tabName === 'AllUsers') {
       this.messagetype = 'private';
       this.getUserList();
@@ -267,6 +271,39 @@ export class ChatComponent extends BaseComponent implements OnInit {
       this.recipient = chat.id.toString();
       this.loadChatHistory();
     }
+  }
+
+  openChatGroupModal() {
+    const dialogRef = this.dialog.open(ChatGroupComponent, {
+      height: '50%',
+      width: '30%',
+      panelClass: 'my-dialog',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.custParam['customerId'] = result.customerId;
+        // this.getCustomerInfo(this.custParam);
+        // let customerId = result.customerId;
+        // //Binding Customer into Consulting
+        // this.selectCustomerConsulting(customerId);
+      }
+    });
+  }
+
+  openBroadCastModal() {
+    const dialogRef = this.dialog.open(BroadcastComponent, {
+      height: '50%',
+      width: '30%',
+      panelClass: 'my-dialog',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
   }
 
 }

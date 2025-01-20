@@ -1,0 +1,50 @@
+<button class="close" mat-button [mat-dialog-close]="true">X</button>
+<div mat-dialog-content class="flex-container">
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row chatgroup-container">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary card-header-icon">
+              <h4 class="card-title">{{ 'Create Group' | translate }}</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="createForm">
+                <div class="row">
+                  <mat-form-field class="col-md-12">
+                    <mat-label>{{ 'Group Name' | translate }}</mat-label>
+                    <input matInput formControlName="groupName" maxlength="300" />
+                    <mat-error *ngIf="createForm.get('groupName').hasError('required')">{{ 'Group Name is required' | translate }}</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div *ngFor="let user of users; let i = index" class="users">
+                      <div>
+                        <input type="checkbox" [formControlName]="i" />
+                        <label>
+                          {{ user.userChatName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row pull-right">
+            <div class="col-md-12">
+              <button mat-raised-button class="btn btn-fill btn-default" [mat-dialog-close]="true">
+                {{ 'close' | translate }}
+              </button>
+              <button mat-raised-button class="btn btn-fill btn-primary" (click)="createGroup()">
+                {{ 'Create' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

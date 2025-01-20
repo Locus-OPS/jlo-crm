@@ -72,7 +72,12 @@
             </div>
           </div>
         </div>
-        <button class="floating-btn" *ngIf="activeTab === 'Group'"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
+        <button class="floating-btn" *ngIf="activeTab === 'Group'" (click)="openChatGroupModal()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Add
+        </button>
+        <button class="floating-btn" *ngIf="activeTab === 'Chat'" (click)="openBroadCastModal()">
+          <i class="fa fa-plus" aria-hidden="true"></i> Broadcast
+        </button>
       </section>
 
       <section class="chat">

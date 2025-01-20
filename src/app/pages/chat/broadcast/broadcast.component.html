@@ -1,0 +1,68 @@
+<button class="close" mat-button [mat-dialog-close]="true">X</button>
+<div mat-dialog-content class="flex-container">
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row chatgroup-container">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-primary card-header-icon">
+              <h4 class="card-title">{{ 'Create Broadcast' | translate }}</h4>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="broadCastForm">
+                <div class="row">
+                  <mat-form-field class="col-md-12">
+                    <mat-label>{{ 'Message' | translate }}</mat-label>
+                    <textarea matInput placeholder="Message" formControlName="message" [rows]="5"></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-radio-group formControlName="messageType" (change)="onSelectionChange()" class="col-md-12">
+                    <mat-radio-button value="private">ส่งรายบุคคล</mat-radio-button>
+                    <mat-radio-button value="public">ส่งแบบกลุ่ม</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <br />
+                <div class="row" *ngIf="broadCastForm.get('messageType').value === 'private'">
+                  <div class="col-md-12">
+                    <div *ngFor="let user of users; let i = index" class="users">
+                      <div>
+                        <input type="checkbox" />
+                        <label>
+                          {{ user.userChatName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="broadCastForm.get('messageType').value === 'public'">
+                  <div class="col-md-12">
+                    <div *ngFor="let group of chatGroups; let i = index" class="users">
+                      <div>
+                        <input type="checkbox" />
+                        <label>
+                          {{ group.roomName }}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="row pull-right">
+            <div class="col-md-12">
+              <button mat-raised-button class="btn btn-fill btn-default" [mat-dialog-close]="true">
+                {{ 'close' | translate }}
+              </button>
+              <button mat-raised-button class="btn btn-fill btn-primary">
+                {{ 'Create' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

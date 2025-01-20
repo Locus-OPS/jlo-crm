@@ -1,0 +1,37 @@
+.chatgroup-container {
+  margin-top: -50px;
+}
+
+div.users {
+  display: flex;
+  align-items: center; /* จัดให้ checkbox และ text อยู่แนวเดียวกัน */
+  padding: 8px 0px; /* เพิ่มระยะห่างด้านใน */
+  border-bottom: 1px solid #ccc; /* เส้นกั้นระหว่างแต่ละรายการ */
+  // font-size: 11pt;
+  // color: #515151;
+}
+
+/* ทำให้เส้นสุดท้ายไม่แสดง */
+div.users:last-child {
+  border-bottom: none;
+}
+
+/* ปรับแต่ง text */
+div.users label {
+  flex-grow: 1;
+  margin-left: 10px; /* เพิ่มช่องว่างระหว่าง checkbox กับ label */
+  font-size: 16px;
+  color: #515151;
+}
+
+/* สไตล์เมื่อ hover รายการ */
+div.users:hover {
+  background-color: #f9f9f9; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
+}
+
+/* สไตล์ของ checkbox */
+div.users input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
