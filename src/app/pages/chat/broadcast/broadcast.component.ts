@@ -193,7 +193,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
   }
 
   async sendMessagePublic(groups) {
-    alert(JSON.stringify(groups));
+    // alert(JSON.stringify(groups));
     for (const group of groups) {
       // ใช้ group.roomId เพื่อดึงค่า roomId ของแต่ละ group
       await this.chatService.sendMessage(`/join ${group.roomId}`);
