@@ -130,7 +130,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.chatGroups = res.data;
-        //console.log(res.data);
       }
     });
   }
@@ -283,11 +282,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.custParam['customerId'] = result.customerId;
-        // this.getCustomerInfo(this.custParam);
-        // let customerId = result.customerId;
-        // //Binding Customer into Consulting
-        // this.selectCustomerConsulting(customerId);
+        this.getChatGroupList();
       }
     });
   }

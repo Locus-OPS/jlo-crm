@@ -13,19 +13,20 @@
                 <div class="row">
                   <mat-form-field class="col-md-12">
                     <mat-label>{{ 'Group Name' | translate }}</mat-label>
-                    <input matInput formControlName="groupName" maxlength="300" />
-                    <mat-error *ngIf="createForm.get('groupName').hasError('required')">{{ 'Group Name is required' | translate }}</mat-error>
+                    <input matInput formControlName="roomName" maxlength="300" />
+                    <mat-error *ngIf="createForm.get('roomName').hasError('required')">{{ 'Group Name is required' | translate }}</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="row">
                   <div class="col-md-12">
-                    <div *ngFor="let user of users; let i = index" class="users">
-                      <div>
-                        <input type="checkbox" [formControlName]="i" />
-                        <label>
-                          {{ user.userChatName }}
-                        </label>
-                      </div>
+                    <div class="users">
+                      <input type="checkbox" [checked]="isSelectUserAll" (click)="onSelectedAllUserChange()" />
+                      <label>
+                        <b>{{ 'Select All' | translate }}</b>
+                      </label>
+                    </div>
+                    <div *ngFor="let user of users; let i = index">
+                      <mat-checkbox [checked]="user.checked" (change)="onUserChange(user, i)">{{ user.userChatName }}</mat-checkbox>
                     </div>
                   </div>
                 </div>

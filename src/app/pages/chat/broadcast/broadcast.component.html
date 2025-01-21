@@ -6,14 +6,14 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary card-header-icon">
-              <h4 class="card-title">{{ 'Create Broadcast' | translate }}</h4>
+              <h4 class="card-title">{{ 'Create Message Broadcast' | translate }}</h4>
             </div>
             <div class="card-body">
               <form [formGroup]="broadCastForm">
                 <div class="row">
                   <mat-form-field class="col-md-12">
                     <mat-label>{{ 'Message' | translate }}</mat-label>
-                    <textarea matInput placeholder="Message" formControlName="message" [rows]="5"></textarea>
+                    <textarea matInput formControlName="message" [rows]="5"></textarea>
                   </mat-form-field>
                 </div>
                 <div class="row">
@@ -25,25 +25,23 @@
                 <br />
                 <div class="row" *ngIf="broadCastForm.get('messageType').value === 'private'">
                   <div class="col-md-12">
-                    <div *ngFor="let user of users; let i = index" class="users">
-                      <div>
-                        <input type="checkbox" />
-                        <label>
-                          {{ user.userChatName }}
-                        </label>
-                      </div>
+                    <div class="users">
+                      <input type="checkbox" [checked]="isSelectUserAll" (click)="onSelectedAllUserChange()" />
+                      <label> <b>Send to everyone</b> </label>
+                    </div>
+                    <div *ngFor="let user of users; let i = index">
+                      <mat-checkbox [checked]="user.checked" (change)="onUserChange(user, i)">{{ user.userChatName }}</mat-checkbox>
                     </div>
                   </div>
                 </div>
                 <div class="row" *ngIf="broadCastForm.get('messageType').value === 'public'">
                   <div class="col-md-12">
-                    <div *ngFor="let group of chatGroups; let i = index" class="users">
-                      <div>
-                        <input type="checkbox" />
-                        <label>
-                          {{ group.roomName }}
-                        </label>
-                      </div>
+                    <div class="users">
+                      <input type="checkbox" [checked]="isSelectGroupAll" (click)="onSelectedAllGroupChange()" />
+                      <label> <b>Send to all groups</b> </label>
+                    </div>
+                    <div *ngFor="let group of chatGroups; let i = index">
+                      <mat-checkbox [checked]="group.checked" (change)="onGroupChange(group, i)">{{ group.roomName }}</mat-checkbox>
                     </div>
                   </div>
                 </div>
@@ -56,7 +54,7 @@
               <button mat-raised-button class="btn btn-fill btn-default" [mat-dialog-close]="true">
                 {{ 'close' | translate }}
               </button>
-              <button mat-raised-button class="btn btn-fill btn-primary">
+              <button mat-raised-button class="btn btn-fill btn-primary" (click)="createBroadcast()">
                 {{ 'Create' | translate }}
               </button>
             </div>

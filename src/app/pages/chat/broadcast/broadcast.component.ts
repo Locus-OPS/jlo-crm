@@ -20,6 +20,8 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
   selectedOption: string = '';
   users = [];
   chatGroups = [];
+  isSelectUserAll: boolean = false;
+  isSelectGroupAll: boolean = false;
   constructor(
     public api: ApiService,
     private formBuilder: FormBuilder,
@@ -28,6 +30,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
     public chatService: ChatService,
   ) {
     super(router, globals);
+    this.connect();
   }
   ngOnInit(): void {
     this.initForm();
@@ -37,6 +40,15 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
       this.getChatGroupList();
     }
 
+  }
+
+  connect(): void {
+    const userId = this.globals.profile.id.toString();
+    if (userId.trim()) {
+      this.chatService.connect(userId);
+    } else {
+      alert('Please enter your username!');
+    }
   }
 
   initForm() {
@@ -67,14 +79,74 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
   }
 
   getChatGroupList() {
-
     this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.chatGroups = res.data;
-        //console.log(res.data);
       }
     });
   }
+
+  onUserChange(user: any, index: any) {
+    if (index >= 0 && index < this.users.length) {
+      this.users[index] = { ...this.users[index], checked: !user.checked }; // Merge ข้อมูลใหม่
+    } else {
+      console.error("Invalid index!");
+    }
+    if (user.checked) {
+      this.isSelectUserAll = false;
+    }
+  }
+
+  onSelectedAllUserChange() {
+    if (!this.isSelectUserAll) {
+      this.users = this.users.map(user => ({
+        ...user,
+        checked: true
+      }));
+      this.isSelectUserAll = true;
+    } else {
+      this.users = this.users.map(user => ({
+        ...user,
+        checked: false
+      }));
+      this.isSelectUserAll = false;
+    }
+
+  }
+
+  onGroupChange(chatGroup: any, index: any) {
+    if (index >= 0 && index < this.chatGroups.length) {
+      this.chatGroups[index] = { ...this.chatGroups[index], checked: !chatGroup.checked }; // Merge ข้อมูลใหม่
+    } else {
+      console.error("Invalid index!");
+    }
+    if (chatGroup.checked) {
+      this.isSelectGroupAll = false;
+    }
+  }
+
+  onSelectedAllGroupChange() {
+    if (!this.isSelectGroupAll) {
+      this.chatGroups = this.chatGroups.map(group => ({
+        ...group,
+        checked: true
+      }));
+      this.isSelectGroupAll = true;
+    } else {
+      this.chatGroups = this.chatGroups.map(group => ({
+        ...group,
+        checked: false
+      }));
+      this.isSelectGroupAll = false;
+    }
+  }
+
+  createBroadcast() {
+    alert(JSON.stringify(this.users));
+    alert(JSON.stringify(this.chatGroups));
+  }
+
+
 
 
 }
