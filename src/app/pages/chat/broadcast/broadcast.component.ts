@@ -6,6 +6,8 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { ChatService } from '../chat.service';
+import Utils from 'src/app/shared/utils';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-broadcast',
@@ -28,6 +30,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
     public router: Router,
     public globals: Globals,
     public chatService: ChatService,
+    private dialogRef: MatDialogRef<BroadcastComponent>
   ) {
     super(router, globals);
     this.connect();
@@ -142,8 +145,61 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
   }
 
   createBroadcast() {
-    alert(JSON.stringify(this.users));
-    alert(JSON.stringify(this.chatGroups));
+    if (!this.broadCastForm.valid) {
+      return;
+    }
+
+    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+      .then((result) => {
+        if (result.isConfirmed) {
+
+          if (this.broadCastForm.get('messageType').value === 'private') {
+            const selectedUsers = this.users.filter(user => user.checked).map(user => user.id);
+            if (selectedUsers.length > 0) {
+              this.sendMessagePrivate(selectedUsers);
+              this.dialogRef.close(true);
+            } else {
+              alert('Please select at least one user.');
+            }
+          } else if (this.broadCastForm.get('messageType').value === 'public') {
+            const selectedGroups = this.chatGroups.filter(group => group.checked);
+            if (selectedGroups.length > 0) {
+              this.sendMessagePublic(selectedGroups);
+              this.dialogRef.close(true);
+            } else {
+              alert('Please select at least one group.');
+            }
+          }
+
+        } else {
+          console.log('Cancelled');
+        }
+      });
+
+
+  }
+
+  sendMessagePrivate(users) {
+    const promises = users.map(user =>
+      this.chatService.sendMessage(`/private ${user} ${this.broadCastForm.get('message').value}`)
+    );
+    Promise.all(promises)
+      .then(results => {
+        console.log("All API Results:", results); // อาร์เรย์ของผลลัพธ์ทั้งหมด
+      })
+      .catch(error => {
+        console.error("Error in API requests:", error);
+      });
+  }
+
+  async sendMessagePublic(groups) {
+    alert(JSON.stringify(groups));
+    for (const group of groups) {
+      // ใช้ group.roomId เพื่อดึงค่า roomId ของแต่ละ group
+      await this.chatService.sendMessage(`/join ${group.roomId}`);
+      await this.chatService.sendMessage(this.broadCastForm.get('message').value);
+    }
+    console.log('All groups processed');
   }
 
 

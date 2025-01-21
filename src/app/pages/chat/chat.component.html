@@ -25,6 +25,16 @@
                   'background-image':
                     'url(' + (chat.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
                 }"
+                *ngIf="chat.messageType === 'private'"
+              >
+                <div *ngIf="chat.isOnline" class="online"></div>
+              </div>
+              <div
+                class="photo"
+                [ngStyle]="{
+                  'background-image': 'url(' + chat.pictureUrl + ')'
+                }"
+                *ngIf="chat.messageType === 'public'"
               >
                 <div *ngIf="chat.isOnline" class="online"></div>
               </div>
@@ -83,7 +93,7 @@
       <section class="chat">
         <div class="header-chat">
           <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers' || messagetype === 'private'"></i>
-          <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group'"></i>
+          <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group' || messagetype === 'public'"></i>
           <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}</p>
           <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
           <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
@@ -129,7 +139,7 @@
           </div>
         </div>
 
-        <div *ngIf="activeTab === 'Group'">
+        <div *ngIf="activeTab === 'Group' || messagetype === 'public'">
           <div class="messages-chat">
             <div *ngIf="chatGroup != null">
               <div *ngFor="let message of messages">

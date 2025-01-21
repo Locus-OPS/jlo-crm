@@ -54,6 +54,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.initForm();
     this.getUserList();
     this.subscription = this.chatService.getMessages().subscribe((message: string) => {
+      alert('' + message);
       this.messages.push(message);
     });
 
@@ -134,12 +135,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     });
   }
 
-  getChatMessageList() {
-
-  }
-
   onSelectUser(user: any) {
-    // alert(JSON.stringify(user));
     this.messagetype = 'private';
     this.messages = [];
     this.user = user;
@@ -154,10 +150,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.room = group.roomId;
     this.loadChatGroupHistory();
     this.joinRoom();
-  }
-
-  onScroll(event: any): void {
-    //console.log(event.target);
   }
 
   parseMessage(input) {
@@ -269,6 +261,12 @@ export class ChatComponent extends BaseComponent implements OnInit {
       this.messagetype = 'private';
       this.recipient = chat.id.toString();
       this.loadChatHistory();
+    } else if (chat.messageType == 'public') {
+      this.messagetype = 'public';
+      this.chatGroup = { roomId: chat.id, roomName: chat.chatName };
+      this.room = chat.id;
+      this.loadChatGroupHistory();
+      this.joinRoom();
     }
   }
 
@@ -297,6 +295,9 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        setTimeout(() => {
+          this.getChatList();
+        }, 2000);
       }
     });
   }
