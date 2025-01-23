@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <section class="discussions">
-        <form [formGroup]="searchForm" (ngSubmit)="getUserList()" style="margin-bottom: -10px">
+        <form [formGroup]="searchForm" (ngSubmit)="searchData()" style="margin-bottom: -10px">
           <div class="discussion search">
             <div class="searchbar">
               <i class="fa fa-search" aria-hidden="true"></i>
@@ -154,9 +154,11 @@
                     [ngStyle]="{
                       'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
                     }"
+                    [matTooltip]="'Sathaporn Wongkhamnoi'"
                   >
                     <div class="online"></div>
                   </div>
+                  <!-- <p class="chatname">Sathaporn</p> -->
                   <p class="text">{{ parseMessageChatGroup(message).message }}</p>
                 </div>
               </div>

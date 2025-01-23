@@ -54,7 +54,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.initForm();
     this.getUserList();
     this.subscription = this.chatService.getMessages().subscribe((message: string) => {
-      alert('' + message);
+
       this.messages.push(message);
     });
 
@@ -115,6 +115,16 @@ export class ChatComponent extends BaseComponent implements OnInit {
     });
   }
 
+  searchData() {
+    if (this.activeTab === 'AllUsers') {
+      this.getUserList();
+    } else if (this.activeTab === 'Chat') {
+      this.getChatList();
+    } else if (this.activeTab === 'Group') {
+      this.getChatGroupList();
+    }
+  }
+
   getUserList() {
     const param = this.searchForm.getRawValue();
     this.chatService.getUserList({ data: param, pageNo: 0, pageSize: 100000 }).then((res) => {
@@ -128,7 +138,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
   getChatGroupList() {
     this.users = [];
     this.chatGroups = [];
-    this.chatService.getChatRoomList({ data: {}, pageNo: 0, pageSize: 100000 }).then((res) => {
+    this.chatService.getChatRoomList({ data: { roomName: this.searchForm.get('userChatName').value }, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.chatGroups = res.data;
       }
@@ -273,7 +283,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
   openChatGroupModal() {
     const dialogRef = this.dialog.open(ChatGroupComponent, {
       height: '50%',
-      width: '30%',
+      width: '50%',
       panelClass: 'my-dialog',
       data: {}
     });
@@ -288,7 +298,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
   openBroadCastModal() {
     const dialogRef = this.dialog.open(BroadcastComponent, {
       height: '50%',
-      width: '30%',
+      width: '50%',
       panelClass: 'my-dialog',
       data: {}
     });
