@@ -30,7 +30,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   username: string = '';
   room: string = 'general';
-  messages: string[] = [];
+  messages: any[] = [];
   newMessage: string = '';
   recipient: string = ''; // สำหรับการแชท 1:1
   private subscription: Subscription | null = null;
@@ -54,8 +54,8 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.initForm();
     this.getUserList();
     this.subscription = this.chatService.getMessages().subscribe((message: string) => {
-
-      this.messages.push(message);
+      console.log(message);
+      this.messages.push(JSON.parse(message));
     });
 
   }
@@ -78,7 +78,9 @@ export class ChatComponent extends BaseComponent implements OnInit {
   sendMessagetoChatRoom(): void {
     if (this.newMessage.trim()) {
       let msg = '[From ' + this.globals.profile.id + ']: ' + this.newMessage;
-      this.messages.push(msg);
+      // this.messages.push(msg);
+      let msgObj = { senderId: this.globals.profile.id, roomId: this.room, messageText: this.newMessage, createdAt: this.formatCurrentDate() };
+      this.messages.push(msgObj);
       this.chatService.sendMessage(this.newMessage);
       this.newMessage = '';
     }
@@ -87,7 +89,8 @@ export class ChatComponent extends BaseComponent implements OnInit {
   sendPrivateMessage(): void {
     if (this.recipient.trim() && this.newMessage.trim()) {
       let msg = '[Private from ' + this.globals.profile.id + ']: ' + this.newMessage;
-      this.messages.push(msg);
+      let msgObj = { senderId: this.globals.profile.id, targetId: this.recipient, messageText: this.newMessage, createdAt: this.formatCurrentDate() };
+      this.messages.push(msgObj);
       //console.log(msg);
       this.chatService.sendMessage(`/private ${this.recipient} ${this.newMessage}`);
       this.newMessage = '';
@@ -162,66 +165,57 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.joinRoom();
   }
 
-  parseMessage(input) {
-    //.log(input);
-    if (input == null) return;
-    const regex = /^\[Private from ([^:]+)\]:\s(.+)$/;
-    const match = input.match(regex);
-    console.log(match);
-    if (match) {
-      const user = match[1];
-      const message = match[2];
-      return { user, message };
-    } else {
-      throw new Error("Invalid format");
-    }
-  }
+  // parseMessage(input) {
+  //   //.log(input);
+  //   if (input == null) return;
+  //   const regex = /^\[Private from ([^:]+)\]:\s(.+)$/;
+  //   const match = input.match(regex);
+  //   //console.log(match);
+  //   if (match) {
+  //     const user = match[1];
+  //     const message = match[2];
+  //     return { user, message };
+  //   } else {
+  //     throw new Error("Invalid format");
+  //   }
+  // }
 
-  parseMessageChatGroup(input) {
-    // console.log(input);
-    const regex = /^\[From ([^:]+)\]:\s(.+)$/;
-    const match = input.match(regex);
-    // console.log(match);
-    if (match) {
-      const user = match[1];
-      const message = match[2];
-      return { user, message };
-    } else {
-      throw new Error("Invalid format");
-    }
-  }
+  // parseMessageChatGroup(input) {
+  //   // console.log(input);
+  //   const regex = /^\[From ([^:]+)\]:\s(.+)$/;
+  //   const match = input.match(regex);
+  //   // console.log(match);
+  //   if (match) {
+  //     const user = match[1];
+  //     const message = match[2];
+  //     return { user, message };
+  //   } else {
+  //     throw new Error("Invalid format");
+  //   }
+  // }
 
   isUserMatch(message: any): boolean {
-    const parsedUser = this.parseMessage(message).user;
+    if (message == null) return;
+    const parsedUser = message.senderId.toString();
     const profileUserId = '' + this.globals.profile.id.toString();
     return parsedUser === profileUserId;
   }
 
   isUserMatchChatRoom(message: any): boolean {
     if (message == null) return;
-    const parsedUser = this.parseMessageChatGroup(message).user.toString();
+    const parsedUser = message.senderId.toString();
     const profileUserId = '' + this.globals.profile.id.toString();
-    // console.log(parsedUser + "=>" + profileUserId + " " + (parsedUser === profileUserId));
     return parsedUser === profileUserId;
   }
 
   loadChatHistory() {
     if (this.user != null) {
-      this.chatService.getPrivateChatMessages({ data: { senderId: this.globals.profile.id, targetId: this.user.id }, pageNo: 0, pageSize: 50 }).then((res) => {
+      this.chatService.getPrivateChatMessages({ data: { senderId: this.globals.profile.id, targetId: this.user.id }, pageNo: 0, pageSize: 5000 }).then((res) => {
         if (res.status) {
           let chatMsg = res.data.reverse();
-          for (let i = 0; i < chatMsg.length; i++) {
-            let msg = chatMsg[i].messageText;
-            let sender = chatMsg[i].senderId;
-            if (sender == this.globals.profile.id) {
-              msg = '[Private from ' + this.globals.profile.id + ']: ' + msg;
-            } else {
-              msg = '[Private from ' + this.user.targetId + ']: ' + msg;
-            }
+          chatMsg.forEach((msg) => {
             this.messages.push(msg);
-          }
-
-          //console.log(res.data);
+          });
         }
         console.log("Error");
       });
@@ -229,15 +223,12 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   loadChatGroupHistory() {
-    this.chatService.getPublicChatMessages({ data: { roomId: this.chatGroup.roomId }, pageNo: 0, pageSize: 50 }).then((res) => {
+    this.chatService.getPublicChatMessages({ data: { roomId: this.chatGroup.roomId }, pageNo: 0, pageSize: 5000 }).then((res) => {
       if (res.status) {
         let chatMsg = res.data.reverse();
-        for (let i = 0; i < chatMsg.length; i++) {
-          let msg = chatMsg[i].messageText;
-          let sender = chatMsg[i].senderId;
-          msg = '[From ' + sender + ']: ' + msg;
+        chatMsg.forEach((msg) => {
           this.messages.push(msg);
-        }
+        });
       }
     });
   }
@@ -310,6 +301,21 @@ export class ChatComponent extends BaseComponent implements OnInit {
         }, 2000);
       }
     });
+  }
+
+  formatCurrentDate() {
+    const now = new Date();
+
+    // ดึงข้อมูลแต่ละส่วนของวันที่
+    const day = String(now.getDate()).padStart(2, '0'); // วันที่ (เติม 0 ข้างหน้า)
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // เดือน (เริ่มต้นที่ 0)
+    const year = now.getFullYear(); // ปี
+    const hours = String(now.getHours()).padStart(2, '0'); // ชั่วโมง
+    const minutes = String(now.getMinutes()).padStart(2, '0'); // นาที
+    const seconds = String(now.getSeconds()).padStart(2, '0'); // วินาที
+
+    // รวมวันที่เป็นฟอร์แมตที่กำหนด
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
   }
 
 }

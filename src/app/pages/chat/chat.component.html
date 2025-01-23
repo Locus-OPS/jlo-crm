@@ -27,7 +27,7 @@
                 }"
                 *ngIf="chat.messageType === 'private'"
               >
-                <div *ngIf="chat.isOnline" class="online"></div>
+                <!-- <div *ngIf="chat.isOnline" class="online"></div> -->
               </div>
               <div
                 class="photo"
@@ -36,7 +36,7 @@
                 }"
                 *ngIf="chat.messageType === 'public'"
               >
-                <div *ngIf="chat.isOnline" class="online"></div>
+                <!-- <div *ngIf="chat.isOnline" class="online"></div> -->
               </div>
               <div class="desc-contact">
                 <p class="name">{{ chat.chatName }}</p>
@@ -55,7 +55,7 @@
                     'url(' + (user.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
                 }"
               >
-                <div *ngIf="user.isOnline" class="online"></div>
+                <!-- <div *ngIf="user.isOnline" class="online"></div> -->
               </div>
               <div class="desc-contact">
                 <p class="name">{{ user.userChatName }}</p>
@@ -72,7 +72,7 @@
                   'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
                 }"
               >
-                <div *ngIf="chatGroup.isOnline" class="online"></div>
+                <!-- <div *ngIf="chatGroup.isOnline" class="online"></div> -->
               </div>
               <div class="desc-contact">
                 <p class="name">{{ chatGroup.roomName }}</p>
@@ -93,9 +93,11 @@
       <section class="chat">
         <div class="header-chat">
           <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers' || messagetype === 'private'"></i>
+
           <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group' || messagetype === 'public'"></i>
-          <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}</p>
-          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
+          <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}<span> - Online</span></p>
+          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }} <span> - Online</span></p>
+
           <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
           <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
         </div>
@@ -106,23 +108,24 @@
               <div *ngFor="let message of messages">
                 <div class="message text-only" *ngIf="isUserMatch(message)">
                   <div class="response">
-                    <p class="text">{{ parseMessage(message).message }}</p>
+                    <p class="text">{{ message.messageText }}</p>
+                    <p class="time-response">{{ message.createdAt }}</p>
                   </div>
                 </div>
+
                 <div class="message" *ngIf="!isUserMatch(message)">
                   <div
                     class="photo"
                     [ngStyle]="{
                       'background-image':
-                        'url(' +
-                        (user.pictureUrl == null ? './assets/img/profile_image_not_found.png' : api.getProfileImagePath(user.pictureUrl)) +
-                        ')'
+                        'url(' + (user.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
                     }"
                   >
-                    <div class="online"></div>
+                    <!-- <div class="online"></div> -->
                   </div>
-                  <p class="text">{{ parseMessage(message).message }}</p>
+                  <p class="text">{{ message.messageText }}</p>
                 </div>
+                <div class="time" *ngIf="!isUserMatch(message)">{{ message.createdAt }}</div>
               </div>
             </div>
           </div>
@@ -145,22 +148,22 @@
               <div *ngFor="let message of messages">
                 <div class="message text-only" *ngIf="isUserMatchChatRoom(message)">
                   <div class="response">
-                    <p class="text">{{ parseMessageChatGroup(message).message }}</p>
+                    <p class="text">{{ message.messageText }}</p>
+                    <p class="time-response">{{ message.createdAt }}</p>
                   </div>
                 </div>
                 <div class="message" *ngIf="!isUserMatchChatRoom(message)">
                   <div
                     class="photo"
                     [ngStyle]="{
-                      'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
+                      'background-image':
+                        'url(' + (message.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(message.pictureUrl)) + ')'
                     }"
-                    [matTooltip]="'Sathaporn Wongkhamnoi'"
-                  >
-                    <div class="online"></div>
-                  </div>
-                  <!-- <p class="chatname">Sathaporn</p> -->
-                  <p class="text">{{ parseMessageChatGroup(message).message }}</p>
+                    [matTooltip]="message.senderName"
+                  ></div>
+                  <p class="text">{{ message.messageText }}</p>
                 </div>
+                <div class="time" *ngIf="!isUserMatchChatRoom(message)">{{ message.createdAt }}</div>
               </div>
             </div>
           </div>
