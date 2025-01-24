@@ -27,7 +27,8 @@
                 }"
                 *ngIf="chat.messageType === 'private'"
               >
-                <!-- <div *ngIf="chat.isOnline" class="online"></div> -->
+                <div *ngIf="chat.isOnline && chat.messageType == 'private'" class="online"></div>
+                <div *ngIf="!chat.isOnline && chat.messageType == 'private'" class="offline"></div>
               </div>
               <div
                 class="photo"
@@ -41,8 +42,8 @@
               <div class="desc-contact">
                 <p class="name">{{ chat.chatName }}</p>
                 <p class="message">{{ chat.messageText }}</p>
+                <!-- <p class="time">{{ chat.createdAt }}</p> -->
               </div>
-              <!-- <div class="timer">{{ chat.createdAt | date : 'HH:mm' }}</div> -->
             </div>
           </div>
 
@@ -55,11 +56,12 @@
                     'url(' + (user.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
                 }"
               >
-                <!-- <div *ngIf="user.isOnline" class="online"></div> -->
+                <div *ngIf="user.isOnline" class="online"></div>
+                <div *ngIf="!user.isOnline" class="offline"></div>
               </div>
               <div class="desc-contact">
                 <p class="name">{{ user.userChatName }}</p>
-                <p class="message">{{ user.message }}</p>
+                <p class="message" *ngIf="!user.isOnline && user.lastSeen != null">{{ 'last seen : ' + user.lastSeen }}</p>
               </div>
               <!-- <div class="timer">{{ user.time }}</div> -->
             </div>
@@ -76,7 +78,7 @@
               </div>
               <div class="desc-contact">
                 <p class="name">{{ chatGroup.roomName }}</p>
-                <p class="message">{{ chatGroup.message }}</p>
+                <p class="message">{{ chatGroup.totalMember + ' Members' }}</p>
               </div>
               <!-- <div class="timer">{{ chatGroup.time }}</div> -->
             </div>
@@ -93,10 +95,12 @@
       <section class="chat">
         <div class="header-chat">
           <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers' || messagetype === 'private'"></i>
-
           <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group' || messagetype === 'public'"></i>
-          <p class="name" *ngIf="activeTab === 'AllUsers'">{{ this.user == null ? '' : this.user.userChatName }}<span> - Online</span></p>
-          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }} <span> - Online</span></p>
+
+          <p class="name" *ngIf="activeTab === 'AllUsers'">
+            {{ this.user == null ? '' : this.user.userChatName }}
+          </p>
+          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
 
           <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
           <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>

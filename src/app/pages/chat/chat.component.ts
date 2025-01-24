@@ -133,7 +133,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.chatService.getUserList({ data: param, pageNo: 0, pageSize: 100000 }).then((res) => {
       if (res.status) {
         this.users = res.data;
-        //console.log(res.data);
       }
     });
   }
@@ -164,35 +163,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.loadChatGroupHistory();
     this.joinRoom();
   }
-
-  // parseMessage(input) {
-  //   //.log(input);
-  //   if (input == null) return;
-  //   const regex = /^\[Private from ([^:]+)\]:\s(.+)$/;
-  //   const match = input.match(regex);
-  //   //console.log(match);
-  //   if (match) {
-  //     const user = match[1];
-  //     const message = match[2];
-  //     return { user, message };
-  //   } else {
-  //     throw new Error("Invalid format");
-  //   }
-  // }
-
-  // parseMessageChatGroup(input) {
-  //   // console.log(input);
-  //   const regex = /^\[From ([^:]+)\]:\s(.+)$/;
-  //   const match = input.match(regex);
-  //   // console.log(match);
-  //   if (match) {
-  //     const user = match[1];
-  //     const message = match[2];
-  //     return { user, message };
-  //   } else {
-  //     throw new Error("Invalid format");
-  //   }
-  // }
 
   isUserMatch(message: any): boolean {
     if (message == null) return;
