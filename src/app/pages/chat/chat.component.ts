@@ -10,12 +10,11 @@ import { Subscription } from 'rxjs';
 import { ChatGroupComponent } from './chat-group/chat-group.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BroadcastComponent } from './broadcast/broadcast.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [SharedModule, ScrollingModule],
+  imports: [SharedModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
