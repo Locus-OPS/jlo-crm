@@ -23,7 +23,7 @@
                 class="photo"
                 [ngStyle]="{
                   'background-image':
-                    'url(' + (chat.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
+                    'url(' + (chat.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
                 }"
                 *ngIf="chat.messageType === 'private'"
               >
@@ -53,7 +53,7 @@
                 class="photo"
                 [ngStyle]="{
                   'background-image':
-                    'url(' + (user.pictureUrl == null ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
+                    'url(' + (user.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
                 }"
               >
                 <div *ngIf="user.isOnline" class="online"></div>
@@ -108,6 +108,10 @@
 
         <div *ngIf="activeTab === 'AllUsers' || messagetype === 'private'">
           <div class="messages-chat">
+            <div class="row-loadmore" *ngIf="totalMessages > messages.length && totalMessages != 0" (click)="loadChatHistory()">
+              <div class="load-more-icon"><i id="refresh-icon" class="icon fa fa-refresh"></i></div>
+            </div>
+
             <div *ngIf="user != null">
               <div *ngFor="let message of messages">
                 <div class="message text-only" *ngIf="isUserMatch(message)">
@@ -148,6 +152,9 @@
 
         <div *ngIf="activeTab === 'Group' || messagetype === 'public'">
           <div class="messages-chat">
+            <div class="row-loadmore" *ngIf="totalMessages > messages.length && totalMessages != 0" (click)="loadChatGroupHistory()">
+              <div class="load-more-icon"><i id="refresh-icon" class="icon fa fa-refresh"></i></div>
+            </div>
             <div *ngIf="chatGroup != null">
               <div *ngFor="let message of messages">
                 <div class="message text-only" *ngIf="isUserMatchChatRoom(message)">

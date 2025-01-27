@@ -518,3 +518,43 @@ body {
   outline: 2px solid #4caf50;
   outline-offset: 2px;
 }
+
+.row-loadmore {
+  display: flex;
+  justify-content: center; /* จัดให้อยู่ตรงกลางในแนวนอน */
+  align-items: center; /* จัดให้อยู่ตรงกลางในแนวตั้ง (หากมีความสูงกำหนดไว้) */
+  height: 20px; /* กำหนดความสูงตัวอย่าง (ปรับตามต้องการ) */
+  // background: #f9f9f9; /* สีพื้นหลังแถวสำหรับดูง่าย */
+}
+
+/* ไอคอน Load More */
+.load-more-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* ความกว้างของวงรี */
+  height: 20px; /* ความสูงของวงรี */
+  background: rgba(128, 128, 128, 0.5); /* สีเทาโปร่งใส */
+  border-radius: 20px; /* โค้งเป็นวงรี */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* เงาเล็กน้อย */
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: -40px;
+}
+
+.load-more-icon:hover {
+  background: rgba(128, 128, 128, 0.8); /* เปลี่ยนสีเมื่อ Hover */
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

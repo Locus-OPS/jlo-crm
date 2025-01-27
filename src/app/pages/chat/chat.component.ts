@@ -10,11 +10,12 @@ import { Subscription } from 'rxjs';
 import { ChatGroupComponent } from './chat-group/chat-group.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BroadcastComponent } from './broadcast/broadcast.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, ScrollingModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })
@@ -37,6 +38,12 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   //Tab สำหรับการ Chat
   activeTab: string = 'AllUsers'; // ค่าเริ่มต้นของแท็บที่ active
+
+  //Attribute สำหรับการ Chat
+  msgPageNo: number = 0;
+  msgpageSize: number = 50;
+  lastMessageId: number = 0;
+  totalMessages: number = 0;
 
   constructor(
     public api: ApiService,
@@ -91,7 +98,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
       let msg = '[Private from ' + this.globals.profile.id + ']: ' + this.newMessage;
       let msgObj = { senderId: this.globals.profile.id, targetId: this.recipient, messageText: this.newMessage, createdAt: this.formatCurrentDate() };
       this.messages.push(msgObj);
-      //console.log(msg);
       this.chatService.sendMessage(`/private ${this.recipient} ${this.newMessage}`);
       this.newMessage = '';
 
@@ -151,8 +157,11 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.messagetype = 'private';
     this.messages = [];
     this.user = user;
+    this.msgPageNo = 0;
+    this.lastMessageId = 0;
     this.recipient = user.id.toString();
     this.loadChatHistory();
+
   }
 
   onSelectGroup(group: any) {
@@ -160,6 +169,8 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.messagetype = 'public';
     this.chatGroup = group;
     this.room = group.roomId;
+    this.msgPageNo = 0;
+    this.lastMessageId = 0;
     this.loadChatGroupHistory();
     this.joinRoom();
   }
@@ -180,25 +191,71 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   loadChatHistory() {
     if (this.user != null) {
-      this.chatService.getPrivateChatMessages({ data: { senderId: this.globals.profile.id, targetId: this.user.id }, pageNo: 0, pageSize: 5000 }).then((res) => {
+
+      this.chatService.getPrivateChatMessages({ data: { senderId: this.globals.profile.id, lastMessageId: this.lastMessageId, targetId: this.user.id }, pageNo: this.msgPageNo, pageSize: this.msgpageSize }).then((res) => {
         if (res.status) {
+
+          //Click ครั้งแรก?
+          if (this.lastMessageId == 0) {
+            this.totalMessages = res.total;
+          }
+
+          if (res.data.length > 0) {
+            this.lastMessageId = res.data[res.data.length - 1].messageId;
+            // console.log("Last Message : " + this.lastMessageId);
+          }
           let chatMsg = res.data.reverse();
-          chatMsg.forEach((msg) => {
-            this.messages.push(msg);
-          });
+          if (this.messages.length > 0) {
+
+            let tempMsg = this.messages;
+            this.messages = [];
+            chatMsg.forEach((msg) => {
+              this.messages.push(msg);
+            });
+            tempMsg.forEach((msg) => {
+              this.messages.push(msg);
+            });
+
+          } else {
+            chatMsg.forEach((msg) => {
+              this.messages.push(msg);
+            });
+          }
         }
-        console.log("Error");
+
+      }).finally(() => {
+        // icon.classList.remove('spin');
       });
     }
   }
 
   loadChatGroupHistory() {
-    this.chatService.getPublicChatMessages({ data: { roomId: this.chatGroup.roomId }, pageNo: 0, pageSize: 5000 }).then((res) => {
+    this.chatService.getPublicChatMessages({ data: { roomId: this.chatGroup.roomId, lastMessageId: this.lastMessageId }, pageNo: this.msgPageNo, pageSize: this.msgpageSize }).then((res) => {
       if (res.status) {
+        //Click ครั้งแรก?
+        if (this.lastMessageId == 0) {
+          this.totalMessages = res.total;
+        }
+        if (res.data.length > 0) {
+          this.lastMessageId = res.data[res.data.length - 1].messageId;
+        }
         let chatMsg = res.data.reverse();
-        chatMsg.forEach((msg) => {
-          this.messages.push(msg);
-        });
+        if (this.messages.length > 0) {
+
+          let tempMsg = this.messages;
+          this.messages = [];
+          chatMsg.forEach((msg) => {
+            this.messages.push(msg);
+          });
+          tempMsg.forEach((msg) => {
+            this.messages.push(msg);
+          });
+
+        } else {
+          chatMsg.forEach((msg) => {
+            this.messages.push(msg);
+          });
+        }
       }
     });
   }
@@ -213,8 +270,9 @@ export class ChatComponent extends BaseComponent implements OnInit {
     this.user = null;
     this.chatGroup = null;
     this.activeTab = tabName; // ตั้งค่าแท็บที่ถูกเลือก
-    // console.log('Active Tab:', this.activeTab);
+    this.msgPageNo = 0;
     if (tabName === 'AllUsers') {
+      this.msgPageNo = 0;
       this.messagetype = 'private';
       this.getUserList();
     } else if (tabName === 'Chat') {
@@ -228,6 +286,9 @@ export class ChatComponent extends BaseComponent implements OnInit {
   onSelectChat(chat: any) {
     this.messages = [];
     this.user = chat;
+    this.msgPageNo = 0;
+    this.totalMessages = 0;
+    this.lastMessageId = 0;
     if (chat.messageType == 'private') {
       this.messagetype = 'private';
       this.recipient = chat.id.toString();
@@ -289,7 +350,6 @@ export class ChatComponent extends BaseComponent implements OnInit {
   }
 
   editChatRoom() {
-    // alert(JSON.stringify(this.chatGroup));
     if (this.chatGroup != null) {
       const dialogRef = this.dialog.open(ChatGroupComponent, {
         height: '70%',
