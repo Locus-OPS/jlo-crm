@@ -102,8 +102,8 @@
           </p>
           <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
 
-          <p class="name" *ngIf="activeTab === 'Group'">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
-          <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+          <p class="name" *ngIf="activeTab === 'Group'" (click)="alert('Hi')">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
+          <i class="icon clickable fa fa-ellipsis-h iconchat right" (click)="editChatRoom()" aria-hidden="true" *ngIf="chatGroup != null"></i>
         </div>
 
         <div *ngIf="activeTab === 'AllUsers' || messagetype === 'private'">

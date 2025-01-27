@@ -6,7 +6,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header card-header-primary card-header-icon">
-              <h4 class="card-title">{{ 'Create Group' | translate }}</h4>
+              <h4 class="card-title">{{ this.mode === 'create' ? 'Create Group' : ('Edit Group' | translate) }}</h4>
             </div>
             <div class="card-body">
               <form [formGroup]="createForm">
@@ -34,14 +34,34 @@
             </div>
           </div>
 
-          <div class="row pull-right">
-            <div class="col-md-12">
-              <button mat-raised-button class="btn btn-fill btn-default" [mat-dialog-close]="true">
-                {{ 'close' | translate }}
+          <div class="row">
+            <div class="col-md-6">
+              <button
+                mat-raised-button
+                class="btn btn-fill btn-danger"
+                (click)="deleteChatRoom()"
+                *ngIf="mode === 'edit' && createForm.get('createdBy').value.toString() === this.globals.profile.id.toString()"
+              >
+                {{ 'Delete' | translate }}
               </button>
-              <button mat-raised-button class="btn btn-fill btn-primary" (click)="createGroup()">
-                {{ 'Create' | translate }}
-              </button>
+            </div>
+            <div class="col-md-6">
+              <div class="pull-right">
+                <button mat-raised-button class="btn btn-fill btn-default" [mat-dialog-close]="true">
+                  {{ 'close' | translate }}
+                </button>
+                <button mat-raised-button class="btn btn-fill btn-primary" (click)="createGroup()" *ngIf="mode === 'create'">
+                  {{ 'Create' | translate }}
+                </button>
+                <button
+                  mat-raised-button
+                  class="btn btn-fill btn-primary"
+                  (click)="editChatRoom()"
+                  *ngIf="mode === 'edit' && createForm.get('createdBy').value.toString() === this.globals.profile.id.toString()"
+                >
+                  {{ 'Edit' | translate }}
+                </button>
+              </div>
             </div>
           </div>
         </div>

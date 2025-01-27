@@ -243,7 +243,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   openChatGroupModal() {
     const dialogRef = this.dialog.open(ChatGroupComponent, {
-      height: '50%',
+      height: '70%',
       width: '50%',
       panelClass: 'my-dialog',
       data: {}
@@ -258,7 +258,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
   openBroadCastModal() {
     const dialogRef = this.dialog.open(BroadcastComponent, {
-      height: '50%',
+      height: '70%',
       width: '50%',
       panelClass: 'my-dialog',
       data: {}
@@ -286,6 +286,29 @@ export class ChatComponent extends BaseComponent implements OnInit {
 
     // รวมวันที่เป็นฟอร์แมตที่กำหนด
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  editChatRoom() {
+    // alert(JSON.stringify(this.chatGroup));
+    if (this.chatGroup != null) {
+      const dialogRef = this.dialog.open(ChatGroupComponent, {
+        height: '70%',
+        width: '50%',
+        panelClass: 'my-dialog',
+        data: { roomId: this.chatGroup.roomId }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'edit') {
+          setTimeout(() => {
+            this.getChatGroupList();
+          }, 2000);
+        } else if (result === 'delete') {
+          this.chatGroup = null;
+          this.getChatGroupList();
+        }
+      });
+    }
   }
 
 }

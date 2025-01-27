@@ -74,6 +74,18 @@ export class ChatService {
     return this.api.call('/api/chatweb/getchatroomlist', params);
   }
 
+  getChatRoomById(params: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/chatweb/getchatroombyid', params);
+  }
+
+  updateChatRoom(params: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/chatweb/updatechatroom', params);
+  }
+
+  deleteChatRoom(params: ApiRequest<any>): Promise<ApiResponse<any>> {
+    return this.api.call('/api/chatweb/deletechatroom', params);
+  }
+
   getPrivateChatMessages(params: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
     return this.api.call('/api/chatweb/getprivatechatmessage', params);
   }
