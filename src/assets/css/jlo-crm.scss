@@ -18,7 +18,7 @@ html,
   --mdc-icon-button-icon-size: 14px;
   --mat-dialog-container-max-width: 80vw;
   --mat-text-button-with-icon-horizontal-padding: 8px;
-  --jlo-crm-sidebar-width: 260px;
+  --jlo-crm-sidebar-width: 261px;
 
   --mat-toolbar-title-text-font: 'Noto Sans Thai', Roboto, sans-serif;
   --mat-tree-node-text-size: 12px;
@@ -46,11 +46,11 @@ button.btn,
     width: var(--jlo-crm-sidebar-width, 260px);
     .logo {
       padding: 0px;
-      background: white;
+      background: #00a5cd;
       .logo-mini {
         .logo-img {
           img {
-            width: 125px;
+            width: 160px;
             top: 5px;
           }
         }
@@ -78,7 +78,7 @@ button.btn,
         .logo-img {
           img {
             left: 2px;
-            width: 55px;
+            width: 70px;
             top: auto;
           }
         }

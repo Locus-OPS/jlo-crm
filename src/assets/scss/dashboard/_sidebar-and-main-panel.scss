@@ -13,7 +13,7 @@
   // padding: 10px 0px;
   display: none;
   &.logo-mini {
-    margin-left: 10px;
+    margin-left: 5px;
     display: block;
   }
 }
@@ -32,11 +32,11 @@
     max-height: 42px;
 
     img {
-      width: 125px;
+      width: 160px;
+      height: 64px;
       top: 5px;
-      left: 65px;
+      left: 50px;
       position: absolute;
-      background: white;
       border-radius: 5px;
       padding: 3px 5px;
       &.logo-mini {
@@ -264,7 +264,7 @@
     display: block;
     position: relative;
     z-index: 4;
-    height: 55px;
+    height: 70px;
 
     a.logo-mini,
     a.logo-normal {
@@ -450,7 +450,7 @@
   }
 
   &[data-background-color='blue'] {
-    @include sidebar-background-color($brand-locus, $white-color);
+    @include sidebar-background-color($white-color, $brand-locus);
 
     .user,
     .logo,
@@ -507,6 +507,8 @@
 
   .navbar {
     margin-bottom: 0;
+    background-color: #00a5cd !important;
+    border-radius: 0;
   }
 
   .header {

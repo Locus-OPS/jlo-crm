@@ -1,3 +1,4 @@
+import { ClaimProcessComponent } from './pages/claim-process/claim-process.component';
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
@@ -206,12 +207,17 @@ const routes: Routes = [
         path: 'chat',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/chat/chat.component').then(m => m.ChatComponent)
-      }, {
+      },
+      {
         path: 'chat-example',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/chat-example/chat-example.component').then(m => m.ChatExampleComponent)
       },
-
+      {
+        path: 'claim-process',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/claim-process/claim-process.component').then(m => m.ClaimProcessComponent)
+      },
     ]
   }, {
     path: '',
