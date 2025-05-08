@@ -56,12 +56,12 @@ export class SidebarComponent implements OnInit {
 
   logout() {
     this.spinner.show();
-    this.globals.clear();
+    this.tabManageService.removeTabs();
     setTimeout(() => {
-      this.router.navigate(['/login']);
-      this.tabManageService.removeTabs();
       this.spinner.hide();
-    }, 1000);
+      this.globals.clear();
+      this.router.navigate(['login']);
+    }, 500);
   }
 
 }

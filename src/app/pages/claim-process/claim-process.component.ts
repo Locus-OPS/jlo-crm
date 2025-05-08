@@ -6,7 +6,7 @@ import Utils from 'src/app/shared/utils';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { TableControl } from 'src/app/shared/table-control';
-import { UserService } from './claim-process.service';
+import { ClaimProcessService } from './claim-process.service';
 import { BaseComponent } from 'src/app/shared/base.component';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
@@ -33,18 +33,12 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   tableControl: TableControl = new TableControl(() => { this.search(); });
   selectedRow: UserData;
   dataSource: UserData[];
-  displayedColumns: string[] = ['userId', 'displayName', 'buName', 'divName', 'teamName', 'roleName', 'posName', 'useYn'];
+  displayedColumns: string[] = ['itemName', 'quantity', 'unitCost', 'totalCost', 'discount', 'amount', 'genericName', 'strength', 'dosageNo', 'dosageUnit', 'unitName', 'itemCategory'];
 
   uploadForm: UntypedFormGroup;
   file: File;
 
-  loginTypes: Dropdown[];
-  statusList: Dropdown[];
-  businessUnitList: Dropdown[];
-  roleList: Dropdown[];
-  posList: Dropdown[];
-  departmentList: Dropdown[];
-  teamList: Dropdown[];
+  methodList: Dropdown[];
 
   selectedFiles: FileList;
   submitted = false;
@@ -53,7 +47,7 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
 
   constructor(
     public api: ApiService,
-    private userService: UserService,
+    private claimService: ClaimProcessService,
     private formBuilder: UntypedFormBuilder,
     public router: Router,
     public globals: Globals,
@@ -61,37 +55,25 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   ) {
     super(router, globals);
     api.getMultipleCodebookByCodeType({
-      data: ['ACTIVE_FLAG', 'LOGIN_TYPE']
+      data: ['PROMPT_METHOD']
     }).then(
       result => {
-        this.loginTypes = result.data['LOGIN_TYPE'];
-        this.statusList = result.data['ACTIVE_FLAG'];
+        this.methodList = result.data['PROMPT_METHOD'];
       }
     );
-    api.getBusinessUnit().then(result => { this.businessUnitList = result.data; });
-    api.getRole().then(result => { this.roleList = result.data; });
-    api.getPosition().then(result => { this.posList = result.data; });
-    api.getDepartment().then(result => { this.departmentList = result.data; });
-
   }
 
   ngOnInit() {
-    if (this.CAN_WRITE()) {
-      this.displayedColumns.push("action");
-    }
     this.uploadForm = this.formBuilder.group({
-      methodCode: [''],// Validators.required],
-      fileName: [''],// Validators.required],
+      methodCode: ['', Validators.required],
+      fileName: ['', Validators.required],
     });
 
-    this.search();
+    // this.onSearch();
     this.CHECK_FORM_PERMISSION(this.uploadForm);
   }
 
   onSearch() {
-    if (this.uploadForm.invalid) {
-      return;
-    }
     this.submitted = true;
     this.tableControl.resetPage();
     this.search();
@@ -99,13 +81,15 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
 
   search() {
     this.selectedRow = null;
-    this.userService.getUserList({
+    this.claimService.getDataExtractionList({
       pageSize: this.tableControl.pageSize,
       pageNo: this.tableControl.pageNo,
-      data: { ...this.uploadForm.value, sortColumn: this.tableControl.sortColumn, sortDirection: this.tableControl.sortDirection }
+      data: { sortColumn: this.tableControl.sortColumn, sortDirection: this.tableControl.sortDirection }
     }).then(result => {
       this.dataSource = result.data;
       this.tableControl.total = result.total;
+
+      this.submitted = true;
     }, error => {
       Utils.alertError({
         text: 'Please try again later.',
@@ -118,6 +102,8 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   }
 
   selectFile(event) {
+    this.file = null;
+    this.selectedFiles = event.target.files;
     if (event.target.files && event.target.files[0]) {
       this.file = event.target.files[0];
       this.uploadForm.patchValue({
@@ -137,7 +123,7 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.userService.saveUser({
+    /*this.claimService.saveUser({
       data: this.uploadForm.value
     }).then(result => {
       if (result.status) {
@@ -161,61 +147,47 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
       Utils.alertError({
         text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
       });
-    });
-  }
-
-  onDelete(row: UserData) {
-    Utils.confirmDelete().then(confirm => {
-      if (confirm.value) {
-        this.userService.deleteUser({
-          data: row.id
-        }).then(result => {
-          if (result.status) {
-            Utils.alertSuccess({
-              text: 'User has been deleted.',
-            });
-            this.search();
-          } else {
-            Utils.alertError({
-              text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-            });
-          }
-        }, error => {
-          Utils.alertError({
-            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-          });
-        });
-      }
-    });
+    });*/
   }
 
   clear() {
     this.uploadForm.reset();
     this.clearSort();
-    this.selectedRow = null;
+    this.file = null;
+    this.selectedFiles = null;
+    this.uploadForm.patchValue({
+      fileName: ''
+    });
   }
 
-  upload() {
+  async upload() {
+    this.submitted = true;
+    if (this.uploadForm.invalid) {
+      return;
+    }
+    this.tableControl.resetPage();
+
     this.uploadProgress = 0;
-    this.api.uploadProfileImage(this.selectedFiles.item(0), this.selectedRow.id, this.selectedRow.userId).subscribe(event => {
+    await this.claimService.geminiAnalyze(this.selectedFiles.item(0), this.uploadForm.controls['methodCode'].value).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         this.uploadProgress = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         if (event.status === 200) {
           Utils.alertSuccess({
             title: 'Uploaded!',
-            text: 'Profile image has been updated.',
+            text: 'The file has been uploaded and analyzed successfully.',
           });
-          this.selectedRow.pictureUrl = <string>event.body;
+
+          this.onSearch();
         } else {
           Utils.alertError({
             text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
           });
         }
         this.uploadProgress = 0;
-        this.imageSrc = null;
       }
     });
+    this.uploadForm.reset();
     this.selectedFiles = null;
   }
 }

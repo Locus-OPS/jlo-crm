@@ -1,0 +1,167 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'prompt-manage.title' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'prompt-manage.promptCode' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="codeId" maxlength="50" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'prompt-manage.promptName' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="codeName" maxlength="200" />
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <mat-label>{{ 'prompt-manage.status' | translate }}</mat-label>
+                  <mat-select formControlName="activeFlag">
+                    <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="pull-right">
+                <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
+                <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary" type="button" (click)="create()">
+                  {{ 'button.create' | translate }}
+                </button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset" (click)="clear()">
+                  {{ 'button.clear' | translate }}
+                </button>
+              </div>
+            </form>
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div class="material-datatables table-responsive" width="550px">
+              <table
+                mat-table
+                [dataSource]="dataSource"
+                class="mat-elevation-z8"
+                (matSortChange)="sortData($event)"
+                matSort
+                matSortActive="firstName"
+                matSortDirection="asc"
+                matSortDisableClear
+              >
+                <ng-container matColumnDef="codeId">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>{{ 'prompt-manage.promptCode' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeId }}</td>
+                </ng-container>
+                <ng-container matColumnDef="codeType">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'codebook.codeType' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeType }}</td>
+                </ng-container>
+                <ng-container matColumnDef="codeName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'prompt-manage.promptName' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeName }}</td>
+                </ng-container>
+                <ng-container matColumnDef="parentType">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'codebook.parentType' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.parentType }}</td>
+                </ng-container>
+                <ng-container matColumnDef="parentId">
+                  <th mat-header-cell *matHeaderCellDef>{{ 'codebook.parentId' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.parentId }}</td>
+                </ng-container>
+                <ng-container matColumnDef="activeFlag">
+                  <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'prompt-manage.active' | translate }}</th>
+                  <td mat-cell *matCellDef="let element" class="text-center">
+                    <mat-icon matSuffix *ngIf="element.activeFlag === 'Y'">done</mat-icon>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  (click)="onSelectRow(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }"
+                ></tr>
+              </table>
+            </div>
+            <mat-paginator
+              class="mat-paginator-sticky"
+              (page)="onPage($event)"
+              [length]="total"
+              [pageSize]="pageSize"
+              [pageIndex]="pageNo"
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+            >
+            </mat-paginator>
+          </div>
+          <!-- end content-->
+        </div>
+        <!--  end card  -->
+        <div class="card" *ngIf="selectedRow">
+          <div class="card-header card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">perm_identity</i>
+            </div>
+            <h4 class="card-title">{{ 'prompt-manage.detailTitle' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'prompt-manage.promptCode' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="codeId" [readonly]="isUpdated" maxlength="50" />
+                  <mat-error *ngIf="createForm.controls['codeId'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-5">
+                  <mat-label>{{ 'prompt-manage.promptName' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="codeName" #codeName (input)="selectedRow.codeName = codeName.value" maxlength="200" />
+                  <mat-error *ngIf="createForm.controls['codeName'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <mat-label>{{ 'prompt-manage.seq' | translate }}</mat-label>
+                  <input matInput type="number" formControlName="seq" />
+                </mat-form-field>
+                <mat-form-field class="col-md-2">
+                  <mat-label>{{ 'prompt-manage.status' | translate }}</mat-label>
+                  <mat-select formControlName="activeFlag" #activeFlag (selectionChange)="selectedRow.activeFlag = activeFlag.value">
+                    <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-12">
+                  <mat-label>{{ 'prompt-manage.description' | translate }}</mat-label>
+                  <textarea matInput type="text" formControlName="description" rows="3"></textarea>
+                  <mat-error *ngIf="createForm.controls['description'].hasError('required')">
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <app-created-by
+                [createdBy]="createForm.controls['createdByName'].value"
+                [createdDate]="createForm.controls['createdDate'].value"
+                [updatedBy]="createForm.controls['updatedByName'].value"
+                [updatedDate]="createForm.controls['updatedDate'].value"
+              >
+              </app-created-by>
+              <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-rose pull-right">{{ 'button.save' | translate }}</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- end col-md-12 -->
+    </div>
+    <!-- end row -->
+  </div>
+</div>

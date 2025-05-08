@@ -218,6 +218,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/claim-process/claim-process.component').then(m => m.ClaimProcessComponent)
       },
+      {
+        path: 'prompt-management',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/prompt-management/prompt-management.component').then(m => m.PromptManagementComponent)
+      },
     ]
   }, {
     path: '',

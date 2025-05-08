@@ -4,30 +4,35 @@ import { ApiService } from 'src/app/services/api.service';
 import { ApiPageRequest } from 'src/app/model/api-page-request.model';
 import { ApiPageResponse } from 'src/app/model/api-page-response.model';
 import { ApiResponse } from 'src/app/model/api-response.model';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class ClaimProcessService {
+
+  private rootPath = environment.endpoint;
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    private http: HttpClient
   ) { }
 
-  getUserLoginLogList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
-    return this.api.call('/api/user/getUserLoginLogList', param);
+  getDataExtractionList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
+    return this.api.call('/api/claim-process/getDataExtractionList', param);
   }
 
-  getUserList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
-    return this.api.call('/api/user/getUserList', param);
-  }
-
-  saveUser(param: ApiRequest<any>): Promise<any> {
-    return this.api.call('/api/user/saveUser', param);
-  }
-
-  deleteUser(param: ApiRequest<any>): Promise<any> {
-    return this.api.call('/api/user/deleteUser', param);
+  geminiAnalyze(file: File, prompt: string): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('prompt', prompt);
+    const req = new HttpRequest('POST', this.rootPath + '/api/claim-process/analyze', formdata, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+    return this.http.request(req);
   }
 
 }

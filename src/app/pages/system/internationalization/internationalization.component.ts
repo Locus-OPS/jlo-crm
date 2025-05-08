@@ -34,7 +34,7 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
   searchForm: UntypedFormGroup;
   createForm: UntypedFormGroup;
 
-  isUpdate = false;
+  isUpdate;
   selectedRow: Internationalization;
   dataSource: Internationalization[];
   displayedColumns: string[] = ['msgCode', 'msgValue'];
@@ -90,11 +90,11 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
     }).then(result => {
       this.dataSource = result.data;
       this.tableControl.total = result.total;
-      if (this.dataSource.length > 0) {
+      /*if (this.dataSource.length > 0) {
         this.onSelectRow(this.dataSource[0]);
       } else {
         this.create();
-      }
+      }*/
     }, error => {
       Utils.alertError({
         text: 'Please try again later.',

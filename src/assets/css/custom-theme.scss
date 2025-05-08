@@ -38,9 +38,10 @@ $my-theme: mat.define-theme((color: (theme-type: light,
     .mat-mdc-tab {
       background-color: blue($color: #000000) !important;
       height: 35px;
-      padding: 0 16px;
+      padding: 0 0 0 16px;
       color: #1e1d1d !important;
       min-width: 140px;
+      box-shadow: inset 0 0 5px -2px #999;
     }
 
     .mat-mdc-tab:hover {
@@ -185,4 +186,8 @@ input.mat-mdc-input-element {
 .swal2-success-circular-line-right,
 .swal2-success-fix {
   background: transparent !important;
+}
+
+.mdc-floating-label--required:not(.mdc-floating-label--hide-required-marker)::after {
+  color: red;
 }
