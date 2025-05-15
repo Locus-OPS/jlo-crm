@@ -23,6 +23,7 @@
                 <mat-form-field class="col-md-2">
                   <mat-label>{{ 'prompt-manage.status' | translate }}</mat-label>
                   <mat-select formControlName="activeFlag">
+                    <mat-option value="">{{ 'combo.option.all' | translate }}</mat-option>
                     <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
