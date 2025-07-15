@@ -9,7 +9,7 @@
     "start.uat": "ng serve --configuration=uat --ssl --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
     "prebuild.prod": "ts-node -P tsconfig.git.json git-version.ts",
-    "build.prod": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --base-href  \"/jlo-crm/\" --configuration production",
+    "build.prod": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --base-href  \"/jlo-crm/\" --deploy-url \"/jlo-crm/\" --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -48,7 +48,6 @@
     "@swimlane/ngx-charts": "^20.5.0",
     "@swimlane/ngx-graph": "^9.0.1",
     "@types/bootstrap": "^4.3.1",
-    "@types/dompurify": "^3.2.0",
     "@types/sockjs-client": "^1.5.4",
     "angular-calendar": "^0.31.1",
     "angular-cd-timer": "^3.0.0",
