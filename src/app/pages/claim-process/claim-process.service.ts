@@ -21,14 +21,14 @@ export class ClaimProcessService {
   ) { }
 
   getDataExtractionList(param: ApiPageRequest<any>): Promise<ApiPageResponse<any>> {
-    return this.api.call('/api/claim-process/getDataExtractionList', param);
+    return this.api.call('/api/claim-process/searchDataExtraction', param);
   }
 
-  geminiAnalyze(file: File, prompt: string): Observable<HttpEvent<{}>> {
+  geminiAnalyze(file: File, promptCode: string): Observable<HttpEvent<{}>> {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    formdata.append('prompt', prompt);
-    const req = new HttpRequest('POST', this.rootPath + '/api/claim-process/analyze', formdata, {
+    formdata.append('promptCode', promptCode);
+    const req = new HttpRequest('POST', this.rootPath + '/api/claim-process/analyzeDataExtraction', formdata, {
       reportProgress: true,
       responseType: 'json'
     });

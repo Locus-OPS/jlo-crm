@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { MatSort } from '@angular/material/sort';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
@@ -24,6 +24,7 @@ import { MatInput } from '@angular/material/input';
   imports: [SharedModule, CreatedByComponent]
 })
 export class ClaimProcessComponent extends BaseComponent implements OnInit {
+  @ViewChild('fileUpload') fileUpload!: ElementRef<HTMLInputElement>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -45,6 +46,7 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   imageSrc: string;
   uploadProgress = 0;
 
+
   constructor(
     public api: ApiService,
     private claimService: ClaimProcessService,
@@ -54,6 +56,7 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
     public dialog: MatDialog
   ) {
     super(router, globals);
+    this.tableControl.pageSize = 10;
     api.getMultipleCodebookByCodeType({
       data: ['PROMPT_METHOD']
     }).then(
@@ -98,11 +101,15 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   }
 
   clearSort() {
-    this.sort.sort({ id: '', start: 'asc', disableClear: false });
+    if (this.sort)
+      this.sort.sort({ id: '', start: 'asc', disableClear: false });
   }
 
   selectFile(event) {
     this.file = null;
+    this.uploadForm.patchValue({
+      fileName: null
+    });
     this.selectedFiles = event.target.files;
     if (event.target.files && event.target.files[0]) {
       this.file = event.target.files[0];
@@ -152,12 +159,13 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
 
   clear() {
     this.uploadForm.reset();
-    this.clearSort();
     this.file = null;
     this.selectedFiles = null;
+    this.fileUpload.nativeElement.value = '';
     this.uploadForm.patchValue({
       fileName: ''
     });
+    this.clearSort();
   }
 
   async upload() {
@@ -168,26 +176,34 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
     this.tableControl.resetPage();
 
     this.uploadProgress = 0;
-    await this.claimService.geminiAnalyze(this.selectedFiles.item(0), this.uploadForm.controls['methodCode'].value).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.uploadProgress = Math.round(100 * event.loaded / event.total);
-      } else if (event instanceof HttpResponse) {
-        if (event.status === 200) {
-          Utils.alertSuccess({
-            title: 'Uploaded!',
-            text: 'The file has been uploaded and analyzed successfully.',
-          });
+    await this.claimService.geminiAnalyze(this.selectedFiles.item(0), this.uploadForm.controls['methodCode'].value).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.uploadProgress = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          if (event.status === 200) {
+            Utils.alertSuccess({
+              title: 'Uploaded!',
+              text: 'The file has been uploaded and analyzed successfully.',
+            });
 
-          this.onSearch();
-        } else {
-          Utils.alertError({
-            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-          });
+            this.onSearch();
+          } else {
+            Utils.alertError({
+              text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+            });
+          }
+          this.uploadProgress = 0;
         }
-        this.uploadProgress = 0;
+      },
+      error: (err) => {
+        console.error('เกิดข้อผิดพลาด:', err);
+      },
+      complete: () => {
+        this.uploadForm.reset();
+        this.selectedFiles = null;
+        this.fileUpload.nativeElement.value = '';
       }
     });
-    this.uploadForm.reset();
-    this.selectedFiles = null;
   }
 }
