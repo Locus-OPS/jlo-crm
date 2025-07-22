@@ -8,6 +8,7 @@
     "start.sit": "ng serve --configuration=sit --ssl --host 0.0.0.0 --disable-host-check",
     "start.uat": "ng serve --configuration=uat --ssl --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
+    "build.sit": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --base-href  \"/\" --configuration sit",
     "prebuild.prod": "ts-node -P tsconfig.git.json git-version.ts",
     "build.prod": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --base-href  \"/jlo-crm/\" --configuration production",
     "test": "ng test",

@@ -169,7 +169,6 @@ export class ClaimProcessComponent extends BaseComponent implements OnInit {
   }
 
   async upload() {
-    this.submitted = true;
     if (this.uploadForm.invalid) {
       return;
     }

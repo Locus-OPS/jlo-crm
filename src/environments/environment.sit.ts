@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  endpoint: 'http://sit-server:8080',
-  whitelistedDomains: ['sit-server:8080']
+  endpoint: 'http://35.198.200.255:8080/ocl-backend',
+  whitelistedDomains: ['35.198.200.255:8080']
 };
