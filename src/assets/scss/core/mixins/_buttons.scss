@@ -4,12 +4,6 @@
   background-color: $background;
   border-color: $border;
 
-  @include hover {
-    color: $color;
-    background-color: $focus-background;
-    border-color: $focus-border;
-  }
-
   &:focus,
   &.focus,
   &:hover{
@@ -54,10 +48,10 @@
       background-color: $background;
       border-color: $border;
     }
-    @include hover {
-      background-color: $background;
-      border-color: $border;
-    }
+    // @include hover {
+    //   background-color: $background;
+    //   border-color: $border;
+    // }
   }
 }
 
@@ -230,6 +224,12 @@
   }
   &.btn-rose {
     @include bmd-raised-button-variant($btn-rose-color, $btn-rose-bg, $btn-rose-border-color);
+  }
+  &.btn-locus {
+    @include bmd-raised-button-variant($btn-locus-color, $btn-locus-bg, $btn-locus-border-color);
+  }
+  &.btn-select {
+    @include bmd-raised-button-variant($btn-primary-bg, $btn-locus-bg, $btn-locus-border-color);
   }
   &,
   &.btn-default{

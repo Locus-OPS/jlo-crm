@@ -208,3 +208,9 @@
     opacity: 0;
   }
 }
+
+.mat-checkbox-disabled {
+    .mat-checkbox-inner-container {
+        background-color: $grey-300;
+    }
+}

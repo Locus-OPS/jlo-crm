@@ -10,10 +10,11 @@
   <ng-scrollbar visibility="hover">
     <div class="user">
       <div class="photo">
-        <img [src]="profile?.pictureUrl ? api.getProfileImagePath(profile.pictureUrl) : './assets/img/profile_image_not_found.png'" />
+        <img
+          [src]="profile?.pictureUrl ? api.getProfileImagePath(profile.pictureUrl) : './assets/img/profile_image_not_found.png'" />
       </div>
       <div class="user-info">
-        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+        <a data-bs-toggle="collapse" data-bs-target="#collapseExample" class="collapsed">
           <span>
             {{ profile?.firstName + ' ' + profile?.lastName }}
             <b class="caret"></b>
@@ -40,30 +41,24 @@
           <p>{{ menuitem.name | translate }}</p>
         </a>
         <!--If it have a submenu-->
-        <a
-          data-toggle="collapse"
-          [attr.aria-expanded]="this.router.url.startsWith(menuitem.link)"
-          href="#{{ menuitem.collapse }}"
-          *ngIf="menuitem.type === 'sub'"
-          class="nav-link"
-        >
+        <a data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse_'+menuitem.collapse"
+          [attr.aria-expanded]="this.router.url.startsWith(menuitem.link)" *ngIf="menuitem.type === 'sub'"
+          class="nav-link collapsed">
           <i class="material-icons">{{ menuitem.icon }}</i>
           <p>{{ menuitem.name | translate }}<b class="caret"></b></p>
+
         </a>
 
         <!--Display the submenu items-->
-        <div
-          id="{{ menuitem.collapse }}"
+        <div id="collapse_{{ menuitem.collapse }}"
           [class]="this.router.url.startsWith(menuitem.link) ? 'collapse show' : 'collapse'"
-          *ngIf="menuitem.type === 'sub'"
-        >
+          *ngIf="menuitem.type === 'sub'">
           <ul class="nav">
             <li routerLinkActive="active" *ngFor="let childitem of menuitem.children" class="nav-item">
               <a [routerLink]="[childitem.link]" class="nav-link">
                 <i class="material-icons" *ngIf="childitem.icon">{{ childitem.icon }}</i>
-                <span class="sidebar-mini" *ngIf="!childitem.icon"
-                  ><small>{{ (childitem.name | translate).toUpperCase().substr(0, 2) }}</small></span
-                >
+                <span class="sidebar-mini" *ngIf="!childitem.icon"><small>{{ (childitem.name |
+                    translate).toUpperCase().substr(0, 2) }}</small></span>
                 <span class="sidebar-normal">{{ childitem.name | translate }}</span>
               </a>
             </li>

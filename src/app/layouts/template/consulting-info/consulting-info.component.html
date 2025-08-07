@@ -1,6 +1,6 @@
-<div class="btn-group">
+<div class="btn-group dropstart">
 
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" data-display="static"
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-display="static"
     aria-expanded="false" (click)="onInitConsultInfo();">
     <i class="material-icons">support_agent</i>
     {{'consulting.header.text'|translate}} :
@@ -13,7 +13,7 @@
   </button>
 
 
-  <div class="dropdown-menu dropdown-menu-right" width="200">
+  <div class="dropdown-menu dropdown-menu-left" width="200">
     <div mat-dialog-content class="flex-container">
       <div class="main-content">
         <div class="container-fluid">
@@ -58,7 +58,7 @@
                         readonly style="color: blue; font-size: medium;">
                     </mat-form-field>
 
-                    <div class="pull-center">
+                    <div class="text-center">
                       <button mat-raised-button type="button" class="btn btn-primary"
                         (click)="onStartWalkinConsulting('04')" *ngIf="this.constInfoModel == null">{{
                         'consulting.header.start' | translate }}</button>

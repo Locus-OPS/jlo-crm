@@ -12,37 +12,24 @@
     <div class="d-block d-lg-none mode-mobile">
       <app-consulting-info> </app-consulting-info>
     </div>
-    <button mat-button class="navbar-toggler btn-no-ripple" type="button" (click)="sidebarToggle()">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="navbar-toggler-icon icon-bar"></span>
-      <span class="navbar-toggler-icon icon-bar"></span>
-      <span class="navbar-toggler-icon icon-bar"></span>
+
+    <button mat-button class="navbar-toggler btn-no-ripple" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navigation">
       <ul class="navbar-nav">
 
-        <div class="row">
-          <li class="nav-item">
-            <app-notification-info> </app-notification-info>
-          </li>
-          <div class="clearfix">&nbsp;</div>
-          <li class="nav-item">
-            <app-consulting-info> </app-consulting-info>
-          </li>
-          <div class="clearfix">&nbsp;</div>
-          <!-- <li class="nav-item">
-            <mat-button-toggle-group appearance="legacy" [value]="currentLang" (change)="changeLanguage($event)" #group="matButtonToggleGroup">
-              <mat-button-toggle value="th" aria-label="ไทย">
-                TH
-              </mat-button-toggle>
-              <mat-button-toggle value="en" aria-label="English">
-                EN
-              </mat-button-toggle>
-            </mat-button-toggle-group>
-          </li> -->
-
-        </div>
+        <!-- <div class="row"> -->
+        <li class="nav-item">
+          <app-notification-info> </app-notification-info>
+        </li>
+        <div class="clearfix">&nbsp;</div>
+        <li class="nav-item">
+          <app-consulting-info> </app-consulting-info>
+        </li>
+        <div class="clearfix">&nbsp;</div>
       </ul>
     </div>
   </div>
