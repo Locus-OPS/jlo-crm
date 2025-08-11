@@ -134,7 +134,7 @@ export class ConsultingInfoComponent extends BaseComponent implements OnInit {
   }
 
   onStartWalkinConsulting(channelCd: string) {
-    alert("onStartWalkinConsulting" + channelCd + "");
+    
     this.spinner.show("approve_process_spinner");
     const params = { data: { 'channelCd': channelCd } }
     this.consultingInfoService.startWalkinConsulting(params).then((result: any) => {
