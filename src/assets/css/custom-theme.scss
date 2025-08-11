@@ -2,7 +2,8 @@
 @use 'sass:color';
 @import '../scss/core/variables';
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $my-theme: mat.define-theme((color: (theme-type: light,
         primary: mat.$azure-palette,
