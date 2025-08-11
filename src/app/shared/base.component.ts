@@ -5,8 +5,9 @@ import { MenuResp } from '../model/profile.model';
 import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-base',
-  template: `NO UI HERE`
+    selector: 'app-base',
+    template: `NO UI HERE`,
+    standalone: false
 })
 export class BaseComponent {
 

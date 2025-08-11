@@ -15,11 +15,10 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-role',
-  templateUrl: './role.component.html',
-  styleUrls: ['./role.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-role',
+    templateUrl: './role.component.html',
+    styleUrls: ['./role.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class RoleComponent extends BaseComponent implements OnInit {
 

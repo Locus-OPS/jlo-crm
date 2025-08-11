@@ -32,11 +32,10 @@ import { ConsultingService } from '../../consulting/consulting.service';
 
 
 @Component({
-  selector: 'app-service-request-details',
-  templateUrl: './service-request-details.component.html',
-  styleUrl: './service-request-details.component.scss',
-  standalone: true,
-  imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent]
+    selector: 'app-service-request-details',
+    templateUrl: './service-request-details.component.html',
+    styleUrl: './service-request-details.component.scss',
+    imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent]
 })
 export class ServiceRequestDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
 

@@ -17,11 +17,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 @Component({
-  selector: 'tab-caseactivity-content',
-  templateUrl: './caseactivity.component.html',
-  styleUrls: ['./caseactivity.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'tab-caseactivity-content',
+    templateUrl: './caseactivity.component.html',
+    styleUrls: ['./caseactivity.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 
 export class CaseactivityComponent extends BaseComponent implements OnInit, OnDestroy {

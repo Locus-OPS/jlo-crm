@@ -26,11 +26,10 @@ interface Emails {
 
 
 @Component({
-  selector: 'app-modal-email',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './modal-email.component.html',
-  styleUrl: './modal-email.component.scss'
+    selector: 'app-modal-email',
+    imports: [SharedModule],
+    templateUrl: './modal-email.component.html',
+    styleUrl: './modal-email.component.scss'
 })
 export class ModalEmailComponent extends BaseComponent implements OnInit {
 

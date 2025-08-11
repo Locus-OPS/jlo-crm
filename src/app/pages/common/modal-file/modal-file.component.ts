@@ -10,11 +10,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 
 
 @Component({
-  selector: 'modal-file.component',
-  templateUrl: 'modal-file.component.html',
-  styleUrls: ['./modal-file.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'modal-file.component',
+    templateUrl: 'modal-file.component.html',
+    styleUrls: ['./modal-file.component.scss'],
+    imports: [SharedModule]
 })
 export class ModalContentFileComponent extends BaseComponent implements OnInit {
 

@@ -14,11 +14,10 @@ import { WorkflowTrackingDetailComponent } from './workflow-tracking-detail/work
 
 
 @Component({
-  selector: 'app-workflow-tracking',
-  standalone: true,
-  imports: [SharedModule, WorkflowTrackingDetailComponent],
-  templateUrl: './workflow-tracking.component.html',
-  styleUrl: './workflow-tracking.component.scss'
+    selector: 'app-workflow-tracking',
+    imports: [SharedModule, WorkflowTrackingDetailComponent],
+    templateUrl: './workflow-tracking.component.html',
+    styleUrl: './workflow-tracking.component.scss'
 })
 export class WorkflowTrackingComponent extends BaseComponent implements OnInit {
 

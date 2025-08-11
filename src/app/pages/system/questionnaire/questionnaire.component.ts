@@ -14,11 +14,10 @@ import { QuestionnaireStore } from './questionnaire.store';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-questionnaire',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './questionnaire.component.html',
-  styleUrl: './questionnaire.component.scss'
+    selector: 'app-questionnaire',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './questionnaire.component.html',
+    styleUrl: './questionnaire.component.scss'
 })
 export class QuestionnaireComponent extends BaseComponent implements OnInit {
 

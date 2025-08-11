@@ -27,10 +27,9 @@ export interface NavTitle {
 }
 
 @Component({
-  selector: 'app-navbar-cmp',
-  templateUrl: 'navbar.component.html',
-  standalone: true,
-  imports: [SharedModule, ConsultingInfoComponent, NotificationInfoComponent]
+    selector: 'app-navbar-cmp',
+    templateUrl: 'navbar.component.html',
+    imports: [SharedModule, ConsultingInfoComponent, NotificationInfoComponent]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 

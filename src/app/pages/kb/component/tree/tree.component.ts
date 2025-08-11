@@ -19,11 +19,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
-  selector: 'kb-tree',
-  templateUrl: './tree.component.html',
-  styleUrls: ['./tree.component.scss'],
-  standalone: true,
-  imports: [SharedModule, NewFolderComponent, FontAwesomeModule]
+    selector: 'kb-tree',
+    templateUrl: './tree.component.html',
+    styleUrls: ['./tree.component.scss'],
+    imports: [SharedModule, NewFolderComponent, FontAwesomeModule]
 })
 export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
 

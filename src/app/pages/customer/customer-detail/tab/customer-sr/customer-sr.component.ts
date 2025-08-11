@@ -14,11 +14,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 
 @Component({
-  selector: 'app-customer-sr',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './customer-sr.component.html',
-  styleUrl: './customer-sr.component.scss'
+    selector: 'app-customer-sr',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './customer-sr.component.html',
+    styleUrl: './customer-sr.component.scss'
 })
 export class CustomerSrComponent extends BaseComponent implements OnInit {
   @Input() customerIdParam: any;

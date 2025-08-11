@@ -11,11 +11,10 @@ import Utils from 'src/app/shared/utils';
 import { WorkflowTaskAssignComponent } from '../workflow-task-assign/workflow-task-assign.component';
 
 @Component({
-  selector: 'app-workflow-task',
-  standalone: true,
-  imports: [SharedModule, WorkflowTaskAssignComponent],
-  templateUrl: './workflow-task.component.html',
-  styleUrl: './workflow-task.component.scss'
+    selector: 'app-workflow-task',
+    imports: [SharedModule, WorkflowTaskAssignComponent],
+    templateUrl: './workflow-task.component.html',
+    styleUrl: './workflow-task.component.scss'
 })
 export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   @Input() workflowId: string = '';

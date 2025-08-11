@@ -10,11 +10,10 @@ import { WorkflowMgmtService } from '../workflow-mgmt.service';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-workflow-business-rule',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './workflow-business-rule.component.html',
-  styleUrl: './workflow-business-rule.component.scss'
+    selector: 'app-workflow-business-rule',
+    imports: [SharedModule],
+    templateUrl: './workflow-business-rule.component.html',
+    styleUrl: './workflow-business-rule.component.scss'
 })
 export class WorkflowBusinessRuleComponent extends BaseComponent implements OnInit {
   @Input() workflowId: string = '';

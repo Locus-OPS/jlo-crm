@@ -14,11 +14,10 @@ import { SlaService } from './sla.service';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-sla',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './sla.component.html',
-  styleUrl: './sla.component.scss'
+    selector: 'app-sla',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './sla.component.html',
+    styleUrl: './sla.component.scss'
 })
 export class SlaComponent extends BaseComponent implements OnInit {
 

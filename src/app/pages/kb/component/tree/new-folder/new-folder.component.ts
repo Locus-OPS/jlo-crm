@@ -9,11 +9,10 @@ import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-new-folder',
-  templateUrl: './new-folder.component.html',
-  styleUrls: ['./new-folder.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-new-folder',
+    templateUrl: './new-folder.component.html',
+    styleUrls: ['./new-folder.component.scss'],
+    imports: [SharedModule]
 })
 export class NewFolderComponent extends BaseComponent implements OnInit {
 

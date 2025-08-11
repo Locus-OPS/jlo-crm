@@ -11,11 +11,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { create } from 'domain';
 
 @Component({
-  selector: 'app-chat-group',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './chat-group.component.html',
-  styleUrl: './chat-group.component.scss'
+    selector: 'app-chat-group',
+    imports: [SharedModule],
+    templateUrl: './chat-group.component.html',
+    styleUrl: './chat-group.component.scss'
 })
 export class ChatGroupComponent extends BaseComponent implements OnInit {
   // @Input() chatGroup: any;

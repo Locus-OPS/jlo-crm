@@ -9,11 +9,10 @@ import { WorkflowSystemService } from '../workflow-system.service';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-workflow-system-detail',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './workflow-system-detail.component.html',
-  styleUrl: './workflow-system-detail.component.scss'
+    selector: 'app-workflow-system-detail',
+    imports: [SharedModule],
+    templateUrl: './workflow-system-detail.component.html',
+    styleUrl: './workflow-system-detail.component.scss'
 })
 export class WorkflowSystemDetailComponent extends BaseComponent implements OnInit {
   createForm: FormGroup;

@@ -17,11 +17,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 
 @Component({
-  selector: 'kb-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'kb-detail',
+    templateUrl: './detail.component.html',
+    styleUrls: ['./detail.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class DetailComponent extends BaseComponent implements OnInit, OnDestroy {
 

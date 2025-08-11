@@ -22,11 +22,10 @@ interface Resp {
 }
 
 @Component({
-  selector: 'app-responsibility',
-  templateUrl: './responsibility.component.html',
-  styleUrls: ['./responsibility.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-responsibility',
+    templateUrl: './responsibility.component.html',
+    styleUrls: ['./responsibility.component.scss'],
+    imports: [SharedModule]
 })
 export class ResponsibilityComponent extends BaseComponent implements OnInit {
 

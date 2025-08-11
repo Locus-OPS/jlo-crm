@@ -18,11 +18,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { Case } from '../case/case.model';
 
 @Component({
-  selector: 'app-consulting',
-  templateUrl: './consulting.component.html',
-  styleUrl: './consulting.component.scss',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-consulting',
+    templateUrl: './consulting.component.html',
+    styleUrl: './consulting.component.scss',
+    imports: [SharedModule, CreatedByComponent]
 })
 export class ConsultingComponent extends BaseComponent implements OnInit {
 

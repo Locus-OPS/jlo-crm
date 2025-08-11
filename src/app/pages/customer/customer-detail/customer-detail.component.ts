@@ -24,11 +24,10 @@ import { CustomerAuditLogComponent } from './tab/customer-audit-log/customer-aud
 import { CustomerSrComponent } from './tab/customer-sr/customer-sr.component';
 
 @Component({
-  selector: 'app-customer-detail',
-  templateUrl: './customer-detail.component.html',
-  styleUrls: ['./customer-detail.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent, CustomerCaseComponent, CustomerSrComponent, CustomerAddressComponent, CustomerAuditLogComponent]
+    selector: 'app-customer-detail',
+    templateUrl: './customer-detail.component.html',
+    styleUrls: ['./customer-detail.component.scss'],
+    imports: [SharedModule, CreatedByComponent, ContactHistoryTlComponent, CustomerCaseComponent, CustomerSrComponent, CustomerAddressComponent, CustomerAuditLogComponent]
 })
 export class CustomerDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 

@@ -12,11 +12,10 @@ import { MatDialog } from '@angular/material/dialog';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-workflow-task-assign',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './workflow-task-assign.component.html',
-  styleUrl: './workflow-task-assign.component.scss'
+    selector: 'app-workflow-task-assign',
+    imports: [SharedModule],
+    templateUrl: './workflow-task-assign.component.html',
+    styleUrl: './workflow-task-assign.component.scss'
 })
 export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit {
   @Input() taskId: string = '';

@@ -10,11 +10,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 declare var $: any;
 
 @Component({
-  selector: 'app-login-cmp',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-login-cmp',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [SharedModule]
 })
 
 export class LoginComponent implements OnInit, OnDestroy {

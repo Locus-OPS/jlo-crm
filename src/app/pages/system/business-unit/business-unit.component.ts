@@ -14,11 +14,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
-  selector: 'app-business-unit',
-  templateUrl: './business-unit.component.html',
-  styleUrls: ['./business-unit.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-business-unit',
+    templateUrl: './business-unit.component.html',
+    styleUrls: ['./business-unit.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class BusinessUnitComponent extends BaseComponent implements OnInit {
 

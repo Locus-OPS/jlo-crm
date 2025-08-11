@@ -11,11 +11,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @Component({
-  selector: 'app-sidebar-cmp',
-  templateUrl: 'sidebar.component.html',
-  styleUrls: ["./sidebar.component.scss"],
-  standalone: true,
-  imports: [SharedModule, NgScrollbarModule]
+    selector: 'app-sidebar-cmp',
+    templateUrl: 'sidebar.component.html',
+    styleUrls: ["./sidebar.component.scss"],
+    imports: [SharedModule, NgScrollbarModule]
 })
 
 export class SidebarComponent implements OnInit {

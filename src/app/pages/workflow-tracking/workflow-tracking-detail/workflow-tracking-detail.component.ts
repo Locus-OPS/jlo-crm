@@ -16,11 +16,10 @@ import { clusters, links, nodes } from '../../workflow-mgmt/process-flow/process
 // import { nodes, clusters, links } from 'src/app/pages/workflow-mgmt/process-flow/process-flow.model';
 
 @Component({
-  selector: 'app-workflow-tracking-detail',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './workflow-tracking-detail.component.html',
-  styleUrl: './workflow-tracking-detail.component.scss'
+    selector: 'app-workflow-tracking-detail',
+    imports: [SharedModule],
+    templateUrl: './workflow-tracking-detail.component.html',
+    styleUrl: './workflow-tracking-detail.component.scss'
 })
 export class WorkflowTrackingDetailComponent extends BaseComponent implements OnInit {
 

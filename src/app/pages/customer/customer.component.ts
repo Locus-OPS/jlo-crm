@@ -20,11 +20,10 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-customer',
+    templateUrl: './customer.component.html',
+    styleUrls: ['./customer.component.scss'],
+    imports: [SharedModule]
 })
 export class CustomerComponent extends BaseComponent implements OnInit {
 

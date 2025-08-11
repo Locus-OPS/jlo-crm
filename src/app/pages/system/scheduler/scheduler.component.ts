@@ -12,11 +12,10 @@ import { SchedulerData } from './scheduler.model';
 import { SchedulerService } from './scheduler.service';
 import Utils from 'src/app/shared/utils';
 @Component({
-  selector: 'app-scheduler',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './scheduler.component.html',
-  styleUrl: './scheduler.component.scss'
+    selector: 'app-scheduler',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './scheduler.component.html',
+    styleUrl: './scheduler.component.scss'
 })
 export class SchedulerComponent extends BaseComponent implements OnInit {
 

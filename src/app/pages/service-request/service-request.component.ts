@@ -20,11 +20,10 @@ import { ModalCustomerComponent } from '../common/modal-customer/modal-customer.
 import { ModalUserComponent } from '../common/modal-user/modal-user.component';
 
 @Component({
-  selector: 'app-service-request',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './service-request.component.html',
-  styleUrl: './service-request.component.scss'
+    selector: 'app-service-request',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './service-request.component.html',
+    styleUrl: './service-request.component.scss'
 })
 export class ServiceRequestComponent extends BaseComponent implements OnInit {
   @ViewChild('createFormDirective')

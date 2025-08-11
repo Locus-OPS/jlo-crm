@@ -18,11 +18,10 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'kb-favtree',
-  standalone: true,
-  imports: [SharedModule, FontAwesomeModule],
-  templateUrl: './favtree.component.html',
-  styleUrl: './favtree.component.scss'
+    selector: 'kb-favtree',
+    imports: [SharedModule, FontAwesomeModule],
+    templateUrl: './favtree.component.html',
+    styleUrl: './favtree.component.scss'
 })
 export class FavtreeComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() translatePrefix: string;

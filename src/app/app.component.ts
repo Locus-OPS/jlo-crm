@@ -7,13 +7,12 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { WebSocketService } from "./services/web-socket.service";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  standalone: true,
-  imports: [
-    SharedModule
-    , NgxSpinnerModule
-  ]
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    imports: [
+        SharedModule,
+        NgxSpinnerModule
+    ]
 })
 export class AppComponent implements OnInit {
 

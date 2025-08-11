@@ -11,11 +11,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'modal-kb-detail-info',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './kb-detail-info.component.html',
-  styleUrl: './kb-detail-info.component.scss'
+    selector: 'modal-kb-detail-info',
+    imports: [SharedModule],
+    templateUrl: './kb-detail-info.component.html',
+    styleUrl: './kb-detail-info.component.scss'
 })
 export class KbDetailInfoComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input()

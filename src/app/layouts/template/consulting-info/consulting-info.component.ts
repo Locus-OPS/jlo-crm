@@ -17,11 +17,10 @@ import { BehaviorSubject } from 'rxjs';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-consulting-info',
-  templateUrl: './consulting-info.component.html',
-  styleUrl: './consulting-info.component.scss',
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-consulting-info',
+    templateUrl: './consulting-info.component.html',
+    styleUrl: './consulting-info.component.scss',
+    imports: [SharedModule]
 })
 export class ConsultingInfoComponent extends BaseComponent implements OnInit {
   consultingForm: FormGroup;

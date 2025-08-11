@@ -14,11 +14,10 @@ import { Dropdown } from 'src/app/model/dropdown.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-email-inbound',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './email-inbound.component.html',
-  styleUrl: './email-inbound.component.scss'
+    selector: 'app-email-inbound',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './email-inbound.component.html',
+    styleUrl: './email-inbound.component.scss'
 })
 export class EmailInboundComponent extends BaseComponent implements OnInit {
 

@@ -13,11 +13,10 @@ import { Subject } from 'rxjs';
 import * as shape from 'd3-shape';
 
 @Component({
-  selector: 'app-workflow-preview',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './workflow-preview.component.html',
-  styleUrl: './workflow-preview.component.scss'
+    selector: 'app-workflow-preview',
+    imports: [SharedModule],
+    templateUrl: './workflow-preview.component.html',
+    styleUrl: './workflow-preview.component.scss'
 })
 export class WorkflowPreviewComponent extends BaseComponent implements OnInit {
 

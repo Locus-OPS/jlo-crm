@@ -12,11 +12,10 @@ import { WorkflowMgmtService } from './workflow-mgmt.service';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-workflow-mgmt',
-  standalone: true,
-  imports: [SharedModule, MatTabsModule],
-  templateUrl: './workflow-mgmt.component.html',
-  styleUrl: './workflow-mgmt.component.scss'
+    selector: 'app-workflow-mgmt',
+    imports: [SharedModule, MatTabsModule],
+    templateUrl: './workflow-mgmt.component.html',
+    styleUrl: './workflow-mgmt.component.scss'
 })
 export class WorkflowMgmtComponent extends BaseComponent implements OnInit {
 

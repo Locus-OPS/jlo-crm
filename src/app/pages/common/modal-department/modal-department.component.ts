@@ -16,11 +16,10 @@ import { DepartmentService } from '../../system/department/department.service';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-modal-department',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './modal-department.component.html',
-  styleUrl: './modal-department.component.scss'
+    selector: 'app-modal-department',
+    imports: [SharedModule],
+    templateUrl: './modal-department.component.html',
+    styleUrl: './modal-department.component.scss'
 })
 export class ModalDepartmentComponent extends BaseComponent implements OnInit {
 

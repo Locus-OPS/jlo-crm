@@ -16,11 +16,10 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { ModalContentFileComponent } from '../../modal-file/modal-file.component';
 
 @Component({
-  selector: 'kb-detail-document',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './kb-detail-document.component.html',
-  styleUrl: './kb-detail-document.component.scss'
+    selector: 'kb-detail-document',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './kb-detail-document.component.html',
+    styleUrl: './kb-detail-document.component.scss'
 })
 export class KbDetailDocumentComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('createFormDirective')

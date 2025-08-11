@@ -16,11 +16,10 @@ import Utils from 'src/app/shared/utils';
 import { TabParam } from 'src/app/layouts/admin/tab-manage.service';
 
 @Component({
-  selector: 'app-department-team',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './department-team.component.html',
-  styleUrl: './department-team.component.scss'
+    selector: 'app-department-team',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './department-team.component.html',
+    styleUrl: './department-team.component.scss'
 })
 export class DepartmentTeamComponent extends BaseComponent implements OnInit {
 

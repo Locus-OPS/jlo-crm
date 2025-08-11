@@ -33,11 +33,10 @@ import { CasekbComponent } from '../casekb/casekb.component';
 
 
 @Component({
-  selector: 'app-casedetails',
-  templateUrl: './casedetails.component.html',
-  styleUrls: ['./casedetails.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent, CasekbComponent]
+    selector: 'app-casedetails',
+    templateUrl: './casedetails.component.html',
+    styleUrls: ['./casedetails.component.scss'],
+    imports: [SharedModule, CaseattComponent, CaseactivityComponent, CreatedByComponent, CasekbComponent]
 })
 
 export class CasedetailsComponent extends BaseComponent implements OnInit, OnDestroy {

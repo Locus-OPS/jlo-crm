@@ -9,11 +9,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { QuestionnaireService } from '../questionnaire.service';
 
 @Component({
-  selector: 'app-landing-page',
-  standalone: true,
-  imports: [SharedModule, MatRadioModule],
-  templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss'
+    selector: 'app-landing-page',
+    imports: [SharedModule, MatRadioModule],
+    templateUrl: './landing-page.component.html',
+    styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent implements OnInit {
   hasKey: string;

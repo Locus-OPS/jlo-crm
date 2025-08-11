@@ -18,11 +18,10 @@ interface Keyword {
 }
 
 @Component({
-  selector: 'kb-detail-keyword',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './kb-detail-keyword.component.html',
-  styleUrl: './kb-detail-keyword.component.scss'
+    selector: 'kb-detail-keyword',
+    imports: [SharedModule],
+    templateUrl: './kb-detail-keyword.component.html',
+    styleUrl: './kb-detail-keyword.component.scss'
 })
 export class KbDetailKeywordComponent extends BaseComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
