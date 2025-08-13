@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
-@import "src/assets/scss/core/variables.scss";
+@use "src/assets/scss/core/variables" as *;
+@use "src/assets/scss/core/variables/brand" as brand;
 
 @include mat.elevation-classes();
 @include mat.app-background();
@@ -9,7 +10,7 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: $brand-locus !important;
+    background-color: brand.$brand-locus !important;
 }
 
 

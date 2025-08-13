@@ -26,9 +26,6 @@
 $enable-flex: true; // fully adopt flexbox layouts
 $enable-shadows: true; // enable shadows, set to false to turn off shadows
 
-$brand-default: #cecece !default;
-$brand-locus:                #ffd500 !default;
-$brand-second:               #273c83 !default;
 
 @import "variables/layout";
 @import "variables/menu";

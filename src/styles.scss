@@ -1,4 +1,7 @@
-@use 'src/assets/scss/core/variables.scss';
+// @use 'src/assets/scss/core/variables' as *;
+// @use 'src/assets/scss/core/variables/brand' as *;
+@use 'src/assets/scss/core/variables' as variables;
+@use 'src/assets/scss/core/variables/brand' as brand;
 // @import 'quill/dist/quill.bubble.css';
 // @import 'node_modules/quill/dist/quill.bubble.css';
 // or
@@ -69,7 +72,7 @@ mat-tab-body {
 }
 
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header .mat-tab-labels .mat-tab-label.mat-tab-label-active {
-  background: $brand-second;
+  background: brand.$brand-second;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   color: white;
@@ -86,7 +89,7 @@ mat-tab-body {
 }
 
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header {
-  border-bottom: 1px solid $brand-second;
+  border-bottom: 1px solid brand.$brand-second;
 }
 
 .main-panel .mat-tab-group .mat-tab-group .mat-tab-header mat-ink-bar {
@@ -791,7 +794,7 @@ td .mat-icon[svgicon='circle-modified'] svg {
   .card.bg-primary,
   .card.card-rotate.bg-primary .front,
   .card.card-rotate.bg-primary .back {
-    background: $brand-locus;
+    background: brand.$brand-locus;
   }
 
   .card {

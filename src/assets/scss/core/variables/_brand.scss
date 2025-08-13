@@ -2,9 +2,18 @@
 
 
 /*     brand Colors              */
-
+$brand-default: #cecece !default;
 $brand-locus: #2b547e !default;
 $brand-second: #009881 !default;
+
+$green-500: #4caf50 !default;
+$orange-500: #ff9800 !default;
+$red-500: #f44336 !default;
+$pink-500: #e91e63 !default;
+$blue-500: #2196f3 !default;
+$cyan-500: #00bcd4 !default;
+$black-color: #000000 !default;
+// Define brand colors with default
 $brand-primary: $blue-500 !default;
 $brand-info: $cyan-500 !default;
 $brand-success: $green-500 !default;

@@ -31,7 +31,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/custom-theme.scss",
@@ -43,9 +42,14 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "",
+                "src/assets/scss",
                 "."
-              ]
+              ],
+              "sass": {
+                "silenceDeprecations": [
+                  "import"
+                ]
+              }
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

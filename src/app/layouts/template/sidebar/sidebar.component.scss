@@ -1,4 +1,4 @@
-@import 'src/assets/scss/core/variables.scss';
+@use 'src/assets/scss/core/variables' as *;
 
 .sidebar-wrapper {
   height: calc(100vh - 98px);

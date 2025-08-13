@@ -1,6 +1,8 @@
 @use '@angular/material' as mat;
+@use 'src/assets/scss/core/variables/brand' as brand;
 @use 'sass:color';
 @import '../scss/core/variables';
+
 
 @include mat.elevation-classes();
 @include mat.app-background();
@@ -35,7 +37,7 @@ $my-theme: mat.define-theme((color: (theme-type: light,
   mat-tab-header {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     // border-bottom: 2px solid #1565c0;
-    border-bottom: 2px solid $brand-locus;
+    border-bottom: 2px solid brand.$brand-locus;
 
     .mat-mdc-tab {
       background-color: blue($color: #000000) !important;
@@ -47,8 +49,7 @@ $my-theme: mat.define-theme((color: (theme-type: light,
     }
 
     .mat-mdc-tab:hover {
-      //background-color: lighten($brand-locus, 50%) !important;
-      background-color: color.adjust($brand-locus, $lightness: 50%) !important;
+      background-color: color.adjust(brand.$brand-locus, $lightness: 50%) !important;
     }
 
     .mdc-tab--active {
@@ -58,7 +59,7 @@ $my-theme: mat.define-theme((color: (theme-type: light,
       .mdc-tab-indicator {
         top: 0;
         height: 3px !important;
-        background-color: $brand-locus !important;
+        background-color: brand.$brand-locus !important;
       }
     }
 
@@ -117,7 +118,7 @@ $my-theme: mat.define-theme((color: (theme-type: light,
     .mat-mdc-header-cell {
       font-size: 14px;
       font-weight: bold;
-      background-color: $brand-locus;
+      background-color: brand.$brand-locus;
     }
   }
 }
@@ -145,11 +146,11 @@ mat-form-field.mat-mdc-form-field-should-float label {
 }
 
 .mat-mdc-option:hover {
-  background: $brand-locus !important;
+  background: brand.$brand-locus !important;
 }
 
 .mat-mdc-option.mat-mdc-selected:not(.mat-mdc-option-multiple) {
-  background-color: $brand-locus !important;
+  background-color: brand.$brand-locus !important;
 }
 
 input:read-only {
@@ -165,12 +166,12 @@ input.mat-mdc-input-element {
 }
 
 .selected-row {
-  //background-color: lighten($brand-locus, 30%) !important;
-  background-color: color.adjust($brand-locus, $lightness: 30%) !important;
+  //background-color: lighten(brand.$brand-locus, 30%) !important;
+  background-color: color.adjust(brand.$brand-locus, $lightness: 30%) !important;
 }
 
 .subgroup-header {
-  background-color: $brand-locus !important;
+  background-color: brand.$brand-locus !important;
 
   .card-title {
     color: white;
