@@ -5,18 +5,18 @@
     &.active {
       color: $active-color;
       border-color: $active-border;
-      @include hover-focus {
-        border-color: $active-border;
-      }
+      // @include hover-focus {
+      //   border-color: $active-border;
+      // }
     }
 
     // Disabled state lightens text and removes hover/tab effects
     &.disabled {
       color: $disabled-link-color;
 
-      @include plain-hover-focus {
-        color: $disabled-link-hover-color;
-      }
+      // @include plain-hover-focus {
+      //   color: $disabled-link-hover-color;
+      // }
     }
   }
 }
@@ -25,7 +25,7 @@
 
     .moving-tab{
         background-color: $color;
-        @include shadow-big-color($color);
+        // @include shadow-big-color($color);
     }
 
     .picture{

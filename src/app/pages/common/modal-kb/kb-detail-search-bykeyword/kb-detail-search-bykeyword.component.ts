@@ -20,11 +20,10 @@ import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'kb-detail-search-bykeyword',
-  standalone: true,
-  imports: [SharedModule, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailComponent, KbDetailInfoComponent],
-  templateUrl: './kb-detail-search-bykeyword.component.html',
-  styleUrl: './kb-detail-search-bykeyword.component.scss'
+    selector: 'kb-detail-search-bykeyword',
+    imports: [SharedModule, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailComponent, KbDetailInfoComponent],
+    templateUrl: './kb-detail-search-bykeyword.component.html',
+    styleUrl: './kb-detail-search-bykeyword.component.scss'
 })
 export class KbDetailSearchBykeywordComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() data: any;

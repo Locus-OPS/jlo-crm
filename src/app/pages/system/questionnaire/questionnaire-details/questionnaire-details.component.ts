@@ -23,11 +23,10 @@ import { TableControl } from 'src/app/shared/table-control';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-questionnaire-details',
-  templateUrl: './questionnaire-details.component.html',
-  styleUrl: './questionnaire-details.component.scss',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-questionnaire-details',
+    templateUrl: './questionnaire-details.component.html',
+    styleUrl: './questionnaire-details.component.scss',
+    imports: [SharedModule, CreatedByComponent]
 })
 export class QuestionnaireDetailsComponent extends BaseComponent implements OnInit, OnDestroy {
 

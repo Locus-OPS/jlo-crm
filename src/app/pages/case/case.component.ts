@@ -18,11 +18,10 @@ import { CreatedByComponent } from '../common/created-by/created-by.component';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-case',
-  templateUrl: './case.component.html',
-  styleUrls: ['./case.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-case',
+    templateUrl: './case.component.html',
+    styleUrls: ['./case.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class CaseComponent extends BaseComponent implements OnInit {
   @ViewChild('createFormDirective')

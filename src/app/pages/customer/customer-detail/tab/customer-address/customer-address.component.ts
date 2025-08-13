@@ -13,11 +13,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 
 
 @Component({
-  selector: 'app-customer-address',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './customer-address.component.html',
-  styleUrl: './customer-address.component.scss'
+    selector: 'app-customer-address',
+    imports: [SharedModule],
+    templateUrl: './customer-address.component.html',
+    styleUrl: './customer-address.component.scss'
 })
 export class CustomerAddressComponent extends BaseComponent implements OnInit {
 

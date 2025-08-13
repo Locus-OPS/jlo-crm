@@ -4,11 +4,10 @@ import { CustomerVerifyData } from './customer-verify-data';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-verify-customer-dialog',
-  templateUrl: './verify-customer-dialog.component.html',
-  styleUrls: ['./verify-customer-dialog.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-verify-customer-dialog',
+    templateUrl: './verify-customer-dialog.component.html',
+    styleUrls: ['./verify-customer-dialog.component.scss'],
+    imports: [SharedModule]
 })
 export class VerifyCustomerDialogComponent implements OnInit {
 

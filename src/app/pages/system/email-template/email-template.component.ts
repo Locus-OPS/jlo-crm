@@ -24,11 +24,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'app-email-template',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './email-template.component.html',
-  styleUrl: './email-template.component.scss'
+    selector: 'app-email-template',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './email-template.component.html',
+    styleUrl: './email-template.component.scss'
 })
 export class EmailTemplateComponent extends BaseComponent implements OnInit {
 

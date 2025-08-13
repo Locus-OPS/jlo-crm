@@ -20,11 +20,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  standalone: true,
-  imports: [SharedModule, NgxChartsModule]
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    imports: [SharedModule, NgxChartsModule]
 })
 export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
 

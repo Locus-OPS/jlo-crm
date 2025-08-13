@@ -37,7 +37,7 @@ $btn-box-shadow:                 none !default;
 $btn-active-box-shadow:          none !default; // inset 0 3px 5px rgba(0,0,0,.125)
 
 //
-$btn-primary-color:              #fff !default;
+$btn-primary-color:              $brand-locus !default;
 $btn-primary-bg:                 $brand-primary !default;
 $btn-primary-border-color:             $btn-primary-bg !default;
 //
@@ -86,3 +86,7 @@ $input-btn-padding-x-lg:    2.25rem  !default;
 //$btn-border-radius-lg:           $border-radius-lg !default;
 $btn-border-radius-sm:             .1875rem !default;
 $border-radius-extreme:            2rem !default;
+
+$btn-locus-color:                 #f00 !default;
+$btn-locus-bg:                    $brand-locus !default;
+$btn-locus-border-color:              $btn-locus-bg !default;

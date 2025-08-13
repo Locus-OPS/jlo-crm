@@ -14,11 +14,10 @@ import { Router } from '@angular/router';
 import { interval, Subscription } from 'rxjs';
 import { NotificationInfoService } from './notification-info.service';
 @Component({
-  selector: 'app-notification-info',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './notification-info.component.html',
-  styleUrl: './notification-info.component.scss'
+    selector: 'app-notification-info',
+    imports: [SharedModule],
+    templateUrl: './notification-info.component.html',
+    styleUrl: './notification-info.component.scss'
 })
 export class NotificationInfoComponent implements OnInit, OnDestroy {
 

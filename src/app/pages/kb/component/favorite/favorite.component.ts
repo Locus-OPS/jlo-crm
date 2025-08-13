@@ -8,11 +8,10 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { FavoriteService } from './favorite.service';
 
 @Component({
-  selector: 'kb-favorite',
-  standalone: true,
-  imports: [],
-  templateUrl: './favorite.component.html',
-  styleUrl: './favorite.component.scss'
+    selector: 'kb-favorite',
+    imports: [],
+    templateUrl: './favorite.component.html',
+    styleUrl: './favorite.component.scss'
 })
 export class FavoriteComponent extends BaseComponent implements OnInit {
   @Input() contentId!: number;  // รับ contentId จาก parent component

@@ -10,11 +10,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
-  selector: 'app-workflow-system',
-  standalone: true,
-  imports: [SharedModule, MatTabsModule],
-  templateUrl: './workflow-system.component.html',
-  styleUrl: './workflow-system.component.scss'
+    selector: 'app-workflow-system',
+    imports: [SharedModule, MatTabsModule],
+    templateUrl: './workflow-system.component.html',
+    styleUrl: './workflow-system.component.scss'
 })
 export class WorkflowSystemComponent extends BaseComponent implements OnInit {
 

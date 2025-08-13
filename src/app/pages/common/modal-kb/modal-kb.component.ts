@@ -27,11 +27,10 @@ import { KbDetailKeywordComponent } from './kb-detail-keyword/kb-detail-keyword.
 import { KbDetailSearchBykeywordComponent } from './kb-detail-search-bykeyword/kb-detail-search-bykeyword.component';
 
 @Component({
-  selector: 'app-modal-kb',
-  standalone: true,
-  imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailSearchBykeywordComponent],
-  templateUrl: './modal-kb.component.html',
-  styleUrl: './modal-kb.component.scss'
+    selector: 'app-modal-kb',
+    imports: [SharedModule, TreeComponent, KbDetailComponent, KbDetailInfoComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailSearchBykeywordComponent],
+    templateUrl: './modal-kb.component.html',
+    styleUrl: './modal-kb.component.scss'
 })
 export class ModalKbComponent extends BaseComponent implements OnInit {
   kbDetailSubscription: Subscription;

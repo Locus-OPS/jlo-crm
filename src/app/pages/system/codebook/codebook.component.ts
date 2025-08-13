@@ -14,11 +14,10 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-codebook',
-  templateUrl: './codebook.component.html',
-  styleUrls: ['./codebook.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-codebook',
+    templateUrl: './codebook.component.html',
+    styleUrls: ['./codebook.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class CodebookComponent extends BaseComponent implements OnInit {
 

@@ -12,11 +12,10 @@ import { Subject } from 'rxjs';
 
 
 @Component({
-  selector: 'app-process-flow',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './process-flow.component.html',
-  styleUrl: './process-flow.component.scss'
+    selector: 'app-process-flow',
+    imports: [SharedModule],
+    templateUrl: './process-flow.component.html',
+    styleUrl: './process-flow.component.scss'
 })
 export class ProcessFlowComponent extends BaseComponent implements OnInit {
 

@@ -9,11 +9,10 @@ import { KbStore } from '../../../kb.store';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-tree-modal',
-  templateUrl: './tree-modal.component.html',
-  styleUrls: ['./tree-modal.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-tree-modal',
+    templateUrl: './tree-modal.component.html',
+    styleUrls: ['./tree-modal.component.scss'],
+    imports: [SharedModule]
 })
 export class TreeModalComponent implements OnInit {
 

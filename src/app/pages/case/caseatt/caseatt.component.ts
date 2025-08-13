@@ -21,11 +21,10 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'tab-caseatt-content',
-  templateUrl: './caseatt.component.html',
-  styleUrls: ['./caseatt.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'tab-caseatt-content',
+    templateUrl: './caseatt.component.html',
+    styleUrls: ['./caseatt.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() caseNumber!: string;

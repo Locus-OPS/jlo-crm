@@ -14,11 +14,10 @@ import { ModalEmailComponent } from '../common/modal-email/modal-email.component
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-advertising',
-  templateUrl: './advertising.component.html',
-  styleUrl: './advertising.component.scss',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-advertising',
+    templateUrl: './advertising.component.html',
+    styleUrl: './advertising.component.scss',
+    imports: [SharedModule, CreatedByComponent]
 })
 export class AdvertisingComponent extends BaseComponent implements OnInit {
 

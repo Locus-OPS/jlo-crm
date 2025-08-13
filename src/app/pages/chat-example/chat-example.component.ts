@@ -9,11 +9,10 @@ import { ChatExampleService } from './chat-example.service';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-chat-example',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './chat-example.component.html',
-  styleUrls: ['./chat-example.component.scss']
+    selector: 'app-chat-example',
+    imports: [SharedModule],
+    templateUrl: './chat-example.component.html',
+    styleUrls: ['./chat-example.component.scss']
 })
 export class ChatExampleComponent extends BaseComponent implements OnInit, OnDestroy {
   username: string = '';

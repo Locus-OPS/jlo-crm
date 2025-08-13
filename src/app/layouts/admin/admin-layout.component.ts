@@ -16,12 +16,11 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  standalone: true,
-  imports: [SharedModule, NgScrollbarModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
+    selector: 'app-layout',
+    templateUrl: './admin-layout.component.html',
+    styleUrls: ['./admin-layout.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    imports: [SharedModule, NgScrollbarModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 

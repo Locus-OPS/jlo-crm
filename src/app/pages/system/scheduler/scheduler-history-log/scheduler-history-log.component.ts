@@ -14,11 +14,10 @@ import { SchedulerHistoryLogData } from './scheduler-history-log.model';
 import { SchedulerHistoryLogService } from './scheduler-history-log.service';
 
 @Component({
-  selector: 'app-scheduler-history-log',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './scheduler-history-log.component.html',
-  styleUrl: './scheduler-history-log.component.scss'
+    selector: 'app-scheduler-history-log',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './scheduler-history-log.component.html',
+    styleUrl: './scheduler-history-log.component.scss'
 })
 export class SchedulerHistoryLogComponent extends BaseComponent implements OnInit {
 

@@ -9,11 +9,10 @@ import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'kb-main-document',
-  templateUrl: './main-document.component.html',
-  styleUrls: ['./main-document.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'kb-main-document',
+    templateUrl: './main-document.component.html',
+    styleUrls: ['./main-document.component.scss'],
+    imports: [SharedModule]
 })
 export class MainDocumentComponent extends BaseComponent implements OnInit, OnDestroy {
 

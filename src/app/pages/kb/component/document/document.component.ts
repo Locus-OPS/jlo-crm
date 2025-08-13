@@ -16,11 +16,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.component';
 
 @Component({
-  selector: 'kb-document',
-  templateUrl: './document.component.html',
-  styleUrls: ['./document.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'kb-document',
+    templateUrl: './document.component.html',
+    styleUrls: ['./document.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class DocumentComponent extends BaseComponent implements OnInit, OnDestroy {
 

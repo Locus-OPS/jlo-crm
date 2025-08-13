@@ -14,11 +14,10 @@ import { EmailLogService } from './email-log.service';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-email-log',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './email-log.component.html',
-  styleUrl: './email-log.component.scss'
+    selector: 'app-email-log',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './email-log.component.html',
+    styleUrl: './email-log.component.scss'
 })
 export class EmailLogComponent extends BaseComponent implements OnInit {
 

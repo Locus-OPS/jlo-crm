@@ -5,10 +5,9 @@ import { filter, tap } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './auth-layout.component.html',
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-layout',
+    templateUrl: './auth-layout.component.html',
+    imports: [SharedModule]
 })
 export class AuthLayoutComponent implements OnInit {
   private toggleButton: any;

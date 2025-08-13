@@ -13,11 +13,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import Utils from 'src/app/shared/utils';
 @Component({
-  selector: 'app-contact-history-tl',
-  templateUrl: './contact-history-tl.component.html',
-  styleUrl: './contact-history-tl.component.scss',
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-contact-history-tl',
+    templateUrl: './contact-history-tl.component.html',
+    styleUrl: './contact-history-tl.component.scss',
+    imports: [SharedModule]
 })
 export class ContactHistoryTlComponent extends BaseComponent implements OnInit {
   searchForm: FormGroup;

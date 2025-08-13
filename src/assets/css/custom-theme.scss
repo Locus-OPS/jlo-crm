@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
+@use 'sass:color';
 @import '../scss/core/variables';
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $my-theme: mat.define-theme((color: (theme-type: light,
         primary: mat.$azure-palette,
@@ -37,6 +39,7 @@ $my-theme: mat.define-theme((color: (theme-type: light,
 
     .mat-mdc-tab {
       background-color: blue($color: #000000) !important;
+      //background-color: blue !important;
       height: 35px;
       padding: 0 16px;
       color: #1e1d1d !important;
@@ -44,7 +47,8 @@ $my-theme: mat.define-theme((color: (theme-type: light,
     }
 
     .mat-mdc-tab:hover {
-      background-color: lighten($brand-locus, 50%) !important;
+      //background-color: lighten($brand-locus, 50%) !important;
+      background-color: color.adjust($brand-locus, $lightness: 50%) !important;
     }
 
     .mdc-tab--active {
@@ -161,7 +165,8 @@ input.mat-mdc-input-element {
 }
 
 .selected-row {
-  background-color: lighten($brand-locus, 30%) !important;
+  //background-color: lighten($brand-locus, 30%) !important;
+  background-color: color.adjust($brand-locus, $lightness: 30%) !important;
 }
 
 .subgroup-header {

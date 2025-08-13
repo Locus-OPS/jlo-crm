@@ -10,11 +10,10 @@ import Utils from 'src/app/shared/utils';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-broadcast',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './broadcast.component.html',
-  styleUrl: './broadcast.component.scss'
+    selector: 'app-broadcast',
+    imports: [SharedModule],
+    templateUrl: './broadcast.component.html',
+    styleUrl: './broadcast.component.scss'
 })
 export class BroadcastComponent extends BaseComponent implements OnInit {
 

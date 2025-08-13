@@ -18,11 +18,10 @@ interface Keyword {
 }
 
 @Component({
-  selector: 'kb-keyword',
-  templateUrl: './keyword.component.html',
-  styleUrls: ['./keyword.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'kb-keyword',
+    templateUrl: './keyword.component.html',
+    styleUrls: ['./keyword.component.scss'],
+    imports: [SharedModule]
 })
 export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy {
 

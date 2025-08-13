@@ -11,11 +11,10 @@ import Utils from 'src/app/shared/utils';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'kb-detail-info',
-  templateUrl: './detail-info.component.html',
-  styleUrls: ['./detail-info.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'kb-detail-info',
+    templateUrl: './detail-info.component.html',
+    styleUrls: ['./detail-info.component.scss'],
+    imports: [SharedModule]
 })
 export class DetailInfoComponent extends BaseComponent implements OnInit, OnDestroy {
 

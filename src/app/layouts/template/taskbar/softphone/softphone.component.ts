@@ -10,11 +10,10 @@ import { TaskbarService } from "../taskbar.service";
 import { SharedModule } from "src/app/shared/module/shared.module";
 
 @Component({
-  selector: "app-softphone-cmp",
-  templateUrl: "./softphone.component.html",
-  styleUrls: ["./softphone.component.scss"],
-  standalone: true,
-  imports: [SharedModule]
+    selector: "app-softphone-cmp",
+    templateUrl: "./softphone.component.html",
+    styleUrls: ["./softphone.component.scss"],
+    imports: [SharedModule]
 })
 export class SoftphoneComponent implements OnInit {
   @Input()

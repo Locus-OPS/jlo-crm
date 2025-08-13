@@ -4,11 +4,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { LoginLogComponent } from '../login-log/login-log.component';
 
 @Component({
-  selector: 'app-user-log',
-  templateUrl: './user-log.component.html',
-  styleUrls: ['./user-log.component.scss'],
-  standalone: true,
-  imports: [SharedModule, LoginLogComponent]
+    selector: 'app-user-log',
+    templateUrl: './user-log.component.html',
+    styleUrls: ['./user-log.component.scss'],
+    imports: [SharedModule, LoginLogComponent]
 })
 export class UserLogComponent implements OnInit {
 

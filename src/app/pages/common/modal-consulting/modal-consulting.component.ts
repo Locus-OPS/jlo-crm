@@ -19,11 +19,10 @@ import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../created-by/created-by.component';
 
 @Component({
-  selector: 'app-modal-consulting',
-  templateUrl: './modal-consulting.component.html',
-  styleUrl: './modal-consulting.component.scss',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-modal-consulting',
+    templateUrl: './modal-consulting.component.html',
+    styleUrl: './modal-consulting.component.scss',
+    imports: [SharedModule, CreatedByComponent]
 })
 export class ModalConsultingComponent extends BaseComponent implements OnInit {
 

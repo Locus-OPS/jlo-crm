@@ -15,11 +15,10 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 
 
 @Component({
-  selector: 'app-internationalization',
-  templateUrl: './internationalization.component.html',
-  styleUrls: ['./internationalization.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-internationalization',
+    templateUrl: './internationalization.component.html',
+    styleUrls: ['./internationalization.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class InternationalizationComponent extends BaseComponent implements OnInit {
 

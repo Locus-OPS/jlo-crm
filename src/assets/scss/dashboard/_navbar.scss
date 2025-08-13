@@ -51,66 +51,6 @@
         }
     }
   }
-
-//   .user{
-//         padding-bottom: 20px;
-//         margin:20px auto 0;
-//         position: relative;
-
-//         &:after{
-//             content: '';
-//             position: absolute;
-//             bottom: 0;
-//             right: 15px;
-//             height: 1px;
-//             width: calc(100% - 30px);
-//             background-color: rgba(180,180,180, .3);
-//         }
-
-//         .photo{
-//             width: 34px;
-//             height: 34px;
-//             overflow: hidden;
-//             float: left;
-//             z-index: 5;
-//             margin-right: 11px;
-//             border-radius: 50%;
-//             margin-left: 23px;
-//             @include shadow-big();
-//             @extend .animation-transition-general;
-
-//             img{
-//                 width: 100%;
-//             }
-//         }
-
-//         a{
-//             color: $black-color;
-//             padding: $padding-base-vertical 15px;
-//             white-space: nowrap;
-//         }
-
-//         .user-info{
-//             > a{
-//                display: block;
-//                line-height: 18px;
-//                font-size: 14px;
-
-//                 > span{
-//                    @extend .animation-transition-general;
-//                    display: block;
-//                    position: relative;
-//                    opacity: 1;
-//                 }
-//             }
-
-//             .caret{
-//                 position: absolute;
-//                 top: 8px;
-//                 right: 15px;
-//             }
-//         }
-//     }
 }
 
 .off-canvas-sidebar{

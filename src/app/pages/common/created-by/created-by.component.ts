@@ -3,11 +3,10 @@ import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-created-by',
-  templateUrl: './created-by.component.html',
-  styleUrls: ['./created-by.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-created-by',
+    templateUrl: './created-by.component.html',
+    styleUrls: ['./created-by.component.scss'],
+    imports: [SharedModule]
 })
 export class CreatedByComponent implements OnChanges {
 

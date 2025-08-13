@@ -18,11 +18,10 @@ import { CreatedByComponent } from '../../common/created-by/created-by.component
 import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent]
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    styleUrls: ['./user.component.scss'],
+    imports: [SharedModule, CreatedByComponent]
 })
 export class UserComponent extends BaseComponent implements OnInit {
 

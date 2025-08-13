@@ -1,10 +1,10 @@
 .pagination{
 
-    > .page-item .page-link.mat-mdc-button .mat-mdc-button-ripple{
+    > .page-item .page-link.mat-button .mat-button-ripple{
       border-radius: 30px;
     }
 
-    > .page-item > .page-link.mat-mdc-button,
+    > .page-item > .page-link.mat-button,
     > .page-item > span,
     .paginate_button a{
       border: 0;
@@ -33,7 +33,7 @@
       display: block;
     }
 
-    > .page-item.active > a.mat-mdc-button,
+    > .page-item.active > a.mat-button,
     > .page-item.active > span,
     .paginate_button.active a{
         color: $gray-color;
@@ -161,7 +161,7 @@
 //   }
 //   @include pagination-size($pagination-padding-y-sm, $pagination-padding-x-sm, $font-size-sm, $line-height-sm, 4em);
 // }
-.mat-mdc-button:hover .mat-mdc-button-focus-overlay, .mat-mdc-stroked-button:hover .mat-mdc-button-focus-overlay{
+.mat-button:hover .mat-button-focus-overlay, .mat-stroked-button:hover .mat-button-focus-overlay{
   opacity: 0;
   background-color: transparent!important;
 }

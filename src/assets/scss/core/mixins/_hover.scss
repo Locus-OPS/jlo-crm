@@ -3,9 +3,9 @@
   &.active {
     @content;
   }
-  @include hover-focus-active() {
-    @content;
-  }
+  // @include hover-focus-active() {
+  //   @content;
+  // }
 }
 
 @mixin transform-translate-y($value){

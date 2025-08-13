@@ -11,11 +11,10 @@ const md: any = {
 };
 
 @Component({
-  selector: 'app-fixedplugin',
-  templateUrl: './fixedplugin.component.html',
-  styleUrls: ['./fixedplugin.component.css'],
-  standalone: true,
-  imports: [CommonModule]
+    selector: 'app-fixedplugin',
+    templateUrl: './fixedplugin.component.html',
+    styleUrls: ['./fixedplugin.component.css'],
+    imports: [CommonModule]
 })
 
 export class FixedpluginComponent implements OnInit {

@@ -11,11 +11,10 @@ import { TableControl } from 'src/app/shared/table-control';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-customer-audit-log',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './customer-audit-log.component.html',
-  styleUrl: './customer-audit-log.component.scss'
+    selector: 'app-customer-audit-log',
+    imports: [SharedModule],
+    templateUrl: './customer-audit-log.component.html',
+    styleUrl: './customer-audit-log.component.scss'
 })
 export class CustomerAuditLogComponent extends BaseComponent implements OnInit {
 

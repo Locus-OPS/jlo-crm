@@ -9,11 +9,10 @@ import { RatingService } from './rating.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'kb-rating',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './rating.component.html',
-  styleUrl: './rating.component.scss'
+    selector: 'kb-rating',
+    imports: [SharedModule],
+    templateUrl: './rating.component.html',
+    styleUrl: './rating.component.scss'
 })
 export class RatingComponent extends BaseComponent implements OnInit {
 

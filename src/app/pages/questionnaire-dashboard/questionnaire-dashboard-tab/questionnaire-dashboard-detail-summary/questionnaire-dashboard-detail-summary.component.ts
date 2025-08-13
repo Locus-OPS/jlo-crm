@@ -11,11 +11,10 @@ import { Globals } from 'src/app/shared/globals';
 import Utils from 'src/app/shared/utils';
 
 @Component({
-  selector: 'app-questionnaire-dashboard-detail-summary',
-  standalone: true,
-  imports: [],
-  templateUrl: './questionnaire-dashboard-detail-summary.component.html',
-  styleUrl: './questionnaire-dashboard-detail-summary.component.scss'
+    selector: 'app-questionnaire-dashboard-detail-summary',
+    imports: [],
+    templateUrl: './questionnaire-dashboard-detail-summary.component.html',
+    styleUrl: './questionnaire-dashboard-detail-summary.component.scss'
 })
 export class QuestionnaireDashboardDetailSummaryComponent extends BaseComponent implements OnInit {
   @Input() id: number;

@@ -16,11 +16,10 @@ import { CustomerModalService } from './customer-modal-service.service';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
 @Component({
-  selector: 'app-modal-customer',
-  templateUrl: './modal-customer.component.html',
-  styleUrls: ['./modal-customer.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-modal-customer',
+    templateUrl: './modal-customer.component.html',
+    styleUrls: ['./modal-customer.component.scss'],
+    imports: [SharedModule]
 })
 export class ModalCustomerComponent extends BaseComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;

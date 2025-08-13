@@ -1,0 +1,209 @@
+.statusBreadcrumb {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+
+    ul {
+        list-style: none;
+        float:right;
+
+        .icon {
+            font-size: 14px;
+        }
+
+        li {
+            float: left;
+            margin-bottom: 4px;
+
+            a {
+                color: $brand-primary;
+                display: block;
+                background: $gray-lighter;
+                text-decoration: none;
+                position: relative;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 10px 0 5px;
+                text-align: center;
+                margin-right: 23px;
+            }
+
+            .waitStatus {
+                display: none;
+            }
+
+            &.bc-pass {
+                a {
+                    background: $brand-locus;
+
+                    &:before {
+                        border-color: $brand-locus;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: $brand-locus;
+                    }
+                }
+            }
+
+            &.bc-primary {
+                a {
+                    color: $brand-locus;
+                    background: $brand-primary;
+
+                    &:before {
+                        border-color: $brand-primary;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: $brand-primary;
+                    }
+
+                    .waitStatus {
+                        display: initial;
+                    }
+                }
+            }
+
+            &.bc-orange {
+                a {
+                    background: orange;
+
+                    &:before {
+                        border-color: orange;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: orange;
+                    }
+
+                    .waitStatus {
+                        display: initial;
+                    }
+                }
+            }
+
+            &.bc-red {
+                a {
+                    background: $red;
+                    color: $brand-locus;
+
+                    &:before {
+                        border-color: $red;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: $red;
+                    }
+
+                    .waitStatus {
+                        display: initial;
+                    }
+                }
+            }
+
+            &.bc-green {
+                a {
+                    background: $green;
+
+                    &:before {
+                        border-color: $green;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: $green;
+                    }
+
+                    .waitStatus {
+                        display: initial;
+                    }
+                }
+            }
+
+            &.bc-gray {
+                a {
+                    background: $gray;
+
+                    &:before {
+                        border-color: $gray;
+                        border-left-color: transparent;
+                    }
+
+                    &:after {
+                        border-left-color: $gray;
+                    }
+
+                    .waitStatus {
+                        display: initial;
+                    }
+                }
+            }
+
+            /*
+            &:nth-child(even){
+                a{
+                    background-color: $blue-darken;
+
+                    &:before{
+                    border-color:$blue-darken;
+                    border-left-color:transparent;
+                    }
+                    &:after{
+                    border-left-color:$blue-darken;
+                    }
+                }
+            }
+            */
+            &:first-child {
+                a {
+                    padding-left: 15px;
+                    margin-left: -19px;
+                    //border-radius(4px 0 0 4px);
+                    &:before {
+                        border: none;
+                    }
+                }
+            }
+
+            &:last-child {
+                a {
+                    padding-right: 15px;
+                    margin-right: 0;
+                    //border-radius(0 4px 4px 0);
+                    &:after {
+                        border: none;
+                    }
+                }
+            }
+
+            a {
+                &:before, &:after {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    border: 0 solid $gray-lighter;
+                    border-width: 20px 10px;
+                    width: 0;
+                    height: 0;
+                }
+
+                &:before {
+                    left: -19px;
+                    border-left-color: transparent;
+                }
+
+                &:after {
+                    left: 100%;
+                    border-color: transparent;
+                    border-left-color: $gray-lighter;
+                }
+            }
+        }
+
+    }
+}

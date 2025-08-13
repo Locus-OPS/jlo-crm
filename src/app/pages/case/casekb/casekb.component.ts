@@ -20,11 +20,10 @@ import { KbDetailComponent } from '../../common/modal-kb/kb-detail/kb-detail.com
 import { KbDetailInfoComponent } from '../../common/modal-kb/kb-detail-info/kb-detail-info.component';
 
 @Component({
-  selector: 'tab-casekb-content',
-  standalone: true,
-  imports: [SharedModule, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailComponent, KbDetailInfoComponent],
-  templateUrl: './casekb.component.html',
-  styleUrl: './casekb.component.scss'
+    selector: 'tab-casekb-content',
+    imports: [SharedModule, RatingComponent, FavoriteComponent, KbDetailDocumentComponent, KbDetailKeywordComponent, KbDetailComponent, KbDetailInfoComponent],
+    templateUrl: './casekb.component.html',
+    styleUrl: './casekb.component.scss'
 })
 export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() caseNumber!: string;

@@ -17,11 +17,10 @@ import moment from 'moment';
 import { KbDetail } from 'src/app/pages/kb/kb.model';
 
 @Component({
-  selector: 'modal-kb-detail',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-  templateUrl: './kb-detail.component.html',
-  styleUrl: './kb-detail.component.scss'
+    selector: 'modal-kb-detail',
+    imports: [SharedModule, CreatedByComponent],
+    templateUrl: './kb-detail.component.html',
+    styleUrl: './kb-detail.component.scss'
 })
 export class KbDetailComponent extends BaseComponent implements OnInit, OnDestroy {
 

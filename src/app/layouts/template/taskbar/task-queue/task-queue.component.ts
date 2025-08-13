@@ -7,11 +7,10 @@ import { Router } from "@angular/router";
 import { CdTimerModule } from 'angular-cd-timer';
 
 @Component({
-  selector: "app-task-queue-cmp",
-  templateUrl: "./task-queue.component.html",
-  styleUrls: ["./task-queue.component.scss"],
-  standalone: true,
-  imports: [SharedModule, CdTimerModule]
+    selector: "app-task-queue-cmp",
+    templateUrl: "./task-queue.component.html",
+    styleUrls: ["./task-queue.component.scss"],
+    imports: [SharedModule, CdTimerModule]
 })
 export class TaskQueueComponent implements OnInit {
   @Input()

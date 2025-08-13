@@ -12,12 +12,10 @@ import { Globals } from 'src/app/shared/globals';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-customer-case',
-  standalone: true,
-  imports: [SharedModule],
-  templateUrl: './customer-case.component.html',
-  styleUrl: './customer-case.component.scss'
-
+    selector: 'app-customer-case',
+    imports: [SharedModule],
+    templateUrl: './customer-case.component.html',
+    styleUrl: './customer-case.component.scss'
 })
 export class CustomerCaseComponent extends BaseComponent implements OnInit {
 

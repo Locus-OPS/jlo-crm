@@ -6,11 +6,10 @@ import { SoftphoneComponent } from "./softphone/softphone.component";
 import { TaskQueueComponent } from "./task-queue/task-queue.component";
 
 @Component({
-  selector: "app-taskbar-cmp",
-  templateUrl: "./taskbar.component.html",
-  styleUrls: ["./taskbar.component.scss"],
-  standalone: true,
-  imports: [SharedModule, SoftphoneComponent, TaskQueueComponent]
+    selector: "app-taskbar-cmp",
+    templateUrl: "./taskbar.component.html",
+    styleUrls: ["./taskbar.component.scss"],
+    imports: [SharedModule, SoftphoneComponent, TaskQueueComponent]
 })
 export class TaskbarComponent implements OnInit {
 

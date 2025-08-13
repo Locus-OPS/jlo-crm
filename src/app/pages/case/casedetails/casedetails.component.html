@@ -4,10 +4,10 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
-            <!-- <div class="pull-right">
-              <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+            <!-- <div class="float-end">
+              <a data-bs-toggle="collapse" href="#collapseExample" class="collapsed">
                 <span>
-                  <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
+                  <b><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
                 </span>
               </a>
             </div>
@@ -75,7 +75,7 @@
                       formControlName="email" />
                   </mat-form-field>
                 </div>
-                <div class="pull-right">
+                <div class="float-end">
                   <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="createContact()">
                     {{ 'button.create.contact' | translate }}
                   </button>
@@ -146,7 +146,7 @@
                   </div>
                 </form>
 
-                <div class="pull-right">
+                <div class="float-end">
                   <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="searchCustomer()">
                     {{ 'button.search' | translate }}
                     <mat-icon>search</mat-icon>
@@ -324,7 +324,7 @@
                     [updatedBy]="createForm.controls['updatedByName'].value"
                     [updatedDate]="createForm.controls['updatedDate'].value">
                   </app-created-by>
-                  <div class="pull-right">
+                  <div class="float-end">
                     <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
                       {{ 'button.back' | translate }}
                       <mat-icon>undo</mat-icon>

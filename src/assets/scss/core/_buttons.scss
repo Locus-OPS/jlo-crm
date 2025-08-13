@@ -1,9 +1,10 @@
-.mat-mdc-button.btn,.mat-mdc-raised-button.btn,.mat-mdc-raised-button.btn:not([class*=mat-mdc-elevation-z]),
+.mat-button.btn,.mat-raised-button.btn,.mat-raised-button.btn:not([class*=mat-elevation-z]),
 .btn{
   position: relative;
   padding: 12px 30px;
   margin: $bmd-btn-margin-bottom 1px;
-  min-width: auto;
+  margin-left: 4px;
+  min-width: 100px;
   font-size: .75rem; //  12px
   font-weight: 400;
   line-height: $bmd-line-height;
@@ -19,6 +20,10 @@
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: box-shadow, transform;
   @include undo-bs-tab-focus();
+
+  &:first-child {
+      margin: $bmd-btn-margin-bottom 1px;
+  }
 
   //--
   // Colors
@@ -42,7 +47,7 @@
       text-decoration: none !important;
   }
 
-  @include hover-focus();
+  // @include hover-focus();
 
   //---
   // btn-raised
@@ -69,19 +74,19 @@
   @include bmd-outline-button-color();
 
   // Size variations
-  &.btn-lg,
-  .btn-group-lg & {
-    @include button-size($input-btn-padding-y-lg, $input-btn-padding-x-lg, $bmd-btn-font-size, $btn-lg-line-height, $border-radius-sm);
-  }
-  &.btn-sm,
-  .btn-group-sm & {
-    @include button-size($input-btn-padding-y-sm, $input-btn-padding-x-sm, $bmd-btn-font-size-sm, $line-height-sm, $border-radius-sm);
-  }
+  // &.btn-lg,
+  // .btn-group-lg & {
+  //   @include button-size($input-btn-padding-y-lg, $input-btn-padding-x-lg, $bmd-btn-font-size, $btn-lg-line-height, $border-radius-sm);
+  // }
+  // &.btn-sm,
+  // .btn-group-sm & {
+  //   @include button-size($input-btn-padding-y-sm, $input-btn-padding-x-sm, $bmd-btn-font-size-sm, $line-height-sm, $border-radius-sm);
+  // }
 
   &.btn-round {
     border-radius: $border-radius-extreme;
 
-    > .mat-mdc-button-focus-overlay, .mat-mdc-button-ripple{
+    > .mat-button-focus-overlay, .mat-button-ripple{
       border-radius: $border-radius-extreme;
     }
   }
@@ -174,8 +179,8 @@
     }
 
 // Disabled buttons and button groups
-.mat-mdc-raised-button.btn,
-.input-group-btn .mat-mdc-raised-button.btn,
+.mat-raised-button.btn,
+.input-group-btn .mat-raised-button.btn,
 .btn-group,
 .btn-group-vertical {
   // have to ratchet up the specificity to kill drop shadows on disabled raised buttons
@@ -212,9 +217,9 @@
     @include box-shadow($bmd-shadow-2dp);
   }
 
-  .mat-mdc-raised-button.btn + .mat-mdc-raised-button.btn,
-  .mat-mdc-raised-button.btn,
-  .mat-mdc-raised-button.btn:active,
+  .mat-raised-button.btn + .mat-raised-button.btn,
+  .mat-raised-button.btn,
+  .mat-raised-button.btn:active,
   .btn-group {
     margin: 0;
   }
@@ -225,20 +230,20 @@
   }
 
 }
-.btn-group > .mat-mdc-raised-button.btn:not(:first-child), .btn-group > .btn-group:not(:first-child) > .mat-mdc-raised-button.btn,
+.btn-group > .mat-raised-button.btn:not(:first-child), .btn-group > .btn-group:not(:first-child) > .mat-raised-button.btn,
 
-.btn-group > .mat-mdc-raised-button.btn:not(:first-child) .mat-mdc-button-ripple, .btn-group > .btn-group:not(:first-child) > .mat-mdc-raised-button.btn .mat-mdc-button-ripple,
+.btn-group > .mat-raised-button.btn:not(:first-child) .mat-button-ripple, .btn-group > .btn-group:not(:first-child) > .mat-raised-button.btn .mat-button-ripple,
 
-.btn-group > .mat-mdc-raised-button.btn:not(:first-child) .mat-mdc-button-focus-overlay, .btn-group > .btn-group:not(:first-child) > .mat-mdc-raised-button.btn .mat-mdc-button-focus-overlay{
+.btn-group > .mat-raised-button.btn:not(:first-child) .mat-button-focus-overlay, .btn-group > .btn-group:not(:first-child) > .mat-raised-button.btn .mat-button-focus-overlay{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-.btn-group > .mat-mdc-raised-button.btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .mat-mdc-raised-button.btn,
-.btn-group > .mat-mdc-raised-button.btn:not(:last-child):not(.dropdown-toggle) .mat-mdc-button-ripple, .btn-group > .btn-group:not(:last-child) > .mat-mdc-raised-button.btn .mat-mdc-button-ripple,
-.btn-group > .mat-mdc-raised-button.btn:not(:last-child):not(.dropdown-toggle) .mat-mdc-button-focus-overlay, .btn-group > .btn-group:not(:last-child) > .mat-mdc-raised-button.btn .mat-mdc-button-focus-overlay {
+.btn-group > .mat-raised-button.btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .mat-raised-button.btn,
+.btn-group > .mat-raised-button.btn:not(:last-child):not(.dropdown-toggle) .mat-button-ripple, .btn-group > .btn-group:not(:last-child) > .mat-raised-button.btn .mat-button-ripple,
+.btn-group > .mat-raised-button.btn:not(:last-child):not(.dropdown-toggle) .mat-button-focus-overlay, .btn-group > .btn-group:not(:last-child) > .mat-raised-button.btn .mat-button-focus-overlay {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.btn-no-ripple .mat-mdc-button-ripple{
+.btn-no-ripple .mat-button-ripple{
   display: none;
 }

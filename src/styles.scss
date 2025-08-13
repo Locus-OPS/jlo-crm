@@ -1,5 +1,5 @@
-@import 'src/assets/scss/core/variables.scss';
-// @import '~quill/dist/quill.bubble.css';
+@use 'src/assets/scss/core/variables.scss';
+// @import 'quill/dist/quill.bubble.css';
 // @import 'node_modules/quill/dist/quill.bubble.css';
 // or
 // import '~quill/dist/quill.snow.css';
@@ -454,8 +454,46 @@ mat-form-field.mat-form-field-appearance-legacy {
   }
 }
 
+
 .sidebar-mini .sidebar:hover .sidebar-wrapper ul.nav li.nav-item>a.nav-link p {
   transform: translateX(-13px);
+}
+
+.sidebar-mini {
+  .sidebar {
+    &:hover {
+      .sidebar-wrapper {
+        ul.nav {
+          li.nav-item {
+            a.nav-link {
+              width: auto;
+
+              .sidebar-normal {
+                display: inline;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .sidebar-wrapper {
+      ul.nav {
+        li.nav-item {
+          a.nav-link {
+            width: 40px;
+            overflow: hidden;
+
+            .sidebar-normal {
+              display: none;
+            }
+          }
+
+          clear: both;
+        }
+      }
+    }
+  }
 }
 
 .sidebar-wrapper {
@@ -482,6 +520,10 @@ mat-form-field.mat-form-field-appearance-legacy {
     li.nav-item {
       i.material-icons {
         transform: translateX(-5px);
+      }
+
+      .sidebar-normal {
+        margin-left: 10px;
       }
 
       .jlo-menu-sub {
@@ -542,6 +584,8 @@ mat-form-field.mat-form-field-appearance-legacy {
           margin-left: 29px;
           white-space: nowrap;
         }
+
+
       }
     }
   }

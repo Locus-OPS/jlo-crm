@@ -15,11 +15,10 @@ interface LoginLogData {
 }
 
 @Component({
-  selector: 'app-login-log',
-  templateUrl: './login-log.component.html',
-  styleUrls: ['./login-log.component.scss'],
-  standalone: true,
-  imports: [SharedModule]
+    selector: 'app-login-log',
+    templateUrl: './login-log.component.html',
+    styleUrls: ['./login-log.component.scss'],
+    imports: [SharedModule]
 })
 export class LoginLogComponent implements OnInit {
 

@@ -16,12 +16,10 @@ import { ApiService } from 'src/app/services/api.service';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
 
 @Component({
-  selector: 'app-department',
-  templateUrl: './department.component.html',
-  styleUrl: './department.component.scss',
-  standalone: true,
-  imports: [SharedModule, CreatedByComponent],
-
+    selector: 'app-department',
+    templateUrl: './department.component.html',
+    styleUrl: './department.component.scss',
+    imports: [SharedModule, CreatedByComponent]
 })
 export class DepartmentComponent extends BaseComponent implements OnInit {
   @ViewChild('createFormDirective')
