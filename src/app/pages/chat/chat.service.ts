@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { promise } from 'protractor';
 import { Subject } from 'rxjs';
 import { ApiPageRequest } from 'src/app/model/api-page-request.model';
 import { ApiPageResponse } from 'src/app/model/api-page-response.model';
