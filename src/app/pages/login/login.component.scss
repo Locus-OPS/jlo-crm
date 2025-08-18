@@ -1,11 +1,11 @@
-@use "src/assets/scss/core/variables/brand" as brand;
+@use 'src/assets/scss/core/variables/brand' as brand;
+@use 'sass:color';
 
 .login {
   background-color: brand.$brand-locus;
   background-size: cover;
   background-position: top center;
 }
-
 
 .login-container {
   background-color: brand.$brand-locus;
@@ -22,7 +22,7 @@
 }
 
 .card-title {
-  color: darken($color: brand.$brand-locus, $amount: 10);
+  color: color.adjust(brand.$brand-locus, $lightness: -10%);
   margin-top: 15px;
   font-weight: 600;
   text-align: center;
