@@ -17,10 +17,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FavtreeComponent } from '../component/favtree/favtree.component';
 
 @Component({
-    selector: 'app-content',
-    templateUrl: './content.component.html',
-    styleUrls: ['./content.component.scss'],
-    imports: [SharedModule, TreeComponent, FavtreeComponent, DetailComponent, DetailInfoComponent, MainDocumentComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent, MatTabsModule]
+  selector: 'app-content',
+  templateUrl: './content.component.html',
+  styleUrls: ['./content.component.scss'],
+  imports: [SharedModule, TreeComponent, FavtreeComponent, DetailComponent, DetailInfoComponent, DocumentComponent, KeywordComponent, RatingComponent, FavoriteComponent, MatTabsModule]
 })
 export class ContentComponent extends BaseComponent implements OnInit {
 

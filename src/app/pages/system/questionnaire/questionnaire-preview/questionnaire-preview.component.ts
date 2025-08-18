@@ -11,10 +11,10 @@ import { CreatedByComponent } from 'src/app/pages/common/created-by/created-by.c
 import Utils from 'src/app/shared/utils';
 
 @Component({
-    selector: 'app-questionnaire-preview',
-    imports: [SharedModule, CreatedByComponent],
-    templateUrl: './questionnaire-preview.component.html',
-    styleUrl: './questionnaire-preview.component.scss'
+  selector: 'app-questionnaire-preview',
+  imports: [SharedModule],
+  templateUrl: './questionnaire-preview.component.html',
+  styleUrl: './questionnaire-preview.component.scss'
 })
 export class QuestionnairePreviewComponent extends BaseComponent implements OnInit {
   id: number;

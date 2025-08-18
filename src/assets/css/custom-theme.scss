@@ -3,16 +3,20 @@
 @use 'sass:color';
 @import '../scss/core/variables';
 
-
 @include mat.elevation-classes();
 @include mat.app-background();
 
-$my-theme: mat.define-theme((color: (theme-type: light,
-        primary: mat.$azure-palette,
-      ),
-      typography: (plain-family: "'Noto Sans Thai', Roboto, sans-serif",
-      ),
-    ));
+$my-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+    ),
+    typography: (
+      plain-family: "'Noto Sans Thai', Roboto, sans-serif",
+    ),
+  )
+);
 
 :root {
   @include mat.all-component-themes($my-theme);
@@ -33,14 +37,15 @@ $my-theme: mat.define-theme((color: (theme-type: light,
   height: 100%;
 }
 
-.main-tab> {
+.main-tab > {
   mat-tab-header {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     // border-bottom: 2px solid #1565c0;
     border-bottom: 2px solid brand.$brand-locus;
 
     .mat-mdc-tab {
-      background-color: blue($color: #000000) !important;
+      // background-color: blue($color: #000000) !important;
+      background-color: color.channel(#000000, 'blue', $space: rgb) !important;
       //background-color: blue !important;
       height: 35px;
       padding: 0 16px;

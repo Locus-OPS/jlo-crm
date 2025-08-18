@@ -15,10 +15,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModalContentFileComponent } from '../../common/modal-file/modal-file.component';
 
 @Component({
-    selector: 'app-email-inbound-detail',
-    imports: [SharedModule, CreatedByComponent],
-    templateUrl: './email-inbound-detail.component.html',
-    styleUrl: './email-inbound-detail.component.scss'
+  selector: 'app-email-inbound-detail',
+  imports: [SharedModule],
+  templateUrl: './email-inbound-detail.component.html',
+  styleUrl: './email-inbound-detail.component.scss'
 })
 export class EmailInboundDetailComponent extends BaseComponent implements OnInit {
 

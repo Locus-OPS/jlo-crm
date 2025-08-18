@@ -16,10 +16,10 @@ import { TableControl } from 'src/app/shared/table-control';
 import { QuestionnaireDashboardService } from '../questionnaire-dashboard.service';
 
 @Component({
-    selector: 'app-questionnaire-dashboard-detail',
-    imports: [SharedModule, NgxChartsModule, QuestionnaireDashboardDetailIndividualComponent, QuestionnaireDashboardDetailSummaryComponent],
-    templateUrl: './questionnaire-dashboard-detail.component.html',
-    styleUrl: './questionnaire-dashboard-detail.component.scss'
+  selector: 'app-questionnaire-dashboard-detail',
+  imports: [SharedModule, NgxChartsModule],
+  templateUrl: './questionnaire-dashboard-detail.component.html',
+  styleUrl: './questionnaire-dashboard-detail.component.scss'
 })
 export class QuestionnaireDashboardDetailComponent extends BaseComponent implements OnInit {
   id: number;
