@@ -3,23 +3,24 @@
 @use "sass:color";
 @use "sass:meta";
 @import "../core/misc";
-.loader {
-    margin: 0 auto;
-    width: 60px;
-    position: absolute;
-    display: block;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    @include transform-translate-y(-50%);
-    text-align: center;
-    top: 50%;
 
-    &:before {
-        content: '';
-        display: block;
-        padding-top: 100%;
-    }
+.loader {
+  margin: 0 auto;
+  width: 60px;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  @include transform-translate-y(-50%);
+  text-align: center;
+  top: 50%;
+
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
 }
 
 .circular {
@@ -34,6 +35,7 @@
   right: 0;
   margin: auto;
 }
+
 .path {
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
@@ -52,10 +54,12 @@
     stroke-dasharray: 1, 200;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -35px;
   }
+
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -124px;
@@ -63,30 +67,36 @@
 }
 
 @keyframes color {
+
   100%,
   0% {
     stroke: $brand-primary;
   }
+
   50% {
     stroke: $brand-warning;
   }
+
   100% {
     stroke: $brand-primary;
   }
 }
 
-a{
+a {
   color: $link-color;
+
   &:hover,
-  &:focus{
-      color: darken($link-color, 5%);
-      text-decoration: none;
+  &:focus {
+    color: color.adjust($link-color, $lightness: -5%);
+    text-decoration: none;
   }
 
-  &.text-info{
-      &:hover, &:focus{
-          color: darken($brand-info, 5%);
-      }
+  &.text-info {
+
+    &:hover,
+    &:focus {
+      color: color.adjust($brand-info, $lightness: -5%);
+    }
   }
 
   & .material-icons {
@@ -97,18 +107,19 @@ a{
 a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .dropdown.open .caret,
 .dropup.open .caret,
-.btn-group.bootstrap-select.open .caret{
-    @include rotate-180();
+.btn-group.bootstrap-select.open .caret {
+  @include rotate-180();
 }
 
 .caret,
 .bootstrap-tagsinput .tag,
 .sidebar a,
 .bootstrap-tagsinput [data-role="remove"] {
-    @include transition-all($fast-transition-time, $transition-ease-in);
+  @include transition-all($fast-transition-time, $transition-ease-in);
 }
 
-.disabled,[disabled] {
+.disabled,
+[disabled] {
   pointer-events: none;
   cursor: not-allowed;
 }

@@ -163,13 +163,14 @@
 
 @mixin bmd-raised-button-variant($color, $background, $border) {
   // FIXME: SPEC - this should be the 600 color, how can we get that programmatically if at all? Or are we limited to the color palette only?
-  $focus-background: contrast-color($background, darken($background, 3%), color.scale($background, $lightness: 3%));
-  //$focus-background: darken($background, 10%);  // default bootstrap
-  $focus-border: darken($border, 12%);
+  $focus-background: contrast-color($background, color.adjust($background, $lightness: -3%), color.scale($background, $lightness: 3%));
+
+  //  $focus-border: darken($border, 12%);
+  $focus-border: color.adjust($border, $lightness: -12%);
 
   $active-background: $focus-background;
-  //$active-background: darken($background, 17%);
-  $active-border: darken($border, 25%);
+  //$active-border: darken($border, 25%);
+  $active-border: color.adjust($border, $lightness: -25%);
 
   @include bmd-button-variant($color, $background, $focus-background, $active-background, $border, $focus-border, $active-border);
 

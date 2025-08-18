@@ -2,6 +2,7 @@
 @use "sass:math";
 @use "sass:color";
 @use "sass:meta";
+@use "sass:map";
 
 // alert-variations("", $brand-primary)
 @mixin alert-variations($component, $selector-suffix, $brand-default) {
@@ -9,8 +10,9 @@
 }
 
 @mixin alert-variations-content($args) {
-  $variation-color: map-get($args, variation-color);
-  $variation-color-text: map-get($args, variation-color-text);
+  $variation-color: map.get($args, variation-color);
+  $variation-color: map.get($args, variation-color);
+  $variation-color-text: map.get($args, variation-color-text);
 
   background-color: color.scale($variation-color, $lightness: 3%);
   color: $variation-color-text;

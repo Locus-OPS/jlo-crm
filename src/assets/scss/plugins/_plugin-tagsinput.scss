@@ -2,6 +2,7 @@
 @use "sass:math";
 @use "sass:color";
 @use "sass:meta";
+
 /*
  * bootstrap-tagsinput v0.8.0
  *
@@ -46,11 +47,13 @@
         margin: map-get($theme, 'container-margin');
     }
 }
+
 @mixin error-message($theme) {
     font-size: map-get($theme, 'error-message-font-size');
     color: map-get($theme, 'error-message-color');
     margin: map-get($theme, 'error-message-margin');
 }
+
 @mixin tag-theme($theme) {
     font-family: map-get($theme, 'font-family');
     font-weight: map-get($theme, 'font-weight');
@@ -124,6 +127,7 @@
         }
     }
 }
+
 @mixin tag-input-form-theme($theme) {
     display: inline;
     vertical-align: middle;
@@ -137,6 +141,7 @@
         outline: 0;
     }
 }
+
 @mixin icon-theme($theme) {
     width: auto;
     height: map-get($theme, 'height');
@@ -176,27 +181,52 @@
         color: map-get($theme, 'color-hover');
     }
 }
+
 @mixin icon-theme-focused($theme) {
     path {
         fill: map-get($theme, 'fill-focus');
     }
 }
+
 $filled-primary: $brand-default;
-$filled-primary-dark: darken($filled-primary, 10%);
+$filled-primary-dark: color.adjust($filled-primary, $lightness: -10%);
+
 // this is the container's theme
-$filled-theme: ( container-border-bottom: 1px solid $filled-primary );
+$filled-theme: (
+    container-border-bottom: 1px solid $filled-primary
+);
 // this is the tag's theme
-$filled-tag-theme: ( cursor: pointer, margin: 8px 3px 5px 0px, position: relative, padding: 5px 8px, border-radius: 12px, color: #FFFFFF, font-weight: 500, font-size: 0.75em, text-transform: uppercase, display: inline-block, line-height: 1.5em, padding-left: 0.8em );
+$filled-tag-theme: (
+    cursor: pointer,
+    margin: 8px 3px 5px 0px,
+    position: relative,
+    padding: 5px 8px,
+    border-radius: 12px,
+    color: #FFFFFF,
+    font-weight: 500,
+    font-size: 0.75em,
+    text-transform: uppercase,
+    display: inline-block,
+    line-height: 1.5em,
+    padding-left: 0.8em
+);
 // this is the delete icon's theme
-$filled-icon-theme: ( fill: #ffffff, fill-focus: #eee, transform: none, );
+$filled-icon-theme: (
+    fill: #ffffff,
+    fill-focus: #eee,
+    transform: none,
+);
+
 // apply theme to the container
 .ng2-tag-input.filled-theme {
     @include tag-input-theme($filled-theme);
 }
+
 // apply theme to the tags
 .ng2-tag-input.filled-theme tag {
     @include tag-theme($filled-tag-theme);
 }
+
 // apply theme to the delete icon
 .ng2-tag-input.filled-theme tag delete-icon {
     @include icon-theme($filled-icon-theme);
