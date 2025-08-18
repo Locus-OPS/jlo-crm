@@ -43,16 +43,18 @@
               <div class="card-footer justify-content-center">
                 <a class="btn btn-primary btn-lg" (click)="onLogin()">Login</a>
               </div>
-              <ng-container *ngIf="usernameVal.errors && usernameVal.errors.required && passwordVal.errors && passwordVal.errors.required && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); then thenTemplate; else elseTemplate"></ng-container>
+              <ng-container
+                *ngIf="usernameVal.errors && usernameVal.errors.required && passwordVal.errors && passwordVal.errors.required && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); then thenTemplate; else elseTemplate"></ng-container>
               <ng-template #thenTemplate>
                 <div class="alert alert-danger">
-                  <div >
+                  <div>
                     Username password is required.
                   </div>
                 </div>
               </ng-template>
               <ng-template #elseTemplate>
-                <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)" class="alert alert-danger">
+                <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)"
+                  class="alert alert-danger">
                   <div *ngIf="usernameVal.errors.required">
                     Username is required.
                   </div>
@@ -60,7 +62,8 @@
                     Username must be at least 4 characters long.
                   </div>
                 </div>
-                <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)" class="alert alert-danger">
+                <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)"
+                  class="alert alert-danger">
                   <div *ngIf="passwordVal.errors.required">
                     Password is required.
                   </div>

@@ -1,4 +1,6 @@
+@use "sass:color";
 @use "sass:math";
+@use "sass:string";
 
 $bmd-label-color-focus: $brand-primary !default;
 $bmd-invalid-underline: $brand-danger !default;
@@ -19,8 +21,8 @@ $mdb-input-placeholder-color: #AAAAAA !default;
 $mdb-input-underline-color: #D2D2D2 !default;
 
 $mdb-input-font-size-base: 14px !default;
-$mdb-input-font-size-large: ceil(($font-size-base * 1.25)) !default; // ~20px
-$mdb-input-font-size-small: ceil(($font-size-base * 0.75)) !default; // ~12px
+$mdb-input-font-size-large: math.ceil($font-size-base * 1.25) !default; // ~20px
+$mdb-input-font-size-small: math.ceil($font-size-base * 0.75) !default; // ~12px
 
 $bmd-bmd-label-static-size-ratio: math.div(75, 100) !default;
 $bmd-help-size-ratio: math.div(75, 100) !default;
@@ -101,8 +103,8 @@ $bmd-switch-handle-checked-bg: $brand-primary !default;
 $bmd-switch-handle-unchecked-bg: #f1f1f1 !default;
 $bmd-switch-handle-disabled-bg: #bdbdbd !default;
 $bmd-switch-unchecked-bg: $gray-lighter !default;
-$bmd-switch-checked-bg: desaturate(lighten($bmd-switch-handle-checked-bg, 28%),
-    32%); // kind of magic recipe
+$bmd-switch-checked-bg: color.adjust(color.adjust($bmd-switch-handle-checked-bg, $lightness: 28%), $saturation: -32%); // kind of magic recipe
+
 $bmd-switch-disabled-bg: $gray-lighter !default;
 
 // Popovers and Popups
@@ -119,7 +121,7 @@ $bmd-radio-color-off: $bmd-label-color-inner-focus !default;
 $bmd-radio-color-on: $brand-primary !default;
 $bmd-radio-color-disabled: $gray-lighter; //
 $bmd-radio-color-disabled-inverse: rgba($white,
-    0.30); // dark theme spec: Disabled: #FFFFFF, Opacity  30%
+                0.30); // dark theme spec: Disabled: #FFFFFF, Opacity  30%
 
 $white-color: #fff !default;
 $navbar-color: #555 !default;
@@ -216,8 +218,8 @@ $social-behance: #1769ff;
 
 // Variables for checkboxes
 
-$mdb-label-color: unquote("rgba(#{$rgb-black}, 0.26)") !default;
-$mdb-label-color-toggle-focus: unquote("rgba(#{$rgb-black}, .54)") !default;
+$mdb-label-color: string.unquote("rgba(#{$rgb-black}, 0.26)") !default;
+$mdb-label-color-toggle-focus: string.unquote("rgba(#{$rgb-black}, .54)") !default;
 
 $mdb-checkbox-size: 20px !default;
 $mdb-checkbox-animation-ripple: 500ms !default;

@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "sass:string";
+
 @function calc-top($line-height-base, $font-size, $component-height) {
   @return math.div((($line-height-base * $font-size) - $component-height), 2); // vertical center of line-height
 }
@@ -31,7 +34,7 @@
   }
 
   @else {
-    @return unquote("brightness(#{$color})");
+    @return string.unquote("brightness(#{$color})");
   }
 }
 
