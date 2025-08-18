@@ -25,12 +25,12 @@ interface Holiday {
 }
 
 @Component({
-    selector: 'app-holiday',
-    imports: [
-        SharedModule, CreatedByComponent
-    ],
-    templateUrl: './holiday.component.html',
-    styleUrl: './holiday.component.scss'
+  selector: 'app-holiday',
+  imports: [
+    SharedModule
+  ],
+  templateUrl: './holiday.component.html',
+  styleUrl: './holiday.component.scss'
 })
 export class HolidayComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['date', 'name'];
