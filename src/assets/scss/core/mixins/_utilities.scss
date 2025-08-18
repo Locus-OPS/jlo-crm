@@ -1,5 +1,8 @@
 @use "sass:math";
 @use "sass:string";
+@use "sass:color";
+@use "sass:meta";
+
 
 @function calc-top($line-height-base, $font-size, $component-height) {
   @return math.div((($line-height-base * $font-size) - $component-height), 2); // vertical center of line-height
@@ -28,15 +31,17 @@
   }
 }
 
+
 @function brightness($color) {
-  @if type-of($color)==color {
-    @return math.div((red($color) * 0.299 + green($color) * 0.587 + blue($color) * 0.114), 255) * 100%;
+  @if meta.type-of($color)==color {
+    @return math.div((color.channel($color, "red", $space: rgb) * 0.299 + color.channel($color, "green", $space: rgb) * 0.587 + color.channel($color, "blue", $space: rgb) * 0.114), 255) * 100%;
   }
 
   @else {
     @return string.unquote("brightness(#{$color})");
   }
 }
+
 
 @mixin linear-gradient($color1, $color2) {
   background: $color1;
