@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .progress {
     height: 4px;
     border-radius: 0;
@@ -6,7 +10,7 @@
     margin-bottom: 20px;
     .progress-bar {
         box-shadow: none;
-        @include variations(unquote(".progress-bar"), unquote(""), background-color, $brand-primary);
+        @include variations(string.unquote(".progress-bar"), string.unquote(""), background-color, $brand-primary);
         &.progress-bar-primary{
             background: $brand-primary !important;
         }

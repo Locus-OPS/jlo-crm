@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .card-pricing{
     &:after{
         background-color: rgba(0, 0, 0, 0.7) !important;

@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // extra for Material Kit PRO
 .mat-raised-button.btn{
   // Social colors

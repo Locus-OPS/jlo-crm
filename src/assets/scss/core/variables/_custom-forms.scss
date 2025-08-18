@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 $custom-file-bg: transparent !default;
 $custom-file-border-width: 0 !default;
 $custom-file-box-shadow: none !default;

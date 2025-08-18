@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .popover, .tooltip-inner {
     line-height: 1.5em;
     background: $white-color;

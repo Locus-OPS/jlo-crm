@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 
 @mixin radio-color($color, $opacity){
   & ~ .check,
@@ -39,7 +43,7 @@
             width: 15px;
             border-radius: 100%;
             background-color: $mdb-radio-color-on;
-            @include transform-scale3d(unquote('0,0,0'));
+            @include transform-scale3d(string.unquote('0,0,0'));
 
 
         }
@@ -66,7 +70,7 @@
             @include radio-color($mdb-radio-color-on, 1);
         }
         &:checked ~ .circle .check {
-            @include transform-scale3d(unquote('0.65, 0.65, 1'));
+            @include transform-scale3d(string.unquote('0.65, 0.65, 1'));
         }
     }
 

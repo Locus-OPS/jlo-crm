@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @use 'src/assets/scss/core/variables/brand' as brand;
 
 //https://www.google.com/design/spec/components/cards.html#cards-content-blocks
@@ -175,7 +179,7 @@
     &.bg-primary,
     &.card-rotate.bg-primary .front,
     &.card-rotate.bg-primary .back {
-        background: linear-gradient(60deg, lighten(brand.$brand-locus, 20), lighten(brand.$brand-locus, 10));
+        background: linear-gradient(60deg, color.scale(brand.$brand-locus, $lightness: 20%), color.scale(brand.$brand-locus, $lightness: 10%));
     }
 
     .card-header-info .card-icon,

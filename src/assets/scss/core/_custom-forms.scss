@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .custom-file-control {
   // @extend .form-control;
   // @include bmd-form-color($bmd-label-color, $bmd-label-color-focus, $input-border-color);

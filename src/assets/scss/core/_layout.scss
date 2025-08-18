@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // This is a set of flex-based layout containers necessary for components such as the drawer.
 //  It allows for flex based positioning such as sticky header and footer inside an bmd-layout, with a
 //  bmd-layout-content that scrolls.

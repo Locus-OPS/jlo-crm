@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // Generates the `.in` style for the generic backdrop used components such as the drawer in overlay mode
 @mixin bmd-layout-backdrop-in() {
   > .bmd-layout-backdrop {

@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // Animations (from mdl http://www.getmdl.io/)
 
 @mixin material-animation-fast-out-slow-in($duration:0.2s) {

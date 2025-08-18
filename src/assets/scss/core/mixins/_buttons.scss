@@ -1,5 +1,9 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @use 'src/assets/scss/core/variables/_buttons' as btn;
-@use 'sass:color';
+
 
 // from bs mixins/buttons button-variant
 @mixin bmd-button-variant($color, $background, $focus-background, $active-background, $border, $focus-border, $active-border) {
@@ -17,8 +21,8 @@
 
   &:active,
   &.active,
-  .open > &.dropdown-toggle,
-  .show > &.dropdown-toggle {
+  .open>&.dropdown-toggle,
+  .show>&.dropdown-toggle {
     color: $color;
     background-color: $focus-background;
     border-color: $focus-border;
@@ -34,7 +38,7 @@
   }
 
   // when it is an icon, kill the active bg on open dropdown, but stabilize on hover
-  .open > &.dropdown-toggle.bmd-btn-icon {
+  .open>&.dropdown-toggle.bmd-btn-icon {
     color: inherit;
     background-color: $background;
 
@@ -46,6 +50,7 @@
 
   &.disabled,
   &:disabled {
+
     &:focus,
     &.focus {
       background-color: $background;
@@ -113,6 +118,7 @@
 }
 
 @mixin bmd-outline-button-color() {
+
   &.btn-outline,
   &.btn-outline-primary,
   &.btn-outline-secondary,
@@ -157,7 +163,7 @@
 
 @mixin bmd-raised-button-variant($color, $background, $border) {
   // FIXME: SPEC - this should be the 600 color, how can we get that programmatically if at all? Or are we limited to the color palette only?
-  $focus-background: contrast-color($background, darken($background, 3%), lighten($background, 3%));
+  $focus-background: contrast-color($background, darken($background, 3%), color.scale($background, $lightness: 3%));
   //$focus-background: darken($background, 10%);  // default bootstrap
   $focus-border: darken($border, 12%);
 
@@ -284,10 +290,12 @@
 }
 
 @mixin undo-bs-tab-focus() {
+
   // clear out the tab-focus() from BS
   &,
   &:active,
   &.active {
+
     &:focus,
     &.focus {
       //@include tab-focus();
@@ -341,9 +349,9 @@ $opacity-2: rgba(255, 255, 255, 0.2) !default;
   &:active:hover,
   &.active:focus,
   &.active:hover,
-  .open > &.dropdown-toggle,
-  .open > &.dropdown-toggle:focus,
-  .open > &.dropdown-toggle:hover {
+  .open>&.dropdown-toggle,
+  .open>&.dropdown-toggle:focus,
+  .open>&.dropdown-toggle:hover {
     background-color: $btn-color;
     color: $white-color;
   }
@@ -359,6 +367,7 @@ $opacity-2: rgba(255, 255, 255, 0.2) !default;
   &:disabled,
   &[disabled],
   fieldset[disabled] & {
+
     &,
     &:hover,
     &:focus,

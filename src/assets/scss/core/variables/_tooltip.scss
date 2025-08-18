@@ -1,1 +1,5 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 $tooltip-bg: rgba($grey-700, .9);

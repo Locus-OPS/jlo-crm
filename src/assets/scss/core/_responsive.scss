@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @media all and (max-width: 991px) {
     [class*="navbar-expand-"] > .container,
     [class*="navbar-expand-"] > .container-fluid{

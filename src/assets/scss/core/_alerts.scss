@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .alert {
     border: 0;
     border-radius: 0;
@@ -13,7 +17,7 @@
         font-size: $font-size-small;
     }
     // SASS conversion note: please mirror any content change in _mixins-shared.scss alert-variations-content
-    @include alert-variations(unquote(".alert"), unquote(""), $mdb-text-color-light);
+    @include alert-variations(string.unquote(".alert"), string.unquote(""), $mdb-text-color-light);
 
     &-info, &-danger, &-warning, &-success {
         color: $mdb-text-color-light;

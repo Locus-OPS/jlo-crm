@@ -1,6 +1,10 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // case where behavior is responsive, or with a marker class
 @mixin media-breakpoint-down-or($breakpoint, $name) {
-  #{unquote($name)} {
+  #{string.unquote($name)} {
     @content;
   }
 
@@ -11,7 +15,7 @@
 
 // case where behavior is responsive, or with a marker class
 @mixin media-breakpoint-up-or($breakpoint, $name) {
-  #{unquote($name)} {
+  #{string.unquote($name)} {
     @content;
   }
 

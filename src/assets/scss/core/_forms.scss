@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 form {
   // ensure enough room at the bottom of any form to display a one-line bmd-help
   margin-bottom: ($bmd-help-size-ratio * $font-size-base) * $line-height-base;
@@ -126,7 +130,7 @@ form {
 
 // Reference http://www.google.com/design/spec/components/text-fields.html
 // MDL implementation: http://www.getmdl.io/components/index.html#textfields-section
-//.variations(unquote(" label"), color, $bmd-input-placeholder-color);  // default label color variations
+//.variations(string.unquote(" label"), color, $bmd-input-placeholder-color);  // default label color variations
 
 // Whereas .form-group adds structure, bmd-form-group just needs to make sure we have enough padding for our labels to work.  That's the only purpose.
 .bmd-form-group {

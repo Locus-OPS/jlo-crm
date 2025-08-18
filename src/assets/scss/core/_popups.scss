@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .popover{
     font-size: $font-size-base;
     box-shadow: 0px 10px 50px 0px rgba(0, 0, 0, 0.2);

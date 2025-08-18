@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @mixin bmd-tabs-color($color, $active-color, $active-border, $disabled-link-color, $disabled-link-hover-color) {
   .nav-link {
     color: $color;

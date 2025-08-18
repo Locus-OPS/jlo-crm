@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .pagination{
 
     > .page-item .page-link.mat-button .mat-button-ripple{

@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // // FIXME: only necessary because there isn't an underscored file - see https://github.com/twbs/bootstrap/issues/18350
 // //@import "../bower_components/bootstrap/scss/
 // //@import "../../bootstrap/scss/

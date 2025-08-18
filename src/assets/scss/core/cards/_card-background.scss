@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 %common-card-background{
   background-position: center center;
   background-size: cover;

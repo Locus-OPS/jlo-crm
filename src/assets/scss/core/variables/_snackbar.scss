@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 $bmd-snackbar-bg: #323232 !default;
 $bmd-snackbar-color: #fff !default;
 $bmd-snackbar-min-width: 280px !default;

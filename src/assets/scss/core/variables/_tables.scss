@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 $table-bg-accent: rgba(#000, .03);
 $table-border-color: rgba(#000, .06);
 $table-bg-hover: rgba(#000, .02); // Grey 100 (on white background)

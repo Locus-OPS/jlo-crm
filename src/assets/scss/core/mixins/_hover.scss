@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @mixin bmd-hover-focus-active {
   // add the .active to the whole mix of hover-focus-active
   &.active {

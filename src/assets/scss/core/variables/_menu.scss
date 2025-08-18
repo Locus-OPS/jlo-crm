@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 $bmd-menu-line-height: 1 !default; // makes it easier to use sizes to match spec
 
 $bmd-menu-item-min-width: 7rem !default; // Minimum width on mobile = 2 * 56dp = 112dp

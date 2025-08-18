@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // Modals
 $modal-content-xs-box-shadow: $bmd-shadow-24dp !default;
 

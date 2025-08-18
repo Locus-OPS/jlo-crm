@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // http://codepen.io/rosskevin/pen/EPPwRR?editors=110
 .switch {
   label {
@@ -59,7 +63,7 @@
         + .bmd-switch-track {
           background-position: -100%;
           &::after {
-            left: unquote(
+            left: string.unquote(
               "calc(100% - #{$bmd-switch-handle-size})"
             ); //calc(100% - $bmd-switch-handle-size);
             background-color: $bmd-switch-handle-checked-bg;

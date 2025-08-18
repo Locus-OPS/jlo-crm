@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 .index-page{
     .section-components h6.description{
         margin-top: 5px;

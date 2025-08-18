@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 @mixin bmd-disabled() {
   fieldset[disabled][disabled] &,
   &.disabled,
@@ -388,7 +392,7 @@
 }
 
 
-// variations(unquote(""), background-color, #FFF);
+// variations(string.unquote(""), background-color, #FFF);
 @mixin variations($component, $selector-suffix, $mdb-param-1, $color-default) {
  // @include generic-variations($component, $selector-suffix, $color-default, "variations-content", $mdb-param-1);
 }

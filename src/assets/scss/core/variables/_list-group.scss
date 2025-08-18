@@ -1,3 +1,7 @@
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
 // List group
 
 $list-group-bg: inherit !default; // #fff
@@ -9,7 +13,7 @@ $list-group-border-radius: 0 !default; // $border-radius
 //$list-group-active-color:       $component-active-color !default;
 //$list-group-active-bg:          $component-active-bg !default;
 //$list-group-active-border:      $list-group-active-bg !default;
-//$list-group-active-text-color:  lighten($list-group-active-bg, 40%) !default;
+//$list-group-active-text-color:  color.scale($list-group-active-bg, $lightness: 40%%) !default;
 //
 //$list-group-disabled-color:      $gray-light !default;
 //$list-group-disabled-bg:         $gray-lighter !default;
