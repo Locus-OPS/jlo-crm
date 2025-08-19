@@ -2,6 +2,7 @@
 @use "sass:math";
 @use "sass:color";
 @use "sass:meta";
+@use 'sass:map';
 
 /*
  * bootstrap-tagsinput v0.8.0
@@ -10,13 +11,13 @@
 @mixin tag-input-theme($theme) {
     display: block;
     position: relative;
-    transition: map-get($theme, transition);
-    padding: map-get($theme, 'container-padding');
-    min-height: map-get($theme, 'container-height');
+    transition: map.get($theme, transition);
+    padding: map.get($theme, 'container-padding');
+    min-height: map.get($theme, 'container-height');
     cursor: text;
-    border-bottom: map-get($theme, 'container-border-bottom');
-    box-shadow: map-get($theme, 'box-shadow');
-    border-radius: map-get($theme, 'border-radius');
+    border-bottom: map.get($theme, 'container-border-bottom');
+    box-shadow: map.get($theme, 'box-shadow');
+    border-radius: map.get($theme, 'border-radius');
 
     &:focus {
         outline: 0;
@@ -27,11 +28,11 @@
     }
 
     &.ng2-tag-input--focused {
-        border-bottom: map-get($theme, 'container-border-bottom-focused');
+        border-bottom: map.get($theme, 'container-border-bottom-focused');
     }
 
     &.ng2-tag-input--invalid {
-        border-bottom: map-get($theme, 'container-border-bottom-invalid');
+        border-bottom: map.get($theme, 'container-border-bottom-invalid');
     }
 
     &.ng2-tag-input--loading {
@@ -44,30 +45,30 @@
     }
 
     form {
-        margin: map-get($theme, 'container-margin');
+        margin: map.get($theme, 'container-margin');
     }
 }
 
 @mixin error-message($theme) {
-    font-size: map-get($theme, 'error-message-font-size');
-    color: map-get($theme, 'error-message-color');
-    margin: map-get($theme, 'error-message-margin');
+    font-size: map.get($theme, 'error-message-font-size');
+    color: map.get($theme, 'error-message-color');
+    margin: map.get($theme, 'error-message-margin');
 }
 
 @mixin tag-theme($theme) {
-    font-family: map-get($theme, 'font-family');
-    font-weight: map-get($theme, 'font-weight');
-    font-size: map-get($theme, 'font-size');
-    letter-spacing: map-get($theme, 'letter-spacing');
-    color: map-get($theme, 'color') !important;
-    border-radius: map-get($theme, 'border-radius');
-    border: map-get($theme, 'border');
-    margin: map-get($theme, 'margin');
-    padding: map-get($theme, 'padding');
-    height: map-get($theme, 'height');
-    line-height: map-get($theme, 'line-height');
-    background: map-get($theme, 'background');
-    text-transform: map-get($theme, 'text-transform');
+    font-family: map.get($theme, 'font-family');
+    font-weight: map.get($theme, 'font-weight');
+    font-size: map.get($theme, 'font-size');
+    letter-spacing: map.get($theme, 'letter-spacing');
+    color: map.get($theme, 'color') !important;
+    border-radius: map.get($theme, 'border-radius');
+    border: map.get($theme, 'border');
+    margin: map.get($theme, 'margin');
+    padding: map.get($theme, 'padding');
+    height: map.get($theme, 'height');
+    line-height: map.get($theme, 'line-height');
+    background: map.get($theme, 'background');
+    text-transform: map.get($theme, 'text-transform');
     height: 24px;
     white-space: nowrap;
     display: inline-block;
@@ -81,18 +82,18 @@
     transition: all 150ms ease-in;
 
     &:not(.readonly):not(.tag--editing):focus {
-        background: map-get($theme, 'background-focused');
-        color: map-get($theme, 'color-focused');
+        background: map.get($theme, 'background-focused');
+        color: map.get($theme, 'color-focused');
     }
 
     &:not(.readonly):not(.tag--editing):active {
-        background: map-get($theme, 'background-active');
-        color: map-get($theme, 'color-active');
+        background: map.get($theme, 'background-active');
+        color: map.get($theme, 'color-active');
     }
 
     &:not(:focus):not(.tag--editing):not(:active):not(.readonly):hover {
-        background: map-get($theme, 'background-hover');
-        color: map-get($theme, 'color-hover');
+        background: map.get($theme, 'background-hover');
+        color: map.get($theme, 'color-hover');
     }
 
     &.readonly {
@@ -105,7 +106,7 @@
     }
 
     &.tag--editing {
-        background-color: map-get($theme, 'background-editing');
+        background-color: map.get($theme, 'background-editing');
         cursor: text;
     }
 
@@ -131,11 +132,11 @@
 @mixin tag-input-form-theme($theme) {
     display: inline;
     vertical-align: middle;
-    border: map-get($theme, 'input-border');
-    padding: map-get($theme, 'input-padding');
-    height: map-get($theme, 'input-height');
-    font-size: map-get($theme, 'input-font-size');
-    font-family: map-get($theme, 'font-family');
+    border: map.get($theme, 'input-border');
+    padding: map.get($theme, 'input-padding');
+    height: map.get($theme, 'input-height');
+    font-size: map.get($theme, 'input-font-size');
+    font-family: map.get($theme, 'font-family');
 
     &:focus {
         outline: 0;
@@ -144,12 +145,12 @@
 
 @mixin icon-theme($theme) {
     width: auto;
-    height: map-get($theme, 'height');
-    // transition: map-get($theme, 'transition');
+    height: map.get($theme, 'height');
+    // transition: map.get($theme, 'transition');
     opacity: 0;
     text-align: right;
     font-size: 100px;
-    transform: map-get($theme, 'transform');
+    transform: map.get($theme, 'transform');
     -webkit-transition: all 150ms ease-in;
     -moz-transition: all 150ms ease-in;
     -o-transition: all 150ms ease-in;
@@ -157,7 +158,7 @@
     transition: all 150ms ease-in;
 
     path {
-        fill: map-get($theme, 'fill');
+        fill: map.get($theme, 'fill');
     }
 
     svg {
@@ -170,21 +171,21 @@
     }
 
     &:not(.readonly):not(.tag--editing):focus {
-        color: map-get($theme, 'color-focused');
+        color: map.get($theme, 'color-focused');
     }
 
     &:not(.readonly):not(.tag--editing):active {
-        color: map-get($theme, 'color-active');
+        color: map.get($theme, 'color-active');
     }
 
     &:not(:focus):not(.tag--editing):not(:active):not(.readonly):hover {
-        color: map-get($theme, 'color-hover');
+        color: map.get($theme, 'color-hover');
     }
 }
 
 @mixin icon-theme-focused($theme) {
     path {
-        fill: map-get($theme, 'fill-focus');
+        fill: map.get($theme, 'fill-focus');
     }
 }
 
