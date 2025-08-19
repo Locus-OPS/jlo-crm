@@ -1,7 +1,8 @@
-@use 'sass:string';
-@use 'sass:math';
-@use 'sass:color';
-@use 'sass:meta';
+@use "sass:string";
+@use "sass:math";
+@use "sass:color";
+@use "sass:meta";
+@use "sass:map";
 // Implementation specification in https://github.com/FezVrasta/bootstrap-material-design/issues/822
 
 // Drawer.
@@ -28,13 +29,13 @@
   @include box-shadow($bmd-shadow-2dp);
   @include material-animation-default();
 
-  > * {
+  >* {
     flex-shrink: 0;
   }
 
   // Placement of common components within the drawer
   //  You might say this is opinionated - feedback welcome.
-  > header {
+  >header {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -46,7 +47,7 @@
     }
   }
 
-  > .list-group {
+  >.list-group {
     padding-top: 1rem;
 
     .list-group-item {
@@ -92,8 +93,9 @@
 //
 // Drawer open positioning, and style options (push is default, overlay is optional)
 :not(.bmd-drawer-out) {
+
   // first eliminate positioning or sizing rules if the drawer is already forced closed
-  @each $breakpoint in map-keys($grid-breakpoints) {
+  @each $breakpoint in map.keys($grid-breakpoints) {
     @include bmd-drawer-x-in-up($bmd-drawer-x-size, $breakpoint);
     @include bmd-drawer-y-in-up($bmd-drawer-y-size, $breakpoint);
 
@@ -108,7 +110,7 @@
 //  $custom-size: 500px;
 //  @include bmd-drawer-x-out($custom-size);
 //  &:not(.bmd-drawer-out) {
-//    @each $breakpoint in map-keys($grid-breakpoints) {
+//    @each $breakpoint in map.keys($grid-breakpoints) {
 //      @include bmd-drawer-x-in-up($custom-size, $breakpoint);
 //    }
 //  }
