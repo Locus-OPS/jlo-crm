@@ -32,7 +32,7 @@ a {
 
   &:hover,
   &:focus {
-    color: color.adjust($link-color, $lightness: -5%); //darken($link-color, 5%);
+    color: darken($link-color, 5%);
     text-decoration: none;
   }
 
@@ -40,7 +40,7 @@ a {
 
     &:hover,
     &:focus {
-      color: color.adjust($brand-info, $lightness: -5%); // darken($brand-info, 5%);
+      color: darken($brand-info, 5%);
     }
   }
 
@@ -83,7 +83,6 @@ label {
   @include transition-all($fast-transition-time, $transition-ease);
 }
 
-
 .animation-transition-fast,
 .navbar,
 .bootstrap-tagsinput .tag,
@@ -123,7 +122,6 @@ label {
   }
 }
 
-
 // offline-doc
 .offline-doc,
 .offline-free-doc {
@@ -157,10 +155,7 @@ label {
   }
 }
 
-
 // hinge card
-
-
 
 @-webkit-keyframes hinge {
   0% {

@@ -1,12 +1,12 @@
-@use "sass:string";
-@use "sass:math";
-@use "sass:color";
-@use "sass:meta";
-@use "sass:map";
+@use 'sass:string';
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:meta';
+@use 'sass:map';
 
 // alert-variations("", $brand-primary)
 @mixin alert-variations($component, $selector-suffix, $brand-default) {
-  @include generic-variations($component, $selector-suffix, $brand-default, "alert-variations-content", null);
+  @include generic-variations($component, $selector-suffix, $brand-default, 'alert-variations-content', null);
 }
 
 @mixin alert-variations-content($args) {
@@ -64,7 +64,7 @@
   }
 
   @else {
-    @error "Unknown mixin: #{$mixin-name}"
+    @error "Unknown mixin: #{$mixin-name}";
   }
 }
 
@@ -79,7 +79,6 @@
 //
 
 @mixin generic-variations($component, $selector-suffix, $color-default, $mixin-name, $mdb-param-1) {
-
   //setup map to pass parameters (instead of the incredibly long-error-prone list for each and every @include)
   $args: (
     //extra: $selector-suffix,
@@ -91,10 +90,16 @@
 // bootstrap styles
 &#{$selector-suffix},
 &#{$component}-default#{$selector-suffix} {
-
-  $args-extra: map.merge($args, (variation-color: $white-color,
-        variation-color-text: $gray ));
+  $args-extra: map.merge($args,
+      (variation-color: $white-color,
+        variation-color-text: $gray,
+      ));
   @include call-variations-content-mixin($args-extra);
+}
+
+$args-extra: map.merge($args, (variation-color: $white-color,
+      variation-color-text: $gray ));
+@include call-variations-content-mixin($args-extra);
 }
 
 &#{$component}-inverse#{$selector-suffix} {
@@ -139,6 +144,13 @@
   @include call-variations-content-mixin($args-rose);
 }
 
+&#{$component}-rose#{$selector-suffix} {
+  $args-rose: map.merge($args,
+      (variation-color: $brand-rose,
+        variation-color-text: $mdb-text-color-light,
+      ));
+  @include call-variations-content-mixin($args-rose);
+}
 }
 
 @mixin alert-icon-color($color) {
