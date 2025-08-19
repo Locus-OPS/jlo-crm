@@ -32,7 +32,7 @@ a {
 
   &:hover,
   &:focus {
-    color: darken($link-color, 5%);
+    color: color.adjust($link-color, $lightness: -5%); //darken($link-color, 5%);
     text-decoration: none;
   }
 
@@ -40,7 +40,7 @@ a {
 
     &:hover,
     &:focus {
-      color: darken($brand-info, 5%);
+      color: color.adjust($brand-info, $lightness: -5%);
     }
   }
 
