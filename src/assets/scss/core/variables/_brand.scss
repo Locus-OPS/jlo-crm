@@ -17,8 +17,11 @@ $pink-500: #e91e63 !default;
 $blue-500: #2196f3 !default;
 $cyan-500: #00bcd4 !default;
 $black-color: #000000 !default;
+$gray-500: #6c757d !default;
+
 // Define brand colors with default
 $brand-primary: $blue-500 !default;
+$brand-secondary: $gray-500 !default;
 $brand-info: $cyan-500 !default;
 $brand-success: $green-500 !default;
 $brand-warning: $orange-500 !default;

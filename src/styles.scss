@@ -949,6 +949,87 @@ body {
 */
 }
 
+/*
+ * Override for Material Dashboard's btn-rose
+ * to work with Angular Material's mat-raised-button.
+ *
+ * CSS Overrides for Angular Material Buttons
+ *
+ * บล็อกนี้จะช่วยให้สไตล์ของปุ่มที่กำหนดเอง (เช่น .btn-rose)
+ * สามารถแสดงผลได้อย่างถูกต้องบน mat-raised-button ของ Angular Material
+ * โดยเป็นการแก้ไขปัญหา CSS specificity conflicts
+*/
+
+// Selector หลักสำหรับ `mat-raised-button` ของ Angular Material
+.mat-mdc-raised-button.btn {
+
+  // ปุ่ม Default
+  &.btn-default,
+  &:not([class*="btn-"]) {
+    // สำหรับปุ่มที่มีแค่ class .btn
+    background-color: brand.$brand-default; // $white
+    color: #000000; // $gray-900
+  }
+
+  // ปุ่ม Primary
+  &.btn-primary {
+    background-color: brand.$brand-primary; // Bootstrap Primary Blue
+    color: #ffffff;
+  }
+
+  // ปุ่ม Secondary
+  &.btn-secondary {
+    background-color: brand.$brand-secondary; // Bootstrap Secondary Gray
+    color: #ffffff;
+  }
+
+  // ปุ่ม Info
+  &.btn-info {
+    background-color: brand.$brand-info; // Bootstrap Info Cyan
+    color: #000000;
+  }
+
+  // ปุ่ม Success
+  &.btn-success {
+    background-color: brand.$brand-success; // Bootstrap Success Green
+    color: #ffffff;
+  }
+
+  // ปุ่ม Warning
+  &.btn-warning {
+    background-color: brand.$brand-warning; // Bootstrap Warning Yellow
+    color: #000000;
+  }
+
+  // ปุ่ม Danger
+  &.btn-danger {
+    background-color: brand.$brand-danger; // Bootstrap Danger Red
+    color: #ffffff;
+  }
+
+  // ปุ่ม Rose (Custom Theme)
+  &.btn-rose {
+    background-color: brand.$brand-rose;
+    color: #ffffff;
+  }
+
+  // ปุ่ม Locus (Custom Theme)
+  &.btn-locus {
+    /* หมายเหตุ: สีสำหรับ 'locus' เป็นการคาดเดา กรุณาเปลี่ยนเป็นสีที่ถูกต้องตามธีมของคุณ */
+    background-color: brand.$brand-locus; // Assumed Purple
+    color: #ffffff;
+  }
+
+  // ปุ่ม Select (Custom Theme)
+  &.btn-select {
+    /* หมายเหตุ: สไตล์นี้อิงตาม mixin ที่ใช้ locus-bg เป็นสีพื้นหลัง และ primary-bg เป็นสีตัวอักษร กรุณาปรับแก้หากไม่ใช่ผลลัพธ์ที่ต้องการ */
+    background-color: brand.$brand-locus; // Assumed Locus background
+    color: brand.$brand-primary; // Assumed Primary background as text color
+  }
+}
+
+
+
 /* table */
 .mat-tab-body-wrapper,
 .mat-dialog-container {
