@@ -1,5 +1,34 @@
 import { writeFileSync } from 'fs';
-import { dedent } from 'tslint/lib/utils';
+
+function dedent(strings: TemplateStringsArray, ...values: any[]): string {
+  // 1. นำ string ทั้งหมดมาต่อกันให้สมบูรณ์ก่อน
+  let fullString = strings.reduce((result, str, i) => {
+    return result + str + (values[i] || '');
+  }, '');
+
+  // 2. ลบ \n แรกสุดที่มักจะติดมากับการขึ้นบรรทัดใหม่หลัง backtick
+  if (fullString.startsWith('\n')) {
+    fullString = fullString.substring(1);
+  }
+
+  // 3. หาค่า indentation ที่น้อยที่สุดจากทุกบรรทัด (ยกเว้นบรรทัดว่าง)
+  const lines = fullString.split('\n');
+  const minIndentation = lines
+    .filter(line => line.trim().length > 0)
+    .reduce((min, line) => {
+      const indentation = line.match(/^(\s*)/)[0].length;
+      return Math.min(min, indentation);
+    }, Infinity);
+
+  // 4. ถ้ามี indentation, ให้ลบออกจากทุกบรรทัด
+  if (minIndentation !== Infinity && minIndentation > 0) {
+    const dedentedLines = lines.map(line => line.substring(minIndentation));
+    fullString = dedentedLines.join('\n');
+  }
+
+  // 5. คืนค่า string ที่จัดรูปแบบเรียบร้อยแล้ว
+  return fullString;
+}
 
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -19,7 +48,7 @@ async function createVersionsFile(filename: string) {
         date: '${date}'
       };`;
 
-  writeFileSync(filename, content, {encoding: 'utf8'});
+  writeFileSync(filename, content, { encoding: 'utf8' });
 }
 
 createVersionsFile('src/environments/versions.ts');
