@@ -1,10 +1,11 @@
 # Dockerfile
-# Example command to build image from this Dockerfile:
-# docker build -t bay-consent-admin .
+# Example build image command from this Dockerfile:
+#   docker build -t bay-consent-admin .
+# Example start container command:
+#   docker run -d --name jlo-crm -p 4200:80 -e PRODUCTION=true -e API_ENDPOINT=http://localhost:8080/jlo-crm-backend -e WEB_SOCKET_ENDPOINT=ws://localhost:8080/jlo-crm-backend/chat -e WHITELISTED_DOMAINS=localhost:8080 --restart unless-stopped jlo-crm
 
 # --- STAGE 1: Build ---
 # Use Node.js version 24.0.0 as a base image to install and build application and name this stage as 'build'.
-# FROM node:24.0.0-alpine AS build
 FROM node:24.0.0 AS build
 
 # Set the container working directory.
@@ -23,8 +24,7 @@ RUN npm run build.prod
 
 # --- STAGE 2: Serve ---
 # User NGINX as a base image to run application.
-# FROM nginx:1.29.1-alpine
-FROM nginx:1.29.1
+FROM nginx:1.29.1-alpine
 
 # Remove NGINX default configuration file.
 RUN rm /etc/nginx/conf.d/default.conf
