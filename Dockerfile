@@ -26,6 +26,13 @@ RUN npm run build.prod
 # User NGINX as a base image to run application.
 FROM nginx:1.29.1
 
+# Set default environment variables
+ENV PORT=80
+ENV PRODUCTION=false
+ENV API_ENDPOINT=http://localhost:8080/jlo-crm-backend
+ENV WEB_SOCKET_ENDPOINT=ws://localhost:8080/jlo-crm-backend/chat
+ENV WHITELISTED_DOMAINS=localhost:8080
+
 # Remove NGINX default configuration file.
 RUN rm /etc/nginx/conf.d/default.conf
 
