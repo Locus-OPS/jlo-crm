@@ -1,0 +1,12 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/locus-app-repo/jlo-crm:1.0.0',
+    '-f',
+    'Dockerfile',
+    '.'
+  ]
+images:
+- 'asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/locus-app-repo/jlo-crm:1.0.0'
