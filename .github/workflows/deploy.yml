@@ -29,7 +29,7 @@ jobs:
       # Authenticate to GCP using the JSON key (no WIF)
       - uses: google-github-actions/auth@v3
         with:
-          credentials_json: 7ec85ead3e83932f0e2d0b062bcd688445ed9515
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - uses: google-github-actions/setup-gcloud@v2
 
