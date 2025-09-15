@@ -1,0 +1,53 @@
+name: build-and-deploy-jlo-crm
+
+on:
+  push:
+    branches: [ "gcloud" ]
+
+permissions:
+  contents: read
+
+env:
+  PROJECT_ID: ntt-oceanlife-poc
+  REGION: asia-southeast1
+  REPO_NAME: jlo-crm-registry               # your Artifact Registry (Docker) repo
+  SERVICE_NAME: jlo-crm-cicd            # Cloud Run service name
+  IMAGE: asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/jlo-crm-registry/jlo-crm-cicd:${{ github.sha }}
+
+  # App runtime env for your entrypoint.sh → env.js
+  PRODUCTION: "true"
+  API_ENDPOINT: "https://jlo-crm-be-180096520787.asia-southeast1.run.app"
+  WEB_SOCKET_ENDPOINT: "ws://jlo-crm-be-180096520787.asia-southeast1.run.app/jlo-crm-backend/chat"
+  WHITELISTED_DOMAINS: "jlo-crm-be-180096520787.asia-southeast1.run.app"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Authenticate to GCP using the JSON key (no WIF)
+      - uses: google-github-actions/auth@v3
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: gcloud --quiet auth configure-docker "${{ env.REGION }}-docker.pkg.dev"
+
+      - name: Build Docker image
+        run: docker build -t "${IMAGE}" -f Dockerfile .
+
+      - name: Push image
+        run: docker push "${IMAGE}"
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy "${{ env.SERVICE_NAME }}" \
+            --image "${IMAGE}" \
+            --region "${{ env.REGION }}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 80 \
+            --set-env-vars PRODUCTION=${{ env.PRODUCTION }},API_ENDPOINT=${{ env.API_ENDPOINT }},WEB_SOCKET_ENDPOINT=${{ env.WEB_SOCKET_ENDPOINT }},WHITELISTED_DOMAINS=${{ env.WHITELISTED_DOMAINS }}
