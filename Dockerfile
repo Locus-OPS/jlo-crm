@@ -19,11 +19,11 @@ RUN npm install --force
 COPY . .
 
 # Build Angular project in production mode.
-RUN npm run build.prod
+RUN npm run build.cloud
 
 
 # --- STAGE 2: Serve ---
-# User NGINX as a base image to run application.
+# Use NGINX version 1.29.1 as a base image to run application.
 FROM nginx:1.29.1-alpine
 
 # Set default environment variables
@@ -41,13 +41,12 @@ COPY docker-config/nginx.conf /etc/nginx/conf.d
 
 # Copy all built files from 'build' stage into NGINX and set permission.
 COPY --from=build /app/dist/jlo-crm/browser/ /usr/share/nginx/html
-# RUN chmod +x -R /usr/share/nginx/html
 
 # Copy the environment template file
 COPY src/assets/env.js /usr/share/nginx/html/assets/env.js
 
 # Copy and set executable permissions for the entrypoint script
-COPY entrypoint.sh /entrypoint.sh
+COPY docker-config/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r$//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

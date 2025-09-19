@@ -9,7 +9,8 @@
     "start.uat": "ng serve --configuration=uat --ssl --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
     "prebuild.prod": "ts-node -P tsconfig.git.json git-version.ts",
-    "build.prod": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --configuration=production",
+    "build.prod": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --base-href  \"/jlo-crm/\" --deploy-url \"/jlo-crm/\" --configuration production",
+    "build.cloud": "node --max_old_space_size=8096 ./node_modules/@angular/cli/bin/ng build --configuration=cloud",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
