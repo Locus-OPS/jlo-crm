@@ -24,7 +24,7 @@ RUN npm run build.prod
 
 # --- STAGE 2: Serve ---
 # User NGINX as a base image to run application.
-FROM nginx:1.29.1
+FROM nginx:1.29.1-alpine
 
 # Set default environment variables
 ENV PORT=80
