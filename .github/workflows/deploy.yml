@@ -26,12 +26,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Authenticate to GCP using the JSON key (no WIF)
-      - uses: google-github-actions/auth@v3
+      # Authenticate to GCP using the JSON key (with WIF)
+      - id: auth
+        uses: google-github-actions/auth@v3
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
+          workload_identity_provider: 'projects/180096520787/locations/global/workloadIdentityPools/github-pool/providers/github-actions'
+          service_account: 'github-jlo-deployer@ntt-oceanlife-poc.iam.gserviceaccount.com'
+          # create_credentials_file: true (default) → exports ADC for later steps
 
-      - uses: google-github-actions/setup-gcloud@v2
+      - uses: google-github-actions/setup-gcloud@v3
+        with:
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Configure Docker for Artifact Registry
         run: gcloud --quiet auth configure-docker "${{ env.REGION }}-docker.pkg.dev"
