@@ -457,7 +457,6 @@ mat-form-field.mat-form-field-appearance-legacy {
   }
 }
 
-
 .sidebar-mini .sidebar:hover .sidebar-wrapper ul.nav li.nav-item>a.nav-link p {
   transform: translateX(-13px);
 }
@@ -587,8 +586,6 @@ mat-form-field.mat-form-field-appearance-legacy {
           margin-left: 29px;
           white-space: nowrap;
         }
-
-
       }
     }
   }
@@ -965,7 +962,7 @@ body {
 
   // ปุ่ม Default
   &.btn-default,
-  &:not([class*="btn-"]) {
+  &:not([class*='btn-']) {
     // สำหรับปุ่มที่มีแค่ class .btn
     background-color: brand.$brand-default; // $white
     color: #000000; // $gray-900
@@ -1027,8 +1024,6 @@ body {
     color: brand.$brand-primary; // Assumed Primary background as text color
   }
 }
-
-
 
 /* table */
 .mat-tab-body-wrapper,
@@ -1208,4 +1203,12 @@ li.close-all button .mat-button-focus-overlay {
 
 .mat-form-field .mat-select.mat-select-disabled .mat-select-arrow-wrapper {
   display: none;
+}
+
+.custom-tooltip-style {
+  color: white !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  padding: 4px 8px !important;
 }

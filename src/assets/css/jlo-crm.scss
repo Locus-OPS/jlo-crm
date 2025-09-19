@@ -29,9 +29,11 @@ html,
 .mat-mdc-select-placeholder {
   font-family: 'Noto Sans Thai', Roboto, sans-serif;
 }
+
 .mat-mdc-tab-header {
   --mat-tab-header-label-text-font: 'Noto Sans Thai', Roboto, sans-serif;
 }
+
 .navbar-wrapper .navbar-brand,
 button.btn,
 .swal2-title,
@@ -44,21 +46,25 @@ button.btn,
 @media (min-width: 992px) {
   .sidebar {
     width: var(--jlo-crm-sidebar-width, 260px);
+
     .logo {
       padding: 0px;
       background: white;
+
       .logo-mini {
         .logo-img {
           img {
-            width: 125px;
+            width: 110px;
             top: 5px;
           }
         }
       }
     }
+
     .sidebar-wrapper {
       width: var(--jlo-crm-sidebar-width, 260px);
       height: calc(100vh - 110px);
+
       .nav-link {
         font-family: var(--mat-form-field-container-text-font);
       }
@@ -67,6 +73,7 @@ button.btn,
 
   .main-panel {
     width: calc(100% - calc(var(--jlo-crm-sidebar-width, 260px) + 1px));
+
     .main-content {
       min-height: calc(100vh - 125px);
     }
@@ -84,16 +91,19 @@ button.btn,
         }
       }
     }
+
     .sidebar:hover {
       width: var(--jlo-crm-sidebar-width, 260px);
 
       .sidebar-wrapper {
         width: var(--jlo-crm-sidebar-width, 260px);
+
         .nav-link {
           font-family: var(--mat-form-field-container-text-font);
         }
       }
     }
+
     .main-panel {
       width: calc(100% - calc(var(--jlo-crm-sidebar-mini-width, 80px) + 1px));
     }
@@ -101,20 +111,23 @@ button.btn,
 }
 
 .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
-  --mat-mdc-form-field-label-transform: translateY(calc(calc(9.75px + var(--mat-form-field-container-height) / 2) * -1))
-    scale(var(--mat-mdc-form-field-floating-label-scale, 0.75)) !important;
+  --mat-mdc-form-field-label-transform: translateY(calc(calc(9.75px + var(--mat-form-field-container-height) / 2) * -1)) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75)) !important;
 }
+
 table.mat-mdc-table {
   thead {
     background-color: var(--primary);
+
     tr {
       th {
         color: var(--light);
+
         .mat-sort-header-container {
           .mat-sort-header-arrow {
             color: var(--light);
           }
         }
+
         .mat-sort-header-sorted {
           color: var(--light);
         }
@@ -122,7 +135,9 @@ table.mat-mdc-table {
     }
   }
 }
+
 app-created-by {
+
   .mdc-text-field--outlined:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched-outline .mdc-notched-outline__leading,
   .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
   .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
@@ -133,30 +148,37 @@ app-created-by {
     border-color: #dddddd;
   }
 }
+
 .mat-mdc-dialog-inner-container {
   .mat-mdc-dialog-component-host {
     display: flex;
     flex-direction: column;
     height: 100% !important;
     justify-content: space-between;
+
     button.close {
       min-width: 45px;
       margin-left: auto;
       margin-top: 5px;
+
       .mdc-button__ripple {
         width: initial;
       }
     }
+
     .mat-mdc-dialog-content {
       max-height: max-content;
     }
+
     .pull-right {
       margin-left: auto;
       padding-right: 10px;
     }
+
     .justify-content-end {
       padding-right: 10px;
     }
+
     .mat-mdc-dialog-actions {
       padding-top: 2px;
       padding-bottom: 5px;
@@ -176,9 +198,11 @@ app-created-by {
               border-left-style: dashed;
               border-bottom-style: dashed;
             }
+
             .mdc-notched-outline__notch {
               border-bottom-style: dashed;
             }
+
             .mdc-notched-outline__trailing {
               border-top-style: dashed;
               border-right-style: dashed;
@@ -187,17 +211,21 @@ app-created-by {
           }
         }
       }
+
       .mat-mdc-text-field-wrapper {
         cursor: not-allowed;
+
         input {
           cursor: not-allowed;
         }
+
         .mat-icon {
           cursor: context-menu;
         }
       }
     }
   }
+
   .mdc-text-field--outlined {
     .mat-mdc-form-field-flex {
       .mat-mdc-form-field-icon-suffix {
@@ -210,13 +238,16 @@ app-created-by {
             padding-left: 14px;
           }
         }
+
         .mat-mdc-button {
           min-width: 30px;
+
           .mat-icon {
             transform: translateX(6px);
             padding-top: 0;
           }
         }
+
         .mat-icon {
           padding-left: 0px;
           padding-right: 2px;
@@ -227,6 +258,7 @@ app-created-by {
     }
   }
 }
+
 .mat-mdc-checkbox {
   .mdc-label {
     padding-top: 6px;
@@ -235,6 +267,7 @@ app-created-by {
     font-size: var(--mat-form-field-container-text-size);
   }
 }
+
 .mat-mdc-radio-button {
   .mdc-label {
     padding-top: 6px;
@@ -243,6 +276,7 @@ app-created-by {
     font-size: var(--mat-form-field-container-text-size);
   }
 }
+
 .mat-mdc-slide-toggle {
   .mdc-form-field {
     label {
@@ -250,6 +284,7 @@ app-created-by {
     }
   }
 }
+
 .cdk-overlay-pane {
   .mat-mdc-select-panel {
     min-width: max-content;

@@ -6,17 +6,12 @@
 @include mat.elevation-classes();
 @include mat.app-background();
 
-$my-theme: mat.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: mat.$azure-palette,
-    ),
-    typography: (
-      plain-family: "'Noto Sans Thai', Roboto, sans-serif",
-    ),
-  )
-);
+$my-theme: mat.define-theme((color: (theme-type: light,
+        primary: mat.$azure-palette,
+      ),
+      typography: (plain-family: "'Noto Sans Thai', Roboto, sans-serif",
+      ),
+    ));
 
 :root {
   @include mat.all-component-themes($my-theme);
@@ -37,7 +32,7 @@ $my-theme: mat.define-theme(
   height: 100%;
 }
 
-.main-tab > {
+.main-tab> {
   mat-tab-header {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     // border-bottom: 2px solid #1565c0;
@@ -120,10 +115,13 @@ $my-theme: mat.define-theme(
       vertical-align: middle;
     }
 
+
+
     .mat-mdc-header-cell {
       font-size: 14px;
       font-weight: bold;
       background-color: brand.$brand-locus;
+      color: white;
     }
   }
 }
