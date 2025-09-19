@@ -6,15 +6,16 @@ on:
 
 permissions:
   contents: read
+  id-token: write   # required for WIF
 
 env:
   PROJECT_ID: ntt-oceanlife-poc
   REGION: asia-southeast1
-  REPO_NAME: jlo-crm-registry               # your Artifact Registry (Docker) repo
-  SERVICE_NAME: jlo-crm-cicd            # Cloud Run service name
+  REPO_NAME: jlo-crm-registry
+  SERVICE_NAME: jlo-crm-cicd
   IMAGE: asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/jlo-crm-registry/jlo-crm-cicd:${{ github.sha }}
 
-  # App runtime env for your entrypoint.sh → env.js
+  # App runtime env
   PRODUCTION: "true"
   API_ENDPOINT: "https://jlo-crm-be-180096520787.asia-southeast1.run.app"
   WEB_SOCKET_ENDPOINT: "ws://jlo-crm-be-180096520787.asia-southeast1.run.app/jlo-crm-backend/chat"
@@ -26,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Authenticate to GCP using the JSON key (with WIF)
+      # ✅ Authenticate to Google Cloud via WIF (no JSON key)
       - id: auth
         uses: google-github-actions/auth@v3
         with:
@@ -41,7 +42,7 @@ jobs:
 
       - name: Configure Docker for Artifact Registry
         run: gcloud --quiet auth configure-docker "${{ env.REGION }}-docker.pkg.dev"
-                
+
       - name: Build Docker image
         run: docker build -t "${IMAGE}" -f Dockerfile .
 
