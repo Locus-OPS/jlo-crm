@@ -33,7 +33,7 @@ jobs:
         with:
           project_id: ${{ env.PROJECT_ID }}
           workload_identity_provider: 'projects/180096520787/locations/global/workloadIdentityPools/github-pool/providers/github-actions'
-          service_account: 'github-jlo-deployer@ntt-oceanlife-poc.iam.gserviceaccount.com'
+          service_account: 'github-deployer@ntt-oceanlife-poc.iam.gserviceaccount.com'
           # create_credentials_file: true (default) → exports ADC for later steps
 
       - uses: google-github-actions/setup-gcloud@v3
