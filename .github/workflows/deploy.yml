@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # ✅ Authenticate to Google Cloud via WIF (no JSON key)
+      # Authenticate to Google Cloud via WIF
       - id: auth
         uses: google-github-actions/auth@v3
         with:
