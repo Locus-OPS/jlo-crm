@@ -50,6 +50,11 @@ const routes: Routes = [
         loadComponent: () => import('./pages/service-request/service-request-details/service-request-details.component').then(m => m.ServiceRequestDetailsComponent)
       },
       {
+        path: 'consent-profile',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/consent-profile/consent-profile.component').then(m => m.ConsentProfileComponent)
+      },
+      {
         path: 'kb/content/:contentType',
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/kb/content/content.component').then(m => m.ContentComponent)
