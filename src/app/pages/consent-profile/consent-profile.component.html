@@ -52,6 +52,17 @@
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                 (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="asc">
 
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button color="primary" (click)="openProfileDetail(element)"
+                            aria-label="detail">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
                 <!-- CIF Column -->
                 <ng-container matColumnDef="cif">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>CIF</th>

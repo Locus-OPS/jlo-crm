@@ -33,7 +33,7 @@ export class ConsentProfileComponent extends BaseComponent implements OnInit {
 
     selectedRow: ConsentProfile;
     dataSource: ConsentProfile[] = [];
-    displayedColumns: string[] = ['cif', 'idNumber', 'idTypeName', 'consentTypeCode', 'channelCode', 'createdDate'];
+    displayedColumns: string[] = ['action', 'cif', 'idNumber', 'idTypeName', 'consentTypeCode', 'channelCode', 'createdDate'];
 
     constructor(
         public consentProfileService: ConsentProfileService,
@@ -139,6 +139,13 @@ export class ConsentProfileComponent extends BaseComponent implements OnInit {
 
     onSelectRow(row: ConsentProfile) {
         this.selectedRow = row;
+    }
+
+    openProfileDetail(element: ConsentProfile) {
+        console.log('openProfileDetail element: ', element);
+        this.router.navigate([
+            "/consent-profile/detail", { profileId: element.profileId }
+        ]);
     }
 
 }
