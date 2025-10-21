@@ -4,6 +4,7 @@ body {
   padding-left: 50px;
   padding-right: 50px;
   background-color: #f5f5f5;
+  margin-bottom: 100px;
 }
 
 .container {
@@ -378,9 +379,10 @@ body {
 }
 
 .discussion-container {
-  max-height: 700px; /* กำหนดความสูงคงที่ */
-  overflow-y: auto; /* เปิดใช้งาน scroll bar ในแนวตั้ง */
-  padding-right: 0px; /* เพิ่มพื้นที่สำหรับ scroll bar */
+  height: 100vh; /* ยืดเต็มหน้าจอ */
+  overflow-y: auto; /* scroll ในแนวตั้ง */
+  padding: 0px 10px 70px 10px; /* เว้นขอบซ้าย-ขวา */
+  box-sizing: border-box; /* รวม padding เข้า height */
   position: relative;
 }
 
@@ -552,6 +554,11 @@ body {
   animation: spin 1s linear infinite;
 }
 
+.message-chat {
+  height: 75vh; /* viewport height เต็มจอ */
+  overflow-y: auto;
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -559,4 +566,147 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.messagechat {
+  padding-top: 20px;
+  display: flex;
+  align-items: flex-start; /* จัดให้ avatar อยู่ด้านบนของข้อความ */
+  gap: 12px; /* ระยะห่างระหว่าง avatar กับข้อความ */
+  margin-bottom: 16px; /* เว้นระยะห่างระหว่างแต่ละ message */
+  position: relative;
+}
+
+.photoAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* ทำเป็นวงกลม */
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0; /* กันไม่ให้ avatar หด */
+}
+
+.messagechat .message-content-wrapper {
+  /* ทำให้ข้อความและเวลาอยู่แนวตั้ง */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: flex-start;
+}
+
+.text-message {
+  margin: 0;
+  padding: 10px 14px;
+  background: #06c755;
+  color: #fff;
+  border-radius: 12px;
+
+  /* ************************************** */
+  /* *** แก้ไขตรงนี้: เพิ่มความกว้างเป็น 95% *** */
+  max-width: 95%;
+  /* ************************************** */
+
+  word-break: break-word;
+  font-size: 16px;
+
+  flex-shrink: 1;
+  /* margin-right: auto; ถูกย้ายไปที่ .message-content-group เพื่อควบคุมการจัดเรียง */
+}
+
+.message-content-group {
+  /* ทำให้ข้อความและเวลาอยู่ติดกัน */
+  display: flex;
+
+  /* จัดให้ข้อความและเวลาอยู่ล่างสุดของกลุ่ม */
+  align-items: flex-end;
+
+  gap: 4px;
+  flex-grow: 1;
+
+  /* *** เพิ่ม/แก้ไขตรงนี้ *** */
+  /* กำหนดทิศทางการจัดเรียงเป็นแบบคอลัมน์ (บนลงล่าง) */
+  flex-direction: column;
+  /* จัดองค์ประกอบภายในคอลัมน์ให้ชิดซ้าย (สำคัญมาก) */
+  align-items: flex-start;
+  /* *********************** */
+}
+.createtime {
+  margin: 0; /* ล้าง margin ที่อาจติดมากับ <p> */
+  /* จัดให้เวลาชิดขวา */
+  /* align-self: flex-end; เป็นตัวกำหนดให้เวลาอยู่ด้านล่างของข้อความ */
+
+  font-size: 0.75em; /* ขนาดเล็ก */
+  color: #999; /* สีเทา */
+  white-space: nowrap; /* กันเวลาไม่ให้ขึ้นบรรทัดใหม่ */
+  margin-bottom: 2px; /* ดันเวลาขึ้นเล็กน้อยเพื่อให้ดูสวยงามขึ้น */
+  padding-left: 4px; /* เว้นระยะห่างจากข้อความเล็กน้อย */
+}
+
+.messagechat-sent {
+  padding-top: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  position: relative;
+  /* *** สำคัญ: ดันกลุ่มข้อความและ Avatar ไปชิดขวาของหน้าจอ *** */
+  justify-content: flex-end;
+}
+
+.messagechat-sent .photoAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  /* ไม่ต้องใช้ flex-direction: row-reverse แล้ว เพราะสลับตำแหน่งใน HTML แล้ว */
+}
+
+.messagechat-sent .message-content-wrapper {
+  /* ทำให้ข้อความและเวลาอยู่แนวตั้ง */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  /* *** สำคัญ: จัดเรียงองค์ประกอบทั้งหมดในคอลัมน์ให้ชิดขวา *** */
+  align-items: flex-end;
+}
+
+.messagechat-sent .createtime {
+  margin: 0;
+  font-size: 0.75em;
+  color: #999;
+  white-space: nowrap;
+  margin-bottom: 2px;
+
+  /* ล้าง margin-left: auto ที่อาจมีจากคลาสข้อความรับ */
+  margin-left: 0;
+}
+
+.add-case-btn {
+  position: absolute;
+  right: -40px; /* วางข้าง ๆ bubble */
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: none;
+}
+
+.btn-round {
+  position: absolute;
+  bottom: 5px; /* ชิดล่าง */
+  right: 5px; /* ชิดขวา */
+  box-shadow: none;
+  width: 30px;
+  height: 30px;
+}
+.btn-round mat-icon {
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
 }

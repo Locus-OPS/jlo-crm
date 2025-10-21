@@ -211,6 +211,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadComponent: () => import('./pages/chat-example/chat-example.component').then(m => m.ChatExampleComponent)
       },
+      {
+        path: 'integration/linemessaging',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/integration/linemessaging/linemessaging').then(m => m.Linemessaging)
+      },
+      {
+        path: 'integration/fbmessaging',
+        canActivate: [AuthGuard],
+        loadComponent: () => import('./pages/integration/fbmessaging/fbmessaging').then(m => m.Fbmessaging)
+      }
 
     ]
   }, {

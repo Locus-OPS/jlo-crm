@@ -12,10 +12,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { BroadcastComponent } from './broadcast/broadcast.component';
 
 @Component({
-    selector: 'app-chat',
-    imports: [SharedModule],
-    templateUrl: './chat.component.html',
-    styleUrl: './chat.component.scss'
+  selector: 'app-chat',
+  imports: [SharedModule],
+  templateUrl: './chat.component.html',
+  styleUrl: './chat.component.scss'
 })
 export class ChatComponent extends BaseComponent implements OnInit {
 

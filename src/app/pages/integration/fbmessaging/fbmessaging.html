@@ -1,0 +1,115 @@
+<body>
+  <div class="container">
+    <div class="row">
+      <section class="discussions">
+        <form [formGroup]="searchForm" (ngSubmit)="searchDataFromSearchBar()" style="margin-bottom: -10px">
+          <div class="discussion search">
+            <div class="searchbar">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <input type="text" formControlName="displayName" placeholder="Search..." />
+            </div>
+          </div>
+        </form>
+        <div class="discussion-container">
+          <div *ngFor="let user of users" class="discussion" (click)="onSelectChat(user)">
+            <div
+              class="photo"
+              [ngStyle]="{
+                  'background-image': 'url(' + user.pictureUrl + ')'
+                }"
+            ></div>
+
+            <div class="desc-contact">
+              <p class="name" style="font-weight: bold">{{ user.displayName }}</p>
+              <p class="message">{{ user.statusMessage }}</p>
+              <!-- <p class="time">{{ chat.createdAt }}</p> -->
+            </div>
+          </div>
+          <!-- ปุ่ม Load More -->
+          @if(users.length < totalUsers) {
+          <div class="load-more-container">
+            <button mat-stroked-button color="primary" (click)="loadMore()">
+              {{'Load More : ' +this.users.length+' / '+ this.totalUsers + ' users'}}
+            </button>
+          </div>
+          }
+        </div>
+      </section>
+      <section class="chat">
+        <div class="header-chat">
+          @if(selectedUser) {
+          <div
+            class="photoAvatar"
+            [ngStyle]="{
+                  'background-image': 'url(' + selectedUser.pictureUrl + ')'
+                }"
+          ></div>
+          <span style="padding-left: 10px; font-weight: bold">{{ selectedUser.displayName }} </span>
+          }
+        </div>
+
+        <div>
+          <div class="message-chat">
+            @if(selectedUser) { @if((interactionList.length < totalInteractions) && interactionList.length!=0) {
+            <!-- ปุ่ม Load More บนสุด -->
+            <div class="load-more-container">
+              <button mat-stroked-button color="primary" (click)="loadMoreChat()">
+                <mat-icon>expand_more</mat-icon>
+                Load More : {{interactionList.length}} / {{totalInteractions}} messages
+              </button>
+            </div>
+            }
+
+            <div *ngFor="let interaction of interactionList">
+              @if(interaction.direction==='INBOUND'){
+              <div class="messagechat">
+                <div
+                  class="photoAvatar"
+                  [ngStyle]="{
+                  'background-image': 'url(' + selectedUser.pictureUrl + ')'
+                }"
+                ></div>
+                <div class="message-content-wrapper">
+                  <div class="text-message">
+                    {{ interaction.messageText }}
+                    <p [innerHTML]="getAttachmentsHtml(interaction.metadataJson)"></p>
+                    <!-- <p style="padding-top: 10px">
+                      ปุ่ม Add Case -->
+                    <!-- <button mat-mini-fab color="primary" (click)="addCase(interaction)">
+                        <mat-icon>add</mat-icon>
+                      </button>
+                    </p> -->
+                  </div>
+                  <p class="createtime">{{ interaction.createdAt }}</p>
+                </div>
+              </div>
+              } @if(interaction.direction==='OUTBOUND'){
+              <div class="messagechat-sent">
+                <div class="message-content-wrapper">
+                  <p class="text-message">{{ interaction.messageText }}</p>
+                  <p class="createtime">{{ interaction.createdAt }}</p>
+                </div>
+                <div
+                  class="photoAvatar"
+                  [ngStyle]="{
+                  'background-image': 'url(./assets/img/chat-user-default.png)'
+                }"
+                  title="{{interaction.createdByName}}"
+                ></div>
+              </div>
+              }
+            </div>
+
+            }
+          </div>
+        </div>
+
+        <div class="footer-chat">
+          <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
+          <input type="text" class="write-message" placeholder="Type your message here" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" />
+          <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendMessage()"></i>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>

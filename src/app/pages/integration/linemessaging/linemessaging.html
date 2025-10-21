@@ -1,0 +1,144 @@
+<body>
+  <!-- <button (click)="this.loadImage()">Load Image</button>
+
+  <div *ngIf="imageUrl" class="preview">
+    <img [src]="imageUrl" alt="LINE image" width="150" height="150">
+  </div> -->
+
+  <div class="container">
+    <div class="row">
+      <section class="discussions">
+        <form [formGroup]="searchForm" (ngSubmit)="searchDataFromSearchBar()" style="margin-bottom: -10px">
+          <div class="discussion search">
+            <div class="searchbar">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <input type="text" formControlName="displayName" placeholder="Search..." />
+            </div>
+          </div>
+          <!-- <p style="padding-top: 20px; text-align: end">{{'Totals: ' +this.users.length+'/'+ this.totalUsers + ' users'}}</p> -->
+        </form>
+
+        <div class="discussion-container">
+          <div *ngFor="let user of users" class="discussion" (click)="onSelectChat(user)">
+            <div
+              class="photo"
+              [ngStyle]="{
+                  'background-image': 'url(' + user.pictureUrl + ')'
+                }"
+            ></div>
+
+            <div class="desc-contact">
+              <p class="name" style="font-weight: bold">{{ user.displayName }}</p>
+              <p class="message">{{ user.statusMessage }}</p>
+              <!-- <p class="time">{{ chat.createdAt }}</p> -->
+            </div>
+          </div>
+          <!-- ปุ่ม Load More -->
+          @if(users.length < totalUsers) {
+          <div class="load-more-container">
+            <button mat-stroked-button color="primary" (click)="loadMore()">
+              {{'Load More : ' +this.users.length+' / '+ this.totalUsers + ' users'}}
+            </button>
+          </div>
+          }
+        </div>
+      </section>
+      <section class="chat">
+        <div class="header-chat">
+          @if(selectedUser) {
+          <div
+            class="photoAvatar"
+            [ngStyle]="{
+                  'background-image': 'url(' + selectedUser.pictureUrl + ')'
+                }"
+          ></div>
+          <span style="padding-left: 10px; font-weight: bold">{{ selectedUser.displayName }} </span>
+          }
+        </div>
+
+        <div>
+          <div class="message-chat">
+            @if(selectedUser) { @if((interactionList.length < totalInteractions) && interactionList.length!=0) {
+            <!-- ปุ่ม Load More บนสุด -->
+            <div class="load-more-container">
+              <button mat-stroked-button color="primary" (click)="loadMoreChat()">
+                <mat-icon>expand_more</mat-icon>
+                Load More : {{interactionList.length}} / {{totalInteractions}} messages
+              </button>
+            </div>
+            }
+
+            <div *ngFor="let interaction of interactionList">
+              @if(interaction.direction==='INBOUND'){
+              <div class="messagechat">
+                <div
+                  class="photoAvatar"
+                  [ngStyle]="{
+                  'background-image': 'url(' + selectedUser.pictureUrl + ')'
+                }"
+                ></div>
+                <div class="message-content-wrapper">
+                  <div class="text-message">
+                    {{ interaction.messageText }} @if(interaction.messageType==='IMAGE' || interaction.messageType==='VIDEO' ||
+                    interaction.messageType==='AUDIO') { @if (interaction.loadedDataUrl) { @switch (interaction.messageType) { @case ('IMAGE') {
+                    <img [src]="interaction.loadedDataUrl" alt="Loaded image" width="200" style="border-radius: 12px" />
+                    } @case ('VIDEO') {
+                    <video [src]="interaction.loadedDataUrl" controls width="300" style="border-radius: 12px"></video>
+                    } @case ('AUDIO') {
+                    <audio [src]="interaction.loadedDataUrl" controls></audio>
+                    } @case ('FILE') {
+                    <a
+                      [href]="interaction.loadedDataUrl"
+                      [download]="interaction.messageText || 'downloaded-file'"
+                      mat-stroked-button
+                      color="primary"
+                    >
+                      <mat-icon>download</mat-icon>
+                      Download {{ interaction.messageText || 'File' }}
+                    </a>
+                    } } } @else if (interaction.isLoadingMedia) {
+                    <mat-spinner diameter="30"></mat-spinner>
+                    } @else if (interaction.loadError) {
+                    <p style="color: red; font-size: 12px">{{ interaction.loadError }}</p>
+                    } @else {
+                    <button mat-raised-button (click)="loadContent(interaction)">
+                      @switch (interaction.messageType) { @case ('IMAGE') { Load Image... } @case ('VIDEO') { Load Video... } @case ('AUDIO') { Load
+                      Audio... } }
+                    </button>
+                    } } @else if(interaction.messageType==='STICKER') {
+                    <p [innerHTML]="getSticker(interaction.metadataJson)"></p>
+                    }
+                  </div>
+                  <p class="createtime">{{ interaction.createdAt }}</p>
+                </div>
+              </div>
+              } @if(interaction.direction==='OUTBOUND'){
+              <div class="messagechat-sent">
+                <div class="message-content-wrapper">
+                  <p class="text-message">{{ interaction.messageText }}</p>
+                  <p class="createtime">{{ interaction.createdAt }}</p>
+                </div>
+                <div
+                  class="photoAvatar"
+                  [ngStyle]="{
+                  'background-image': 'url(./assets/img/chat-user-default.png)'
+                }"
+                  title="{{interaction.createdByName}}"
+                ></div>
+              </div>
+              }
+            </div>
+
+            }
+          </div>
+        </div>
+
+        <div class="footer-chat">
+          <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
+          <input type="text" class="write-message" placeholder="Type your message here" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" />
+          <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendMessage()"></i>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
