@@ -57,9 +57,12 @@
                 <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">
                   {{ 'button.search' | translate }}
                 </button>
+                @if(CAN_WRITE()){
                 <a [routerLink]="['/customer/customer']" mat-raised-button type="button"
-                  class="btn btn-fill btn-primary" type="button" *ngIf="CAN_WRITE()">{{ 'button.create' | translate
+                  class="btn btn-fill btn-primary" type="button">{{
+                  'button.create' | translate
                   }}</a>
+                }
                 <button mat-raised-button type="reset" class="btn btn-fill btn-default" (click)="clear()">
                   {{ 'button.clear' | translate }}
                 </button>
@@ -72,7 +75,6 @@
               <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
                 (matSortChange)="tableControl.onSort($event)" matSort matSortActive="firstName" matSortDirection="asc"
                 matSortDisableClear>
-
                 <ng-container matColumnDef="fullName">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{ 'member.name' | translate }}
@@ -104,7 +106,7 @@
                     {{ 'member.customerStatus' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.customerStatusName}}
+                    {{ element.customerStatusName }}
                   </td>
                   <!-- <td mat-cell *matCellDef="let element" style="text-align: center; vertical-align: middle">
                     <mat-label *ngIf="element.customerStatus == '01'" class="badge active">{{ element.customerStatusName }} </mat-label>
@@ -149,7 +151,8 @@
     </div>
     <!-- end row -->
     <!-- form create customer -->
-    <div class="col-md-12" *ngIf="selectedRow != null">
+    @if(selectedRow != null){
+    <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-rose card-header-icon">
           <div class="card-icon">
@@ -157,16 +160,13 @@
           </div>
           <div class="header-actions">
             <ng-container *ngIf="createForm.value.memberId != null; else elseCustomer">
-              <button (click)="selectCustomerConsulting('member')" mat-raised-button class="btn btn-fill btn-default">
-                View Member Detail
-              </button>
-
+              <button (click)="selectCustomerConsulting('member')" mat-raised-button
+                class="btn btn-fill btn-default">View Member Detail</button>
             </ng-container>
             <ng-template #elseCustomer></ng-template>
 
             <button (click)="selectCustomerConsulting('customer')" mat-raised-button
               class="btn btn-fill btn-default">View Customer Detail</button>
-
           </div>
           <h4 class="card-title">Customer</h4>
           <mat-card-subtitle>Customer Name :
@@ -190,7 +190,8 @@
                 </div>
               </div>
               <div class="col-md-8">
-                <div class="row" *ngIf="createForm.value.customerType">
+                @if(createForm.value.customerType){
+                <div class="row">
                   <div class="col-md-12">
                     <div class="row">
                       <mat-form-field class="col-md-3">
@@ -219,20 +220,22 @@
                           </mat-option>
                         </mat-select>
                       </mat-form-field>
-                      <mat-form-field class="col-md-4"
-                        *ngIf="createForm.controls['nationality'].value == THAI_NATIONALITY">
+                      @if(createForm.controls['nationality'].value == THAI_NATIONALITY){
+                      <mat-form-field class="col-md-4">
                         <mat-label>{{ 'member.citizenId' | translate }}</mat-label>
                         <input matInput type="text" formControlName="citizenId" maxlength="13" readonly />
                       </mat-form-field>
-                      <mat-form-field class="col-md-4"
-                        *ngIf="createForm.controls['nationality'].value != THAI_NATIONALITY">
+                      } @if(createForm.controls['nationality'].value != THAI_NATIONALITY){
+                      <mat-form-field class="col-md-4">
                         <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
                         <input matInput type="text" formControlName="passportNo" readonly />
                       </mat-form-field>
+                      }
                     </div>
                   </div>
                 </div>
-                <div class="row" *ngIf="!createForm.value.customerType">
+                } @if(!createForm.value.customerType){
+                <div class="row">
                   <mat-form-field class="col-md-10">
                     <mat-label>{{ 'member.businessName' | translate }}</mat-label>
                     <input matInput type="text" formControlName="businessName" readonly />
@@ -242,6 +245,7 @@
                     <input matInput type="text" formControlName="taxId" readonly />
                   </mat-form-field>
                 </div>
+                }
               </div>
             </div>
 
@@ -300,5 +304,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
 </div>

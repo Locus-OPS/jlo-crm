@@ -4,15 +4,13 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button
-            class="btn btn-danger btn-round btn-fab mat-raised-button"
-            *ngIf="CAN_WRITE()"
-            (click)="onDelete(element); $event.stopPropagation()"
-          >
+          @if(CAN_WRITE()){
+          <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="onDelete(element); $event.stopPropagation()">
             <span class="mat-button-wrapper">
               <i class="material-icons">remove</i>
             </span>
           </button>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="title">
@@ -22,7 +20,9 @@
       <ng-container matColumnDef="mainFlag">
         <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'document.mainFlag' | translate }}</th>
         <td mat-cell *matCellDef="let element" class="text-center">
-          <mat-icon matSuffix *ngIf="element.mainFlag === 'Y'">done</mat-icon>
+          @if(element.mainFlag === 'Y'){
+          <mat-icon matSuffix>done</mat-icon>
+          }
         </td>
       </ng-container>
       <ng-container matColumnDef="createdBy">
@@ -48,21 +48,19 @@
           <mat-label>{{ 'document.file' | translate }}</mat-label>
           <input type="file" hidden #fileUpload (change)="selectFile($event)" />
           <input disabled formControlName="fileName" matInput type="text" maxlength="200" readonly />
-          <button type="button" *ngIf="kbDetail" matSuffix mat-button (click)="fileUpload.click()" class="file-icon">
+          @if(kbDetail){
+          <button type="button" matSuffix mat-button (click)="fileUpload.click()" class="file-icon">
             <mat-icon>attachment</mat-icon>
           </button>
-          <button
-            type="button"
-            *ngIf="kbDetail && createForm.controls['attId'].value"
-            matSuffix
-            mat-button
-            (click)="openAttachmentDialog(createForm.controls['attId'].value)"
-          >
+          } @if(kbDetail && createForm.controls['attId'].value){
+          <button type="button" matSuffix mat-button (click)="openAttachmentDialog(createForm.controls['attId'].value)">
             <mat-icon>pageview</mat-icon>
           </button>
-          <mat-error *ngIf="createForm.controls['fileName'].hasError('required')">
+          } @if(createForm.controls['fileName'].hasError('required')){
+          <mat-error>
             {{ 'error.required' | translate }}
           </mat-error>
+          }
         </mat-form-field>
         <mat-form-field class="col-md-12">
           <mat-label>{{ 'document.description' | translate }}</mat-label>
@@ -77,28 +75,22 @@
       >
       </app-created-by>
     </div>
-    <div *ngIf="kbDetail" class="pull-right">
-      <button
-        mat-raised-button
-        type="button"
-        class="btn btn-fill btn-primary"
-        *ngIf="CAN_WRITE() && !creatingContent && !creatingDocument"
-        (click)="create()"
-      >
+    @if(kbDetail){
+    <div class="pull-right">
+      @if(CAN_WRITE() && !creatingContent && !creatingDocument){
+      <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="create()">
         {{ 'button.create' | translate }}
       </button>
-      <button
-        mat-raised-button
-        type="button"
-        class="btn btn-fill btn-default"
-        *ngIf="CAN_WRITE() && !creatingContent && creatingDocument"
-        (click)="cancel()"
-      >
+      } @if(CAN_WRITE() && !creatingContent && creatingDocument){
+      <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="cancel()">
         {{ 'button.cancel' | translate }}
       </button>
-      <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="CAN_WRITE() && !creatingContent" (click)="onSave()">
+      } @if(CAN_WRITE() && !creatingContent){
+      <button mat-raised-button type="submit" class="btn btn-rose" (click)="onSave()">
         {{ 'button.save' | translate }}
       </button>
+      }
     </div>
+    }
   </form>
 </div>

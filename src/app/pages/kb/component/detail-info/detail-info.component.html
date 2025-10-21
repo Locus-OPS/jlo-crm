@@ -1,19 +1,20 @@
 <form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
-    <input formControlName="contentId" type="hidden" />
-    <div class="row">
-        <mat-form-field class="col-md-12">
-            <mat-label>{{translatePrefix + '.url' | translate}}</mat-label>
-            <input formControlName="url" matInput type="text" maxlength="500" />
-        </mat-form-field>
-    </div>
-    <div class="row">
-        <mat-form-field class="col-md-12">
-            <mat-label>{{translatePrefix + '.description' | translate}}</mat-label>
-            <textarea [disabled]="!kbDetail" formControlName="description" matInput type="text"
-                rows="5" maxlength="2000"></textarea>
-        </mat-form-field>
-    </div>
-    <div class="row pull-right">
-      <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="kbDetail && CAN_WRITE()">{{ 'button.save' | translate }}</button>
-    </div>
+  <input formControlName="contentId" type="hidden" />
+  <div class="row">
+    <mat-form-field class="col-md-12">
+      <mat-label>{{ translatePrefix + '.url' | translate }}</mat-label>
+      <input formControlName="url" matInput type="text" maxlength="500" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field class="col-md-12">
+      <mat-label>{{ translatePrefix + '.description' | translate }}</mat-label>
+      <textarea [disabled]="!kbDetail" formControlName="description" matInput type="text" rows="5" maxlength="2000"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="row pull-right">
+    @if(kbDetail && CAN_WRITE()){
+    <button mat-raised-button type="submit" class="btn btn-rose">{{ 'button.save' | translate }}</button>
+    }
+  </div>
 </form>

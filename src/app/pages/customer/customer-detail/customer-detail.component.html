@@ -8,45 +8,53 @@
               <i class="material-icons">perm_identity</i>
             </div>
             <div class="header-actions">
-              <button mat-raised-button class="btn btn-fill btn-default" [routerLink]="['/customer']">{{ 'button.back' |
-                translate }}</button>
-              <button mat-raised-button class="btn btn-fill btn-danger"
-                [routerLink]="['/casedetails', { customerId: createForm.controls['customerId'].value, type: 'customer' }]">
+              <button mat-raised-button class="btn btn-fill btn-default" [routerLink]="['/customer']">{{ 'button.back' | translate }}</button>
+              <button
+                mat-raised-button
+                class="btn btn-fill btn-danger"
+                [routerLink]="['/casedetails', { customerId: createForm.controls['customerId'].value, type: 'customer' }]"
+              >
                 {{ 'customer.newcase' | translate }}
               </button>
-              <button mat-raised-button class="btn btn-fill btn-success" (click)="onSave()" *ngIf="CAN_WRITE()">
+              @if(CAN_WRITE()){
+              <button mat-raised-button class="btn btn-fill btn-success" (click)="onSave()">
                 {{ 'button.save' | translate }}
               </button>
+              }
             </div>
             <h4 class="card-title">Customers Detail</h4>
-            <mat-card-subtitle>{{ 'member.customerName' | translate }} :
+            <mat-card-subtitle
+              >{{ 'member.customerName' | translate }} :
               {{ (createForm.controls['firstName'].value || '') + ' ' + (createForm.controls['lastName'].value || '') }}
             </mat-card-subtitle>
           </div>
           <div class="card-body">
-            <div class="row">
-            </div>
+            <div class="row"></div>
             <form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
               <div class="row">
                 <div class="col-md-6">
                   <div class="row d-flex align-items-stretch">
                     <div class="col-md-4 d-sm-none d-md-block">
                       <div class="card-simple">
-                        <img class="card-bg" [src]="
+                        <img
+                          class="card-bg"
+                          [src]="
                             imageSrc
                               ? imageSrc
                               : this.createForm.controls['pictureUrl'].value
                               ? customerService.getCustomerProfileImagePath(this.createForm.controls['pictureUrl'].value)
                               : './assets/img/profile_image_not_found.png'
-                          " />
+                          "
+                        />
                       </div>
                       <input type="file" hidden #fileUpload (change)="selectFile($event)" accept="image/*" /><br />
-                      <div *ngIf="this.customerId">
-                        <a class="btn btn-info btn-round"
-                          (click)="fileUpload.click()"><mat-icon>attachment</mat-icon></a> &nbsp;
-                        <a *ngIf="imageSrc" class="btn btn-info btn-round"
-                          (click)="upload()"><mat-icon>upload</mat-icon></a>
+                      @if(this.customerId){
+                      <div>
+                        <a class="btn btn-info btn-round" (click)="fileUpload.click()"><mat-icon>attachment</mat-icon></a> &nbsp; @if(imageSrc){
+                        <a class="btn btn-info btn-round" (click)="upload()"><mat-icon>upload</mat-icon></a>
+                        }
                       </div>
+                      }
                     </div>
                   </div>
                 </div>
@@ -56,40 +64,41 @@
                 <div class="col-md-3">
                   <mat-label>{{ 'member.customerType' | translate }} </mat-label>
                   &nbsp;
-                  <mat-slide-toggle formControlName="customerType"
-                    (click)="changeCustomerType(createForm.controls['customerType'].value)">
+                  <mat-slide-toggle formControlName="customerType" (click)="changeCustomerType(createForm.controls['customerType'].value)">
                     <b class="{{ createForm.controls['customerType'].value ? 'text-warning' : 'text-info' }}">{{
                       (createForm.controls['customerType'].value ? 'member.individual' : 'member.corporate') | translate
-                      }}</b>
+                    }}</b>
                   </mat-slide-toggle>
                 </div>
               </div>
-              <div class="row" *ngIf="createForm.controls['customerType'].value">
+              @if(createForm.controls['customerType'].value){
+              <div class="row">
                 <div class="col-md-12">
                   <div class="row">
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.title' | translate }}</mat-label>
                       <mat-select formControlName="title">
                         <mat-option>--</mat-option>
-                        <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }}
-                        </mat-option>
+                        <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                       </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.firstName' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="firstName" [required]="createForm.value.customerType"
-                        maxlength="255" />
-                      <mat-error *ngIf="createForm.controls['firstName'].hasError('required')">
+                      <input matInput type="text" formControlName="firstName" [required]="createForm.value.customerType" maxlength="255" />
+                      @if(createForm.controls['firstName'].hasError('required')){
+                      <mat-error>
                         {{ 'error.required' | translate }}
                       </mat-error>
+                      }
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.lastName' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="lastName" [required]="createForm.value.customerType"
-                        maxlength="255" />
-                      <mat-error *ngIf="createForm.controls['lastName'].hasError('required')">
+                      <input matInput type="text" formControlName="lastName" [required]="createForm.value.customerType" maxlength="255" />
+                      @if(createForm.controls['lastName'].hasError('required')){
+                      <mat-error>
                         {{ 'error.required' | translate }}
                       </mat-error>
+                      }
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.customerStatus' | translate }}</mat-label>
@@ -100,31 +109,38 @@
                       </mat-select>
                     </mat-form-field>
                   </div>
-                  <div class="row" *ngIf="createForm.controls['customerType'].value">
-
+                  @if(createForm.controls['customerType'].value){
+                  <div class="row">
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.nationality' | translate }}</mat-label>
                       <mat-select formControlName="nationality" (valueChange)="onChangeNationality($event)">
                         <mat-option>--</mat-option>
-                        <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }}
-                        </mat-option>
+                        <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                       </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3"
-                      *ngIf="createForm.controls['nationality'].value == THAI_NATIONALITY">
+                    @if(createForm.controls['nationality'].value == THAI_NATIONALITY){
+                    <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.citizenId' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="citizenId" maxlength="13"
+                      <input
+                        matInput
+                        type="text"
+                        formControlName="citizenId"
+                        maxlength="13"
                         [required]="createForm.value.customerType && createForm.value.nationality == THAI_NATIONALITY"
-                        pattern="[0-9]{13}" />
-                      <mat-error *ngIf="createForm.controls['citizenId'].hasError('required')">
+                        pattern="[0-9]{13}"
+                      />
+                      @if(createForm.controls['citizenId'].hasError('required')){
+                      <mat-error>
                         {{ 'error.required' | translate }}
                       </mat-error>
+                      }
                     </mat-form-field>
-                    <mat-form-field class="col-md-3"
-                      *ngIf="createForm.controls['nationality'].value != THAI_NATIONALITY">
+                    } @if(createForm.controls['nationality'].value != THAI_NATIONALITY){
+                    <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
                       <input matInput type="text" formControlName="passportNo" maxlength="20" />
                     </mat-form-field>
+                    }
 
                     <mat-form-field class="col-md-3">
                       <mat-label>{{ 'member.birthDate' | translate }}</mat-label>
@@ -136,31 +152,31 @@
                       <mat-label>{{ 'member.maritalStatus' | translate }}</mat-label>
                       <mat-select formControlName="maritalStatus">
                         <mat-option>--</mat-option>
-                        <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }}
-                        </mat-option>
+                        <mat-option *ngFor="let item of maritalList" [value]="item.codeId">{{ item.etc1 | translate }} </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
-
+                  }
                 </div>
               </div>
-
-              <div class="row" *ngIf="!createForm.controls['customerType'].value">
+              } @if(!createForm.controls['customerType'].value){
+              <div class="row">
                 <mat-form-field class="col-md-9">
                   <mat-label>{{ 'member.businessName' | translate }}</mat-label>
-                  <input matInput type="text" formControlName="businessName" [required]="!createForm.value.customerType"
-                    maxlength="255" />
-                  <mat-error *ngIf="createForm.controls['businessName'].hasError('required')">
+                  <input matInput type="text" formControlName="businessName" [required]="!createForm.value.customerType" maxlength="255" />
+                  @if(createForm.controls['businessName'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.taxId' | translate }}</mat-label>
                   <input matInput type="text" formControlName="taxId" maxlength="13" />
                 </mat-form-field>
               </div>
-
-              <div class="row" *ngIf="!createForm.controls['customerType'].value">
+              } @if(!createForm.controls['customerType'].value){
+              <div class="row">
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'member.companyRegisterDate' | translate }}</mat-label>
                   <input matInput [matDatepicker]="birthDateRef" formControlName="birthDate" />
@@ -171,20 +187,20 @@
                   <mat-label>{{ 'member.businessType' | translate }}</mat-label>
                   <mat-select formControlName="businessType">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of businessTypeList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of businessTypeList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
-
-              <div class="row" *ngIf="createForm.controls['customerType'].value">
+              } @if(createForm.controls['customerType'].value){
+              <div class="row">
                 <div class="col-md-3">
                   <div matLabel>
                     {{ 'member.gender' | translate }}
                   </div>
                   <mat-radio-group class="no-label" formControlName="gender">
-                    <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList">{{ item.etc1 | translate
-                      }} &nbsp;&nbsp;</mat-radio-button>
+                    <mat-radio-button [value]="item.codeId" *ngFor="let item of genderList"
+                      >{{ item.etc1 | translate }} &nbsp;&nbsp;</mat-radio-button
+                    >
                   </mat-radio-group>
                 </div>
 
@@ -192,11 +208,11 @@
                   <mat-label>{{ 'member.occupation' | translate }}</mat-label>
                   <mat-select formControlName="occupation">
                     <mat-option>--</mat-option>
-                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }}
-                    </mat-option>
+                    <mat-option *ngFor="let item of occupationList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
+              }
 
               <div class="row">
                 <div class="col-md-12">
@@ -211,31 +227,32 @@
                           <mat-label>{{ 'member.mobileArea' | translate }}</mat-label>
                           <mat-select formControlName="phoneArea">
                             <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of phonePrefixList" [value]="item.codeId">{{ item.codeName }}
-                            </mat-option>
+                            <mat-option *ngFor="let item of phonePrefixList" [value]="item.codeId">{{ item.codeName }} </mat-option>
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
                           <mat-label>{{ 'member.phoneNo' | translate }}</mat-label>
                           <mat-icon matSuffix>phone</mat-icon>
                           <input matInput type="text" formControlName="phoneNo" required maxlength="20" />
-                          <mat-error *ngIf="createForm.controls['phoneNo'].hasError('required')">
+                          @if(createForm.controls['phoneNo'].hasError('required')){
+                          <mat-error>
                             {{ 'error.required' | translate }}
                           </mat-error>
+                          }
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
                           <mat-label>{{ 'member.email' | translate }}</mat-label>
                           <input matInput type="text" formControlName="email" required maxlength="100" />
-                          <mat-error *ngIf="createForm.controls['email'].hasError('required')">
+                          @if(createForm.controls['email'].hasError('required')){
+                          <mat-error>
                             {{ 'error.required' | translate }}
                           </mat-error>
+                          }
                         </mat-form-field>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
-
-
               </div>
 
               <div class="row">
@@ -244,10 +261,12 @@
                   <textarea matInput type="text" formControlName="remark"></textarea>
                 </mat-form-field>
               </div>
-              <app-created-by [createdBy]="createForm.controls['createdByName'].value"
+              <app-created-by
+                [createdBy]="createForm.controls['createdByName'].value"
                 [createdDate]="createForm.controls['createdDate'].value"
                 [updatedBy]="createForm.controls['updatedByName'].value"
-                [updatedDate]="createForm.controls['updatedDate'].value">
+                [updatedDate]="createForm.controls['updatedDate'].value"
+              >
               </app-created-by>
             </form>
           </div>
@@ -257,30 +276,34 @@
           <div class="card-body">
             <mat-tab-group mat-align-tabs="end">
               <mat-tab [label]="'member.address' | translate">
-                <app-customer-address #customerAddress *ngIf="this.customerId != null"
-                  [customerIdParam]="this.customerId">
-                </app-customer-address>
+                @if(this.customerId != null){
+                <app-customer-address #customerAddress [customerIdParam]="this.customerId"> </app-customer-address>
+                }
               </mat-tab>
-
-              <mat-tab [label]="'case.title' | translate" *ngIf="IS_ROLE('CRM_PACKAGE') || IS_ROLE('SUPER_ADMIN')">
-                <app-customer-case #customerCase *ngIf="this.customerId != null" [customerIdParam]="this.customerId">
-                </app-customer-case>
+              @if(IS_ROLE('CRM_PACKAGE') || IS_ROLE('SUPER_ADMIN')){
+              <mat-tab [label]="'case.title' | translate">
+                @if(this.customerId != null){
+                <app-customer-case #customerCase [customerIdParam]="this.customerId"> </app-customer-case>
+                }
               </mat-tab>
-
-              <mat-tab [label]="'sr.title' | translate" *ngIf="IS_ROLE('CRM_SLF') || IS_ROLE('SUPER_ADMIN')">
-                <app-customer-sr #customerSr *ngIf=" this.customerId !=null" [customerIdParam]="this.customerId">
-                </app-customer-sr>
+              } @if(IS_ROLE('CRM_SLF') || IS_ROLE('SUPER_ADMIN')){
+              <mat-tab [label]="'sr.title' | translate">
+                @if(this.customerId != null){
+                <app-customer-sr #customerSr [customerIdParam]="this.customerId"> </app-customer-sr>
+                }
               </mat-tab>
+              }
 
               <mat-tab [label]="'contact.history' | translate">
-                <app-contact-history-tl #contactHistoryTlComponent *ngIf="this.customerId != null"
-                  [customerIdParam]="this.customerId">
-                </app-contact-history-tl>
+                @if(this.customerId != null){
+                <app-contact-history-tl #contactHistoryTlComponent [customerIdParam]="this.customerId"> </app-contact-history-tl>
+                }
               </mat-tab>
 
               <mat-tab [label]="'member.changeLog' | translate">
-                <app-customer-audit-log #customerAuditLogComponent *ngIf="this.customerId != null"
-                  [customerIdParam]="this.customerId"></app-customer-audit-log>
+                @if(this.customerId != null){
+                <app-customer-audit-log #customerAuditLogComponent [customerIdParam]="this.customerId"></app-customer-audit-log>
+                }
               </mat-tab>
             </mat-tab-group>
           </div>

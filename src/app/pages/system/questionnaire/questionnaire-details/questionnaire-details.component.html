@@ -15,21 +15,20 @@
 
             <form #createFormDirective="ngForm" [formGroup]="createFormHeader" (ngSubmit)="onSave($event)" novalidate>
               <div class="row">
-                <div class="col-md-12" *ngIf="id != null">
+                @if(id != null){
+                <div class="col-md-12">
                   <div class="pull-right">
                     <button mat-raised-button type="button" (click)="onGenerateLink()" class="btn btn-fill btn-rose">Smartlink Generate</button>
-                    <button
-                      mat-raised-button
-                      type="button"
-                      class="btn btn-fill btn-defualt"
-                      (click)="onCopySmartlink()"
-                      *ngIf="createFormHeader.get('urlLink').value != null"
-                    >
+                    @if(createFormHeader.get('urlLink').value != null){
+                    <button mat-raised-button type="button" class="btn btn-fill btn-defualt" (click)="onCopySmartlink()">
                       <mat-icon>content_copy</mat-icon>
                       Copy Url
                     </button>
+                    }
                   </div>
                 </div>
+                }
+
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'questionnaire.id' | translate }}</mat-label>
                   <input matInput type="text" formControlName="id" readonly />
@@ -41,25 +40,31 @@
                       {{ type.codeName }}
                     </mat-option>
                   </mat-select>
-                  <mat-error *ngIf="createFormHeader.controls['questionnaireType'].hasError('required')">
+                  @if(createFormHeader.get('questionnaireType').hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
 
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'questionnaire.formname' | translate }}</mat-label>
                   <input matInput type="text" formControlName="formName" required />
-                  <mat-error *ngIf="createFormHeader.controls['formName'].hasError('required')">
+                  @if(createFormHeader.controls['formName'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
 
                 <mat-form-field class="col-md-3">
                   <mat-label>{{ 'questionnaire.sectionHeaderText' | translate }}</mat-label>
                   <input matInput type="text" formControlName="sectionHeaderText" required />
-                  <mat-error *ngIf="createFormHeader.controls['sectionHeaderText'].hasError('required')">
+                  @if(createFormHeader.controls['sectionHeaderText'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
 
                 <mat-form-field class="col-md-3">
@@ -68,9 +73,11 @@
                     <mat-option *ngFor="let type of statusList" [value]="type.codeId">
                       {{ type.codeName }}
                     </mat-option>
-                    <mat-error *ngIf="createFormHeader.controls['statusCd'].hasError('required')">
+                    @if(createFormHeader.controls['statusCd'].hasError('required')){
+                    <mat-error>
                       {{ 'error.required' | translate }}
                     </mat-error>
+                    }
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -93,17 +100,16 @@
             <!-- </div> -->
           </div>
 
-          <div
-            class="card-header card-header-primary card-header-icon"
-            *ngIf="createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''"
-          >
+          @if(createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''){
+          <div class="card-header card-header-primary card-header-icon">
             <div class="pull-right"></div>
             <div class="card-icon">
               <i class="material-icons">quiz</i>
             </div>
             <h4 class="card-title">{{ 'questionnaire.detail.question' | translate }}</h4>
           </div>
-          <div class="card-body" *ngIf="createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''">
+          } @if(createFormHeader.get('id').value != null && createFormHeader.get('id').value != ''){
+          <div class="card-body">
             <div class="row">
               <div class="col-md-12">
                 <mat-card>
@@ -113,9 +119,11 @@
                         <mat-form-field class="col-md-6">
                           <mat-label>{{ 'questionnaire.question' | translate }}</mat-label>
                           <input matInput formControlName="question" />
-                          <mat-error *ngIf="createFormQuestion.get('question').invalid && createFormQuestion.get('question').touched">
+                          @if(createFormQuestion.get('question').invalid && createFormQuestion.get('question').touched){
+                          <mat-error>
                             {{ 'error.required' | translate }}
                           </mat-error>
+                          }
                         </mat-form-field>
                       </div>
 
@@ -127,23 +135,27 @@
                               {{ type.codeName }}
                             </mat-option>
                           </mat-select>
-                          <mat-error *ngIf="createFormQuestion.get('answerType').invalid && createFormQuestion.get('answerType').touched">
+                          @if(createFormQuestion.get('answerType').invalid && createFormQuestion.get('answerType').touched){
+                          <mat-error>
                             {{ 'error.required' | translate }}
                           </mat-error>
+                          }
                         </mat-form-field>
                         <mat-form-field class="col-md-1">
                           <mat-label>{{ 'questionnaire.sequence' | translate }}</mat-label>
                           <input type="number" matInput formControlName="seqNo" />
-                          <mat-error *ngIf="createFormQuestion.get('seqNo').invalid && createFormQuestion.get('seqNo').touched">
+                          @if(createFormQuestion.get('seqNo').invalid && createFormQuestion.get('seqNo').touched){
+                          <mat-error>
                             {{ 'error.required' | translate }}
                           </mat-error>
+                          }
                         </mat-form-field>
                         <mat-checkbox formControlName="requiredFlg" class="col-md-1"> Required </mat-checkbox>
                       </div>
 
                       <!-- แสดงข้อมูลที่เป็นลักษณะ Check -->
-
-                      <div class="row" *ngIf="multichoice.includes(createFormQuestion.get('answerType').value)">
+                      @if(multichoice.includes(createFormQuestion.get('answerType').value)){
+                      <div class="row">
                         <div class="col-md-4">
                           <form [formGroup]="addListForm">
                             <div>
@@ -169,6 +181,7 @@
                           </form>
                         </div>
                       </div>
+                      }
 
                       <div class="row">
                         <mat-form-field class="col-md-6">
@@ -176,8 +189,8 @@
                           <textarea matInput formControlName="description"></textarea>
                         </mat-form-field>
                       </div>
-
-                      <div class="row" *ngIf="selectedRow != null">
+                      @if(selectedRow != null){
+                      <div class="row">
                         <div class="col-md-6">
                           <label>{{ 'questionnaire.question.uploadimage' | translate }}</label>
                           <div class="card-questionnaire">
@@ -197,9 +210,13 @@
                             /></a>
                           </div>
                           <input type="file" hidden #fileUpload (change)="selectFile($event)" /><br />
-                          <div><a *ngIf="imageSrc" class="btn btn-info btn-round" (click)="upload()">Upload</a>&nbsp;</div>
+                          <div>
+                            @if(imageSrc){
+                            <a class="btn btn-info btn-round" (click)="upload()">Upload</a>&nbsp; }
+                          </div>
                         </div>
                       </div>
+                      }
 
                       <div class="pull-right">
                         <button mat-raised-button type="button" (click)="resetQuestionnaireQuestionForm()" class="btn btn-fill btn-default">
@@ -237,15 +254,13 @@
                     <ng-container matColumnDef="action">
                       <th mat-header-cell *matHeaderCellDef>Actions</th>
                       <td mat-cell *matCellDef="let element">
-                        <button
-                          class="btn btn-danger btn-round btn-fab mat-raised-button"
-                          *ngIf="CAN_WRITE()"
-                          (click)="onDeleteQuestionnaireQuestion(element)"
-                        >
+                        @if(CAN_WRITE()){
+                        <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="onDeleteQuestionnaireQuestion(element)">
                           <span class="mat-button-wrapper">
-                            <i class="material-icons">delete_sweep</i>
+                            <i class="material-icons">delete</i>
                           </span>
                         </button>
+                        }
                       </td>
                     </ng-container>
                     <ng-container matColumnDef="seqNo">
@@ -281,6 +296,7 @@
               </div>
             </div>
           </div>
+          }
 
           <br />
         </div>

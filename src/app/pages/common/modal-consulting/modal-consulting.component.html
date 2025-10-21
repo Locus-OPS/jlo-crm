@@ -9,101 +9,128 @@
               <div class="card-icon">
                 <i class="material-icons">support_agent</i>
               </div>
-              <h4 class="card-title">{{'consulting.save.history' | translate}}</h4>
+              <h4 class="card-title">{{ 'consulting.save.history' | translate }}</h4>
             </div>
             <div class="card-body">
-                <form [formGroup]="createForm" novalidate>
-                    <div class="row">
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.number' | translate}}</mat-label>    
-                        <input matInput [placeholder]="'consulting.number' | translate" type="text" formControlName="consultingNumber" readonly>
-                      </mat-form-field>
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.customer' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.customer' | translate" type="text" formControlName="customerName" readonly
-                          (click)="searchCustomer()" required>
-                        <mat-icon matSuffix (click)="searchCustomer()">person</mat-icon>
-                        <mat-icon matSuffix (click)="removeCustomer()">remove_circle_outline</mat-icon>
-                        <mat-error *ngIf="createForm.controls['customerName'].hasError('required') && createForm.controls['customerId'].hasError('required')">
-                          {{ 'error.required' | translate }}
-                        </mat-error>
-                      </mat-form-field>
+              <form [formGroup]="createForm" novalidate>
+                <div class="row">
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.number' | translate }}</mat-label>
+                    <input matInput [placeholder]="'consulting.number' | translate" type="text" formControlName="consultingNumber" readonly />
+                  </mat-form-field>
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.customer' | translate }}</mat-label>
+                    <input
+                      matInput
+                      [placeholder]="'consulting.customer' | translate"
+                      type="text"
+                      formControlName="customerName"
+                      readonly
+                      (click)="searchCustomer()"
+                      required
+                    />
+                    <mat-icon matSuffix (click)="searchCustomer()">person</mat-icon>
+                    <mat-icon matSuffix (click)="removeCustomer()">remove_circle_outline</mat-icon>
+                    @if(createForm.controls['customerName'].hasError('required') && createForm.controls['customerId'].hasError('required')){
+                    <mat-error>
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                    }
+                  </mat-form-field>
 
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.owner' | translate}}</mat-label> 
-                        <input matInput [placeholder]="'consulting.owner' | translate" type="text" formControlName="consOwnerName" readonly
-                          (click)="showOwner()" required>
-                        <mat-icon matSuffix (click)="showOwner()">person</mat-icon>
-                        <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
-                        <mat-error *ngIf="createForm.controls['consOwnerName'].hasError('required') && createForm.controls['consOwnerId'].hasError('required')">
-                          {{ 'error.required' | translate }}
-                        </mat-error>
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.owner' | translate }}</mat-label>
+                    <input
+                      matInput
+                      [placeholder]="'consulting.owner' | translate"
+                      type="text"
+                      formControlName="consOwnerName"
+                      readonly
+                      (click)="showOwner()"
+                      required
+                    />
+                    <mat-icon matSuffix (click)="showOwner()">person</mat-icon>
+                    <mat-icon matSuffix (click)="removeOwner()">remove_circle_outline</mat-icon>
+                    @if(createForm.controls['consOwnerName'].hasError('required') && createForm.controls['consOwnerId'].hasError('required')){
+                    <mat-error>
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                    }
+                  </mat-form-field>
 
-                      </mat-form-field>
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.channel' | translate }}</mat-label>
+                    <mat-select [placeholder]="'consulting.channel' | translate" formControlName="channelCd">
+                      <mat-option *ngFor="let type of channelList" [value]="type.codeId">
+                        {{ type.codeName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
 
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.channel' | translate}}</mat-label> 
-                        <mat-select [placeholder]="'consulting.channel' | translate" formControlName="channelCd">                           
-                        <mat-option *ngFor="let type of channelList" [value]="type.codeId">
-                            {{type.codeName}}
-                        </mat-option>  
-                        </mat-select>
-                      </mat-form-field>
-
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.title' | translate}}</mat-label>    
-                        <input matInput [placeholder]="'consulting.title' | translate" type="text" formControlName="title">
-                        <mat-error *ngIf="createForm.controls['title'].hasError('required')">
-                          {{ 'error.required' | translate }}
-                        </mat-error>
-                      </mat-form-field>
-                        <mat-form-field class="col-md-4">
-                        <mat-label>{{'consulting.status' | translate}}</mat-label> 
-                        <mat-select [placeholder]="'consulting.status' | translate" formControlName="statusCd">                           
-                        <mat-option *ngFor="let type of statusList" [value]="type.codeId">
-                            {{type.codeName}}
-                        </mat-option>  
-                        </mat-select>
-                      </mat-form-field>
-                    </div>
-                     <div class="row">
-                        <mat-form-field class="col-md-4">
-                            <mat-label>{{'consulting.startDate' | translate}}</mat-label> 
-                            <input matInput [placeholder]="'consulting.startDate' | translate"  formControlName="startDate" [matDatepicker]="startDate" />
-                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                            <mat-datepicker #startDate></mat-datepicker>
-                        </mat-form-field>
-                         <mat-form-field class="col-md-4">
-                           <mat-label>{{'consulting.endDate' | translate}}</mat-label> 
-                            <input matInput [placeholder]="'consulting.endDate' | translate" formControlName="endDate"  [matDatepicker]="endDate" />
-                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                            <mat-datepicker #endDate></mat-datepicker>
-                        </mat-form-field> 
-                    </div>
-                    <div class="row">
-                        <mat-form-field class="col-md-12">
-                            <mat-label>{{'consulting.note' | translate}}</mat-label> 
-                            <textarea matInput type="text" placeholder="{{'consulting.note' | translate}}" formControlName="note"></textarea>
-                        </mat-form-field>
-                    </div>
-                    <app-created-by
-                      [createdBy]="createForm.controls['createdBy'].value"
-                      [createdDate]="createForm.controls['createdDate'].value"
-                      [updatedBy]="createForm.controls['updatedBy'].value"
-                      [updatedDate]="createForm.controls['updatedDate'].value">
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.title' | translate }}</mat-label>
+                    <input matInput [placeholder]="'consulting.title' | translate" type="text" formControlName="title" />
+                    @if(createForm.controls['title'].hasError('required')){
+                    <mat-error>
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.status' | translate }}</mat-label>
+                    <mat-select [placeholder]="'consulting.status' | translate" formControlName="statusCd">
+                      <mat-option *ngFor="let type of statusList" [value]="type.codeId">
+                        {{ type.codeName }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.startDate' | translate }}</mat-label>
+                    <input matInput [placeholder]="'consulting.startDate' | translate" formControlName="startDate" [matDatepicker]="startDate" />
+                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                    <mat-datepicker #startDate></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="col-md-4">
+                    <mat-label>{{ 'consulting.endDate' | translate }}</mat-label>
+                    <input matInput [placeholder]="'consulting.endDate' | translate" formControlName="endDate" [matDatepicker]="endDate" />
+                    <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                    <mat-datepicker #endDate></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="row">
+                  <mat-form-field class="col-md-12">
+                    <mat-label>{{ 'consulting.note' | translate }}</mat-label>
+                    <textarea matInput type="text" placeholder="{{ 'consulting.note' | translate }}" formControlName="note"></textarea>
+                  </mat-form-field>
+                </div>
+                <app-created-by
+                  [createdBy]="createForm.controls['createdBy'].value"
+                  [createdDate]="createForm.controls['createdDate'].value"
+                  [updatedBy]="createForm.controls['updatedBy'].value"
+                  [updatedDate]="createForm.controls['updatedDate'].value"
+                >
                 </app-created-by>
-                </form> 
-
-            
-          </div> <!--  end card  -->
-        </div> <!-- end col-md-12 -->
+              </form>
+            </div>
+            <!--  end card  -->
+          </div>
+          <!-- end col-md-12 -->
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- end content-->
-<div class="d-flex justify-content-end">
-  <button *ngIf="CAN_WRITE()" (click)="onSaveConsulting()" mat-raised-button type="button" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
-  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()"
-    class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
+  <!-- end content-->
+  <div class="d-flex justify-content-end">
+    @if(CAN_WRITE()){
+    <button (click)="onSaveConsulting()" mat-raised-button type="button" class="btn btn-fill btn-primary">
+      {{ 'button.save' | translate }}
+    </button>
+    }
+
+    <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()" class="btn btn-fill btn-default">
+      {{ 'button.cancel' | translate }}
+    </button>
+  </div>
 </div>

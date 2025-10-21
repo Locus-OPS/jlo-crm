@@ -25,7 +25,7 @@ export class ChatService {
       return;
     }
     this.webSocket = new WebSocket(`${this.rootPathWebSocket}?username=${username}`);
-    // this.webSocket = new WebSocket(`ws://localhost:8080/jlo-crm-backend/chat?username=${username}`);
+    // this.webSocket = new WebSocket(`ws://localhost:8080/stdl-crm-backend/chat?username=${username}`);
 
     this.webSocket.onopen = () => {
       console.log("WebSocket connection established");
@@ -40,8 +40,8 @@ export class ChatService {
       console.error("WebSocket error:", error);
     };
 
-    this.webSocket.onclose = () => {
-      console.log('WebSocket connection closed.');
+    this.webSocket.onclose = (e) => {
+      console.log('WebSocket connection closed.', e.code, e.reason);
       this.webSocket = null;
     };
   }

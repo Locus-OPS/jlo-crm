@@ -75,7 +75,7 @@
     background-color: green;
   }
 
-  .progressbar li.active+li:after {
+  .progressbar li.active + li:after {
     background-color: green;
   }
 }

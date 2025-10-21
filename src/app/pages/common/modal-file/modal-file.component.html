@@ -1,24 +1,20 @@
 <!-- <button class="close" mat-button [mat-dialog-close]="true">X</button> -->
 <h2 mat-dialog-title>File Description</h2>
 <mat-dialog-content class="mat-typography">
+  <p>Type: {{ fileType }}</p>
 
-
-     <p>Type: {{fileType}}</p>  
-
-    <div *ngIf="fileUrl">
-        <iframe style="border: 0;"  width="80%" height="100%" [src]="fileUrl">
-        </iframe>
-    </div>
-
-    <div *ngIf="!fileUrl" width="90%" height="100%">          
-      {{fileName}}
-     <a [href]="downloadfileUrl" [download]="fileName">DownloadFile</a>
-    </div>
-
-    
+  @if(fileUrl){
+  <div>
+    <iframe style="border: 0" width="80%" height="100%" [src]="fileUrl"> </iframe>
+  </div>
+  } @if(!fileUrl){
+  <div width="90%" height="100%">
+    {{ fileName }}
+    <a [href]="downloadfileUrl" [download]="fileName">DownloadFile</a>
+  </div>
+  }
 </mat-dialog-content>
- 
+
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>   
-     
+  <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>

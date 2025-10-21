@@ -17,28 +17,34 @@
             <span class="tab" [class.active]="activeTab === 'Group'" (click)="setActiveTab('Group')"> Groups </span>
           </div>
 
-          <div *ngIf="activeTab === 'Chat'">
+          @if(activeTab === 'Chat'){
+          <div>
             <div *ngFor="let chat of chatList" class="discussion" (click)="onSelectChat(chat)">
+              @if(chat.messageType === 'private'){
               <div
                 class="photo"
                 [ngStyle]="{
                   'background-image':
                     'url(' + (chat.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
                 }"
-                *ngIf="chat.messageType === 'private'"
               >
-                <div *ngIf="chat.isOnline && chat.messageType == 'private'" class="online"></div>
-                <div *ngIf="!chat.isOnline && chat.messageType == 'private'" class="offline"></div>
+                @if(chat.isOnline && chat.messageType == 'private'){
+                <div class="online"></div>
+                } @if(!chat.isOnline && chat.messageType == 'private'){
+                <div class="offline"></div>
+                }
               </div>
+              } @if(chat.messageType === 'public'){
               <div
                 class="photo"
                 [ngStyle]="{
                   'background-image': 'url(' + chat.pictureUrl + ')'
                 }"
-                *ngIf="chat.messageType === 'public'"
               >
                 <!-- <div *ngIf="chat.isOnline" class="online"></div> -->
               </div>
+              }
+
               <div class="desc-contact">
                 <p class="name">{{ chat.chatName }}</p>
                 <p class="message">{{ chat.messageText }}</p>
@@ -46,8 +52,8 @@
               </div>
             </div>
           </div>
-
-          <div *ngIf="activeTab === 'AllUsers'">
+          } @if(activeTab === 'AllUsers'){
+          <div>
             <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
               <div
                 class="photo"
@@ -56,17 +62,23 @@
                     'url(' + (user.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
                 }"
               >
-                <div *ngIf="user.isOnline" class="online"></div>
-                <div *ngIf="!user.isOnline" class="offline"></div>
+                @if(user.isOnline){
+                <div class="online"></div>
+                } @if(!user.isOnline){
+                <div class="offline"></div>
+                }
               </div>
               <div class="desc-contact">
                 <p class="name">{{ user.userChatName }}</p>
-                <p class="message" *ngIf="!user.isOnline && user.lastSeen != null">{{ 'last seen : ' + user.lastSeen }}</p>
+                @if(!user.isOnline && user.lastSeen != null){
+                <p class="message">{{ 'last seen : ' + user.lastSeen }}</p>
+                }
               </div>
               <!-- <div class="timer">{{ user.time }}</div> -->
             </div>
           </div>
-          <div *ngIf="activeTab === 'Group'">
+          } @if(activeTab === 'Group'){
+          <div>
             <div *ngFor="let chatGroup of chatGroups" class="discussion" (click)="onSelectGroup(chatGroup)">
               <div
                 class="photo"
@@ -83,45 +95,53 @@
               <!-- <div class="timer">{{ chatGroup.time }}</div> -->
             </div>
           </div>
+          }
         </div>
-        <button class="floating-btn" *ngIf="activeTab === 'Group'" (click)="openChatGroupModal()">
-          <i class="fa fa-plus" aria-hidden="true"></i> Add
-        </button>
-        <button class="floating-btn" *ngIf="activeTab === 'Chat'" (click)="openBroadCastModal()">
-          <i class="fa fa-plus" aria-hidden="true"></i> Broadcast
-        </button>
+        @if(activeTab === 'Group'){
+        <button class="floating-btn" (click)="openChatGroupModal()"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
+        } @if(activeTab === 'Chat'){
+        <button class="floating-btn" (click)="openBroadCastModal()"><i class="fa fa-plus" aria-hidden="true"></i> Broadcast</button>
+        }
       </section>
 
       <section class="chat">
         <div class="header-chat">
-          <i class="icon fa fa-user-o" aria-hidden="true" *ngIf="activeTab === 'AllUsers' || messagetype === 'private'"></i>
-          <i class="icon fa fa-users" aria-hidden="true" *ngIf="activeTab === 'Group' || messagetype === 'public'"></i>
-
-          <p class="name" *ngIf="activeTab === 'AllUsers'">
+          @if(activeTab === 'AllUsers' || messagetype === 'private'){
+          <i class="icon fa fa-user-o" aria-hidden="true"></i>
+          } @if(activeTab === 'Group' || messagetype === 'public'){
+          <i class="icon fa fa-users" aria-hidden="true"></i>
+          } @if(activeTab === 'AllUsers'){
+          <p class="name">
             {{ this.user == null ? '' : this.user.userChatName }}
           </p>
-          <p class="name" *ngIf="activeTab === 'Chat'">{{ this.user == null ? '' : this.user.chatName }}</p>
-
-          <p class="name" *ngIf="activeTab === 'Group'" (click)="alert('Hi')">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
-          <i class="icon clickable fa fa-ellipsis-h iconchat right" (click)="editChatRoom()" aria-hidden="true" *ngIf="chatGroup != null"></i>
+          } @if(activeTab === 'Chat'){
+          <p class="name">{{ this.user == null ? '' : this.user.chatName }}</p>
+          } @if(activeTab === 'Group'){
+          <p class="name" (click)="alert('Hi')">{{ this.chatGroup == null ? '' : this.chatGroup.roomName }}</p>
+          } @if(chatGroup != null){
+          <i class="icon clickable fa fa-ellipsis-h iconchat right" (click)="editChatRoom()" aria-hidden="true"></i>
+          }
         </div>
 
-        <div *ngIf="activeTab === 'AllUsers' || messagetype === 'private'">
+        @if(activeTab === 'AllUsers' || messagetype === 'private'){
+        <div>
           <div class="messages-chat">
-            <div class="row-loadmore" *ngIf="totalMessages > messages.length && totalMessages != 0" (click)="loadChatHistory()">
+            @if(totalMessages > messages.length && totalMessages != 0){
+            <div class="row-loadmore" (click)="loadChatHistory()">
               <div class="load-more-icon"><i id="refresh-icon" class="icon fa fa-refresh"></i></div>
             </div>
-
-            <div *ngIf="user != null">
+            } @if(user != null){
+            <div>
               <div *ngFor="let message of messages">
-                <div class="message text-only" *ngIf="isUserMatch(message)">
+                @if(isUserMatch(message)){
+                <div class="message text-only">
                   <div class="response">
                     <p class="text">{{ message.messageText }}</p>
                     <p class="time-response">{{ message.createdAt }}</p>
                   </div>
                 </div>
-
-                <div class="message" *ngIf="!isUserMatch(message)">
+                } @if(!isUserMatch(message)){
+                <div class="message">
                   <div
                     class="photo"
                     [ngStyle]="{
@@ -133,11 +153,15 @@
                   </div>
                   <p class="text">{{ message.messageText }}</p>
                 </div>
-                <div class="time" *ngIf="!isUserMatch(message)">{{ message.createdAt }}</div>
+                } @if(!isUserMatch(message)){
+                <div class="time">{{ message.createdAt }}</div>
+                }
               </div>
             </div>
+            }
           </div>
-          <div class="footer-chat" *ngIf="user != null">
+          @if(user != null){
+          <div class="footer-chat">
             <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
             <input
               type="text"
@@ -148,22 +172,27 @@
             />
             <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendPrivateMessage()"></i>
           </div>
+          }
         </div>
-
-        <div *ngIf="activeTab === 'Group' || messagetype === 'public'">
+        } @if(activeTab === 'Group' || messagetype === 'public'){
+        <div>
           <div class="messages-chat">
-            <div class="row-loadmore" *ngIf="totalMessages > messages.length && totalMessages != 0" (click)="loadChatGroupHistory()">
+            @if(totalMessages > messages.length && totalMessages != 0){
+            <div class="row-loadmore" (click)="loadChatGroupHistory()">
               <div class="load-more-icon"><i id="refresh-icon" class="icon fa fa-refresh"></i></div>
             </div>
-            <div *ngIf="chatGroup != null">
+            } @if(chatGroup != null){
+            <div>
               <div *ngFor="let message of messages">
-                <div class="message text-only" *ngIf="isUserMatchChatRoom(message)">
+                @if(isUserMatchChatRoom(message)){
+                <div class="message text-only">
                   <div class="response">
                     <p class="text">{{ message.messageText }}</p>
                     <p class="time-response">{{ message.createdAt }}</p>
                   </div>
                 </div>
-                <div class="message" *ngIf="!isUserMatchChatRoom(message)">
+                } @if(!isUserMatchChatRoom(message)){
+                <div class="message">
                   <div
                     class="photo"
                     [ngStyle]="{
@@ -174,11 +203,15 @@
                   ></div>
                   <p class="text">{{ message.messageText }}</p>
                 </div>
-                <div class="time" *ngIf="!isUserMatchChatRoom(message)">{{ message.createdAt }}</div>
+                } @if(!isUserMatchChatRoom(message)){
+                <div class="time">{{ message.createdAt }}</div>
+                }
               </div>
             </div>
+            }
           </div>
-          <div class="footer-chat" *ngIf="chatGroup != null">
+          @if(chatGroup != null){
+          <div class="footer-chat">
             <i class="icon fa fa-smile-o clickable" style="font-size: 25pt" aria-hidden="true"></i>
             <input
               type="text"
@@ -189,7 +222,9 @@
             />
             <i class="icon send fa fa-paper-plane-o clickable" aria-hidden="true" (click)="sendMessagetoChatRoom()"></i>
           </div>
+          }
         </div>
+        }
       </section>
     </div>
   </div>

@@ -1,71 +1,67 @@
 <div class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-primary card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">mail</i>
-                        </div>
-                        <h4 class="card-title">{{ 'email.inbound.detail' | translate }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <form [formGroup]="createForm">
-                            <div class="row">
-                                <mat-form-field class="col-md-2">
-                                    <mat-label>{{ 'email.inbound.id' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="id" readonly />
-                                </mat-form-field>
-                                <mat-form-field class="col-md-3">
-                                    <mat-label>{{'email.inbound.formEmail' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="formEmail" readonly />
-                                </mat-form-field>
-                                <mat-form-field class="col-md-7">
-                                    <mat-label>{{'email.inbound.toEmail'| translate }}</mat-label>
-                                    <input matInput type="text" formControlName="toEmail" readonly />
-                                </mat-form-field>
-
-
-                            </div>
-                            <div class="row">
-                                <mat-form-field class="col-md-12">
-                                    <mat-label>{{'email.inbound.subjectEmail' | translate }}</mat-label>
-                                    <input matInput type="text" formControlName="subjectEmail" readonly />
-                                </mat-form-field>
-                            </div>
-
-                            <div class="row" *ngIf="this.attItemsList.length > 0">
-                                <div class="col-md-12">
-                                    <mat-label>{{attItemsList.length}}&nbsp;</mat-label>
-                                    <mat-label>{{ 'email.inbound.att' | translate }}</mat-label>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-list>
-                                        <mat-list-item *ngFor="let item of attItemsList">
-                                            <mat-label class="attfont">{{item.fileName}}&nbsp;({{item.fileSize}}
-                                                kb)
-                                            </mat-label>
-                                            <button type="button" matSuffix mat-button
-                                                (click)="openAttachmentDialog(item.attachmentId,item.fileExtension,item.fileName)">
-                                                <mat-icon>cloud_download</mat-icon>
-                                            </button>
-
-                                        </mat-list-item>
-                                    </mat-list>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <quill-editor formControlName="htmlContent" format="html" style="width: 100%;"
-                                        [modules]="modules" [readOnly]="true">
-                                    </quill-editor>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">mail</i>
             </div>
+            <h4 class="card-title">{{ 'email.inbound.detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="createForm">
+              <div class="row">
+                <mat-form-field class="col-md-2">
+                  <mat-label>{{ 'email.inbound.id' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="id" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'email.inbound.formEmail' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="formEmail" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-7">
+                  <mat-label>{{ 'email.inbound.toEmail' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="toEmail" readonly />
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="col-md-12">
+                  <mat-label>{{ 'email.inbound.subjectEmail' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="subjectEmail" readonly />
+                </mat-form-field>
+              </div>
+              @if(this.attItemsList.length > 0){
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-label>{{ attItemsList.length }}&nbsp;</mat-label>
+                  <mat-label>{{ 'email.inbound.att' | translate }}</mat-label>
+                </div>
+                <div class="col-md-12">
+                  <mat-list>
+                    <mat-list-item *ngFor="let item of attItemsList">
+                      <mat-label class="attfont"
+                        >{{ item.fileName }}&nbsp;({{ item.fileSize }}
+                        kb)
+                      </mat-label>
+                      <button type="button" matSuffix mat-button (click)="openAttachmentDialog(item.attachmentId, item.fileExtension, item.fileName)">
+                        <mat-icon>cloud_download</mat-icon>
+                      </button>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+              }
+
+              <div class="row">
+                <div class="col-md-12">
+                  <quill-editor formControlName="htmlContent" format="html" style="width: 100%" [modules]="modules" [readOnly]="true"> </quill-editor>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

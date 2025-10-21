@@ -5,8 +5,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-2"></div>
-      <div class="col-md-8" *ngIf="!showForm && !isSubmitted">
-        <mat-card class="error-card" *ngIf="errorCode == '401'">
+      @if(!showForm && !isSubmitted){
+      <div class="col-md-8">
+        @if(errorCode == '401'){
+        <mat-card class="error-card">
           <mat-card-content>
             <h2>401: ลิงค์หมดอายุ</h2>
             <p>กรุณาติดต่อผู้ดูแลระบบ</p>
@@ -15,7 +17,8 @@
             </div>
           </mat-card-content>
         </mat-card>
-        <mat-card class="error-card" *ngIf="errorCode == '404' || errorCode == '500'">
+        } @if(errorCode == '404' || errorCode == '500'){
+        <mat-card class="error-card">
           <mat-card-content>
             <h2>404: ไม่พบแบบฟอร์ม</h2>
             <p>กรุณาติดต่อผู้ดูแลระบบ</p>
@@ -24,8 +27,10 @@
             </div>
           </mat-card-content>
         </mat-card>
+        }
       </div>
-      <div class="col-md-8" *ngIf="!showForm && isSubmitted">
+      } @if(!showForm && isSubmitted){
+      <div class="col-md-8">
         <mat-card class="thank-you-card">
           <mat-card-content>
             <h2>ขอบคุณที่กรอกแบบสอบถามเสร็จสิ้น!</h2>
@@ -33,7 +38,8 @@
           </mat-card-content>
         </mat-card>
       </div>
-      <div class="col-md-8" *ngIf="showForm">
+      } @if(showForm){
+      <div class="col-md-8">
         <div class="card">
           <div class="card-body">
             <div class="text-center">
@@ -51,9 +57,11 @@
                   <mat-form-field>
                     <input matInput [formControlName]="'name'" [required]="true" />
                   </mat-form-field>
-                  <span *ngIf="hasRequiredError('name')" class="text-danger">
+                  @if(hasRequiredError('name')){
+                  <span class="text-danger">
                     {{ 'error.required' | translate }}
                   </span>
+                  }
                 </div>
               </div>
               <div class="row">
@@ -62,9 +70,11 @@
                   <mat-form-field>
                     <input matInput type="number" [formControlName]="'age'" [required]="true" min="0" max="99" />
                   </mat-form-field>
-                  <span *ngIf="hasRequiredError('age')" class="text-danger">
+                  @if(hasRequiredError('age')){
+                  <span class="text-danger">
                     {{ 'error.required' | translate }}
                   </span>
+                  }
                 </div>
               </div>
               <div class="row">
@@ -81,9 +91,11 @@
                       {{ 'questionnaire.respondent.gender.others' | translate }}
                     </mat-radio-button>
                   </mat-radio-group>
-                  <div *ngIf="hasRequiredError('gender')" class="text-danger">
+                  @if(hasRequiredError('gender')){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
               </div>
               <div class="row">
@@ -102,62 +114,106 @@
               <br />
               <div *ngFor="let question of questionnaireQuestionList; let i = index">
                 <!-- TextBox -->
-                <div *ngIf="question.componentType === 'text'">
-                  <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'text'){
+                <div>
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                   </div>
+                  }
                   <br />
                   <mat-form-field>
                     <input matInput [formControlName]="question.id" [required]="question.requiredFlg" />
                   </mat-form-field>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
+
                 <!-- Radio -->
-                <div *ngIf="question.componentType === 'radio'" class="radio-group">
-                  <h5>{{ i + 1 + '. ' + question.question }}<span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'radio'){
+                <div class="radio-group">
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                     <br />
                   </div>
+                  }
 
                   <mat-radio-group [formControlName]="question.id">
                     <mat-radio-button *ngFor="let option of question.options.split(' , ')" [value]="option">
                       {{ option }}
                     </mat-radio-button>
                   </mat-radio-group>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
+
                 <!-- CheckBox -->
-                <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
-                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'checkbox'){
+                <div class="checkbox-group">
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                     <br />
                   </div>
+                  }
 
                   <div *ngFor="let option of question.options.split(' , ')">
                     <mat-checkbox (click)="checkboxConcatValue(option, question.id.toString())">{{ option }}</mat-checkbox>
                   </div>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
+
                 <!-- Select -->
-                <div *ngIf="question.componentType === 'select'">
-                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'select'){
+                <div>
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                     <br />
                   </div>
+                  }
 
                   <mat-form-field style="width: 50%">
                     <mat-select [formControlName]="question.id">
@@ -166,44 +222,70 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
+
                 <!-- TextArea -->
-                <div *ngIf="question.componentType === 'textarea'">
-                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'textarea'){
+                <div>
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                     <br />
                   </div>
-
+                  }
                   <mat-form-field>
                     <textarea matInput [formControlName]="question.id" [rows]="5" [required]="question.requiredFlg"></textarea>
                   </mat-form-field>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
+
                 <!-- Date -->
-                <div *ngIf="question.componentType === 'date'">
-                  <h5>{{ i + 1 + '. ' + question.question }} <span *ngIf="question.requiredFlg" class="text-danger"> * </span></h5>
+                @if(question.componentType === 'date'){
+                <div>
+                  <h5>
+                    {{ i + 1 + '. ' + question.question }}
+                    @if(question.requiredFlg){
+                    <span class="text-danger"> * </span>
+                    }
+                  </h5>
                   <p>{{ question.description }}</p>
-                  <div class="card-questionnaire" *ngIf="question.imageUrl != '' && question.imageUrl != null">
+                  @if(question.imageUrl != '' && question.imageUrl != null){
+                  <div class="card-questionnaire">
                     <a><img class="questionnaire-img" [src]="questionnaireService.getQuestionnaireImagePath(question.imageUrl)" /></a>
                     <br />
                   </div>
+                  }
 
                   <mat-form-field style="width: 50%">
                     <input matInput [matDatepicker]="picker" [formControlName]="question.id" [required]="question.requiredFlg" />
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
-                  <div *ngIf="responseFormhasRequiredError(question.id.toString())" class="text-danger">
+                  @if(responseFormhasRequiredError(question.id.toString())){
+                  <div class="text-danger">
                     {{ 'error.required' | translate }}
                   </div>
+                  }
                 </div>
+                }
 
                 <br />
               </div>
@@ -217,6 +299,8 @@
           </div>
         </div>
       </div>
+      }
+
       <div class="col-md-2"></div>
     </div>
   </div>

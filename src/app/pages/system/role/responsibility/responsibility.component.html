@@ -3,32 +3,43 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <form *ngIf="respForm" [formGroup]="respForm">
+        @if(respForm){
+        <form [formGroup]="respForm">
           <div *ngFor="let module of moduleList" class="card">
             <div class="card-header">
               <h4 class="card-title">{{ module.moduleName | translate }}</h4>
             </div>
             <div class="card-body">
-              <div class="row" [formArrayName]="module.formName"
-                *ngIf="respForm.controls[module.formName].value && (respForm.controls[module.formName].value).length > 0">
-                <mat-form-field class="col-md-3"
-                  *ngFor="let value of respForm.controls[module.formName].value; let formIndex = index; trackBy: trackByFn;">
-                  <mat-label>{{module.subModuleList[formIndex].name | translate}}</mat-label>
+              @if(respForm.controls[module.formName].value && respForm.controls[module.formName].value.length > 0){
+              <div class="row" [formArrayName]="module.formName">
+                <mat-form-field
+                  class="col-md-3"
+                  *ngFor="let value of respForm.controls[module.formName].value; let formIndex = index; trackBy: trackByFn"
+                >
+                  <mat-label>{{ module.subModuleList[formIndex].name | translate }}</mat-label>
                   <mat-select [placeholder]="module.subModuleList[formIndex].name | translate" [formControlName]="formIndex">
-                    <mat-option *ngFor="let item of accessList" [value]="item.codeId + ':' + module.subModuleList[formIndex].menuId">{{ item.codeName }}
+                    <mat-option *ngFor="let item of accessList" [value]="item.codeId + ':' + module.subModuleList[formIndex].menuId"
+                      >{{ item.codeName }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
+              }
             </div>
           </div>
         </form>
+        }
       </div>
     </div>
   </div>
 </div>
 
 <div class="pull-right">
-  <button *ngIf="CAN_WRITE()" mat-raised-button (click)="onSave()" type="button" class="btn btn-fill btn-primary">{{ 'button.save' | translate }}</button>
+  @if(CAN_WRITE()){
+  <button mat-raised-button (click)="onSave()" type="button" class="btn btn-fill btn-primary">
+    {{ 'button.save' | translate }}
+  </button>
+  }
+
   <button mat-raised-button mat-dialog-close type="button" class="btn btn-fill btn-default">{{ 'button.cancel' | translate }}</button>
 </div>

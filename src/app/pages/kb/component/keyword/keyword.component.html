@@ -2,14 +2,25 @@
   <mat-form-field>
     <mat-chip-grid formControlName="keyword" #chipList aria-label="Keyword">
       <mat-chip *ngFor="let keyword of keywords" (removed)="remove(keyword)">
-        {{keyword.keyword}}
+        {{ keyword.keyword }}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-      <input [placeholder]="'content.newKeyword' | translate" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)" maxlength="50" />
+      <input
+        [placeholder]="'content.newKeyword' | translate"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+        maxlength="50"
+      />
     </mat-chip-grid>
   </mat-form-field>
-  <div *ngIf="kbDetail" class="pull-right">
-    <button mat-raised-button type="button" *ngIf="CAN_WRITE() && !creatingDocument" (click)="onSave()" class="btn btn-rose">{{ 'button.save' | translate }}</button>
+  @if(kbDetail){
+  <div class="pull-right">
+    @if(CAN_WRITE() && !creatingDocument){
+    <button mat-raised-button type="button" (click)="onSave()" class="btn btn-rose">
+      {{ 'button.save' | translate }}
+    </button>
+    }
   </div>
+  }
 </form>

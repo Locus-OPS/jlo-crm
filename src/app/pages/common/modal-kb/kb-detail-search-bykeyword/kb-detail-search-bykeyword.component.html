@@ -60,8 +60,8 @@
         >
         </mat-paginator>
       </div>
-
-      <div class="card" *ngIf="selectedRow != null" style="margin: 10px">
+      @if(selectedRow != null){
+      <div class="card" style="margin: 10px">
         <div class="card-header card-header-primary card-header-icon">
           <div class="pull-center"></div>
           <h4 class="card-title" style="padding-left: 10px">{{ 'case.kb.tab' | translate }}</h4>
@@ -119,13 +119,16 @@
             </mat-accordion>
           </div>
           <br />
-          <div class="pull-right" *ngIf="selectedRow != null">
+          @if(selectedRow != null){
+          <div class="pull-right">
             <button mat-raised-button type="button" (click)="onCreateRefKB(); $event.stopPropagation()" class="btn btn-fill btn-primary">
               {{ 'button.select' | translate }}
             </button>
           </div>
+          }
         </div>
       </div>
+      }
     </div>
   </div>
 </div>

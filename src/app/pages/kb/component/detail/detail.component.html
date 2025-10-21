@@ -3,49 +3,58 @@
   <input formControlName="contentIdTemp" type="hidden" />
   <div class="row">
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.contentId' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.contentId' | translate }}</mat-label>
       <input formControlName="contentId" matInput type="text" readonly />
     </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.catId' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.catId' | translate }}</mat-label>
       <input formControlName="catName" matInput type="text" readonly />
-      <button mat-button type="button" matSuffix *ngIf="CAN_WRITE()" (click)="openTreeModal()">
-          <mat-icon>folder_open</mat-icon>
+      @if(CAN_WRITE()){
+      <button mat-button type="button" matSuffix (click)="openTreeModal()">
+        <mat-icon>folder_open</mat-icon>
       </button>
-      <mat-error *ngIf="createForm.controls['catName'].hasError('required')">
+      } @if(createForm.controls['catName'].hasError('required')){
+      <mat-error>
         {{ 'error.required' | translate }}
       </mat-error>
+      }
     </mat-form-field>
     <mat-form-field class="col-md-6">
-      <mat-label>{{translatePrefix + '.contentTitle' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.contentTitle' | translate }}</mat-label>
       <input formControlName="title" matInput type="text" maxlength="500" />
-      <mat-error *ngIf="createForm.controls['title'].hasError('required')">
+      @if(createForm.controls['title'].hasError('required')){
+      <mat-error>
         {{ 'error.required' | translate }}
       </mat-error>
+      }
     </mat-form-field>
   </div>
   <div class="row">
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.seq' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.seq' | translate }}</mat-label>
       <input formControlName="seq" matInput type="number" readonly />
     </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.display' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.display' | translate }}</mat-label>
       <mat-select formControlName="display">
         <mat-option *ngFor="let status of contentIconList" [value]="status.codeId">{{ status.codeName }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="createForm.controls['display'].hasError('required')">
+      @if(createForm.controls['display'].hasError('required')){
+      <mat-error>
         {{ 'error.required' | translate }}
       </mat-error>
-  </mat-form-field>
+      }
+    </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.contentStatus' | translate}}</mat-label>
+      <mat-label>{{ translatePrefix + '.contentStatus' | translate }}</mat-label>
       <mat-select formControlName="contentStatus">
         <mat-option *ngFor="let status of contentStatusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="createForm.controls['contentStatus'].hasError('required')">
+      @if(createForm.controls['contentStatus'].hasError('required')){
+      <mat-error>
         {{ 'error.required' | translate }}
       </mat-error>
+      }
     </mat-form-field>
     <div class="col-md-3 no-label">
       <mat-checkbox formControlName="sendDocFlag">{{ translatePrefix + '.sendDocFlag' | translate }}</mat-checkbox>
@@ -53,35 +62,44 @@
   </div>
   <div class="row">
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.startDate' | translate}}</mat-label>
-      <input matInput [matDatepicker]="startDateFrom" formControlName="startDate">
+      <mat-label>{{ translatePrefix + '.startDate' | translate }}</mat-label>
+      <input matInput [matDatepicker]="startDateFrom" formControlName="startDate" />
       <mat-datepicker-toggle matSuffix [for]="startDateFrom"></mat-datepicker-toggle>
       <mat-datepicker #startDateFrom></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.startTime' | translate}}</mat-label>
-      <input matInput  formControlName="startTime" type="time">
+      <mat-label>{{ translatePrefix + '.startTime' | translate }}</mat-label>
+      <input matInput formControlName="startTime" type="time" />
     </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.endDate' | translate}}</mat-label>
-      <input matInput [matDatepicker]="endDateFrom" formControlName="endDate">
+      <mat-label>{{ translatePrefix + '.endDate' | translate }}</mat-label>
+      <input matInput [matDatepicker]="endDateFrom" formControlName="endDate" />
       <mat-datepicker-toggle matSuffix [for]="endDateFrom"></mat-datepicker-toggle>
       <mat-datepicker #endDateFrom></mat-datepicker>
     </mat-form-field>
     <mat-form-field class="col-md-3">
-      <mat-label>{{translatePrefix + '.endTime' | translate}}</mat-label>
-      <input  formControlName="endTime" matInput type="time">
+      <mat-label>{{ translatePrefix + '.endTime' | translate }}</mat-label>
+      <input formControlName="endTime" matInput type="time" />
     </mat-form-field>
   </div>
   <app-created-by
-      [createdBy]="createForm.controls['createdBy'].value"
-      [createdDate]="createForm.controls['createdDate'].value"
-      [updatedBy]="createForm.controls['updatedBy'].value"
-      [updatedDate]="createForm.controls['updatedDate'].value">
+    [createdBy]="createForm.controls['createdBy'].value"
+    [createdDate]="createForm.controls['createdDate'].value"
+    [updatedBy]="createForm.controls['updatedBy'].value"
+    [updatedDate]="createForm.controls['updatedDate'].value"
+  >
   </app-created-by>
-  <div class="row pull-right">
-    <button mat-raised-button type="button" class="btn btn-primary" *ngIf="CAN_WRITE() && !creating" (click)="create()">{{ 'button.create' | translate }}</button>
-    <button mat-raised-button type="button" class="btn btn-fill btn-default" *ngIf="CAN_WRITE() && creating" (click)="cancel()">{{ 'button.cancel' | translate }}</button>
-    <button mat-raised-button type="submit" class="btn btn-rose" *ngIf="CAN_WRITE()">{{ 'button.save' | translate }}</button>
+  <div class="d-flex justify-content-end gap-2">
+    @if(CAN_WRITE() && !creating){
+    <button mat-raised-button type="button" class="btn btn-primary" (click)="create()">
+      {{ 'button.create' | translate }}
+    </button>
+    } @if(CAN_WRITE() && creating){
+    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="cancel()">
+      {{ 'button.cancel' | translate }}
+    </button>
+    } @if(CAN_WRITE()){
+    <button mat-raised-button type="submit" class="btn btn-rose">{{ 'button.save' | translate }}</button>
+    }
   </div>
 </form>

@@ -11,10 +11,13 @@
   <mat-tree-node *matTreeNodeDef="let node" [ngClass]="{ 'background-highlight': activeNode === node }" matTreeNodePadding>
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button (click)="selectNode(node)" (contextmenu)="onContextMenu($event, node)">
-      <fa-icon class="fa-icon" *ngIf="node.icon == 'file'" [icon]="['far', 'file']" size="lg"></fa-icon>
-      <fa-icon class="fa-icon" *ngIf="node.icon == 'file-excel'" [icon]="['far', 'file-excel']" size="lg"></fa-icon>
-      <fa-icon class="fa-icon" *ngIf="node.icon == 'file-image'" [icon]="['far', 'file-image']" size="lg"></fa-icon>
-      &nbsp;
+      @if(node.icon == 'file'){
+      <fa-icon class="fa-icon" [icon]="['far', 'file']" size="lg"></fa-icon>
+      } @if(node.icon == 'file-excel'){
+      <fa-icon class="fa-icon" [icon]="['far', 'file-excel']" size="lg"></fa-icon>
+      } @if(node.icon == 'file-image'){
+      <fa-icon class="fa-icon" [icon]="['far', 'file-image']" size="lg"></fa-icon>
+      } &nbsp;
       {{ node.name }}
     </button>
   </mat-tree-node>
@@ -36,17 +39,26 @@
 ></div>
 <mat-menu #contextMenu="matMenu">
   <ng-template matMenuContent let-item="item">
-    <button mat-menu-item *ngIf="folder" (click)="createFolder(item)">{{ translatePrefix + '.createFolder' | translate }}</button>
-    <button mat-menu-item *ngIf="!rootFolder && folder" (click)="updateFolder(item)">{{ translatePrefix + '.updateFolder' | translate }}</button>
-    <button *ngIf="!rootFolder && folder" mat-menu-item (click)="removeFolder(item)">{{ translatePrefix + '.removeFolder' | translate }}</button>
-    <button mat-menu-item *ngIf="folder && !rootFolder && !firstFolder" (click)="moveUpFolder(item)">
+    @if(folder){
+    <button mat-menu-item (click)="createFolder(item)">{{ translatePrefix + '.createFolder' | translate }}</button>
+    } @if(!rootFolder && folder){
+    <button mat-menu-item (click)="updateFolder(item)">{{ translatePrefix + '.updateFolder' | translate }}</button>
+    } @if(!rootFolder && folder){
+    <button mat-menu-item (click)="removeFolder(item)">{{ translatePrefix + '.removeFolder' | translate }}</button>
+    } @if(folder && !rootFolder && !firstFolder){
+    <button mat-menu-item (click)="moveUpFolder(item)">
       {{ translatePrefix + '.moveUpFolder' | translate }}
     </button>
-    <button mat-menu-item *ngIf="folder && !rootFolder && !lastFolder" (click)="moveDownFolder(item)">
+    } @if(folder && !rootFolder && !lastFolder){
+    <button mat-menu-item (click)="moveDownFolder(item)">
       {{ translatePrefix + '.moveDownFolder' | translate }}
     </button>
-    <button mat-menu-item *ngIf="!folder" (click)="removeFile(item)">{{ translatePrefix + '.removeFile' | translate }}</button>
-    <button mat-menu-item *ngIf="!folder && !firstFile" (click)="moveUpFile(item)">{{ translatePrefix + '.moveUpFolder' | translate }}</button>
-    <button mat-menu-item *ngIf="!folder && !lastFile" (click)="moveDownFile(item)">{{ translatePrefix + '.moveDownFolder' | translate }}</button>
+    } @if(!folder){
+    <button mat-menu-item (click)="removeFile(item)">{{ translatePrefix + '.removeFile' | translate }}</button>
+    } @if(!folder && !firstFile){
+    <button mat-menu-item (click)="moveUpFile(item)">{{ translatePrefix + '.moveUpFolder' | translate }}</button>
+    } @if(!folder && !lastFile){
+    <button mat-menu-item (click)="moveDownFile(item)">{{ translatePrefix + '.moveDownFolder' | translate }}</button>
+    }
   </ng-template>
 </mat-menu>

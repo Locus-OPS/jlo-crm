@@ -59,7 +59,8 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="row" *ngIf="selectedRow != null && caseKBSource.length > 0">
+  @if(this.selectedRow != null && this.caseKBSource.length > 0){
+  <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary card-header-icon">
@@ -122,4 +123,5 @@
       </div>
     </div>
   </div>
+  }
 </div>

@@ -1,122 +1,117 @@
 <button class="close" mat-button [mat-dialog-close]="true">X</button>
 <div mat-dialog-content class="flex-container">
-    <div class="main-content">
-        <div class="container-fluid">
+  <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="card-title">{{ titleModalEmail }}</h4>
+        </div>
+        <div class="col-md-12">
+          <form [formGroup]="sendEmailForm">
             <div class="row">
-                <div class="col-md-12">
-                    <h4 class="card-title">{{titleModalEmail}}</h4>
-                </div>
-                <div class="col-md-12">
-
-                    <form [formGroup]="sendEmailForm">
-                        <div class="row">
-                            <mat-form-field class="col-md-12">
-                                <mat-label>{{'email.from' | translate}}</mat-label>
-                                <input matInput type="text" formControlName="fromEmail" />
-                            </mat-form-field>
-                            <mat-form-field class="col-md-12">
-
-                                <!-- <mat-label>{{'email.to' | translate}}</mat-label>
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'email.from' | translate }}</mat-label>
+                <input matInput type="text" formControlName="fromEmail" />
+              </mat-form-field>
+              <mat-form-field class="col-md-12">
+                <!-- <mat-label>{{'email.to' | translate}}</mat-label>
                                 <input matInput type="text" formControlName="toEmail" required />
                                 <mat-error *ngIf="sendEmailForm.controls['toEmail'].hasError('required')">
                                     {{ 'error.required' | translate }}
                                 </mat-error> -->
 
-
-                                <mat-label>{{'email.to' | translate}}</mat-label>
-                                <mat-chip-grid formControlName="toEmail" #chipList aria-label="toEmail">
-                                    <mat-chip *ngFor="let value of toEmails" (removed)="remove(value)">
-                                        {{value.email}}
-                                        <mat-icon matChipRemove>cancel</mat-icon>
-                                    </mat-chip>
-                                    <input [placeholder]="'email.to.placeholder' | translate"
-                                        [matChipInputFor]="chipList"
-                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        (matChipInputTokenEnd)="add($event)" maxlength="500" />
-
-                                </mat-chip-grid>
-                                <button type="button" matSuffix mat-button (click)="searchCustomer('TO')"
-                                    class="file-icon">
-                                    <mat-icon matSuffix (click)="searchCustomer('TO')">contact_mail</mat-icon>
-                                </button>
-                                <mat-error *ngIf="sendEmailForm.controls['toEmail'].hasError('required')">
-                                    {{ 'error.required' | translate }}
-                                </mat-error>
-
-                            </mat-form-field>
-                            <mat-form-field class="col-md-12">
-                                <!-- 
+                <mat-label>{{ 'email.to' | translate }}</mat-label>
+                <mat-chip-grid formControlName="toEmail" #chipList aria-label="toEmail">
+                  <mat-chip *ngFor="let value of toEmails" (removed)="remove(value)">
+                    {{ value.email }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    [placeholder]="'email.to.placeholder' | translate"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)"
+                    maxlength="500"
+                  />
+                </mat-chip-grid>
+                <button type="button" matSuffix mat-button (click)="searchCustomer('TO')" class="file-icon">
+                  <mat-icon matSuffix (click)="searchCustomer('TO')">contact_mail</mat-icon>
+                </button>
+                @if(sendEmailForm.controls['toEmail'].hasError('required')){
+                <mat-error>
+                  {{ 'error.required' | translate }}
+                </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field class="col-md-12">
+                <!-- 
                                     <mat-label>{{'email.cc' | translate}}</mat-label>
                                     <input matInput type="text" formControlName="ccEmail" /> 
                                 -->
-                                <mat-label>{{'email.cc' | translate}}</mat-label>
-                                <mat-chip-grid formControlName="ccEmail" #ccChipList aria-label="ccEmail">
-                                    <mat-chip *ngFor="let value of ccEmails" (removed)="removeCC(value)">
-                                        {{value.email}}
-                                        <mat-icon matChipRemove>cancel</mat-icon>
-                                    </mat-chip>
-                                    <input [placeholder]="'email.to.placeholder' | translate"
-                                        [matChipInputFor]="ccChipList"
-                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        (matChipInputTokenEnd)="addCC($event)" maxlength="500" />
+                <mat-label>{{ 'email.cc' | translate }}</mat-label>
+                <mat-chip-grid formControlName="ccEmail" #ccChipList aria-label="ccEmail">
+                  <mat-chip *ngFor="let value of ccEmails" (removed)="removeCC(value)">
+                    {{ value.email }}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    [placeholder]="'email.to.placeholder' | translate"
+                    [matChipInputFor]="ccChipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addCC($event)"
+                    maxlength="500"
+                  />
+                </mat-chip-grid>
+                <button type="button" matSuffix mat-button (click)="searchCustomer('CC')" class="file-icon">
+                  <mat-icon matSuffix (click)="searchCustomer('CC')">contact_mail</mat-icon>
+                </button>
+              </mat-form-field>
 
-                                </mat-chip-grid>
-                                <button type="button" matSuffix mat-button (click)="searchCustomer('CC')"
-                                    class="file-icon">
-                                    <mat-icon matSuffix (click)="searchCustomer('CC')">contact_mail</mat-icon>
-                                </button>
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'email.subject' | translate }}</mat-label>
+                <input matInput type="text" formControlName="subjectEmail" required />
+                @if(sendEmailForm.controls['subjectEmail'].hasError('required')){
+                <mat-error>
+                  {{ 'error.required' | translate }}
+                </mat-error>
+                }
+              </mat-form-field>
 
-                            </mat-form-field>
-
-                            <mat-form-field class="col-md-12">
-                                <mat-label>{{'email.subject' | translate}}</mat-label>
-                                <input matInput type="text" formControlName="subjectEmail" required />
-                                <mat-error *ngIf="sendEmailForm.controls['subjectEmail'].hasError('required')">
-                                    {{ 'error.required' | translate }}
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field class="col-md-12">
-                                <mat-label>{{ 'document.file' | translate }}</mat-label>
-                                <input type="file" hidden #fileUpload (change)="selectFile($event)" />
-                                <input disabled formControlName="fileName" matInput type="text" readonly />
-                                <button type="button" matSuffix mat-button (click)="fileUpload.click()"
-                                    class="file-icon">
-                                    <mat-icon>attachment</mat-icon>
-                                </button>
-
-                            </mat-form-field>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <quill-editor formControlName="bodyEmail" format="html" [modules]="modules">
-                                </quill-editor>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="pull-right">
-                                        <button mat-raised-button type="button" class="btn btn-fill btn-primary"
-                                            (click)="onSendEmail()">
-                                            <mat-icon>send</mat-icon>
-                                            {{'btn.email.send'| translate}}
-                                        </button>
-
-                                        <button mat-raised-button mat-dialog-close type="button" (click)="onCancel()"
-                                            class="btn btn-fill btn-rose">{{'button.close' | translate}}</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
+              <mat-form-field class="col-md-12">
+                <mat-label>{{ 'document.file' | translate }}</mat-label>
+                <input type="file" hidden #fileUpload (change)="selectFile($event)" />
+                <input disabled formControlName="fileName" matInput type="text" readonly />
+                <button type="button" matSuffix mat-button (click)="fileUpload.click()" class="file-icon">
+                  <mat-icon>attachment</mat-icon>
+                </button>
+              </mat-form-field>
             </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <quill-editor formControlName="bodyEmail" format="html" [modules]="modules"> </quill-editor>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="pull-right">
+                    <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onSendEmail()">
+                      <mat-icon>send</mat-icon>
+                      {{ 'btn.email.send' | translate }}
+                    </button>
+
+                    <button mat-raised-button mat-dialog-close type="button" (click)="onCancel()" class="btn btn-fill btn-rose">
+                      {{ 'button.close' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>

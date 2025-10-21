@@ -1,7 +1,8 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-12" *ngIf="id != null">
+      @if(id != null){
+      <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="pull-center"></div>
@@ -78,7 +79,8 @@
                   <mat-tab label="Summary">
                     <div class="col-md-12">
                       <div *ngFor="let question of questionnaireQuestionList; let i = index">
-                        <div *ngIf="question.componentType === 'text' || question.componentType === 'textarea' || question.componentType === 'date'">
+                        @if(question.componentType === 'text' || question.componentType === 'textarea' || question.componentType === 'date'){
+                        <div>
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
                           <div class="row">
@@ -107,8 +109,8 @@
                             </div>
                           </div>
                         </div>
-
-                        <div *ngIf="question.componentType === 'radio' || question.componentType === 'select'" class="radio-group">
+                        } @if(question.componentType === 'radio' || question.componentType === 'select'){
+                        <div class="radio-group">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
                           <div class="row">
@@ -138,8 +140,8 @@
                             </div>
                           </div>
                         </div>
-
-                        <div *ngIf="question.componentType === 'checkbox'" class="checkbox-group">
+                        } @if(question.componentType === 'checkbox'){
+                        <div class="checkbox-group">
                           <h5>{{ i + 1 + '. ' + question.question }}</h5>
                           <p>{{ question.description }}</p>
 
@@ -176,6 +178,8 @@
                             </div>
                           </div>
                         </div>
+                        }
+
                         <br />
                       </div>
                     </div>
@@ -256,7 +260,8 @@
                     </div>
 
                     <hr />
-                    <div class="row" style="padding: 20px" *ngIf="selectedRow != null">
+                    @if(selectedRow != null){
+                    <div class="row" style="padding: 20px">
                       <div class="col-md-2"></div>
                       <div class="col-md-8">
                         <div class="card">
@@ -296,6 +301,7 @@
                       </div>
                       <div class="col-md-2"></div>
                     </div>
+                    }
                   </mat-tab>
                 </mat-tab-group>
               </div>
@@ -303,6 +309,7 @@
           </div>
         </div>
       </div>
+      }
     </div>
   </div>
 </div>

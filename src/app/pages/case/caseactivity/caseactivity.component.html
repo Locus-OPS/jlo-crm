@@ -2,31 +2,30 @@
   <div class="row">
     <div class="col-md-12">
       <div class="pull-right">
-        <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onActCreate()">{{
-          'button.create' | translate }}</button>
-        <button mat-raised-button type="reset" class="btn btn-fill btn-default">{{ 'button.clear' | translate
-          }}</button>
+        <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="onActCreate()">{{ 'button.create' | translate }}</button>
+        <button mat-raised-button type="reset" class="btn btn-fill btn-default">{{ 'button.clear' | translate }}</button>
       </div>
       <!-- {{caseNumber}} -->
       <div class="material-datatables table-responsive">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
-          (matSortChange)="tableControl.onSort($event)" matSort matSortDirection="asc" matSortDisableClear>
-
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8"
+          (matSortChange)="tableControl.onSort($event)"
+          matSort
+          matSortDirection="asc"
+          matSortDisableClear
+        >
           <ng-container matColumnDef="action" stickyEnd>
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-              <button class="btn btn-danger btn-round btn-fab mat-raised-button"
-                (click)="onActDelete(element); $event.stopPropagation()">
+              <button class="btn btn-danger btn-round btn-fab mat-raised-button" (click)="onActDelete(element); $event.stopPropagation()">
                 <span class="mat-button-wrapper">
                   <i class="material-icons">remove</i>
                 </span>
               </button>
             </td>
           </ng-container>
-
-
-
-
 
           <ng-container matColumnDef="activityNumber" sticky>
             <th mat-header-cell *matHeaderCellDef>{{ 'activity.number' | translate }}</th>
@@ -59,18 +58,29 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-          <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="onSelectRow(row)"
-            [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="onSelectRow(row)"
+            [ngClass]="{ 'selected-row': selectedRow == row }"
+          ></tr>
         </table>
       </div>
-      <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)" [length]="tableControl.total"
-        [pageSize]="tableControl.pageSize" [pageSizeOptions]="tableControl.pageSizeOptions" showFirstLastButtons>
+      <mat-paginator
+        class="mat-paginator-sticky"
+        (page)="tableControl.onPage($event)"
+        [length]="tableControl.total"
+        [pageSize]="tableControl.pageSize"
+        [pageSizeOptions]="tableControl.pageSizeOptions"
+        showFirstLastButtons
+      >
       </mat-paginator>
     </div>
   </div>
 
   <!--Activity Detail-->
-  <div class="card" *ngIf="selectedRow">
+  @if(selectedRow){
+  <div class="card">
     <div class="card-header card-header-icon card-header-rose">
       <div class="card-icon">
         <i class="material-icons">details</i>
@@ -91,9 +101,11 @@
               <mat-option *ngFor="let type of actTypeList" [value]="type.codeId">
                 {{ type.codeName }}
               </mat-option>
-              <mat-error *ngIf="actCreateForm.controls['type'].hasError('required')">
+              @if(actCreateForm.controls['type'].hasError('required')){
+              <mat-error>
                 {{ 'error.required' | translate }}
               </mat-error>
+              }
             </mat-select>
           </mat-form-field>
 
@@ -103,31 +115,36 @@
               <mat-option *ngFor="let stat of actStatusList" [value]="stat.codeId">
                 {{ stat.codeName }}
               </mat-option>
-              <mat-error *ngIf="actCreateForm.controls['status'].hasError('required')">
+              @if(actCreateForm.controls['status'].hasError('required')){
+              <mat-error>
                 {{ 'error.required' | translate }}
               </mat-error>
+              }
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="col-md-3">
             <mat-label>{{ 'activity.subject' | translate }}</mat-label>
             <input matInput type="text" formControlName="subject" />
-            <mat-error *ngIf="actCreateForm.controls['subject'].hasError('required')">
+            @if(actCreateForm.controls['subject'].hasError('required')){
+            <mat-error>
               {{ 'error.required' | translate }}
             </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="col-md-3">
             <mat-label>{{ 'activity.description' | translate }}</mat-label>
-            <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text"
-              formControlName="detail"> </textarea>
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="20" type="text" formControlName="detail"> </textarea>
           </mat-form-field>
           <mat-form-field class="col-md-3">
             <mat-label>{{ 'activity.owner' | translate }}</mat-label>
             <input matInput type="text" formControlName="ownerName" (click)="showOwner()" readonly />
-            <mat-error *ngIf="actCreateForm.controls['ownerName'].hasError('required')">
+            @if(actCreateForm.controls['ownerName'].hasError('required')){
+            <mat-error>
               {{ 'error.required' | translate }}
             </mat-error>
+            }
             <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
           </mat-form-field>
 
@@ -148,15 +165,17 @@
             </div>
           </div> -->
         </div>
-        <app-created-by [createdBy]="actCreateForm.controls['createdByName'].value"
+        <app-created-by
+          [createdBy]="actCreateForm.controls['createdByName'].value"
           [createdDate]="actCreateForm.controls['createdDate'].value"
           [updatedBy]="actCreateForm.controls['updatedByName'].value"
-          [updatedDate]="actCreateForm.controls['updatedDate'].value">
+          [updatedDate]="actCreateForm.controls['updatedDate'].value"
+        >
         </app-created-by>
 
-        <button mat-raised-button type="submit" class="btn btn-fill btn-rose pull-right">{{ 'button.save' | translate
-          }}</button>
+        <button mat-raised-button type="submit" class="btn btn-fill btn-rose pull-right">{{ 'button.save' | translate }}</button>
       </form>
     </div>
   </div>
+  }
 </div>

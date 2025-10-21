@@ -61,11 +61,13 @@
                 </mat-expansion-panel>
               </mat-accordion>
               <br />
-              <div class="pull-right" *ngIf="this.createForm.get('kbId').value != null">
+              @if(this.createForm.get('kbId').value != null){
+              <div class="pull-right">
                 <button mat-raised-button type="button" (click)="onCreateRefKB(); $event.stopPropagation()" class="btn btn-fill btn-primary">
                   {{ 'button.select' | translate }}
                 </button>
               </div>
+              }
             </div>
           </div>
         </mat-tab>

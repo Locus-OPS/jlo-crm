@@ -12,7 +12,6 @@
           <div class="card-body">
             <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
               <div class="row">
-
                 <!-- <mat-form-field class="col-md-2">
                   <mat-label>{{'codebook.codeType' | translate}}</mat-label>
                   <mat-select formControlName="codeType">
@@ -21,94 +20,116 @@
                 </mat-form-field> -->
 
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.codeType' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.codeType' | translate }}</mat-label>
                   <mat-select #select1 placeholder="All" formControlName="codeType">
                     <mat-option>
                       <ngx-mat-select-search formControlName="inputFilter"></ngx-mat-select-search>
                     </mat-option>
                     <mat-option>All</mat-option>
-                    <mat-option *ngFor="let item of codeTypeFilter" [value]="item.codeId">{{ item.codeName
-                      }}</mat-option>
+                    <mat-option *ngFor="let item of codeTypeFilter" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.codeId' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.codeId' | translate }}</mat-label>
                   <input matInput type="text" formControlName="codeId" maxlength="50" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'codebook.codeName' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.codeName' | translate }}</mat-label>
                   <input matInput type="text" formControlName="codeName" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'codebook.buId' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.buId' | translate }}</mat-label>
                   <mat-select formControlName="buId">
-                    <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName
-                      }}</mat-option>
+                    <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.status' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.status' | translate }}</mat-label>
                   <mat-select formControlName="activeFlag">
                     <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
               <div class="pull-right">
-                <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' |
-                  translate }}</button>
-                <button *ngIf="CAN_WRITE()" mat-raised-button type="button" class="btn btn-fill btn-primary"
-                  type="button" (click)="create()">{{ 'button.create' | translate }}</button>
-                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset"
-                  (click)="clear()">{{ 'button.clear' | translate }}</button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
+                @if(CAN_WRITE()){
+                <button mat-raised-button type="submit" class="btn btn-fill btn-primary pull-right">
+                  {{ 'button.save' | translate }}
+                </button>
+                }
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset" (click)="clear()">
+                  {{ 'button.clear' | translate }}
+                </button>
               </div>
             </form>
             <div class="toolbar">
               <!--        Here you can write extra buttons/actions for the toolbar              -->
             </div>
             <div class="material-datatables table-responsive" width="550px">
-              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (matSortChange)="sortData($event)"
-                matSort matSortActive="firstName" matSortDirection="asc" matSortDisableClear>
+              <table
+                mat-table
+                [dataSource]="dataSource"
+                class="mat-elevation-z8"
+                (matSortChange)="sortData($event)"
+                matSort
+                matSortActive="firstName"
+                matSortDirection="asc"
+                matSortDisableClear
+              >
                 <ng-container matColumnDef="codeId">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky> {{ 'codebook.codeId' | translate }}
-                  </th>
-                  <td mat-cell *matCellDef="let element"> {{element.codeId}} </td>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header sticky>{{ 'codebook.codeId' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeId }}</td>
                 </ng-container>
                 <ng-container matColumnDef="codeType">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'codebook.codeType' | translate }} </th>
-                  <td mat-cell *matCellDef="let element"> {{element.codeType}} </td>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'codebook.codeType' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeType }}</td>
                 </ng-container>
                 <ng-container matColumnDef="codeName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'codebook.codeName' | translate }} </th>
-                  <td mat-cell *matCellDef="let element"> {{element.codeName}} </td>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'codebook.codeName' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.codeName }}</td>
                 </ng-container>
                 <ng-container matColumnDef="parentType">
-                  <th mat-header-cell *matHeaderCellDef> {{ 'codebook.parentType' | translate }} </th>
-                  <td mat-cell *matCellDef="let element"> {{element.parentType}} </td>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'codebook.parentType' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.parentType }}</td>
                 </ng-container>
                 <ng-container matColumnDef="parentId">
-                  <th mat-header-cell *matHeaderCellDef> {{ 'codebook.parentId' | translate }} </th>
-                  <td mat-cell *matCellDef="let element"> {{element.parentId}} </td>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'codebook.parentId' | translate }}</th>
+                  <td mat-cell *matCellDef="let element">{{ element.parentId }}</td>
                 </ng-container>
                 <ng-container matColumnDef="activeFlag">
-                  <th mat-header-cell *matHeaderCellDef class="text-center"> {{ 'codebook.active' | translate }} </th>
+                  <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'codebook.active' | translate }}</th>
                   <td mat-cell *matCellDef="let element" class="text-center">
-                    <mat-icon matSuffix *ngIf="element.activeFlag === 'Y'">done</mat-icon>
+                    @if(element.activeFlag === 'Y'){
+                    <mat-icon matSuffix>done</mat-icon>
+                    }
                   </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow(row)"
-                  [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                  (click)="onSelectRow(row)"
+                  [ngClass]="{ 'selected-row': selectedRow == row }"
+                ></tr>
               </table>
             </div>
-            <mat-paginator class="mat-paginator-sticky" (page)="onPage($event)" [length]="total" [pageSize]="pageSize"
-              [pageIndex]="pageNo" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+            <mat-paginator
+              class="mat-paginator-sticky"
+              (page)="onPage($event)"
+              [length]="total"
+              [pageSize]="pageSize"
+              [pageIndex]="pageNo"
+              [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons
+            >
             </mat-paginator>
           </div>
           <!-- end content-->
         </div>
         <!--  end card  -->
-        <div class="card" *ngIf="selectedRow">
+        @if(selectedRow){
+        <div class="card">
           <div class="card-header card-header-icon card-header-rose">
             <div class="card-icon">
               <i class="material-icons">perm_identity</i>
@@ -119,111 +140,130 @@
             <form #createFormDirective="ngForm" [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
               <div class="row">
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'codebook.codeType' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.codeType' | translate }}</mat-label>
                   <input matInput type="text" formControlName="codeType" [readonly]="isUpdated" maxlength="50" />
-                  <mat-error *ngIf="createForm.controls['codeType'].hasError('required')">
+                  @if(createForm.controls['codeType'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.parentType' | translate}}</mat-label>
-                  <input matInput type="text" formControlName="parentType" #parentType
-                    (input)="selectedRow.parentType = parentType.value" maxlength="50" />
+                  <mat-label>{{ 'codebook.parentType' | translate }}</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="parentType"
+                    #parentType
+                    (input)="selectedRow.parentType = parentType.value"
+                    maxlength="50"
+                  />
                 </mat-form-field>
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'codebook.parentId' | translate}}</mat-label>
-                  <input matInput type="text" formControlName="parentId" #parentId
-                    (input)="selectedRow.parentId = parentId.value" maxlength="50" />
+                  <mat-label>{{ 'codebook.parentId' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="parentId" #parentId (input)="selectedRow.parentId = parentId.value" maxlength="50" />
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.seq' | translate}}</mat-label>
-                  <input matInput type="number" formControlName="seq">
+                  <mat-label>{{ 'codebook.seq' | translate }}</mat-label>
+                  <input matInput type="number" formControlName="seq" />
                 </mat-form-field>
                 <mat-form-field class="col-md-2">
-                  <mat-label>{{'codebook.status' | translate}}</mat-label>
-                  <mat-select formControlName="activeFlag" #activeFlag
-                    (selectionChange)="selectedRow.activeFlag = activeFlag.value">
+                  <mat-label>{{ 'codebook.status' | translate }}</mat-label>
+                  <mat-select formControlName="activeFlag" #activeFlag (selectionChange)="selectedRow.activeFlag = activeFlag.value">
                     <mat-option value=""></mat-option>
                     <mat-option *ngFor="let item of statusList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                   </mat-select>
-                  <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                  @if(createForm.controls['activeFlag'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-3">
-                  <mat-label>{{'codebook.codeId' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.codeId' | translate }}</mat-label>
                   <input matInput type="text" formControlName="codeId" [readonly]="isUpdated" maxlength="50" />
-                  <mat-error *ngIf="createForm.controls['activeFlag'].hasError('required')">
+                  @if(createForm.controls['activeFlag'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
                 <mat-form-field class="col-md-5">
-                  <mat-label>{{'codebook.codeName' | translate}}</mat-label>
-                  <input matInput type="text" formControlName="codeName" #codeName
-                    (input)="selectedRow.codeName = codeName.value" maxlength="200" />
-                  <mat-error *ngIf="createForm.controls['codeName'].hasError('required')">
+                  <mat-label>{{ 'codebook.codeName' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="codeName" #codeName (input)="selectedRow.codeName = codeName.value" maxlength="200" />
+                  @if(createForm.controls['codeName'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.buId' | translate}}</mat-label>
-                  <div *ngIf="isUpdated">
-                    <input matInput type="text" [value]="getBuName(selectedRow.buId)" readonly>
+                  <mat-label>{{ 'codebook.buId' | translate }}</mat-label>
+                  @if(isUpdated){
+                  <div>
+                    <input matInput type="text" [value]="getBuName(selectedRow.buId)" readonly />
                   </div>
-                  <div *ngIf="!isUpdated">
+                  } @if(!isUpdated){
+                  <div>
                     <mat-select formControlName="buId">
-                      <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName
-                        }}</mat-option>
+                      <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
                     </mat-select>
                   </div>
-                  <mat-error *ngIf="createForm.controls['buId'].hasError('required')">
+                  } @if(createForm.controls['buId'].hasError('required')){
+                  <mat-error>
                     {{ 'error.required' | translate }}
                   </mat-error>
+                  }
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.etc1' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.etc1' | translate }}</mat-label>
                   <input matInput type="text" formControlName="etc1" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.etc2' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.etc2' | translate }}</mat-label>
                   <input matInput type="text" formControlName="etc2" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.etc3' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.etc3' | translate }}</mat-label>
                   <input matInput type="text" formControlName="etc3" maxlength="200" />
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.etc4' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.etc4' | translate }}</mat-label>
                   <input matInput type="text" formControlName="etc4" maxlength="200" />
                 </mat-form-field>
                 <mat-form-field class="col-md-4">
-                  <mat-label>{{'codebook.etc5' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.etc5' | translate }}</mat-label>
                   <input matInput type="text" formControlName="etc5" maxlength="200" />
                 </mat-form-field>
               </div>
               <div class="row">
                 <mat-form-field class="col-md-12">
-                  <mat-label>{{'codebook.description' | translate}}</mat-label>
+                  <mat-label>{{ 'codebook.description' | translate }}</mat-label>
                   <textarea matInput type="text" formControlName="description" rows="3"></textarea>
                 </mat-form-field>
               </div>
-              <app-created-by [createdBy]="createForm.controls['createdByName'].value"
+              <app-created-by
+                [createdBy]="createForm.controls['createdByName'].value"
                 [createdDate]="createForm.controls['createdDate'].value"
                 [updatedBy]="createForm.controls['updatedByName'].value"
-                [updatedDate]="createForm.controls['updatedDate'].value">
+                [updatedDate]="createForm.controls['updatedDate'].value"
+              >
               </app-created-by>
-              <button *ngIf="CAN_WRITE()" mat-raised-button type="submit" class="btn btn-rose pull-right">{{
-                'button.save' | translate }}</button>
+              @if(CAN_WRITE()){
+              <button mat-raised-button type="submit" class="btn btn-rose pull-right">{{ 'button.save' | translate }}</button>
+              }
+
               <div class="clearfix"></div>
             </form>
           </div>
         </div>
+        }
       </div>
       <!-- end col-md-12 -->
     </div>
