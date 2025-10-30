@@ -17,7 +17,7 @@ env:
   IMAGE: asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/jlo-crm-registry/jlo-crm:${{ github.sha }}
 
   # GKE
-  CLUSTER_NAME: jlo-crm-cluster
+  CLUSTER_NAME: jlo-crm-autopilot
   NAMESPACE: demo
   DEPLOYMENT_NAME: jlo-crm
 
