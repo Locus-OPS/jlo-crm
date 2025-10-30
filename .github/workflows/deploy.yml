@@ -41,7 +41,15 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           workload_identity_provider: 'projects/180096520787/locations/global/workloadIdentityPools/github-pool/providers/github-actions'
           service_account: 'github-deployer@ntt-oceanlife-poc.iam.gserviceaccount.com'
+      
+      - uses: google-github-actions/setup-gcloud@v3
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          install_components: 'gke-gcloud-auth-plugin,kubectl'
 
+      - name: Enable GKE auth plugin
+        run: echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
+        
       - uses: google-github-actions/setup-gcloud@v3
         with:
           project_id: ${{ env.PROJECT_ID }}
@@ -56,6 +64,7 @@ jobs:
         run: docker push "${IMAGE}"
 
       # ====== GKE Deploy ======
+      
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${REGION}"
