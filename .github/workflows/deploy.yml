@@ -1,25 +1,32 @@
-name: build-and-deploy-jlo-crm
+name: build-and-deploy-jlo-crm (GKE)
 
 on:
   push:
-    branches: [ "gcloud" ]
+    branches: [ "ckt" ]  # ตามที่คุณตั้งไว้
 
 permissions:
   contents: read
-  id-token: write   # required for WIF
+  id-token: write
 
 env:
   PROJECT_ID: ntt-oceanlife-poc
   REGION: asia-southeast1
   REPO_NAME: jlo-crm-registry
-  SERVICE_NAME: jlo-crm-cicd
-  IMAGE: asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/jlo-crm-registry/jlo-crm-cicd:${{ github.sha }}
+  IMAGE_NAME: jlo-crm
+  # ใช้ชื่ออิมเมจใน Artifact Registry (เปลี่ยนชื่อรีโป/อิมเมจตามจริงได้)
+  IMAGE: asia-southeast1-docker.pkg.dev/ntt-oceanlife-poc/jlo-crm-registry/jlo-crm:${{ github.sha }}
 
-  # App runtime env
+  # GKE
+  CLUSTER_NAME: jlo-crm-cluster
+  NAMESPACE: demo
+  DEPLOYMENT_NAME: jlo-crm
+
+  # App runtime env (จะใส่ใน ConfigMap/Secret)
   PRODUCTION: "true"
   API_ENDPOINT: "https://jlo-crm-be-180096520787.asia-southeast1.run.app"
   WEB_SOCKET_ENDPOINT: "ws://jlo-crm-be-180096520787.asia-southeast1.run.app/jlo-crm-backend/chat"
   WHITELISTED_DOMAINS: "jlo-crm-be-180096520787.asia-southeast1.run.app"
+  # ถ้ามีรหัสลับ ให้ใส่เป็น GitHub Secret แล้วดึงมา เช่น DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
 jobs:
   deploy:
@@ -27,14 +34,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Authenticate to Google Cloud via WIF
+      # Auth to Google Cloud (WIF)
       - id: auth
         uses: google-github-actions/auth@v3
         with:
           project_id: ${{ env.PROJECT_ID }}
           workload_identity_provider: 'projects/180096520787/locations/global/workloadIdentityPools/github-pool/providers/github-actions'
           service_account: 'github-deployer@ntt-oceanlife-poc.iam.gserviceaccount.com'
-          # create_credentials_file: true (default) → exports ADC for later steps
 
       - uses: google-github-actions/setup-gcloud@v3
         with:
@@ -49,12 +55,35 @@ jobs:
       - name: Push image
         run: docker push "${IMAGE}"
 
-      - name: Deploy to Cloud Run
+      # ====== GKE Deploy ======
+      - name: Get GKE credentials
         run: |
-          gcloud run deploy "${{ env.SERVICE_NAME }}" \
-            --image "${IMAGE}" \
-            --region "${{ env.REGION }}" \
-            --platform managed \
-            --allow-unauthenticated \
-            --port 80 \
-            --set-env-vars PRODUCTION=${{ env.PRODUCTION }},API_ENDPOINT=${{ env.API_ENDPOINT }},WEB_SOCKET_ENDPOINT=${{ env.WEB_SOCKET_ENDPOINT }},WHITELISTED_DOMAINS=${{ env.WHITELISTED_DOMAINS }}
+          gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${REGION}"
+
+      - name: Ensure namespace exists
+        run: |
+          kubectl get ns "${NAMESPACE}" || kubectl create ns "${NAMESPACE}"
+
+      - name: Upsert ConfigMap (non-secret envs)
+        run: |
+          kubectl -n "${NAMESPACE}" create configmap jlo-crm-config \
+            --from-literal=PRODUCTION="${PRODUCTION}" \
+            --from-literal=API_ENDPOINT="${API_ENDPOINT}" \
+            --from-literal=WEB_SOCKET_ENDPOINT="${WEB_SOCKET_ENDPOINT}" \
+            --from-literal=WHITELISTED_DOMAINS="${WHITELISTED_DOMAINS}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      # ถ้ามี secret จริง ให้ใช้ secrets ของ GitHub มาใส่ตรงนี้
+      # - name: Upsert Secret (example)
+      #   run: |
+      #     kubectl -n "${NAMESPACE}" create secret generic jlo-crm-secret \
+      #       --from-literal=DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+      #       --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Render deployment with image and apply
+        run: |
+          sed "s#IMAGE_PLACEHOLDER#${IMAGE}#g" k8s/deployment.tpl.yaml | kubectl apply -n "${NAMESPACE}" -f -
+          kubectl apply -n "${NAMESPACE}" -f k8s/service-hpa.yaml
+
+      - name: Check rollout status
+        run: kubectl -n "${NAMESPACE}" rollout status deploy/${{ env.DEPLOYMENT_NAME }} --timeout=180s
