@@ -2,7 +2,7 @@ name: build-and-deploy-jlo-crm (GKE)
 
 on:
   push:
-    branches: [ "ckt_t" ]
+    branches: [ "cke_t" ]
 
 permissions:
   contents: read
