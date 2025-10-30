@@ -2,7 +2,7 @@ name: build-and-deploy-jlo-crm (GKE)
 
 on:
   push:
-    branches: [ "ckt" ]  # ตามที่คุณตั้งไว้
+    branches: [ "ckt_t" ]
 
 permissions:
   contents: read
