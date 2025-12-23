@@ -256,16 +256,9 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
           Utils.alertSuccess({
             text: 'Document has been saved.',
           });
-          if (this.fileUpload) {
-            this.fileUpload.nativeElement.value = '';
-          }
-          this.file = null;
-          this.creatingDocument = false;
           this.search();
-          this.createForm.patchValue({
-            ...response.data
-            , mainFlag: Utils.convertToBoolean(response.data, this.createForm, 'mainFlag')
-          });
+          this.clearForm();
+          this.creatingDocument = true;
         } else {
           Utils.alertError({
             text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
