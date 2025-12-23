@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { KbService } from '../../kb.service';
 import { Subscription } from 'rxjs';
@@ -25,6 +25,9 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
 
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
+
+  @ViewChild('fileUpload')
+  fileUpload: ElementRef;
 
   selectedRow: KbDocument;
   dataSource: KbDocument[];
@@ -94,6 +97,10 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
+    if (this.fileUpload) {
+      this.fileUpload.nativeElement.value = '';
+    }
+    this.file = null;
     this.selectedRow = null;
   }
 
@@ -102,6 +109,10 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
     if (this.createFormDirective) {
       this.createFormDirective.resetForm();
     }
+    if (this.fileUpload) {
+      this.fileUpload.nativeElement.value = '';
+    }
+    this.file = null;
     this.creatingDocument = true;
     this.createForm.patchValue({ 'previousMainFlag': false });
   }
@@ -245,6 +256,10 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
           Utils.alertSuccess({
             text: 'Document has been saved.',
           });
+          if (this.fileUpload) {
+            this.fileUpload.nativeElement.value = '';
+          }
+          this.file = null;
           this.creatingDocument = false;
           this.search();
           this.createForm.patchValue({
