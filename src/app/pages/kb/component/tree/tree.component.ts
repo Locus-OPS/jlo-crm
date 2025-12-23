@@ -109,6 +109,9 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   private convertFlatListToTree(list) {
+    if (!list || list.length === 0) {
+      return [];
+    }
     const map = {}, roots = [];
     let node: KbNode, i: number;
     for (i = 0; i < list.length; i++) {
@@ -118,7 +121,12 @@ export class TreeComponent extends BaseComponent implements OnInit, OnDestroy {
     for (i = 0; i < list.length; i++) {
       node = list[i];
       if (node.parentId !== null) {
-        list[map[node.parentId]].children.push(node);
+        const parentIndex = map[node.parentId];
+        if (parentIndex !== undefined) {
+          list[parentIndex].children.push(node);
+        } else {
+          roots.push(node);
+        }
       } else {
         roots.push(node);
       }
