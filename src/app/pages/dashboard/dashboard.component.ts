@@ -66,7 +66,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
     domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
   };
   //pie
-  viewPie: any[] = [530, 400];
+  viewPie: any[] = [500, 300];
 
   showLabels = true;
   colorSchemePie = {
@@ -75,7 +75,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
   yAxisLabelPie: string = 'Case Type';
 
   isDoughnut: boolean = false;
-  legendPosition: string = 'right';
+  legendPosition: string = 'below';
 
   summaryCaseStatusData = [
     {

@@ -16,7 +16,10 @@
       <mat-tab *ngFor="let tab of tabsComponents; index as i">
         <ng-template mat-tab-label>
           <div class="tab-label-wrapper" (contextmenu)="onTabContextMenu($event, i)">
-            <span class="tab-label-text">{{ tab.title | translate : tab.titleParam }}</span>
+            <span #tabLabel class="tab-label-text"
+                  [matTooltip]="tab.title | translate : tab.titleParam"
+                  matTooltipPosition="above"
+                  [matTooltipDisabled]="!isTextTruncated(tabLabel)">{{ tab.title | translate : tab.titleParam }}</span>
             <button *ngIf="tab.canClose" mat-icon-button class="close-icon-btn" (click)="closeTab($event, i)">
               <mat-icon class="close-icon">close</mat-icon>
             </button>

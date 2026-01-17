@@ -334,6 +334,10 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.router.navigate(['/dashboard']);
   }
 
+  isTextTruncated(element: HTMLElement): boolean {
+    return element?.scrollWidth > element?.clientWidth;
+  }
+
   // runOnRouteChange(): void {
   //   if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
   //     const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
