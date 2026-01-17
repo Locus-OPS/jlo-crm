@@ -1,38 +1,132 @@
-.background-highlight {
-  background-color: lightskyblue;
-}
+// Modern minimal KB tree styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+$folder-color: #f59e0b;
+$file-color: #3b82f6;
 
-.fa-icon {
-  color: steelblue;
-}
-
+// Tree control buttons (expand/collapse all)
 .treeControl {
   text-align: right;
+  padding: 8px 12px;
+  border-bottom: 1px solid $border-color;
+  background: $bg-light;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 a.treeControlBtn {
-  color: #292929;
-  padding: 2px;
-}
+  color: $text-secondary;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  text-decoration: none;
 
-mat-tree-node {
-  .mat-mdc-icon-button {
-    font-size: 14px;
-    width: 100%;
-    text-align: left;
-    height: fit-content;
-    border-radius: 0%;
-
-    mat-icon {
-      padding-top: 4px;
-    }
+  &:hover {
+    color: $brand-color;
+    background: rgba($brand-color, 0.1);
   }
 }
 
-.yellow-icon {
-  color: #f8d775;
+// Tree container
+:host ::ng-deep {
+  .mat-tree {
+    background: transparent;
+    min-height: 400px !important;
+    padding: 8px;
+  }
+
+  .mat-tree-node {
+    min-height: 32px;
+    height: auto;
+    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    transition: background 0.15s ease;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: rgba($brand-color, 0.04);
+    }
+  }
+
+  // Icon button styling
+  .mat-mdc-icon-button,
+  button[mat-icon-button] {
+    font-size: 13px;
+    width: 100%;
+    text-align: left;
+    height: auto;
+    min-height: 32px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    color: $text-primary;
+
+    mat-icon {
+      padding: 0;
+      margin-right: 8px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  // Remove ripple border radius
+  .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+    border-radius: 4px !important;
+  }
 }
 
-::ng-deep.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
-  border-radius: 0% !important;
+// Highlight selected node
+.background-highlight {
+  background: rgba($brand-color, 0.1) !important;
+
+  .mat-mdc-icon-button,
+  button[mat-icon-button] {
+    color: $brand-color;
+  }
+}
+
+// Folder icon color
+.yellow-icon {
+  color: $folder-color !important;
+}
+
+// File icons (FontAwesome)
+.fa-icon {
+  color: $file-color;
+  font-size: 14px;
+  margin-right: 8px;
+  width: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Context menu styling
+::ng-deep {
+  .mat-mdc-menu-panel {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid $border-color;
+  }
+
+  .mat-mdc-menu-item {
+    font-size: 13px;
+    min-height: 36px;
+
+    &:hover {
+      background: rgba($brand-color, 0.06);
+    }
+  }
 }

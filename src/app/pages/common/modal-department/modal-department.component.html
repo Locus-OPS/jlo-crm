@@ -1,96 +1,100 @@
-<button class="close" mat-button [mat-dialog-close]="true">X</button>
-<div mat-dialog-content class="flex-container">
-  <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-primary card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">filter_list</i>
-              </div>
-              <h4 class="card-title">{{ 'dept.searchTitle' | translate }}</h4>
-            </div>
-            <div class="card-body">
-              <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
-                <div class="row">
-                  <mat-form-field class="col-md-3">
-                    <mat-label>{{ 'dept.deptName' | translate }}</mat-label>
-                    <input matInput type="text" formControlName="departmentName" />
-                  </mat-form-field>
+<div mat-dialog-content class="dialog-content">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>account_tree</mat-icon>
+    </div>
+    <h4 class="header-title">{{ 'dept.searchTitle' | translate }}</h4>
+    <button type="button" class="dialog-close" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-                  <mat-form-field class="col-md-2">
-                    <mat-label>{{ 'dept.status' | translate }}</mat-label>
-                    <mat-select formControlName="statusCd">
-                      <mat-option *ngFor="let type of deptStatusList" [value]="type.codeId">
-                        {{ type.codeName }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="pull-right">
-                  <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.search' | translate }}</button>
-
-                  <button mat-raised-button type="reset" class="btn btn-fill btn-default">{{ 'button.clear' | translate }}</button>
-                </div>
-              </form>
-              <div class="material-datatables table-responsive">
-                <table
-                  mat-table
-                  [dataSource]="dataSource"
-                  class="mat-elevation-z8"
-                  (matSortChange)="tableControl.onSort($event)"
-                  matSort
-                  matSortActive="roleName"
-                  matSortDirection="asc"
-                  matSortDisableClear
-                >
-                  <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.id' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="departmentName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.deptName' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.departmentName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="statusName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.status' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.statusName }}</td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr
-                    mat-row
-                    *matRowDef="let row; columns: displayedColumns"
-                    (click)="onSelectRow(row)"
-                    [ngClass]="{ 'selected-row': selectedRow == row }"
-                  ></tr>
-                </table>
-              </div>
-              <mat-paginator
-                class="mat-paginator-sticky"
-                (page)="tableControl.onPage($event)"
-                [length]="tableControl.total"
-                [pageIndex]="tableControl.pageNo"
-                [pageSize]="tableControl.pageSize"
-                [pageSizeOptions]="tableControl.pageSizeOptions"
-                showFirstLastButtons
-              >
-              </mat-paginator>
-            </div>
-          </div>
+  <!-- Content -->
+  <div class="form-container">
+    <!-- Search Form -->
+    <div class="search-section">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+        <div class="search-row">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'dept.deptName' | translate }}</mat-label>
+            <input matInput type="text" formControlName="departmentName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'dept.status' | translate }}</mat-label>
+            <mat-select formControlName="statusCd">
+              <mat-option *ngFor="let type of deptStatusList" [value]="type.codeId">
+                {{ type.codeName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
+        <div class="search-actions">
+          <button mat-raised-button type="submit" class="btn-search">
+            <mat-icon>search</mat-icon>
+            {{ 'button.search' | translate }}
+          </button>
+          <button mat-raised-button type="reset" class="btn-cancel">
+            {{ 'button.clear' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="table-section">
+      <div class="table-container">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          (matSortChange)="tableControl.onSort($event)"
+          matSort
+          matSortActive="roleName"
+          matSortDirection="asc"
+          matSortDisableClear
+        >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.id' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="departmentName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.deptName' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.departmentName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="statusName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'dept.status' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.statusName }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="onSelectRow(row)"
+            [ngClass]="{ 'selected-row': selectedRow == row }"
+          ></tr>
+        </table>
       </div>
+      <mat-paginator
+        (page)="tableControl.onPage($event)"
+        [length]="tableControl.total"
+        [pageIndex]="tableControl.pageNo"
+        [pageSize]="tableControl.pageSize"
+        [pageSizeOptions]="tableControl.pageSizeOptions"
+        showFirstLastButtons
+      >
+      </mat-paginator>
     </div>
   </div>
-</div>
-<div class="pull-right">
-  @if(CAN_WRITE()){
-  <button mat-raised-button type="button" class="btn btn-fill btn-primary" [mat-dialog-close]="deptInfo">
-    {{ 'button.select' | translate }}
-  </button>
-  }
 
-  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()" class="btn btn-fill btn-default">
-    {{ 'button.cancel' | translate }}
-  </button>
+  <!-- Footer Actions -->
+  <div class="dialog-footer">
+    <button mat-button mat-dialog-close (click)="onNoClick()" class="btn-cancel">
+      {{ 'button.cancel' | translate }}
+    </button>
+    @if(CAN_WRITE()){
+    <button mat-raised-button class="btn-primary" [mat-dialog-close]="deptInfo">
+      {{ 'button.select' | translate }}
+    </button>
+    }
+  </div>
 </div>

@@ -1,23 +1,174 @@
-.chart-card {
-  margin-top: 16px;
+// Modern minimal dashboard styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+// Stats cards
+.stats-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
+.stat-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .stat-content {
+    .stat-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: $text-secondary;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: $text-primary;
+      line-height: 1;
+    }
+  }
+
+  .stat-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-family: 'Material Icons';
+      font-size: 28px;
+      color: #ffffff;
+    }
+
+    &.new {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    &.working {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    &.escalated {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    &.closed {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+  }
+}
+
+// Chart cards
+.charts-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.chart-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: none;
+
+  .chart-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid $border-color;
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  .chart-body {
+    padding: 20px;
+    height: 350px;
+  }
+}
+
+// Override mat-card for charts
+::ng-deep {
+  .mat-mdc-card.chart-card {
+    box-shadow: none !important;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+
+    .mat-mdc-card-title {
+      padding: 16px 20px;
+      border-bottom: 1px solid $border-color;
+      font-size: 16px;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+
+    .mat-mdc-card-content {
+      padding: 20px;
+      height: 350px;
+    }
+  }
+}
+
+// Legacy chart styles (for compatibility)
 .chart-title {
-  padding: 8px;
-  text-align: center;
+  padding: 16px 20px !important;
+  text-align: left !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: $text-primary !important;
+  border-bottom: 1px solid $border-color;
+  margin: 0 !important;
 }
 
 .chart-container {
-  padding: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 16px;
-  height: 400px;
+  padding: 20px !important;
+  margin: 0 !important;
+  height: 350px !important;
 }
 
-.material-icons-dashboard {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 4.1em;
+// Responsive stats
+@media (max-width: 768px) {
+  .stats-row {
+    flex-wrap: wrap;
+
+    .stat-card {
+      flex: 1 1 calc(50% - 8px);
+      min-width: calc(50% - 8px);
+    }
+  }
+
+  .charts-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-row .stat-card {
+    flex: 1 1 100%;
+  }
 }

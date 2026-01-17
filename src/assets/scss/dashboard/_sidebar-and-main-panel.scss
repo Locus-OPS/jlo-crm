@@ -564,6 +564,203 @@
          }
 
      }
+
+     // Modern Minimal White Theme
+     &[data-background-color="white"] {
+         background-color: #ffffff;
+         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+
+         .sidebar-background {
+             &:after {
+                 background: #ffffff;
+                 opacity: 1;
+             }
+         }
+
+         .user,
+         .logo,
+         .nav li.separator {
+             &:after {
+                 background-color: #e5e7eb;
+             }
+         }
+
+         .logo {
+             .simple-text {
+                 color: #374151;
+             }
+             p {
+                 color: #374151;
+             }
+         }
+
+         .user {
+             .photo {
+                 box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+             }
+
+             a {
+                 color: #374151;
+             }
+
+             .user-info {
+                 >a {
+                     >span {
+                         color: #6b7280;
+                         font-size: 13px;
+                     }
+                 }
+             }
+
+             .caret {
+                 border-top-color: #6b7280;
+             }
+         }
+
+         .nav {
+             i {
+                 color: #6b7280;
+                 transition: color 0.2s ease;
+             }
+
+             p {
+                 color: #374151;
+                 font-weight: 500;
+                 transition: color 0.2s ease;
+             }
+
+             li {
+                 >a {
+                     border-radius: 8px;
+                     margin: 4px 12px;
+                     padding: 10px 12px;
+                     transition: all 0.2s ease;
+                 }
+
+                 &:hover:not(.active)>a {
+                     background-color: rgba(51, 122, 183, 0.06);
+
+                     i {
+                         color: brand.$brand-locus;
+                     }
+
+                     p {
+                         color: brand.$brand-locus;
+                     }
+                 }
+
+                 &.active>[data-toggle="collapse"] {
+                     background-color: rgba(51, 122, 183, 0.08);
+
+                     i {
+                         color: brand.$brand-locus;
+                     }
+
+                     p {
+                         color: brand.$brand-locus;
+                     }
+                 }
+
+                 &.active>a,
+                 &.active>a:focus {
+                     background-color: rgba(51, 122, 183, 0.1);
+                     color: brand.$brand-locus !important;
+                     position: relative;
+
+                     &::before {
+                         content: '';
+                         position: absolute;
+                         left: 0;
+                         top: 50%;
+                         transform: translateY(-50%);
+                         width: 3px;
+                         height: 60%;
+                         background-color: brand.$brand-locus;
+                         border-radius: 0 2px 2px 0;
+                     }
+
+                     i {
+                         color: brand.$brand-locus !important;
+                     }
+
+                     p {
+                         color: brand.$brand-locus !important;
+                         font-weight: 600;
+                     }
+                 }
+             }
+
+             // Submenu styling
+             li .dropdown-menu {
+                 a {
+                     color: #6b7280;
+                     font-size: 13px;
+                     padding: 8px 12px;
+                     margin: 2px 8px;
+                     border-radius: 6px;
+
+                     &:hover {
+                         background-color: rgba(51, 122, 183, 0.06);
+                         color: brand.$brand-locus;
+                     }
+                 }
+             }
+
+             // Collapse submenu
+             [data-toggle="collapse"]~div>ul>li {
+                 >a {
+                     .sidebar-normal {
+                         color: #6b7280;
+                         font-weight: 400;
+                     }
+
+                     .sidebar-mini {
+                         color: #9ca3af;
+                     }
+
+                     &:hover {
+                         .sidebar-normal {
+                             color: brand.$brand-locus;
+                         }
+                     }
+                 }
+
+                 // Active submenu item - override white color
+                 &.active>a {
+                     background-color: rgba(51, 122, 183, 0.08);
+
+                     .sidebar-normal {
+                         color: brand.$brand-locus !important;
+                         font-weight: 500;
+                     }
+
+                     .sidebar-mini {
+                         color: brand.$brand-locus !important;
+                     }
+
+                     i {
+                         color: brand.$brand-locus !important;
+                     }
+                 }
+
+                 // Focus state for submenu
+                 >a:focus {
+                     .sidebar-normal {
+                         color: brand.$brand-locus !important;
+                     }
+                 }
+             }
+         }
+
+         .caret {
+             border-top-color: #9ca3af;
+         }
+     }
+
+     // Primary color scheme for active states on white background
+     &[data-color="primary"] {
+         @include set-background-color-button(brand.$brand-locus);
+     }
  }
 
  .off-canvas-sidebar .navbar-collapse {

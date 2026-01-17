@@ -2,411 +2,292 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+        <!-- Customer Detail Card -->
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
-            <!-- <div class="pull-right">
-                <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                  <span>
-                    <b class="caret"><mat-icon matSuffix>keyboard_arrow_up</mat-icon></b>
-                  </span>
-                </a>
-              </div>
-              <div class="card-icon">
-                <i class="material-icons">person</i>
-              </div>
-              <h4 class="card-title">{{ 'case.contactdetail' | translate }}</h4>
+            <div class="card-icon">
+              <i class="material-icons">person</i>
             </div>
-            <div class="card-body">
-              <div class="collapse" id="collapseExample">
-                <form [formGroup]="contactForm">
+            <h4 class="card-title">{{ 'case.custdetail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="customerForm">
+              <div class="row">
+                @if(customerForm.value.businessName == null){
+                <div class="col-md-7">
                   <div class="row">
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'contact.title' | translate }}</mat-label>
-                      <mat-select placeholder="{{ 'contact.title' | translate }}" formControlName="title" required>
+                    <mat-form-field class="col-md-2" disabled>
+                      <mat-label>{{ 'member.title' | translate }}</mat-label>
+                      <mat-select formControlName="title">
                         <mat-option>--</mat-option>
                         <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">
                           {{ item.codeName }}
                         </mat-option>
                       </mat-select>
-                      <mat-error *ngIf="contactForm.controls['title'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'contact.firstName' | translate }}</mat-label>
-                      <input matInput placeholder="{{ 'contact.firstName' | translate }}" type="text" required
-                        formControlName="firstName" />
-                      <mat-error *ngIf="contactForm.controls['firstName'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
+                    <mat-form-field class="col-md-5" disabled>
+                      <mat-label>{{ 'member.firstName' | translate }}</mat-label>
+                      <input matInput type="text" formControlName="firstName" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'contact.lastName' | translate }}</mat-label>
-                      <input matInput placeholder="{{ 'contact.lastName' | translate }}" type="text" required
-                        formControlName="lastName" />
-                      <mat-error *ngIf="contactForm.controls['lastName'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-  
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'contact.relationtype' | translate }}</mat-label>
-                      <mat-select formControlName="relationCd" required>
-                        <mat-option *ngFor="let type of contactRelTypeList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="contactForm.controls['relationCd'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-icon matSuffix>phone</mat-icon>
-                      <mat-label>{{ 'contact.phoneNo' | translate }}</mat-label>
-                      <input matInput type="text" placeholder="{{ 'contact.phoneNo' | translate }}" required
-                        formControlName="phoneNo" />
-                      <mat-error *ngIf="contactForm.controls['phoneNo'].hasError('required')">
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'contact.email' | translate }}</mat-label>
-                      <input matInput type="text" placeholder="{{ 'contact.email' | translate }}"
-                        formControlName="email" />
+                    <mat-form-field class="col-md-5" disabled>
+                      <mat-label>{{ 'member.lastName' | translate }}</mat-label>
+                      <input matInput type="text" formControlName="lastName" />
                     </mat-form-field>
                   </div>
-                  <div class="pull-right">
-                    <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="createContact()">
-                      {{ 'button.create.contact' | translate }}
-                    </button>
-  
-                    <button mat-raised-button type="button" (click)="saveContact()" class="btn btn-fill btn-rose">
-                      {{ 'button.save' | translate }}
-                    </button>
-  
-                    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetContactForm()">
-                      {{ 'button.clear' | translate }}
-                    </button>
+                </div>
+                } @if(customerForm.value.businessName != null){
+                <div class="col-md-7">
+                  <div class="row">
+                    <mat-form-field class="col-md-12" disabled>
+                      <mat-label>{{ 'member.businessName' | translate }}</mat-label>
+                      <input matInput ype="text" formControlName="businessName" />
+                    </mat-form-field>
                   </div>
-                </form>
+                </div>
+                }
+                <mat-form-field class="col-md-2" disabled>
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-label>{{ 'member.phoneNo' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="phoneNo" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3" disabled>
+                  <mat-label>{{ 'member.email' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="email" />
+                </mat-form-field>
               </div>
+            </form>
+            <div class="pull-right">
+              <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="searchCustomer()">
+                {{ 'button.search' | translate }}
+                <mat-icon>search</mat-icon>
+              </button>
             </div>
-          </div> -->
-
-            <div class="card">
-              <div class="card-header card-header-primary card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">person</i>
-                </div>
-                <h4 class="card-title">{{ 'case.custdetail' | translate }}</h4>
-              </div>
-              <div class="card-body">
-                <form [formGroup]="customerForm">
-                  <div class="row">
-                    @if(customerForm.value.businessName == null){
-                    <div class="col-md-7">
-                      <div class="row">
-                        <mat-form-field class="col-md-2" disabled>
-                          <mat-label>{{ 'member.title' | translate }}</mat-label>
-                          <mat-select formControlName="title">
-                            <mat-option>--</mat-option>
-                            <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">
-                              {{ item.codeName }}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-5" disabled>
-                          <mat-label>{{ 'member.firstName' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="firstName" />
-                        </mat-form-field>
-                        <mat-form-field class="col-md-5" disabled>
-                          <mat-label>{{ 'member.lastName' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="lastName" />
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    } @if(customerForm.value.businessName != null){
-                    <div class="col-md-7">
-                      <div class="row">
-                        <mat-form-field class="col-md-12" disabled>
-                          <mat-label>{{ 'member.businessName' | translate }}</mat-label>
-                          <input matInput ype="text" formControlName="businessName" />
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    }
-
-                    <mat-form-field class="col-md-2" disabled>
-                      <mat-icon matSuffix>phone</mat-icon>
-                      <mat-label>{{ 'member.phoneNo' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="phoneNo" />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3" disabled>
-                      <mat-label>{{ 'member.email' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="email" />
-                    </mat-form-field>
-                  </div>
-                </form>
-
-                <div class="pull-right">
-                  <button mat-raised-button type="button" class="btn btn-fill btn-rose" (click)="searchCustomer()">
-                    {{ 'button.search' | translate }}
-                    <mat-icon>search</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- {{this.createForm.value | json}} -->
-
-            <!-- </div>         -->
-            <!-- </div> -->
-            <!-- End Customer Session-->
-
-            <!-- <div class="row"> -->
-            <!-- <div class="col-md-12"> -->
-            <div class="card">
-              <div class="card-header card-header-primary card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">assignment</i>
-                </div>
-                <h4 class="card-title">{{ 'sr.detail' | translate }}</h4>
-              </div>
-              <div class="card-body">
-                <form [formGroup]="createForm" (ngSubmit)="onSave($event)">
-                  <div class="row">
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'sr.number' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="srNumber" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                      <mat-label>{{ 'case.subject' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="subject" required />
-                      @if(createForm.controls['subject'].hasError('required')){
-                      <mat-error>
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                      }
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.status' | translate }}</mat-label>
-                      <mat-select formControlName="status" required>
-                        <mat-option *ngFor="let type of srStatusList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                        @if(createForm.controls['status'].hasError('required')){
-                        <mat-error>
-                          {{ 'error.required' | translate }}
-                        </mat-error>
-                        }
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="row">
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.division' | translate }}</mat-label>
-                      <mat-select formControlName="divisionTypeCode" required>
-                        <mat-option *ngFor="let type of divisionList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      @if(createForm.controls['divisionTypeCode'].hasError('required')){
-                      <mat-error>
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                      }
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.category' | translate }}</mat-label>
-                      <mat-select formControlName="categoryTypeCode" (ngModelChange)="getSrTypeByCategoryId($event)" required>
-                        <mat-option *ngFor="let type of categoryList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      @if(createForm.controls['categoryTypeCode'].hasError('required')){
-                      <mat-error>
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                      }
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.type' | translate }}</mat-label>
-                      <mat-select formControlName="type" (ngModelChange)="getSrSubTypeByCaseTypeId($event)" required>
-                        <mat-option *ngFor="let type of typeList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      @if(createForm.controls['type'].hasError('required')){
-                      <mat-error>
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                      }
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.subType' | translate }}</mat-label>
-                      <mat-select formControlName="subType">
-                        <mat-option *ngFor="let type of subTypeList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.area' | translate }}</mat-label>
-                      <mat-select formControlName="serviceAreaCode" required>
-                        <mat-option *ngFor="let type of serviceAreaList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                      @if(createForm.controls['serviceAreaCode'].hasError('required')){
-                      <mat-error>
-                        {{ 'error.required' | translate }}
-                      </mat-error>
-                      }
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.priority' | translate }}</mat-label>
-                      <mat-select formControlName="priority" (ngModelChange)="getSlaIdByPriority($event)">
-                        <mat-option *ngFor="let type of priorityList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.channel' | translate }}</mat-label>
-                      <mat-select formControlName="channel">
-                        <mat-option *ngFor="let type of srChannelList" [value]="type.codeId">
-                          {{ type.codeName }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <div class="col-md-3">
-                      <div class="row">
-                        <mat-form-field class="col-md-12">
-                          <mat-label>{{ 'case.owner' | translate }}</mat-label>
-                          <input matInput type="text" formControlName="displayName" (click)="showOwner()" readonly required />
-                          <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
-                          @if(createForm.controls['type'].hasError('required')){
-                          <mat-error>
-                            {{ 'error.required' | translate }}
-                          </mat-error>
-                          }
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.informname' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="informName" />
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.dueDate' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="dueDate" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.openDate' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="openedDate" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.closeDate' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="closedDate" readonly />
-                    </mat-form-field>
-                  </div>
-                  <div class="row">
-                    <mat-form-field class="col-md-6">
-                      <mat-label>{{ 'case.worknote' | translate }}</mat-label>
-                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="workNote">
-                      </textarea>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                      <mat-label>{{ 'case.description' | translate }}</mat-label>
-                      <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="detail">
-                      </textarea>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.dslnumber' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="dslnumber" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.incnumber' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="incnumber" readonly />
-                    </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                      <mat-label>{{ 'case.dslstatus' | translate }}</mat-label>
-                      <input matInput type="text" formControlName="dslstatus" readonly />
-                    </mat-form-field>
-                  </div>
-                  <app-created-by
-                    [createdBy]="createForm.controls['createdByName'].value"
-                    [createdDate]="createForm.controls['createdDate'].value"
-                    [updatedBy]="createForm.controls['updatedByName'].value"
-                    [updatedDate]="createForm.controls['updatedDate'].value"
-                  >
-                  </app-created-by>
-                  <div class="pull-right">
-                    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
-                      {{ 'button.back' | translate }}
-                      <mat-icon>undo</mat-icon>
-                    </button>
-                    <button mat-raised-button type="submit" class="btn btn-fill btn-rose">
-                      {{ 'button.save' | translate }}
-                      <mat-icon>save</mat-icon>
-                    </button>
-
-                    <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetForm()">
-                      {{ 'button.clear' | translate }}
-                      <mat-icon>restart_alt</mat-icon>
-                    </button>
-
-                    <button
-                      mat-raised-button
-                      type="button"
-                      (click)="onCaseCreate()"
-                      class="btn btn-fill btn-primary"
-                      routerLinkActive="router-link-active"
-                    >
-                      {{ 'button.create' | translate }}
-                      <mat-icon>add_circle</mat-icon>
-                    </button>
-
-                    <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="openModalSendEmail('CASE')">
-                      {{ 'btn.email.send' | translate }}
-                      <mat-icon>email</mat-icon>
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-header card-header-icon card-header-rose">
-                <div class="card-icon">
-                  <i class="material-icons">local_activity</i>
-                </div>
-                <h4 class="card-title">{{ 'case.detail.header' | translate }}</h4>
-              </div>
-              <div class="card-body">
-                <div class="mat-app-background basic-container">
-                  <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
-                    <mat-tab label="{{ 'case.activity.tab' | translate }}">
-                      <tab-caseactivity-content></tab-caseactivity-content>
-                    </mat-tab>
-                    <mat-tab label="{{ 'case.attachment.tab' | translate }}">
-                      <tab-caseatt-content></tab-caseatt-content>
-                    </mat-tab>
-                  </mat-tab-group>
-                </div>
-              </div>
-            </div>
-            <!--Activity Card-->
           </div>
         </div>
-        <!--Row -->
+
+        <!-- SR Detail Card -->
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">{{ 'sr.detail' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="createForm" (ngSubmit)="onSave($event)">
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'sr.number' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="srNumber" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-6">
+                  <mat-label>{{ 'case.subject' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="subject" required />
+                  @if(createForm.controls['subject'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.status' | translate }}</mat-label>
+                  <mat-select formControlName="status" required>
+                    <mat-option *ngFor="let type of srStatusList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                    @if(createForm.controls['status'].hasError('required')){
+                    <mat-error>
+                      {{ 'error.required' | translate }}
+                    </mat-error>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.division' | translate }}</mat-label>
+                  <mat-select formControlName="divisionTypeCode" required>
+                    <mat-option *ngFor="let type of divisionList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                  @if(createForm.controls['divisionTypeCode'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.category' | translate }}</mat-label>
+                  <mat-select formControlName="categoryTypeCode" (ngModelChange)="getSrTypeByCategoryId($event)" required>
+                    <mat-option *ngFor="let type of categoryList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                  @if(createForm.controls['categoryTypeCode'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.type' | translate }}</mat-label>
+                  <mat-select formControlName="type" (ngModelChange)="getSrSubTypeByCaseTypeId($event)" required>
+                    <mat-option *ngFor="let type of typeList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                  @if(createForm.controls['type'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.subType' | translate }}</mat-label>
+                  <mat-select formControlName="subType">
+                    <mat-option *ngFor="let type of subTypeList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.area' | translate }}</mat-label>
+                  <mat-select formControlName="serviceAreaCode" required>
+                    <mat-option *ngFor="let type of serviceAreaList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                  @if(createForm.controls['serviceAreaCode'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.priority' | translate }}</mat-label>
+                  <mat-select formControlName="priority" (ngModelChange)="getSlaIdByPriority($event)">
+                    <mat-option *ngFor="let type of priorityList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.channel' | translate }}</mat-label>
+                  <mat-select formControlName="channel">
+                    <mat-option *ngFor="let type of srChannelList" [value]="type.codeId">
+                      {{ type.codeName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.owner' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="displayName" (click)="showOwner()" readonly required />
+                  <mat-icon matSuffix (click)="showOwner()">person_search</mat-icon>
+                  @if(createForm.controls['type'].hasError('required')){
+                  <mat-error>
+                    {{ 'error.required' | translate }}
+                  </mat-error>
+                  }
+                </mat-form-field>
+              </div>
+
+              <div class="row">
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.informname' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="informName" />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.dueDate' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="dueDate" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.openDate' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="openedDate" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.closeDate' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="closedDate" readonly />
+                </mat-form-field>
+              </div>
+
+              <div class="row">
+                <mat-form-field class="col-md-6">
+                  <mat-label>{{ 'case.worknote' | translate }}</mat-label>
+                  <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="workNote"></textarea>
+                </mat-form-field>
+                <mat-form-field class="col-md-6">
+                  <mat-label>{{ 'case.description' | translate }}</mat-label>
+                  <textarea matInput matTextareaAutosize matAutosizeMinRows="6" matAutosizeMaxRows="20" type="text" formControlName="detail"></textarea>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.dslnumber' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="dslnumber" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.incnumber' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="incnumber" readonly />
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                  <mat-label>{{ 'case.dslstatus' | translate }}</mat-label>
+                  <input matInput type="text" formControlName="dslstatus" readonly />
+                </mat-form-field>
+              </div>
+
+              <app-created-by
+                [createdBy]="createForm.controls['createdByName'].value"
+                [createdDate]="createForm.controls['createdDate'].value"
+                [updatedBy]="createForm.controls['updatedByName'].value"
+                [updatedDate]="createForm.controls['updatedDate'].value"
+              ></app-created-by>
+
+              <div class="pull-right">
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="backClicked()">
+                  {{ 'button.back' | translate }}
+                  <mat-icon>undo</mat-icon>
+                </button>
+                <button mat-raised-button type="submit" class="btn btn-fill btn-rose">
+                  {{ 'button.save' | translate }}
+                  <mat-icon>save</mat-icon>
+                </button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-default" (click)="resetForm()">
+                  {{ 'button.clear' | translate }}
+                  <mat-icon>restart_alt</mat-icon>
+                </button>
+                <button mat-raised-button type="button" (click)="onCaseCreate()" class="btn btn-fill btn-primary" routerLinkActive="router-link-active">
+                  {{ 'button.create' | translate }}
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+                <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="openModalSendEmail('CASE')">
+                  {{ 'btn.email.send' | translate }}
+                  <mat-icon>email</mat-icon>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Activity Card -->
+        <div class="card">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">local_activity</i>
+            </div>
+            <h4 class="card-title">{{ 'case.detail.header' | translate }}</h4>
+          </div>
+          <div class="card-body">
+            <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
+              <mat-tab label="{{ 'case.activity.tab' | translate }}">
+                <tab-caseactivity-content></tab-caseactivity-content>
+              </mat-tab>
+              <mat-tab label="{{ 'case.attachment.tab' | translate }}">
+                <tab-caseatt-content></tab-caseatt-content>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

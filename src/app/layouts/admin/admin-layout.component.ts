@@ -6,11 +6,12 @@ import { filter, tap } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
 import { MatTabGroup } from '@angular/material/tabs';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { KeyboardShortcutsModule, ShortcutEventOutput, ShortcutInput } from 'ng-keyboard-shortcuts';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { TaskbarComponent } from '../template/taskbar/taskbar.component';
 import { SidebarComponent } from '../template/sidebar/sidebar.component';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService, NgxSpinnerModule } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { WebSocketService } from 'src/app/services/web-socket.service';
@@ -20,7 +21,7 @@ import { WebSocketService } from 'src/app/services/web-socket.service';
     templateUrl: './admin-layout.component.html',
     styleUrls: ['./admin-layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    imports: [SharedModule, NgScrollbarModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent]
+    imports: [SharedModule, NgScrollbarModule, KeyboardShortcutsModule, SidebarComponent, NavbarComponent, TaskbarComponent, NgxSpinnerModule]
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -34,6 +35,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('sidebar') sidebar: any;
   @ViewChild(NavbarComponent) navbar: NavbarComponent;
   @ViewChild('tabGroup') tabGroup: MatTabGroup;
+  @ViewChild(MatMenuTrigger) contextMenuTrigger: MatMenuTrigger;
 
   ALLOW_ONE_TAB = [''];
 
@@ -48,6 +50,10 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedTab = 0;
 
   shortcuts: ShortcutInput[] = [];
+
+  // Context menu
+  contextMenuPosition = { x: 0, y: 0 };
+  contextMenuTabIndex = -1;
 
   constructor(
     private router: Router,
@@ -167,12 +173,16 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   async loadTab() {
     const keepTabs = this.tabManageService.getTabs();
     if (keepTabs && keepTabs.length > 1) {
+      // Set flag to prevent individual spinners during batch load
+      this.globals.isInitialTabLoading = true;
       this.spinner.show("initialTab");
       this.initialCount = keepTabs.length;
       for (let i = 0; i < keepTabs.length; i++) {
         await this.navigate(keepTabs[i], true);
       };
       this.spinner.hide("initialTab");
+      // Clear flag after all tabs loaded
+      this.globals.isInitialTabLoading = false;
     }
   }
 
@@ -292,6 +302,36 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate([this.tabsComponents[i - 1].path]);
       }
     }
+  }
+
+  onTabContextMenu(event: MouseEvent, tabIndex: number): void {
+    event.preventDefault();
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.contextMenuTabIndex = tabIndex;
+    this.contextMenuTrigger.openMenu();
+  }
+
+  closeOtherTabs(): void {
+    for (let i = this.tabsComponents.length - 1; i >= 0; i--) {
+      if (i !== this.contextMenuTabIndex && this.tabsComponents[i].canClose) {
+        this.removeTab(i);
+        this.tabManageService.removeTab(i);
+        if (i < this.contextMenuTabIndex) {
+          this.contextMenuTabIndex--;
+        }
+      }
+    }
+    this.router.navigate([this.tabsComponents[this.contextMenuTabIndex]?.path || '/dashboard']);
+  }
+
+  closeAllTabs(): void {
+    for (let i = this.tabsComponents.length - 1; i >= 0; i--) {
+      if (this.tabsComponents[i].canClose) {
+        this.removeTab(i);
+        this.tabManageService.removeTab(i);
+      }
+    }
+    this.router.navigate(['/dashboard']);
   }
 
   // runOnRouteChange(): void {

@@ -1,16 +1,196 @@
-body {
+// Modern minimal modal file styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+:host {
+  display: block;
+}
+
+// Dialog content
+.dialog-content {
+  padding: 0;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Header section (fixed)
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border-color;
+  background: #ffffff;
+  flex-shrink: 0;
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba($brand-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: $brand-color;
+    }
+  }
+
+  .header-title {
     margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+  }
 }
 
-iframe {
+// Close button
+.dialog-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+  }
+}
+
+// File info
+.file-info {
+  padding: 16px 24px;
+  background: $bg-light;
+  border-bottom: 1px solid $border-color;
+  flex-shrink: 0;
+
+  .file-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: $text-secondary;
+
+    strong {
+      color: $text-primary;
+      font-weight: 500;
+    }
+  }
+}
+
+// Preview container
+.preview-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #ffffff;
+  overflow: hidden;
+
+  iframe {
     display: block;
-    background: rgb(252, 252, 252);
-    border: none;
+    background: #fcfcfc;
+    border: 1px solid $border-color;
+    border-radius: 8px;
     height: 60vh;
-    width: 80vw;
+    width: 100%;
+    max-width: 80vw;
+  }
 }
 
-/*
-vh	Relative to 1% of the height of the viewport
-vw	Relative to 1% of the width of the viewport
-*/
+// Download section
+.download-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+
+  .file-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: $text-primary;
+    word-break: break-all;
+  }
+
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: $brand-color;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: darken($brand-color, 8%);
+    }
+  }
+}
+
+// Footer actions (fixed)
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid $border-color;
+  background: $bg-light;
+  flex-shrink: 0;
+}
+
+// Button styling
+.btn-close {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 24px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  transition: all 0.15s ease !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}

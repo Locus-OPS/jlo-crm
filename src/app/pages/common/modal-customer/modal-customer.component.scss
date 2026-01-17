@@ -1,0 +1,280 @@
+// Modern minimal modal styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+:host {
+  display: block;
+}
+
+// Dialog content
+.dialog-content {
+  padding: 0;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Header section (fixed)
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border-color;
+  background: #ffffff;
+  flex-shrink: 0;
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba($brand-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: $brand-color;
+    }
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+// Close button (inside header)
+.dialog-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+  }
+}
+
+// Form container (scrollable)
+.form-container {
+  padding: 20px 24px;
+  background: #ffffff;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($brand-color, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba($brand-color, 0.5);
+  }
+}
+
+// Search form section
+.search-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $border-color;
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 180px;
+  }
+}
+
+.search-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+// Table section
+.table-section {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 3px;
+  }
+}
+
+// Table styling
+::ng-deep {
+  .mat-mdc-table {
+    width: 100%;
+
+    .mat-mdc-header-row {
+      background: $bg-light;
+    }
+
+    .mat-mdc-header-cell {
+      color: $text-secondary;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .mat-mdc-cell {
+      color: $text-primary;
+      font-size: 13px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .mat-mdc-row {
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba($brand-color, 0.04);
+      }
+
+      &.selected-row {
+        background: rgba($brand-color, 0.1);
+      }
+    }
+  }
+
+  .mat-mdc-paginator {
+    background: $bg-light;
+    border-top: 1px solid $border-color;
+  }
+}
+
+// Footer actions (fixed)
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid $border-color;
+  background: $bg-light;
+  flex-shrink: 0;
+}
+
+// Button styling
+.btn-primary {
+  background: $brand-color !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.15s ease !important;
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+  }
+}
+
+.btn-search {
+  background: #ec4899 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+
+  &:hover {
+    background: darken(#ec4899, 8%) !important;
+  }
+}
+
+.btn-cancel {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+  .search-row {
+    flex-direction: column;
+
+    mat-form-field {
+      min-width: 100%;
+    }
+  }
+
+  .dialog-footer {
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+}

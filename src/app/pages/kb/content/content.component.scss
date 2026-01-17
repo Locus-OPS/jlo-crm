@@ -1,7 +1,16 @@
-.custom-tab-group .mat-tab-label {
-  border-bottom: 2px solid #1976d2; /* เปลี่ยนเป็นสีที่ต้องการ */
+// KB content page specific styles
+// Global styles are now in jlo-crm.scss
+
+$brand-color: #337ab7;
+
+// Rating and favorite row alignment
+.row > .col-md-6.pull-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.custom-tab-group .mat-tab-label-active {
-  border-bottom: 2px solid #d32f2f; /* สีของขอบเมื่อแท็บถูกเลือก */
+// Accordion margin for KB page
+.mat-accordion {
+  margin-top: 16px;
 }

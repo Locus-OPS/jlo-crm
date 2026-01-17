@@ -1,148 +1,149 @@
-<button class="close" mat-button [mat-dialog-close]="true">X</button>
-<div mat-dialog-content class="flex-container">
-  <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-primary card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">assignment</i>
-              </div>
-              <h4 class="card-title">{{ 'user.searchTitle' | translate }}</h4>
-            </div>
-            <div class="card-body">
-              <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
-                <div class="row">
-                  <mat-form-field class="col-md-3">
-                    <input matInput [placeholder]="'user.userId' | translate" type="text" formControlName="userId" />
-                  </mat-form-field>
-                  <mat-form-field class="col-md-3">
-                    <input matInput [placeholder]="'user.firstName' | translate" type="text" formControlName="firstName" />
-                  </mat-form-field>
-                  <mat-form-field class="col-md-3">
-                    <input matInput [placeholder]="'user.lastName' | translate" type="text" formControlName="lastName" />
-                  </mat-form-field>
-                  <mat-form-field class="col-md-3">
-                    <mat-select [placeholder]="'user.status' | translate" formControlName="status">
-                      <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }} </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="row">
-                  <mat-form-field class="col-md-3">
-                    <mat-select [placeholder]="'user.businessUnit' | translate" formControlName="buId">
-                      <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }} </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field class="col-md-3">
-                    <mat-select [placeholder]="'user.role' | translate" formControlName="roleCode">
-                      <mat-option *ngFor="let item of roleList" [value]="item.codeId">{{ item.codeName }}</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="pull-right">
-                  <button mat-raised-button type="button" class="btn btn-fill btn-rose" type="submit">{{ 'button.search' | translate }}</button>
-                  @if(CAN_WRITE()){
-                  <button mat-raised-button type="button" class="btn btn-fill btn-primary" type="button" (click)="create()">
-                    {{ 'button.create' | translate }}
-                  </button>
-                  }
-
-                  <button mat-raised-button type="button" class="btn btn-fill btn-default" type="reset" (click)="clear()">
-                    {{ 'button.clear' | translate }}
-                  </button>
-                </div>
-              </form>
-              <div class="toolbar">
-                <!-- Here you can write extra buttons/actions for the toolbar -->
-              </div>
-
-              <div class="material-datatables table-responsive">
-                <table
-                  mat-table
-                  [dataSource]="dataSource"
-                  class="mat-elevation-z8"
-                  (matSortChange)="tableControl.onSort($event)"
-                  matSort
-                  matSortActive="firstName"
-                  matSortDirection="asc"
-                  matSortDisableClear
-                >
-                  <ng-container matColumnDef="userId" sticky>
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.userId' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="firstName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.firstName' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="lastName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.lastName' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="buName">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'user.businessUnit' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.buName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="divName">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'user.division' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.divName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="roleName">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.roleName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="posName">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'user.position' | translate }}</th>
-                    <td mat-cell *matCellDef="let element">{{ element.posName }}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="useYn">
-                    <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'user.active' | translate }}</th>
-                    <td mat-cell *matCellDef="let element" class="text-center">
-                      @if(element.useYn === 'Y'){
-                      <mat-icon matSuffix>done</mat-icon>
-                      }
-                    </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
-                  <tr
-                    mat-row
-                    *matRowDef="let row; columns: displayedColumns"
-                    (click)="onSelectRow(row)"
-                    [ngClass]="{ 'selected-row': selectedRow == row }"
-                  ></tr>
-                </table>
-              </div>
-              <mat-paginator
-                class="mat-paginator-sticky"
-                (page)="tableControl.onPage($event)"
-                [length]="tableControl.total"
-                [pageSize]="tableControl.pageSize"
-                [pageSizeOptions]="tableControl.pageSizeOptions"
-                showFirstLastButtons
-              >
-              </mat-paginator>
-            </div>
-          </div>
-        </div>
-        <!--  end card  -->
-      </div>
-      <!-- end col-md-12 -->
+<div mat-dialog-content class="dialog-content">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>manage_accounts</mat-icon>
     </div>
-    <!-- end row -->
+    <h4 class="header-title">{{ 'user.searchTitle' | translate }}</h4>
+    <button type="button" class="dialog-close" [mat-dialog-close]="true">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
-</div>
-<!-- end content-->
-<div class="pull-right">
-  @if(CAN_WRITE()){
-  <button mat-raised-button type="button" class="btn btn-fill btn-primary" [mat-dialog-close]="userInfo">
-    {{ 'button.select' | translate }}
-  </button>
-  }
 
-  <button mat-raised-button mat-dialog-close type="button" (click)="onNoClick()" class="btn btn-fill btn-default">
-    {{ 'button.cancel' | translate }}
-  </button>
+  <!-- Content -->
+  <div class="form-container">
+    <!-- Search Form -->
+    <div class="search-section">
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" novalidate>
+        <div class="search-row">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.userId' | translate }}</mat-label>
+            <input matInput type="text" formControlName="userId" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.firstName' | translate }}</mat-label>
+            <input matInput type="text" formControlName="firstName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.lastName' | translate }}</mat-label>
+            <input matInput type="text" formControlName="lastName" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.status' | translate }}</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let status of statusList" [value]="status.codeId">{{ status.codeName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="search-row">
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.businessUnit' | translate }}</mat-label>
+            <mat-select formControlName="buId">
+              <mat-option *ngFor="let item of businessUnitList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'user.role' | translate }}</mat-label>
+            <mat-select formControlName="roleCode">
+              <mat-option *ngFor="let item of roleList" [value]="item.codeId">{{ item.codeName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="search-actions">
+          <button mat-raised-button type="submit" class="btn-search">
+            <mat-icon>search</mat-icon>
+            {{ 'button.search' | translate }}
+          </button>
+          @if(CAN_WRITE()){
+          <button mat-raised-button type="button" class="btn-create" (click)="create()">
+            <mat-icon>add</mat-icon>
+            {{ 'button.create' | translate }}
+          </button>
+          }
+          <button mat-raised-button type="reset" class="btn-cancel" (click)="clear()">
+            {{ 'button.clear' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="table-section">
+      <div class="table-container">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          (matSortChange)="tableControl.onSort($event)"
+          matSort
+          matSortActive="firstName"
+          matSortDirection="asc"
+          matSortDisableClear
+        >
+          <ng-container matColumnDef="userId" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.userId' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+          </ng-container>
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.firstName' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'user.lastName' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="buName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'user.businessUnit' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.buName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="divName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'user.division' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.divName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="roleName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'user.role' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.roleName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="posName">
+            <th mat-header-cell *matHeaderCellDef>{{ 'user.position' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.posName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="useYn">
+            <th mat-header-cell *matHeaderCellDef class="text-center">{{ 'user.active' | translate }}</th>
+            <td mat-cell *matCellDef="let element" class="text-center">
+              @if(element.useYn === 'Y'){
+              <mat-icon style="color: #10b981;">done</mat-icon>
+              }
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="onSelectRow(row)"
+            [ngClass]="{ 'selected-row': selectedRow == row }"
+          ></tr>
+        </table>
+      </div>
+      <mat-paginator
+        (page)="tableControl.onPage($event)"
+        [length]="tableControl.total"
+        [pageSize]="tableControl.pageSize"
+        [pageSizeOptions]="tableControl.pageSizeOptions"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="dialog-footer">
+    <button mat-button mat-dialog-close (click)="onNoClick()" class="btn-cancel">
+      {{ 'button.cancel' | translate }}
+    </button>
+    @if(CAN_WRITE()){
+    <button mat-raised-button class="btn-primary" [mat-dialog-close]="userInfo">
+      {{ 'button.select' | translate }}
+    </button>
+    }
+  </div>
 </div>

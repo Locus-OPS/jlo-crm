@@ -27,114 +27,77 @@ export default class Utils {
     return returnFunc;
   }
 
+  // Modern minimal alert styles
+  static swalCustomClass = {
+    popup: 'swal-modern-popup',
+    title: 'swal-modern-title',
+    htmlContainer: 'swal-modern-content',
+    confirmButton: 'swal-modern-btn swal-modern-btn-primary',
+    cancelButton: 'swal-modern-btn swal-modern-btn-default',
+    actions: 'swal-modern-actions',
+  };
+
   static alertSuccess(options: SweetAlertOptions) {
-    // return new SwalComponent({
-    //   type: 'success',
-    //   confirmButtonClass: 'btn btn-success',
-    //   buttonsStyling: false,
-    //   ...options
-    // }).show();
-
-    // return Swal.fire({
-    //   icon: 'success',
-    //   customClass: 'btn btn-success',
-    //   ...options
-    // });
-
     return Swal.fire({
       icon: 'success',
-      customClass: {
-        confirmButton: 'btn btn-info'
-      },
+      iconColor: '#10b981',
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
       ...options
     });
   }
 
   static confirmDelete() {
-    // return new SwalComponent({
-    //   title: 'Are you sure?',
-    //   text: 'You won\'t be able to revert this!',
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonClass: 'btn btn-success',
-    //   cancelButtonClass: 'btn btn-danger',
-    //   confirmButtonText: 'Yes, delete it!',
-    //   buttonsStyling: false
-    // }).show();
-
     return Swal.fire({
       icon: 'warning',
+      iconColor: '#f59e0b',
       title: 'Are you sure?',
       text: 'You won\'t be able to revert this!',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      didClose: () => {
-        return false;
-      }
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      customClass: this.swalCustomClass,
+      reverseButtons: true,
     });
   }
 
   static confirm(title, content, btnText) {
-    // return new SwalComponent({
-    //   title: title,
-    //   text: content,
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonClass: 'btn btn-success',
-    //   cancelButtonClass: 'btn btn-danger',
-    //   confirmButtonText: btnText,
-    //   buttonsStyling: false
-    // }).show();
-
     return Swal.fire({
-      icon: 'warning',
+      icon: 'question',
+      iconColor: '#337ab7',
       title: title,
       text: content,
       showCancelButton: true,
       confirmButtonText: btnText,
+      cancelButtonText: 'Cancel',
+      confirmButtonColor: '#337ab7',
+      cancelButtonColor: '#6b7280',
+      customClass: this.swalCustomClass,
+      reverseButtons: true,
     });
   }
-  static alertDuplicateError() {
-    // return new SwalComponent({
-    //   type: 'error',
-    //   confirmButtonClass: 'btn btn-info',
-    //   buttonsStyling: false,
-    //   html: this.errorDuplicateMessage
-    // }).show();
 
+  static alertDuplicateError() {
     return Swal.fire({
       icon: 'error',
+      iconColor: '#ef4444',
+      title: 'Duplicate Error',
       html: this.errorDuplicateMessage,
-      showCancelButton: true,
-      didClose: () => {
-        return false;
-      }
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
     });
-
   }
 
   static alertError(options: SweetAlertOptions) {
-    // return new SwalComponent({
-    //   type: 'error',
-    //   confirmButtonClass: 'btn btn-info',
-    //   buttonsStyling: false,
-    //   ...options
-    // }).show();
-
-    // return Swal.fire({
-    //   icon: 'error',
-    //   customClass: 'btn btn-info',
-    //   ...options
-    // });
-
     return Swal.fire({
       icon: 'error',
-      customClass: {
-        confirmButton: 'btn btn-info'
-      },
+      iconColor: '#ef4444',
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
       ...options
     });
-
   }
 
   static assign(target: object, ...sources: object[]) {

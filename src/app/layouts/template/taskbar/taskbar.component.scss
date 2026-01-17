@@ -1,34 +1,76 @@
-$taskbar-open-color: #005ea5;
+// Modern minimal taskbar - matching sidebar style
+$taskbar-bg: #ffffff;
+$taskbar-border: #e5e7eb;
+$taskbar-text: #374151;
+$taskbar-text-secondary: #6b7280;
+$taskbar-brand: #337ab7;
+$taskbar-hover-bg: rgba(51, 122, 183, 0.06);
+$taskbar-active-bg: rgba(51, 122, 183, 0.1);
 
 .taskbar {
   position: fixed;
   bottom: 0;
-  height: 43px;
+  height: 46px;
   width: 100%;
-  background: #004172;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-  z-index: 99999999;
+  background: $taskbar-bg;
+  border-top: 1px solid $taskbar-border;
+  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+
+  .items {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 8px;
+    gap: 4px;
+  }
 
   .item-left {
-    height: 43px;
-    display: inline-block;
-    min-width: 180px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    min-width: 120px;
     vertical-align: middle;
-    line-height: 43px;
     text-align: center;
 
-    .open {
-      background: $taskbar-open-color;
-    }
-
     a {
-      color: white;
-      display: block;
+      color: $taskbar-text;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
-    }
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      border: 1px solid transparent;
 
-    a:hover {
-      background: $taskbar-open-color;
+      i.material-icons {
+        font-size: 18px;
+        color: $taskbar-text-secondary;
+        margin-right: 6px;
+        transition: color 0.15s ease;
+      }
+
+      &:hover {
+        background: $taskbar-hover-bg;
+        border-color: rgba(51, 122, 183, 0.1);
+
+        i.material-icons {
+          color: $taskbar-brand;
+        }
+      }
+
+      &.open {
+        background: $taskbar-active-bg;
+        color: $taskbar-brand;
+        border-color: rgba(51, 122, 183, 0.2);
+
+        i.material-icons {
+          color: $taskbar-brand;
+        }
+      }
     }
   }
 }

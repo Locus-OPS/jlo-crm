@@ -27,6 +27,76 @@ $my-theme: mat.define-theme((color: (theme-type: light,
 
 // @include mat.all-component-themes($alternate-theme);
 
+.tab-context-menu-trigger {
+  position: fixed;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.tab-label-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Tab Context Menu Styling
+.tab-context-menu {
+  &.mat-mdc-menu-panel {
+    min-width: 160px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+
+  .mat-mdc-menu-content {
+    padding: 4px 0;
+  }
+}
+
+.tab-context-menu-item.mat-mdc-menu-item {
+  height: 40px;
+  padding: 0 14px;
+  font-size: 13px;
+  color: #374151;
+  transition: all 0.15s ease;
+
+  .mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    color: #6b7280;
+    transition: color 0.15s ease;
+  }
+
+  &:hover {
+    background-color: #f3f4f6;
+
+    .mat-icon {
+      color: #374151;
+    }
+  }
+
+  &.close-others:hover {
+    background-color: #fef3c7;
+
+    .mat-icon {
+      color: #d97706;
+    }
+  }
+
+  &.close-all:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+
+    .mat-icon {
+      color: #dc2626;
+    }
+  }
+}
+
 .main-tab {
   padding-top: 70px;
   height: 100%;
@@ -35,45 +105,99 @@ $my-theme: mat.define-theme((color: (theme-type: light,
 .main-tab> {
   mat-tab-header {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
-    // border-bottom: 2px solid #1565c0;
-    border-bottom: 2px solid brand.$brand-locus;
+    border-bottom: none;
+    background-color: #e9ecef;
+
+    .mat-mdc-tab-labels {
+      gap: 4px;
+      padding: 4px 4px 0;
+    }
 
     .mat-mdc-tab {
-      // background-color: blue($color: #000000) !important;
-      background-color: color.channel(#000000, 'blue', $space: rgb) !important;
-      //background-color: blue !important;
-      height: 35px;
-      padding: 0 16px;
-      color: #1e1d1d !important;
-      min-width: 140px;
-    }
+      background-color: #f3f4f6 !important;
+      height: 40px;
+      padding: 0 20px;
+      color: #374151 !important;
+      min-width: 120px;
+      border-radius: 6px 6px 0 0;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
 
-    .mat-mdc-tab:hover {
-      background-color: color.adjust(brand.$brand-locus, $lightness: 50%) !important;
-    }
+      .mdc-tab__text-label {
+        color: #374151 !important;
+        transition: color 0.15s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-    .mdc-tab--active {
-      background-color: ghostwhite;
-      opacity: 1;
-
-      .mdc-tab-indicator {
-        top: 0;
-        height: 3px !important;
-        background-color: brand.$brand-locus !important;
+      .tab-label-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
       }
     }
 
-    .mat-icon-button {
+    .mat-mdc-tab:hover:not(.mdc-tab--active) {
+      background-color: rgba(51, 122, 183, 0.08) !important;
+
+      .mdc-tab__text-label {
+        color: brand.$brand-locus !important;
+      }
+    }
+
+    .mdc-tab--active {
+      background-color: #ffffff !important;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+      z-index: 1;
+
+      .mdc-tab__text-label {
+        color: brand.$brand-locus !important;
+        font-weight: 600;
+      }
+
+      .mdc-tab-indicator {
+        top: 0;
+        height: 4px !important;
+
+        .mdc-tab-indicator__content--underline {
+          border-color: brand.$brand-locus !important;
+          border-top-width: 4px !important;
+        }
+      }
+    }
+
+    .mat-icon-button,
+    .close-icon-btn {
       padding: 0;
       min-width: 0;
-      width: 26px;
-      height: 26px;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
-      line-height: 26px;
-      border-radius: 50%;
+      line-height: 20px;
+      border-radius: 4px;
+      margin-left: 8px;
+      background: transparent;
+      transition: background-color 0.15s ease, color 0.15s ease;
 
-      mat-icon {
-        margin-right: -30px;
+      mat-icon,
+      .close-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        color: #6b7280;
+        transition: color 0.15s ease;
+      }
+
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.1);
+
+        mat-icon,
+        .close-icon {
+          color: #ef4444;
+        }
       }
     }
   }

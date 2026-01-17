@@ -1,13 +1,40 @@
-<h1 mat-dialog-title>{{'member.verify.title' | translate}} {{data.name}}</h1>
-<div mat-dialog-content>
-  <p>{{'member.verify.sendto' | translate}} <b>{{data.email}}</b></p>
-  <p>{{'member.verify.reference' | translate}} : <b>{{data.ref}}</b></p>
-  <mat-form-field appearance="outline">
-    <mat-label>Verify Key</mat-label>
-    <input matInput [(ngModel)]="data.key">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button class="btn btn-default" (click)="onNoClick()">{{'button.close' | translate}}</button>
-  <button mat-button class="btn btn-primary" [mat-dialog-close]="data.key" cdkFocusInitial>{{'member.verify.submit' | translate}}</button>
+<div mat-dialog-content class="dialog-content">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>verified_user</mat-icon>
+    </div>
+    <h4 class="header-title">
+      {{ 'member.verify.title' | translate }} <span class="customer-name">{{ data.name }}</span>
+    </h4>
+  </div>
+
+  <!-- Body -->
+  <div class="dialog-body">
+    <div class="info-row">
+      <mat-icon>email</mat-icon>
+      <span>{{ 'member.verify.sendto' | translate }}</span>
+      <strong>{{ data.email }}</strong>
+    </div>
+    <div class="info-row">
+      <mat-icon>tag</mat-icon>
+      <span>{{ 'member.verify.reference' | translate }}:</span>
+      <strong>{{ data.ref }}</strong>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Verify Key</mat-label>
+      <input matInput [(ngModel)]="data.key" />
+    </mat-form-field>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="dialog-footer">
+    <button mat-button (click)="onNoClick()" class="btn-cancel">
+      {{ 'button.close' | translate }}
+    </button>
+    <button mat-raised-button [mat-dialog-close]="data.key" cdkFocusInitial class="btn-verify">
+      {{ 'member.verify.submit' | translate }}
+    </button>
+  </div>
 </div>
