@@ -46,7 +46,7 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
     if (this.username.trim()) {
       this.chatService.connect(this.username);
     } else {
-      alert('Please enter your username!');
+      alert('กรุณากรอกชื่อผู้ใช้!');
     }
   }
 
@@ -70,7 +70,7 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
       this.chatService.sendMessage(`/private ${this.recipient} ${this.newMessage}`);
       this.newMessage = '';
     } else {
-      alert('Please provide a recipient and a message.');
+      alert('กรุณาระบุผู้รับและข้อความ');
     }
   }
 
@@ -79,7 +79,7 @@ export class ChatExampleComponent extends BaseComponent implements OnInit, OnDes
       this.chatService.sendMessage(`/broadcast ${this.broadcastMessage}`);
       this.broadcastMessage = '';
     } else {
-      alert('Please enter a broadcast message.');
+      alert('กรุณากรอกข้อความประกาศ');
     }
   }
 

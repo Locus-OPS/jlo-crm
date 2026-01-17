@@ -169,7 +169,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -212,12 +212,12 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Email Template has been deleted.',
+              text: 'ลบเทมเพลตอีเมลสำเร็จ',
             });
             this.search();
           } else {
             Utils.alertError({
-              text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+              text: 'ไม่สามารถลบเทมเพลตอีเมลได้',
             });
           }
         });
@@ -281,7 +281,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
         if (event.status === 200) {
           const response: ApiResponse<EmailTemplateModel> = <ApiResponse<EmailTemplateModel>>JSON.parse(<string>event.body);
           Utils.alertSuccess({
-            text: 'Email Template has been saved.',
+            text: 'บันทึกเทมเพลตอีเมลสำเร็จ',
           });
 
           this.search();
@@ -291,7 +291,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
           });
         } else {
           Utils.alertError({
-            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+            text: 'ไม่สามารถบันทึกเทมเพลตอีเมลได้',
           });
         }
       }
@@ -321,13 +321,13 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
       } else if (event instanceof HttpResponse) {
         if (event.status === 200) {
           Utils.alertSuccess({
-            title: 'Uploaded!',
-            text: 'Image has been updated.',
+            title: 'อัปโหลดสำเร็จ!',
+            text: 'อัปเดตรูปภาพสำเร็จ',
           });
           console.log(this.emailTemplateService.getImagePath(<string>event.body));
         } else {
           Utils.alertError({
-            text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+            text: 'ไม่สามารถอัปโหลดรูปภาพได้',
           });
           //reject('Upload failed');
         }
@@ -370,8 +370,8 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
               if (event.status === 200) {
 
                 Utils.alertSuccess({
-                  title: 'Uploaded!',
-                  text: 'Image has been updated.',
+                  title: 'อัปโหลดสำเร็จ!',
+                  text: 'อัปเดตรูปภาพสำเร็จ',
                 });
 
                 const pictureUrl = this.emailTemplateService.getImagePath(<string>event.body);
@@ -381,7 +381,7 @@ export class EmailTemplateComponent extends BaseComponent implements OnInit {
 
               } else {
                 Utils.alertError({
-                  text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                  text: 'ไม่สามารถอัปโหลดรูปภาพได้',
                 });
                 reject('Upload failed');
               }

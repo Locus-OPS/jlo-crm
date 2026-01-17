@@ -115,12 +115,12 @@ export class CodebookComponent extends BaseComponent implements OnInit {
         this.total = result.total;
       } else {
         Utils.alertError({
-          text: 'Please try again later.',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -182,13 +182,13 @@ export class CodebookComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          title: 'Updated!',
-          text: 'User has been updated.',
+          title: 'อัปเดตสำเร็จ!',
+          text: 'อัปเดตข้อมูลสำเร็จ',
         });
       } else {
-        let message = 'Please try again later.';
+        let message = 'กรุณาลองใหม่ภายหลัง';
         if (result.message === 'DUPLICATE') {
-          message = 'Duplicate Data, Please check.';
+          message = 'ข้อมูลซ้ำ กรุณาตรวจสอบ';
         }
         Utils.alertError({
           text: message,

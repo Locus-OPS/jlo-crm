@@ -83,7 +83,7 @@ export class EmailInboundDetailComponent extends BaseComponent implements OnInit
           this.createForm.patchValue(result.data);
         }, error => {
           Utils.alertError({
-            text: 'Please try again later.',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         });
     }

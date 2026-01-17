@@ -166,7 +166,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -222,7 +222,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
             });
           } else {
             Utils.alertError({
-              text: "Please try again later.",
+              text: "กรุณาลองใหม่ภายหลัง",
             });
           }
         }

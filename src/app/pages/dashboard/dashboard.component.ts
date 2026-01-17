@@ -345,7 +345,7 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
       this.tableControlAct.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

@@ -70,7 +70,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
     if (userId.trim()) {
       this.chatService.connect(userId);
     } else {
-      alert('Please enter your username!');
+      alert('กรุณากรอกชื่อผู้ใช้!');
     }
   }
 
@@ -100,7 +100,7 @@ export class ChatComponent extends BaseComponent implements OnInit {
       this.newMessage = '';
 
     } else {
-      alert('Please provide a recipient and a message.');
+      alert('กรุณาระบุผู้รับและข้อความ');
     }
   }
 

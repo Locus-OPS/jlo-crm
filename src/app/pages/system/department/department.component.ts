@@ -102,7 +102,7 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -128,7 +128,7 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Department has been deleted.',
+              text: 'ลบแผนกสำเร็จ',
             });
             this.search();
           } else {
@@ -162,7 +162,7 @@ export class DepartmentComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createDeptForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Department has been saved.',
+          text: 'บันทึกแผนกสำเร็จ',
         });
         this.search();
       }

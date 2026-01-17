@@ -54,7 +54,7 @@ export class SchedulerHistoryLogComponent extends BaseComponent implements OnIni
           this.searchSchedulerHistoryLog();
         }, error => {
           Utils.alertError({
-            text: 'Please try again later.',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
           this.router.navigate(["/system/scheduler"]);
         });
@@ -75,7 +75,7 @@ export class SchedulerHistoryLogComponent extends BaseComponent implements OnIni
       this.schedulerHistoryLogTableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -86,7 +86,7 @@ export class SchedulerHistoryLogComponent extends BaseComponent implements OnIni
         this.searchSchedulerHistoryLog();
       }, error => {
         Utils.alertError({
-          text: 'Please try again later.',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
         this.router.navigate(["/system/scheduler"]);
       });

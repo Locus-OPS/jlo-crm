@@ -104,7 +104,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 
@@ -254,7 +254,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
           this.dialogRef.close();
         } else {
           Utils.alertError({
-            text: 'Save failed, please try again later.',
+            text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
           });
         }
       }
@@ -282,12 +282,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
       } else {
         Utils.alertError({
-          text: 'Save failed, please try again later.',
+          text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 
@@ -309,12 +309,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
       } else {
         Utils.alertError({
-          text: 'Save failed, please try again later.',
+          text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 

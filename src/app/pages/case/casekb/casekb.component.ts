@@ -85,14 +85,14 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
         } else {
           console.error(result.message);
           Utils.alertError({
-            text: 'Please try again later.',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         }
       })
       .catch((error) => {
         console.error("Error occurred:", error);
         Utils.alertError({
-          text: 'Please try again later.',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
 
@@ -115,7 +115,7 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onActDelete(element) {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.caseKBservice.deleteRefKB({ data: element }).then((res) => {

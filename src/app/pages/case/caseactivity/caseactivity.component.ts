@@ -129,7 +129,7 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -142,13 +142,13 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Activity has been deleted.',
+              text: 'ลบกิจกรรมสำเร็จ',
             });
             this.search();
 
           } else {
             Utils.alertError({
-              text: 'Activity has not been deleted.',
+              text: 'ไม่สามารถลบกิจกรรมได้',
             });
           }
         });
@@ -195,17 +195,17 @@ export class CaseactivityComponent extends BaseComponent implements OnInit, OnDe
         this.searchForm.patchValue({ caseNumber: result.data.caseNumber });
 
         Utils.alertSuccess({
-          text: 'Activity has been saved.',
+          text: 'บันทึกกิจกรรมสำเร็จ',
         });
         this.search();
       } else {
         Utils.alertError({
-          text: 'Activity has not been saved.',
+          text: 'ไม่สามารถบันทึกกิจกรรมได้',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Activity has not been saved.',
+        text: 'ไม่สามารถบันทึกกิจกรรมได้',
       });
     });
 

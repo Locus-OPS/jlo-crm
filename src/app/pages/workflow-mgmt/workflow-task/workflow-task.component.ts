@@ -88,13 +88,13 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   }
 
   saveWorkflowTask() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowMgmtService.createWorkflowTask({ data: { ...param, workflowId: this.workflowId } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Workflow task has been created." });
+              Utils.alertSuccess({ text: "สร้างงานเวิร์กโฟลว์สำเร็จ" });
               this.onSearch();
               this.initForm();
             } else {
@@ -116,13 +116,13 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
 
   editWorkflowTask() {
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowMgmtService.updateWorkflowTask({ data: param }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Workflow task has been updated." });
+              Utils.alertSuccess({ text: "อัปเดตงานเวิร์กโฟลว์สำเร็จ" });
               this.onSearch();
             } else {
               Utils.alertError({ text: res.message });
@@ -136,12 +136,12 @@ export class WorkflowTaskComponent extends BaseComponent implements OnInit {
   }
 
   onDeleteWorkflowTask(element: any) {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.workflowMgmtService.updateWorkflowTask({ data: { ...element, status: "Cancelled" } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Workflow task has been deleted." });
+              Utils.alertSuccess({ text: "ลบงานเวิร์กโฟลว์สำเร็จ" });
               this.onSearch();
               this.initForm();
             } else {

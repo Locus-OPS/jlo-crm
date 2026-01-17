@@ -211,13 +211,13 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     }
     const params = this.createFormHeader.getRawValue();
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.createHeaderQuestionnaire({ data: params }).then((res) => {
             if (res.status) {
               this.id = res.data.id;
-              Utils.alertSuccess({ text: 'Header questionnaire has been added.' });
+              Utils.alertSuccess({ text: 'เพิ่มแบบสอบถามสำเร็จ' });
 
               let elm: HTMLElement | any = document.querySelector(
                 ".mat-tab-label-active .close-icon"
@@ -251,13 +251,13 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       return;
     }
     const params = this.createFormHeader.getRawValue();
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.updateHeaderQuestionnaire({ data: params }).then((res) => {
             if (res.status) {
               this.createFormHeader.patchValue({ ...res.data });
-              Utils.alertSuccess({ text: "Header questionnaire has been updated." })
+              Utils.alertSuccess({ text: "อัปเดตแบบสอบถามสำเร็จ" })
             } else {
               Utils.alertError({ text: res.message });
             }
@@ -275,7 +275,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
     if (this.createFormHeader.invalid) {
       Utils.alertError({
-        text: 'Please, Select Customer',
+        text: 'กรุณาเลือกลูกค้า',
       });
       return;
     }
@@ -318,13 +318,13 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
         this.created = false;
 
         this.createFormHeader.patchValue(result.data);
-        this.handleSuccess("Questionnaire has been saved.");
+        this.handleSuccess("บันทึกแบบสอบถามสำเร็จ");
       } else {
-        this.handleError("Questionnaire has not been saved.");
+        this.handleError("ไม่สามารถบันทึกแบบสอบถามได้");
 
       }
     }, () => {
-      this.handleError("Please, try again later");
+      this.handleError("กรุณาลองใหม่ภายหลัง");
     });
 
   }
@@ -398,13 +398,13 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       this.createFormQuestion.patchValue({ options: choiceStr });
     }
     const params = this.createFormQuestion.getRawValue();
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.createQuestionnaireQuestion({ data: params }).then((res) => {
             if (res.status) {
               this.getQuestionnaireQuestionList();
-              this.handleSuccess("Questionnaire has been created.");
+              this.handleSuccess("สร้างคำถามสำเร็จ");
 
               this.getHeaderQuestionnaireDetail();
               this.createFormQuestion.reset();
@@ -444,14 +444,14 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     }
 
     const params = this.createFormQuestion.getRawValue();
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.updateQuestionnaireQuestion({ data: params }).then((res) => {
             if (res.status) {
               // this.getQuestionnaireQuestionList();
               this.getHeaderQuestionnaireDetail();
-              this.handleSuccess("Questionnaire has been updated.");
+              this.handleSuccess("อัปเดตคำถามสำเร็จ");
               this.imageSrc = null;
               this.selectedRow.imageUrl = res.data.imageUrl;
             } else {
@@ -469,14 +469,14 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
 
   onDeleteQuestionnaireQuestion(questionnaireQuestion: any) {
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.updateQuestionnaireQuestion({ data: { ...questionnaireQuestion, statusCd: 'N' } }).then((res) => {
             if (res.status) {
               // this.getQuestionnaireQuestionList();
               this.getHeaderQuestionnaireDetail();
-              this.handleSuccess("Questionnaire has been deleted.");
+              this.handleSuccess("ลบคำถามสำเร็จ");
             } else {
               this.handleError(res.message);
             }
@@ -514,7 +514,7 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       data: { headerId: this.id, answerJson: JSON.stringify(this.answerForm.getRawValue()), statusCd: 'Y' }
     }).then((res => {
       if (res.status) {
-        this.handleSuccess("Answer has been submitted.")
+        this.handleSuccess("บันทึกคำตอบสำเร็จ")
       } else {
         this.handleError(res.message);
       }
@@ -541,13 +541,13 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   }
 
   onGenerateLink() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.createSmartLink({ data: { headerId: this.id } }).then((res) => {
             if (res.status) {
               this.getHeaderQuestionnaireDetail();
-              this.handleSuccess("Smart link created successfully.");
+              this.handleSuccess("สร้างลิงก์สำเร็จ");
             } else {
               this.handleError(res.message);
             }
@@ -589,8 +589,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
       } else if (event instanceof HttpResponse) {
         if (event.status === 200) {
           Utils.alertSuccess({
-            title: 'Uploaded!',
-            text: 'Profile image has been updated.',
+            title: 'อัปโหลดสำเร็จ!',
+            text: 'อัปเดตรูปภาพเรียบร้อยแล้ว',
           });
           // this.selectedRow.pictureUrl = <string>event.body;
           this.selectedRow.imageUrl = <string>event.body;

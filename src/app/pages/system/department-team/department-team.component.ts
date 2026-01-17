@@ -121,7 +121,7 @@ export class DepartmentTeamComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -144,7 +144,7 @@ export class DepartmentTeamComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Team has been deleted.',
+              text: 'ลบทีมสำเร็จ',
             });
             this.search();
           } else {
@@ -180,7 +180,7 @@ export class DepartmentTeamComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createDeptTeamForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Team has been saved.',
+          text: 'บันทึกทีมสำเร็จ',
         });
         this.search();
       }

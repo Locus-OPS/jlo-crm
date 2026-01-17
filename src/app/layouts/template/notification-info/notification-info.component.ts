@@ -140,7 +140,7 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
           "/casedetails", { caseNumber: element.caseNumber }
         ]);
       } else {
-        alert('Error');
+        alert('เกิดข้อผิดพลาด');
       }
     });
   }

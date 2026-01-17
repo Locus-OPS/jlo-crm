@@ -49,7 +49,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
     if (userId.trim()) {
       this.chatService.connect(userId);
     } else {
-      alert('Please enter your username!');
+      alert('กรุณากรอกชื่อผู้ใช้!');
     }
   }
 
@@ -148,7 +148,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
 
@@ -158,7 +158,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
               this.sendMessagePrivate(selectedUsers);
               this.dialogRef.close(true);
             } else {
-              alert('Please select at least one user.');
+              alert('กรุณาเลือกผู้ใช้อย่างน้อย 1 คน');
             }
           } else if (this.broadCastForm.get('messageType').value === 'public') {
             const selectedGroups = this.chatGroups.filter(group => group.checked);
@@ -166,7 +166,7 @@ export class BroadcastComponent extends BaseComponent implements OnInit {
               this.sendMessagePublic(selectedGroups);
               this.dialogRef.close(true);
             } else {
-              alert('Please select at least one group.');
+              alert('กรุณาเลือกกลุ่มอย่างน้อย 1 กลุ่ม');
             }
           }
 

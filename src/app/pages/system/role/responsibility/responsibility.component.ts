@@ -138,7 +138,7 @@ export class ResponsibilityComponent extends BaseComponent implements OnInit {
       if (result.status) {
         this.dialogRef.close();
         Utils.alertSuccess({
-          text: 'Responsibilities has been saved.',
+          text: 'บันทึกความรับผิดชอบสำเร็จ',
         });
       } else {
         Utils.alertError({

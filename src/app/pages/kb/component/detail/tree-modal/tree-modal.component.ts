@@ -66,7 +66,7 @@ export class TreeModalComponent implements OnInit {
 
   confirmSelect() {
     if (!this.activeNode) {
-      Utils.alertError({ text: 'Please select a folder.' });
+      Utils.alertError({ text: 'กรุณาเลือกโฟลเดอร์' });
       return;
     }
     this.dialogRef.close(this.activeNode);

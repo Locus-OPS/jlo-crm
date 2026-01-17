@@ -94,13 +94,13 @@ export class QuestionnaireComponent extends BaseComponent implements OnInit {
 
   onDeleteheaderQuestionaire(headerQuestionaire: any) {
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.questionnaireService.updateHeaderQuestionnaire({ data: { ...headerQuestionaire, statusCd: 'N' } }).then((res) => {
             if (res.status) {
               this.search();
-              Utils.alertSuccess({ text: 'Header questionaire has been deleted.' })
+              Utils.alertSuccess({ text: 'ลบแบบสอบถามสำเร็จ' })
             } else {
               Utils.alertError({ text: res.message });
             }

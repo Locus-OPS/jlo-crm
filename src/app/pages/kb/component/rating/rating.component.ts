@@ -80,9 +80,9 @@ export class RatingComponent extends BaseComponent implements OnInit {
         this.rating = res.data.rating;
         this.avgRating = res.data.avgRating;
         this.totalReviewer = res.data.totalReviewer;
-        this.openSnackBar("Updated Rating", "OK");
+        this.openSnackBar("อัปเดตคะแนนแล้ว", "ตกลง");
       } else {
-        this.openSnackBar("Something wrong", "OK");
+        this.openSnackBar("เกิดข้อผิดพลาด", "ตกลง");
       }
     });
   }
