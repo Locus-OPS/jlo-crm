@@ -133,9 +133,11 @@ $my-theme: mat.define-theme((color: (theme-type: light,
 
       .tab-label-text {
         white-space: nowrap;
-        // overflow: hidden;
+        overflow: hidden;
         text-overflow: ellipsis;
         max-width: 150px;
+        line-height: 1.4;
+        padding-bottom: 2px;
       }
     }
 
