@@ -2,15 +2,215 @@
 // Global styles are now in jlo-crm.scss
 
 $brand-color: #337ab7;
+$brand-color-light: rgba(51, 122, 183, 0.1);
+$border-color: #e5e7eb;
+$bg-light: #f8f9fa;
+$text-secondary: #6b7280;
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-// Rating and favorite row alignment
-.row > .col-md-6.pull-right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+// ============================================
+// Main Tab Styles
+// ============================================
+.kb-tabs {
+  ::ng-deep {
+    .mat-mdc-tab-header {
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 20px;
+    }
+
+    .mat-mdc-tab {
+      min-width: 160px;
+      padding: 0 24px;
+      height: 48px;
+      border-radius: 8px 8px 0 0;
+      background: $bg-light;
+      margin-right: 4px;
+      transition: all 0.2s ease;
+
+      &:hover:not(.mdc-tab--active) {
+        background: darken($bg-light, 3%);
+      }
+
+      .mdc-tab__text-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        color: $text-secondary;
+        transition: color 0.2s ease;
+      }
+
+      &.mdc-tab--active {
+        background: #ffffff;
+        border: 1px solid $border-color;
+        border-bottom: 2px solid $brand-color;
+
+        .mdc-tab__text-label {
+          color: $brand-color;
+          font-weight: 600;
+        }
+
+        .tab-icon {
+          color: $brand-color;
+        }
+      }
+
+      .mdc-tab-indicator {
+        display: none;
+      }
+    }
+
+    .tab-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: $text-secondary;
+      transition: color 0.2s ease;
+    }
+  }
 }
 
-// Accordion margin for KB page
-.mat-accordion {
-  margin-top: 16px;
+// Tab content area
+.kb-tab-content {
+  padding-top: 8px;
+}
+
+// ============================================
+// Layout Sections
+// ============================================
+.kb-tree-section {
+  padding-right: 20px;
+  border-right: 1px solid $border-color;
+}
+
+.kb-content-section {
+  padding-left: 24px;
+}
+
+// Actions row (Rating & Favorite)
+.kb-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: $bg-light;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  .rating-wrapper,
+  .favorite-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ============================================
+// Accordion / Expansion Panel Styles
+// ============================================
+.kb-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  ::ng-deep {
+    .mat-expansion-panel {
+      border-radius: 8px !important;
+      border: 1px solid $border-color;
+      box-shadow: $shadow-sm;
+      overflow: hidden;
+      transition: all 0.2s ease;
+
+      &:not(.mat-expanded):hover {
+        border-color: darken($border-color, 10%);
+        box-shadow: $shadow-hover;
+      }
+
+      &.mat-expanded {
+        border-color: $brand-color;
+        box-shadow: $shadow-hover;
+
+        .mat-expansion-panel-header {
+          background: $brand-color-light;
+        }
+
+        .panel-icon {
+          color: $brand-color;
+        }
+      }
+
+      // Remove default margin
+      &:not([class*='mat-elevation-z']) {
+        box-shadow: $shadow-sm;
+      }
+    }
+
+    .mat-expansion-panel-header {
+      height: 52px;
+      padding: 0 20px;
+      font-size: 14px;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: $bg-light !important;
+      }
+
+      .mat-expansion-panel-header-title {
+        align-items: center;
+      }
+    }
+
+    .mat-expansion-panel-body {
+      padding: 16px 20px 20px;
+    }
+
+    .mat-expansion-indicator {
+      margin-left: auto;
+
+      &::after {
+        color: $text-secondary;
+      }
+    }
+  }
+}
+
+// Panel icon styling
+.panel-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  color: $text-secondary;
+  transition: color 0.2s ease;
+}
+
+// Panel title styling
+::ng-deep .mat-panel-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+}
+
+// ============================================
+// Responsive Adjustments
+// ============================================
+@media (max-width: 991px) {
+  .kb-tree-section {
+    border-right: none;
+    border-bottom: 1px solid $border-color;
+    padding-right: 15px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .kb-content-section {
+    padding-left: 15px;
+  }
+
+  .kb-tabs ::ng-deep .mat-mdc-tab {
+    min-width: 140px;
+    padding: 0 16px;
+  }
 }
