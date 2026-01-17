@@ -275,23 +275,39 @@
             <h4 class="card-title">{{ 'member.additionalInfo' | translate }}</h4>
           </div>
           <div class="card-body">
-            <mat-tab-group animationDuration="200ms" mat-stretch-tabs="false" mat-align-tabs="start">
-              <mat-tab label="{{ 'member.address' | translate }}">
+            <mat-tab-group class="detail-tabs" animationDuration="200ms" mat-stretch-tabs="false" mat-align-tabs="start">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">location_on</i>
+                  <span>{{ 'member.address' | translate }}</span>
+                </ng-template>
                 @if(this.customerId != null){
                 <app-customer-address #customerAddress [customerIdParam]="this.customerId"></app-customer-address>
                 }
               </mat-tab>
-              <mat-tab label="{{ 'case.title' | translate }}">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">work</i>
+                  <span>{{ 'case.title' | translate }}</span>
+                </ng-template>
                 @if(this.customerId != null){
                 <app-customer-case #customerCase [customerIdParam]="this.customerId"></app-customer-case>
                 }
               </mat-tab>
-              <mat-tab label="{{ 'contact.history' | translate }}">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">history</i>
+                  <span>{{ 'contact.history' | translate }}</span>
+                </ng-template>
                 @if(this.customerId != null){
                 <app-contact-history-tl #contactHistoryTlComponent [customerIdParam]="this.customerId"></app-contact-history-tl>
                 }
               </mat-tab>
-              <mat-tab label="{{ 'member.changeLog' | translate }}">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">update</i>
+                  <span>{{ 'member.changeLog' | translate }}</span>
+                </ng-template>
                 @if(this.customerId != null){
                 <app-customer-audit-log #customerAuditLogComponent [customerIdParam]="this.customerId"></app-customer-audit-log>
                 }

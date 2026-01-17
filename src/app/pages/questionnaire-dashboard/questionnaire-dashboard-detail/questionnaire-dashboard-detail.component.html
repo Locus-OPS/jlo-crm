@@ -75,8 +75,12 @@
             <div class="row">
               <div class="col-md-12">
                 <!-- Tab Summay / Individual -->
-                <mat-tab-group>
-                  <mat-tab label="Summary">
+                <mat-tab-group class="detail-tabs">
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <i class="material-icons tab-icon">bar_chart</i>
+                      <span>{{ 'questionnaire.summary' | translate }}</span>
+                    </ng-template>
                     <div class="col-md-12">
                       <div *ngFor="let question of questionnaireQuestionList; let i = index">
                         @if(question.componentType === 'text' || question.componentType === 'textarea' || question.componentType === 'date'){
@@ -184,7 +188,11 @@
                       </div>
                     </div>
                   </mat-tab>
-                  <mat-tab label="Individual">
+                  <mat-tab>
+                    <ng-template mat-tab-label>
+                      <i class="material-icons tab-icon">person</i>
+                      <span>{{ 'questionnaire.individual' | translate }}</span>
+                    </ng-template>
                     <div style="padding: 20px">
                       <form [formGroup]="individualSearchForm" (submit)="onGetRepondentList()">
                         <div class="row">

@@ -20,6 +20,7 @@ import { CodebookData } from '../../codebook/codebook.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TableControl } from 'src/app/shared/table-control';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -72,7 +73,8 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
     private _location: Location,
     private appStore: AppStore,
     private spinner: NgxSpinnerService,
-    private el: ElementRef
+    private el: ElementRef,
+    private snackBar: MatSnackBar
   ) {
     super(router, globals);
 
@@ -561,7 +563,11 @@ export class QuestionnaireDetailsComponent extends BaseComponent implements OnIn
   onCopySmartlink() {
     navigator.clipboard.writeText(this.createFormHeader.get('urlLink').value)
       .then(() => {
-        alert(this.createFormHeader.get('urlLink').value);
+        this.snackBar.open('คัดลอก URL เรียบร้อยแล้ว', 'ปิด', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        });
       })
       .catch(err => {
         console.error('Failed to copy text: ', err);

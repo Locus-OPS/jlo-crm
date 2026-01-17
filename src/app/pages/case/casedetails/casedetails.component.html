@@ -247,14 +247,26 @@
             <h4 class="card-title">{{ 'case.detail.header' | translate }}</h4>
           </div>
           <div class="card-body">
-            <mat-tab-group animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
-              <mat-tab label="{{ 'case.activity.tab' | translate }}">
+            <mat-tab-group class="detail-tabs" animationDuration="200ms" [selectedIndex]="selectedTab" mat-stretch-tabs="false" mat-align-tabs="start">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">history</i>
+                  <span>{{ 'case.activity.tab' | translate }}</span>
+                </ng-template>
                 <tab-caseactivity-content [caseNumber]="this.caseNumberParam"></tab-caseactivity-content>
               </mat-tab>
-              <mat-tab label="{{ 'case.attachment.tab' | translate }}">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">attach_file</i>
+                  <span>{{ 'case.attachment.tab' | translate }}</span>
+                </ng-template>
                 <tab-caseatt-content [caseNumber]="this.caseNumberParam"></tab-caseatt-content>
               </mat-tab>
-              <mat-tab label="{{ 'case.kb.tab' | translate }}">
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">menu_book</i>
+                  <span>{{ 'case.kb.tab' | translate }}</span>
+                </ng-template>
                 <tab-casekb-content [caseNumber]="this.caseNumberParam"></tab-casekb-content>
               </mat-tab>
             </mat-tab-group>

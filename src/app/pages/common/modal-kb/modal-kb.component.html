@@ -2,9 +2,13 @@
 <div mat-dialog-content class="flex-container">
   <div class="main-content">
     <div class="container-fluid">
-      <mat-tab-group>
+      <mat-tab-group class="detail-tabs">
         <!-- แท็บ All Content -->
-        <mat-tab label="All Content">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="material-icons tab-icon">folder_open</i>
+            <span>{{ 'content.allContentTab' | translate }}</span>
+          </ng-template>
           <div class="row" style="padding: 10px">
             <div class="col-md-4">
               <kb-tree translatePrefix="content"></kb-tree>
@@ -23,20 +27,19 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
+                      <i class="material-icons panel-icon">info</i>
                       {{ 'content.basicInfoTab' | translate }}
                     </mat-panel-title>
-                    <mat-panel-description> </mat-panel-description>
                   </mat-expansion-panel-header>
                   <modal-kb-detail translatePrefix="content"></modal-kb-detail>
-                  <!-- <kb-detail translatePrefix="content"></kb-detail> -->
                 </mat-expansion-panel>
 
                 <mat-expansion-panel expanded="true">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
+                      <i class="material-icons panel-icon">description</i>
                       {{ 'content.detailInfoTab' | translate }}
                     </mat-panel-title>
-                    <mat-panel-description> </mat-panel-description>
                   </mat-expansion-panel-header>
                   <modal-kb-detail-info translatePrefix="content"></modal-kb-detail-info>
                 </mat-expansion-panel>
@@ -44,18 +47,18 @@
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
+                      <i class="material-icons panel-icon">attach_file</i>
                       {{ 'content.docTab' | translate }}
                     </mat-panel-title>
-                    <mat-panel-description> </mat-panel-description>
                   </mat-expansion-panel-header>
                   <kb-detail-document></kb-detail-document>
                 </mat-expansion-panel>
                 <mat-expansion-panel>
                   <mat-expansion-panel-header>
                     <mat-panel-title>
+                      <i class="material-icons panel-icon">label</i>
                       {{ 'content.keywordTab' | translate }}
                     </mat-panel-title>
-                    <mat-panel-description> </mat-panel-description>
                   </mat-expansion-panel-header>
                   <kb-detail-keyword></kb-detail-keyword>
                 </mat-expansion-panel>
@@ -72,7 +75,11 @@
           </div>
         </mat-tab>
         <!-- แท็บ Search keyword -->
-        <mat-tab label="Search by Keyword">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <i class="material-icons tab-icon">search</i>
+            <span>{{ 'content.searchByKeyword' | translate }}</span>
+          </ng-template>
           <div class="row">
             <div class="col-md-12">
               <kb-detail-search-bykeyword [data]="data" (returnEvent)="close($event)"></kb-detail-search-bykeyword>

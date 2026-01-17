@@ -1,12 +1,39 @@
 .checkbox-container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Ensure the container takes the full height of the parent */
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-mat-form-field {
-  width: 100%;
+// Options section for multichoice questions
+.options-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.options-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.options-input {
+  flex: 1;
+}
+
+.options-list {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  margin-top: 8px;
+
+  .mat-mdc-list-item {
+    height: 36px !important;
+    font-size: 13px;
+  }
 }
 
 .button-container {
