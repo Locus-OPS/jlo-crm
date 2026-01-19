@@ -136,7 +136,7 @@ export class UserComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -206,8 +206,8 @@ export class UserComponent extends BaseComponent implements OnInit {
         });
 
         Utils.alertSuccess({
-          title: 'Updated!',
-          text: 'User has been updated.',
+          title: 'อัปเดตสำเร็จ!',
+          text: 'อัปเดตผู้ใช้สำเร็จ',
         });
       }
     }, error => {
@@ -225,7 +225,7 @@ export class UserComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'User has been deleted.',
+              text: 'ลบผู้ใช้สำเร็จ',
             });
             this.search();
           } else {
@@ -268,8 +268,8 @@ export class UserComponent extends BaseComponent implements OnInit {
       } else if (event instanceof HttpResponse) {
         if (event.status === 200) {
           Utils.alertSuccess({
-            title: 'Uploaded!',
-            text: 'Profile image has been updated.',
+            title: 'อัปโหลดสำเร็จ!',
+            text: 'อัปเดตรูปโปรไฟล์เรียบร้อยแล้ว',
           });
           this.selectedRow.pictureUrl = <string>event.body;
         } else {

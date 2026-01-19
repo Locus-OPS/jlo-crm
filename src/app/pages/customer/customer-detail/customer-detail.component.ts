@@ -183,7 +183,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
           this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.customer', { name: result.data.firstName || result.data.businessName });
         }, error => {
           Utils.alertError({
-            text: 'Please try again later.',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         });
     } else {
@@ -363,17 +363,17 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
             this.verifyPassportNo();
           } else {
             Utils.alertError({
-              text: 'Cannot save this customer becuse citizen id ' + citizenId + " is existed.",
+              text: 'ไม่สามารถบันทึกลูกค้าได้ เนื่องจากเลขบัตรประชาชน ' + citizenId + " มีอยู่ในระบบแล้ว",
             });
           }
         } else {
           Utils.alertError({
-            text: 'Please, try again later',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         }
       }, error => {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
     }
@@ -405,17 +405,17 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
             this.saveCustomer();
           } else {
             Utils.alertError({
-              text: 'Cannot save this customer becuse passport no ' + passportNo + " is existed.",
+              text: 'ไม่สามารถบันทึกลูกค้าได้ เนื่องจากเลขหนังสือเดินทาง ' + passportNo + " มีอยู่ในระบบแล้ว",
             });
           }
         } else {
           Utils.alertError({
-            text: 'Please, try again later',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         }
       }, error => {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
     }
@@ -443,8 +443,8 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       , businessType: !customerType ? this.createForm.controls['businessType'].value : null
     };
 
-    const msgTitle = this.createForm.value.customerId == null ? 'Created!' : 'Updated!';
-    const msgText = this.createForm.value.customerId == null ? 'Customer has been created.!' : 'Customer has been updated.';
+    const msgTitle = this.createForm.value.customerId == null ? 'สร้างสำเร็จ!' : 'อัปเดตสำเร็จ!';
+    const msgText = this.createForm.value.customerId == null ? 'สร้างข้อมูลลูกค้าสำเร็จ' : 'อัปเดตข้อมูลลูกค้าสำเร็จ';
 
     this.customerService.saveCustomer({
       data: param
@@ -464,13 +464,13 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
         this.tabManageService.changeTitle(<number>this.tabParam.index, 'menu.customer', { name: result.data.firstName || result.data.businessName });
       } else {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
       //this.customerComp.search();
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -507,7 +507,7 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
     if (this.customerAddressComponent.addressDS == null || this.customerAddressComponent.addressDS.length == 0) {
       Utils.alertError({
-        text: 'Require Address'
+        text: 'กรุณากรอกที่อยู่'
       });
       return;
     }
@@ -532,13 +532,13 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
 
         } else {
           Utils.alertError({
-            text: 'Please, try again later',
+            text: 'กรุณาลองใหม่ภายหลัง',
           });
         }
         //this.customerComp.search();
       }, error => {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
     } else {
@@ -548,8 +548,8 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
   }
 
   sendUpdateStatus(nextStatus) {
-    const msgTitle = this.createForm.value.customerId == null ? 'Created!' : 'Updated!';
-    const msgText = this.createForm.value.customerId == null ? 'Customer has been created.!' : 'Customer has been updated.';
+    const msgTitle = this.createForm.value.customerId == null ? 'สร้างสำเร็จ!' : 'อัปเดตสำเร็จ!';
+    const msgText = this.createForm.value.customerId == null ? 'สร้างข้อมูลลูกค้าสำเร็จ' : 'อัปเดตข้อมูลลูกค้าสำเร็จ';
     const param = {
       ...this.createForm.value
       , birthDate: Utils.getDateString(this.createForm.value['birthDate'])
@@ -570,13 +570,13 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       } else {
 
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
 
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -615,8 +615,8 @@ export class CustomerDetailComponent extends BaseComponent implements OnInit, On
       } else if (event instanceof HttpResponse) {
         if (event.status === 200) {
           Utils.alertSuccess({
-            title: 'Uploaded!',
-            text: 'Profile image has been updated.',
+            title: 'อัปโหลดสำเร็จ!',
+            text: 'อัปเดตรูปโปรไฟล์เรียบร้อยแล้ว',
           });
 
           this.createForm.get('pictureUrl').setValue(<string>event.body);

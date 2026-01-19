@@ -11,13 +11,12 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { TableControl } from 'src/app/shared/table-control';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
-import { ClusterNode, Edge, Layout } from '@swimlane/ngx-graph';
+import { ClusterNode, Edge, Layout, NgxGraphModule } from '@swimlane/ngx-graph';
 import { clusters, links, nodes } from '../../workflow-mgmt/process-flow/process-flow.model';
-// import { nodes, clusters, links } from 'src/app/pages/workflow-mgmt/process-flow/process-flow.model';
 
 @Component({
     selector: 'app-workflow-tracking-detail',
-    imports: [SharedModule],
+    imports: [SharedModule, NgxGraphModule],
     templateUrl: './workflow-tracking-detail.component.html',
     styleUrl: './workflow-tracking-detail.component.scss'
 })

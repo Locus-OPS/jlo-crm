@@ -96,7 +96,7 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
       }
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -130,12 +130,12 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Internationalization has been deleted.',
+              text: 'ลบการแปลภาษาสำเร็จ',
             });
             this.search();
           } else {
             Utils.alertError({
-              text: 'Internationalization has not been deleted.',
+              text: 'ไม่สามารถลบการแปลภาษาได้',
             });
           }
         });
@@ -190,17 +190,17 @@ export class InternationalizationComponent extends BaseComponent implements OnIn
     }).then(result => {
       if (result.status) {
         Utils.alertSuccess({
-          text: 'Internationalization has been saved.',
+          text: 'บันทึกการแปลภาษาสำเร็จ',
         });
         this.search();
       } else {
         Utils.alertError({
-          text: 'Internationalization has not been saved.',
+          text: 'ไม่สามารถบันทึกการแปลภาษาได้',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Internationalization has not been saved.',
+        text: 'ไม่สามารถบันทึกการแปลภาษาได้',
       });
     });
   }

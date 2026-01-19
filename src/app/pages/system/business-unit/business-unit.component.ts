@@ -92,7 +92,7 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -119,12 +119,12 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Business Unit has been deleted.',
+              text: 'ลบหน่วยธุรกิจสำเร็จ',
             });
             this.search();
           } else {
             Utils.alertError({
-              text: 'Business Unit has not been deleted.',
+              text: 'ไม่สามารถลบหน่วยธุรกิจได้',
             });
           }
         });
@@ -165,17 +165,17 @@ export class BusinessUnitComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Business Unit has been saved.',
+          text: 'บันทึกหน่วยธุรกิจสำเร็จ',
         });
         this.search();
       } else {
         Utils.alertError({
-          text: 'Business Unit has not been saved.',
+          text: 'ไม่สามารถบันทึกหน่วยธุรกิจได้',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Business Unit has not been saved.',
+        text: 'ไม่สามารถบันทึกหน่วยธุรกิจได้',
       });
     });
   }

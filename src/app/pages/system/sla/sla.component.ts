@@ -100,7 +100,7 @@ export class SlaComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -126,7 +126,7 @@ export class SlaComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'SLA has been deleted.',
+              text: 'ลบ SLA สำเร็จ',
             });
             this.search();
           } else {
@@ -157,7 +157,7 @@ export class SlaComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'SLA has been saved.',
+          text: 'บันทึก SLA สำเร็จ',
         });
         this.search();
       }

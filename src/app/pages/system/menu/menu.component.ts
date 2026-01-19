@@ -108,7 +108,7 @@ export class MenuComponent extends BaseComponent implements OnInit {
       }
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -130,12 +130,12 @@ export class MenuComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Menu has been deleted.',
+              text: 'ลบเมนูสำเร็จ',
             });
             this.initTree();
           } else {
             Utils.alertError({
-              text: 'Menu has not been deleted.',
+              text: 'ไม่สามารถลบเมนูได้',
             });
           }
         });
@@ -167,18 +167,18 @@ export class MenuComponent extends BaseComponent implements OnInit {
         this.activeParentId = result.data.parentMenuId;
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Menu has been saved.',
+          text: 'บันทึกเมนูสำเร็จ',
         });
         this.loadParentMenu();
         this.initTree();
       } else {
         Utils.alertError({
-          text: 'Menu has not been saved.',
+          text: 'ไม่สามารถบันทึกเมนูได้',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Menu has not been saved.',
+        text: 'ไม่สามารถบันทึกเมนูได้',
       });
     });
   }

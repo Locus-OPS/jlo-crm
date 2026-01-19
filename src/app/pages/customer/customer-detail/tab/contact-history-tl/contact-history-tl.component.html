@@ -1,37 +1,39 @@
-<div class="main-content">
-  <div class="timeline" *ngIf="this.timeLine.length > 0; else elseTimeLine">
-    <div *ngFor="let element of timeLine; let i = index">
-      <div class="container-tl" [ngClass]="{ left: i % 2 !== 0, right: i % 2 == 0 }">
-        <div class="content-tl">
-          <span class="mat-button-wrapper">
-            @if(element.channelCd == '01'){
-            <mat-icon>call</mat-icon>
-            } @if(element.channelCd == '02'){
-            <mat-icon>mail</mat-icon>
-            } @if(element.channelCd == '03'){
-            <mat-icon>chat</mat-icon>
-            } @if(element.channelCd == '04'){
-            <mat-icon svgIcon="walkin-icon"></mat-icon>
-            } @if(element.channelCd == '05'){
-            <mat-icon svgIcon="line-icon"></mat-icon>
-            } @if(element.channelCd == '06'){
-            <mat-icon svgIcon="fb-icon"></mat-icon>
-            }
-          </span>
-          <p>
-            {{ 'consulting.contact.center.text' | translate }}&nbsp;{{ element.channelName }}
-            <br />
-            {{ 'consulting.title' | translate }}&nbsp;{{ element.title }}
-            <br />
-            {{ 'consulting.startDate' | translate }}&nbsp;{{ element.startDate }} - {{ element.endDate }}
-            <br />
-            {{ 'consulting.header.status' | translate }}&nbsp;{{ element.statusName }}
-            <br />
-            {{ 'consulting.owner' | translate }}&nbsp;{{ element.consOwnerName }}
-          </p>
-        </div>
+<div class="timeline-container" *ngIf="this.timeLine.length > 0; else elseTimeLine">
+  <div class="timeline">
+    <div class="timeline-item" *ngFor="let element of timeLine; let i = index">
+      <div class="timeline-marker" [ngClass]="'channel-' + element.channelCd">
+        @if(element.channelCd == '01'){
+          <mat-icon>call</mat-icon>
+        } @else if(element.channelCd == '02'){
+          <mat-icon>mail</mat-icon>
+        } @else if(element.channelCd == '03'){
+          <mat-icon>chat</mat-icon>
+        } @else if(element.channelCd == '04'){
+          <mat-icon svgIcon="walkin-icon"></mat-icon>
+        } @else if(element.channelCd == '05'){
+          <mat-icon svgIcon="line-icon"></mat-icon>
+        } @else if(element.channelCd == '06'){
+          <mat-icon svgIcon="fb-icon"></mat-icon>
+        } @else {
+          <mat-icon>contact_phone</mat-icon>
+        }
+      </div>
+      <div class="timeline-content">
+        <span class="content-title">{{ element.title || '-' }}</span>
+        <span class="content-sep">·</span>
+        <span class="content-date">{{ element.startDate }}</span>
+        <span class="content-sep">·</span>
+        <span class="content-owner">{{ element.consOwnerName }}</span>
+        <span class="badge" [ngClass]="'channel-' + element.channelCd">{{ element.channelName }}</span>
+        <span class="badge" [ngClass]="element.statusCd === '02' ? 'status-completed' : 'status-active'">{{ element.statusName }}</span>
       </div>
     </div>
   </div>
-  <ng-template #elseTimeLine> No Data Found </ng-template>
 </div>
+
+<ng-template #elseTimeLine>
+  <div class="empty-state">
+    <mat-icon>history</mat-icon>
+    <p>{{ 'common.nodata' | translate }}</p>
+  </div>
+</ng-template>

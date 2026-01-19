@@ -117,12 +117,12 @@ export class SoftphoneComponent implements OnInit {
         }
       } else {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

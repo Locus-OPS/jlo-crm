@@ -87,7 +87,7 @@ export class CustomerSrComponent extends BaseComponent implements OnInit {
       this.srForm.disable();
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

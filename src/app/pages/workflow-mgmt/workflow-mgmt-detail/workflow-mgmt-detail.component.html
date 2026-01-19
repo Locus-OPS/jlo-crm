@@ -77,15 +77,23 @@
       </div>
       <div class="card-body">
         <div class="mat-app-background basic-container">
-          <mat-tab-group animationDuration="200ms" [selectedIndex]="0" mat-stretch-tabs="false" mat-align-tabs="start">
-            <mat-tab label="{{ 'Business Rule' | translate }}">
+          <mat-tab-group class="detail-tabs" animationDuration="200ms" [selectedIndex]="0" mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <i class="material-icons tab-icon">rule</i>
+                <span>{{ 'Business Rule' | translate }}</span>
+              </ng-template>
               <app-workflow-business-rule
                 *ngIf="mode == 'EDIT'"
                 [workflowId]="this.createForm.get('workflowId').value"
                 (ruleIdEmitter)="onRuleIdReceived($event)"
               ></app-workflow-business-rule>
             </mat-tab>
-            <mat-tab label="{{ 'Task' | translate }}">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <i class="material-icons tab-icon">assignment</i>
+                <span>{{ 'Task' | translate }}</span>
+              </ng-template>
               <app-workflow-task *ngIf="mode == 'EDIT'" [workflowId]="this.createForm.get('workflowId').value"></app-workflow-task>
             </mat-tab>
           </mat-tab-group>

@@ -181,7 +181,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Document has been deleted.',
+              text: 'เอกสารถูกลบแล้ว',
             });
             this.search();
           } else {
@@ -222,7 +222,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
       }).then(result => {
         if (result.data) {
           let title = result.data.title;
-          Utils.confirm("Warning", "Save this document as a primary will remove primary flag from \"" + title + "\" document, do you want to save this document?", "Save Document").then(confirm => {
+          Utils.confirm("คำเตือน", "การบันทึกเอกสารนี้เป็นหลักจะยกเลิกสถานะหลักจากเอกสาร \"" + title + "\" คุณต้องการบันทึกเอกสารนี้หรือไม่?", "บันทึกเอกสาร").then(confirm => {
             if (confirm.value) {
               this.save();
             }
@@ -232,7 +232,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
         }
       }, error => {
         Utils.alertError({
-          text: 'Please, try again later - from Tier Service.',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
     } else {
@@ -254,7 +254,7 @@ export class DocumentComponent extends BaseComponent implements OnInit, OnDestro
         if (event.status === 200) {
           const response: ApiResponse<KbDocument> = <ApiResponse<KbDocument>>JSON.parse(<string>event.body);
           Utils.alertSuccess({
-            text: 'Document has been saved.',
+            text: 'บันทึกเอกสารแล้ว',
           });
           this.search();
           this.clearForm();

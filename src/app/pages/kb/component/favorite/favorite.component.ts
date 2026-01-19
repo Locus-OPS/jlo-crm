@@ -68,11 +68,11 @@ export class FavoriteComponent extends BaseComponent implements OnInit {
         if (res.data) {
           if (res.data) {
             this.isLiked = true;
-            this.openSnackBar("Liked", "OK");
+            this.openSnackBar("ถูกใจแล้ว", "ตกลง");
           }
         } else {
           this.isLiked = false;
-          this.openSnackBar("Unlike", "OK");
+          this.openSnackBar("ยกเลิกถูกใจ", "ตกลง");
         }
       }
     });

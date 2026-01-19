@@ -85,7 +85,7 @@ export class KbDetailKeywordComponent extends BaseComponent implements OnInit, O
       }
     }).then(result => {
       Utils.alertSuccess({
-        text: 'Keyword has been saved.',
+        text: 'บันทึกคีย์เวิร์ดสำเร็จ',
       });
     });
   }

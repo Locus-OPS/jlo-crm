@@ -1,60 +1,91 @@
-$taskbar-open-color: #005ea5;
+// Modern minimal task queue panel
+$panel-bg: #ffffff;
+$panel-border: #e5e7eb;
+$panel-brand: #337ab7;
+$panel-text: #374151;
+$panel-text-secondary: #6b7280;
 
 .container {
-  // box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .form-container {
   visibility: hidden;
   position: fixed;
-  bottom: 43px;
-  left: 0px;
-  z-index: 1000000;
+  bottom: 46px;
+  left: 136px;
+  z-index: 1010;
   width: 480px;
   height: 604px;
   padding: 0px;
-  background-color: white;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  border: 3px solid $taskbar-open-color;
+  background-color: $panel-bg;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid $panel-border;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
 }
 
 .form-title {
-  background-color: $taskbar-open-color;
-  color: white;
-  padding-left: 16px;
-  font-size: 18px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: 500;
+  background-color: $panel-bg;
+  color: $panel-text;
+  padding: 0 16px;
+  font-size: 15px;
+  height: 44px;
+  line-height: 44px;
+  font-weight: 600;
+  border-bottom: 1px solid $panel-border;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &::before {
+    content: 'format_list_bulleted';
+    font-family: 'Material Icons';
+    color: $panel-brand;
+    margin-right: 10px;
+    font-size: 20px;
+  }
 }
 
 .close-icon {
-  float: right;
-  margin-top: 6px;
-  margin-right: 8px;
   cursor: pointer;
+  color: $panel-text-secondary;
+  transition: all 0.15s ease;
+  font-size: 20px !important;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin-left: auto;
+
+  &:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
 }
 
 .task-title {
   font-weight: 500;
+  color: $panel-text;
 }
 
 .task-time {
   font-size: 12px;
-  color: #666;
+  color: $panel-text-secondary;
 }
 
 .line-icon {
-  color: green !important;
+  color: #06c755 !important;
 }
 
 .facebook-icon {
-  color: blue !important;
+  color: #1877f2 !important;
 }
 
 .email-icon {
-  color: blue !important;
+  color: $panel-brand !important;
 }
 
 .accept-icon {
@@ -62,17 +93,18 @@ $taskbar-open-color: #005ea5;
 
   mat-icon {
     line-height: 0.4;
+    color: $panel-brand;
   }
 }
 
 .show {
   height: 604px;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   visibility: visible;
 }
 
 .hidden {
   height: 0;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   visibility: hidden;
 }

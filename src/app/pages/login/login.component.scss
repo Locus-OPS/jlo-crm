@@ -1,72 +1,153 @@
-@use 'src/assets/scss/core/variables/brand' as brand;
 @use 'sass:color';
 
-.login {
-  background-color: brand.$brand-locus;
-  background-size: cover;
-  background-position: top center;
+// Brand color
+$brand-locus: #337ab7;
+
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  padding: 20px;
 }
 
-.login-container {
-  background-color: brand.$brand-locus;
-  background-size: cover;
-  background-position: top center;
-  height: 100vh;
+.login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 400px;
 }
 
-.div-logo {
-  background-color: white;
-  padding-top: 9vh;
-  padding-bottom: 5px;
-  box-shadow: 0 3px 2px #091239;
-}
-
-.card-title {
-  color: color.adjust(brand.$brand-locus, $lightness: -10%);
-  margin-top: 15px;
-  font-weight: 600;
+.login-logo {
   text-align: center;
-}
+  margin-bottom: 32px;
 
-.card-login .alert.alert-danger {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  padding-top: 8px;
-  padding-bottom: 10px;
-}
-
-form.form {
-  position: relative;
-  z-index: 10;
-}
-
-.form-control,
-.is-focused .form-control,
-.form-control:invalid {
-  background-image: none;
-}
-
-input.form-control {
-  border-radius: 5px !important;
-  border: 1px solid #ccc;
-  padding-left: 5px;
-  padding-right: 5px;
-  box-shadow: 1px 1px 0px 0px rgb(0 0 0 / 0.1);
-}
-
-.remember-section {
-  margin-top: 10px;
-
-  mat-checkbox {
-    margin-left: 54px;
+  img {
+    max-width: 180px;
+    height: auto;
   }
 }
 
-.login-center-wrapper {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: brand.$brand-locus;
+.login-form {
+  .form-field {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+      background-image: none;
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $brand-locus;
+        box-shadow: 0 0 0 3px rgba($brand-locus, 0.1);
+      }
+
+      &.ng-invalid.ng-touched {
+        border-color: #ef4444;
+      }
+    }
+  }
+}
+
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: $brand-locus;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+
+  &:hover {
+    background: color.adjust($brand-locus, $lightness: -8%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.login-error {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 14px;
+  text-align: center;
+
+  span {
+    display: block;
+  }
+}
+
+.login-footer {
+  margin-top: 32px;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+
+  a {
+    color: $brand-locus;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: color.adjust($brand-locus, $lightness: -10%);
+      text-decoration: underline;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+    border-radius: 12px;
+  }
+
+  .login-logo img {
+    max-width: 150px;
+  }
+
+  .login-form .form-field {
+    margin-bottom: 16px;
+
+    input {
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+  }
+
+  .login-btn {
+    padding: 12px;
+    font-size: 15px;
+  }
 }

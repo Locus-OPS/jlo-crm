@@ -55,10 +55,8 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
     this.getNotificationList();
   }
   ngOnDestroy() {
-    this.navTitleSubscription.unsubscribe();
-
-    // For method 1
-    this.subscription && this.subscription.unsubscribe();
+    this.navTitleSubscription?.unsubscribe();
+    this.subscription?.unsubscribe();
   }
 
   ngOnInit() {
@@ -140,7 +138,7 @@ export class NotificationInfoComponent implements OnInit, OnDestroy {
           "/casedetails", { caseNumber: element.caseNumber }
         ]);
       } else {
-        alert('Error');
+        alert('เกิดข้อผิดพลาด');
       }
     });
   }

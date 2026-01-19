@@ -1,84 +1,60 @@
-<div class="btn-group dropstart">
-
-  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" data-display="static"
-    aria-expanded="false" (click)="onInitConsultInfo();" style="color: white; font-size: medium;">
+<div class="btn-group">
+  <button type="button" class="btn-consulting dropdown-toggle" data-bs-toggle="dropdown"
+    aria-expanded="false" (click)="onInitConsultInfo();">
     <i class="material-icons">support_agent</i>
-    {{'consulting.header.text'|translate}} :
-
+    <span class="btn-text">{{'consulting.header.text'|translate}}:</span>
     @if (!constInfoModel) {
-    <mat-label style="font-size: medium;">{{'consulting.header.available'|translate}} </mat-label>
+      <span class="status-badge available">{{'consulting.header.available'|translate}}</span>
     } @else if (constInfoModel.statusCd == '01') {
-    <mat-label style="font-size: medium;">{{'consulting.header.inprogress'|translate}}</mat-label>
+      <span class="status-badge inprogress">{{'consulting.header.inprogress'|translate}}</span>
     }
-
   </button>
 
-
-  <div class="dropdown-menu dropdown-menu-left" width="200">
-    <div mat-dialog-content class="flex-container">
-      <div class="main-content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">support_agent</i>
-                  </div>
-                  <h4 class="card-title">{{'consulting.header.info' | translate}}</h4>
-                </div>
-                <div class="card-body">
-                  <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
-                    <mat-form-field class="form-group">
-                      <mat-label for="txtConsultingNumber">{{'consulting.header.number'|translate}}</mat-label>
-                      <input matInput formControlName="consultingNumber" class="form-control" id="txtConsultingNumber"
-                        type="text" style="color: blue; font-size: medium;">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-group">
-                      <mat-label for="txtStatus">{{'consulting.header.status'|translate}}</mat-label>
-                      <input matInput formControlName="status" class="form-control" id="txtStatus" type="text" readonly
-                        style="color: blue; font-size: medium;">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-group">
-                      <mat-label for="txtClient">{{'consulting.header.client'|translate}}</mat-label>
-                      <input matInput formControlName="client" class="form-control" id="txtClient" type="text" readonly
-                        style="color: blue; font-size: medium;">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-group">
-                      <mat-label for="ddChannel">{{'consulting.header.channel'|translate}}</mat-label>
-                      <input matInput formControlName="channel" class="form-control" id="txtChannel" type="text"
-                        readonly style="color: blue; font-size: medium;">
-                    </mat-form-field>
-
-                    <mat-form-field class="form-group">
-                      <mat-label for="txtContact">{{'consulting.header.contact'|translate}}</mat-label>
-                      <input matInput formControlName="contact" class="form-control" id="txtContact" type="text"
-                        readonly style="color: blue; font-size: medium;">
-                    </mat-form-field>
-
-                    <div class="text-center">
-                      @if (constInfoModel) {
-                      <button mat-raised-button type="button" class="btn btn-fill btn-rose"
-                        (click)="onStopWalkinConsulting()">{{
-                        'consulting.header.wrapup' | translate }}</button>
-                      } @else {
-                      <button mat-raised-button type="button" class="btn btn-primary"
-                        (click)="onStartWalkinConsulting('04')">{{
-                        'consulting.header.start' | translate }}</button>
-                      }
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="dropdown-menu dropdown-menu-end consulting-dropdown">
+    <div class="dropdown-header">
+      <i class="material-icons">support_agent</i>
+      <span>{{'consulting.header.info' | translate}}</span>
     </div>
+
+    <form class="consulting-form" [formGroup]="consultingForm" novalidate>
+      <div class="form-field">
+        <label>{{'consulting.header.number'|translate}}</label>
+        <input formControlName="consultingNumber" type="text" readonly>
+      </div>
+
+      <div class="form-field">
+        <label>{{'consulting.header.status'|translate}}</label>
+        <input formControlName="status" type="text" readonly>
+      </div>
+
+      <div class="form-field">
+        <label>{{'consulting.header.client'|translate}}</label>
+        <input formControlName="client" type="text" readonly>
+      </div>
+
+      <div class="form-field">
+        <label>{{'consulting.header.channel'|translate}}</label>
+        <input formControlName="channel" type="text" readonly>
+      </div>
+
+      <div class="form-field">
+        <label>{{'consulting.header.contact'|translate}}</label>
+        <input formControlName="contact" type="text" readonly>
+      </div>
+
+      <div class="form-actions">
+        @if (constInfoModel) {
+          <button type="button" class="btn-wrapup" (click)="onStopWalkinConsulting()">
+            <i class="material-icons">stop_circle</i>
+            {{ 'consulting.header.wrapup' | translate }}
+          </button>
+        } @else {
+          <button type="button" class="btn-start" (click)="onStartWalkinConsulting('04')">
+            <i class="material-icons">play_circle</i>
+            {{ 'consulting.header.start' | translate }}
+          </button>
+        }
+      </div>
+    </form>
   </div>
-
-
 </div>

@@ -1,10 +1,56 @@
-/* star-rating.component.css */
-.star-rating {
-  font-size: 2em; /* ขนาดของดาว */
-  color: lightgray; /* สีดาวเมื่อไม่ได้เลือก */
-  cursor: pointer;
+// Modern minimal KB rating styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$star-color: #f59e0b;
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
 }
 
-.star.filled {
-  color: gold; /* สีดาวเมื่อถูกเลือก */
+// Star rating
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  font-size: 1.5em;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+
+  &:hover {
+    color: rgba($star-color, 0.6);
+    transform: scale(1.1);
+  }
+
+  &.filled {
+    color: $star-color;
+
+    &:hover {
+      color: darken($star-color, 10%);
+    }
+  }
+}
+
+// Info text
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  color: $text-secondary;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  strong {
+    font-weight: 500;
+    color: $text-primary;
+  }
 }

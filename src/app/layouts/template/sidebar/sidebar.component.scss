@@ -1,9 +1,158 @@
 @use 'src/assets/scss/core/variables' as *;
+@use 'src/assets/scss/core/variables/brand' as brand;
 
+// Modern Minimal Sidebar Styling
 .sidebar-wrapper {
   height: calc(100vh - 98px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
 }
 
 .sidebar-wrapper .nav {
   margin-left: 5px;
+}
+
+// Logo Section - Clean centered look
+.logo {
+  padding: 20px 15px 16px;
+  height: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .simple-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .logo-img {
+    width: 100% !important;
+    max-height: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      background: transparent !important;
+      border-radius: 6px;
+      padding: 0 !important;
+      box-shadow: none;
+
+      // Main logo (Locus)
+      &:not(.logo-mini) {
+        width: 120px !important;
+        display: block;
+      }
+
+      // Mini logo (NTT) - hidden by default
+      &.logo-mini {
+        display: none !important;
+        width: 36px !important;
+      }
+    }
+  }
+
+  &:after {
+    background-color: #e5e7eb !important;
+  }
+}
+
+// Sidebar Mini Mode - Logo handling
+:host-context(.sidebar-mini) {
+  .logo {
+    padding: 16px 10px;
+
+    .logo-img img {
+      // Hide main logo in mini mode
+      &:not(.logo-mini) {
+        display: none !important;
+      }
+
+      // Show mini logo in mini mode
+      &.logo-mini {
+        display: block !important;
+        width: 36px !important;
+      }
+    }
+  }
+
+  // When hovering sidebar in mini mode, show full logo
+  &:hover .logo {
+    .logo-img img {
+      &:not(.logo-mini) {
+        display: block !important;
+      }
+
+      &.logo-mini {
+        display: none !important;
+      }
+    }
+  }
+}
+
+// User Section - Minimal shadow and clean typography
+:host ::ng-deep .user {
+  padding: 16px 0 20px;
+
+  .photo {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08) !important;
+    border: 2px solid #f3f4f6;
+    margin-left: 20px;
+  }
+
+  .user-info {
+    > a {
+      font-weight: 500;
+      font-size: 14px;
+      color: #374151;
+
+      > span {
+        font-size: 12px;
+        color: #6b7280;
+        font-weight: 400;
+      }
+    }
+  }
+
+  &:after {
+    background-color: #e5e7eb !important;
+  }
+}
+
+// Navigation Items - Fix text alignment for 2-line menu names
+:host ::ng-deep .nav {
+  // Main menu item link - use flexbox for proper alignment
+  > li > a {
+    display: flex !important;
+    align-items: flex-start;
+
+    i.material-icons {
+      flex-shrink: 0;
+    }
+
+    p {
+      flex: 1;
+      margin-left: 0;
+    }
+  }
 }

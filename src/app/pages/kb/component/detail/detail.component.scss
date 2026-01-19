@@ -1,3 +1,67 @@
-// .no-label {
-//   margin-top: 15px;
-// }
+// Modern minimal KB detail styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+// Form layout
+:host {
+  display: block;
+}
+
+.row {
+  margin-bottom: 8px;
+}
+
+// Checkbox alignment
+.no-label {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding-top: 8px;
+
+  ::ng-deep {
+    .mat-mdc-checkbox {
+      .mdc-checkbox {
+        padding: 0;
+      }
+
+      .mdc-checkbox__background {
+        border-color: $text-secondary;
+      }
+
+      &.mat-mdc-checkbox-checked .mdc-checkbox__background {
+        background-color: $brand-color !important;
+        border-color: $brand-color !important;
+      }
+
+      .mdc-label {
+        color: $text-primary;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Button row styling
+.d-flex.justify-content-end {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid $border-color;
+}
+
+// Folder open button
+::ng-deep {
+  button[matSuffix] {
+    mat-icon {
+      color: $brand-color;
+    }
+
+    &:hover {
+      mat-icon {
+        color: darken($brand-color, 10%);
+      }
+    }
+  }
+}

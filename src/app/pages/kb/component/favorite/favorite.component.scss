@@ -1,17 +1,49 @@
-.heart-icon {
-  font-size: 2em; /* ปรับขนาดของไอคอน */
-  color: lightgray; /* สีเริ่มต้น */
+// Modern minimal favorite/like button styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$heart-color: #ef4444;
+
+:host {
+  display: inline-block;
+}
+
+.favorite {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
-  margin: 0; /* กำจัด margin เพื่อไม่ให้เกิดช่องว่าง */
-  padding: 0; /* กำจัด padding */
-  transition: color 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba($heart-color, 0.08);
+  }
 }
 
-.heart-icon.liked {
-  color: red; /* สีหัวใจเมื่อกด Like */
+.heart-icon {
+  font-size: 1.25em;
+  color: #d1d5db;
+  line-height: 1;
+  transition: all 0.2s ease;
+
+  &.liked {
+    color: $heart-color;
+  }
+
+  .favorite:hover & {
+    transform: scale(1.1);
+  }
 }
 
-p {
-  margin: 0; /* กำจัด margin เพื่อให้บรรทัดชิดกัน */
-  padding: 0; /* กำจัด padding */
+.like-text {
+  font-size: 13px;
+  color: $text-secondary;
+  font-weight: 500;
+  user-select: none;
+
+  .favorite:hover & {
+    color: $heart-color;
+  }
 }

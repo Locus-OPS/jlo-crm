@@ -86,7 +86,7 @@ export class KeywordComponent extends BaseComponent implements OnInit, OnDestroy
       }
     }).then(result => {
       Utils.alertSuccess({
-        text: 'Keyword has been saved.',
+        text: 'บันทึกคีย์เวิร์ดสำเร็จ',
       });
     });
   }

@@ -2,20 +2,54 @@
 @use "sass:math";
 @use "sass:color";
 @use "sass:meta";
+@use "src/assets/scss/core/variables/brand" as brand;
 @import "../core/navbar";
 
 .navbar{
   .navbar-minimize{
     padding: 3px 0 0 15px;
+
+    // Modern minimal button style
+    .btn.btn-white {
+      background-color: #ffffff !important;
+      border: 1px solid #e5e7eb !important;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+      transition: all 0.15s ease;
+
+      &:hover {
+        background-color: #f9fafb !important;
+        border-color: #d1d5db !important;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .material-icons {
+        color: #6b7280 !important;
+        font-size: 20px;
+      }
+
+      &:hover .material-icons {
+        color: brand.$brand-locus !important;
+      }
+    }
   }
 
   &.navbar-transparent{
     padding-top: 10px;
+    background-color: transparent !important;
   }
 
   &.fixed-top{
     position: fixed !important;
   }
+
+  // Modern minimal navbar brand (page title)
+  .navbar-brand {
+    color: #374151 !important;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+
   .collapse{
     .navbar-nav{
       .nav-item .nav-link{

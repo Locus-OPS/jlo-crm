@@ -70,14 +70,14 @@ export class WorkflowSystemDetailComponent extends BaseComponent implements OnIn
   }
 
   createWfsystem() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowSystemService.createWfSystem({ data: param }).then((res) => {
             if (res.status) {
               this.createForm.patchValue({ ...res.data });
-              Utils.alertSuccess({ text: "Workflow system has been created." });
+              Utils.alertSuccess({ text: "สร้างระบบเวิร์กโฟลว์สำเร็จ" });
               this.mode = 'EDIT';
             } else {
               Utils.alertError({ text: res.message });
@@ -90,14 +90,14 @@ export class WorkflowSystemDetailComponent extends BaseComponent implements OnIn
   }
 
   updateWfsystem() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowSystemService.updateWfSystem({ data: param }).then((res) => {
             if (res.status) {
               this.createForm.patchValue({ ...res.data });
-              Utils.alertSuccess({ text: "Workflow system has been updated." });
+              Utils.alertSuccess({ text: "อัปเดตระบบเวิร์กโฟลว์สำเร็จ" });
               this.mode = 'EDIT';
             } else {
               Utils.alertError({ text: res.message });
@@ -110,14 +110,14 @@ export class WorkflowSystemDetailComponent extends BaseComponent implements OnIn
   }
 
   inActiveWfSystem() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowSystemService.updateWfSystem({ data: { ...param, isActive: 'Inactive' } }).then((res) => {
             if (res.status) {
               this.createForm.patchValue({ ...res.data });
-              Utils.alertSuccess({ text: "Workflow system has been Inactivated." });
+              Utils.alertSuccess({ text: "ปิดใช้งานระบบเวิร์กโฟลว์สำเร็จ" });
               this.mode = 'EDIT';
             } else {
               Utils.alertError({ text: res.message });

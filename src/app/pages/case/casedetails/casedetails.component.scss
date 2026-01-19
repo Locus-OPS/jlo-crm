@@ -3,3 +3,17 @@
     top: 8px;
     right: 15px;
 }
+
+// Tab Content Wrapper
+// .tab-content-wrapper {
+//     padding: 20px 0;
+// }
+
+// Detail Tabs styling
+.detail-tabs {
+    ::ng-deep {
+        .mat-mdc-tab-body-content {
+            padding: 0;
+        }
+    }
+}

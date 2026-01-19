@@ -98,7 +98,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
           buId: this.selectedRow.buId.toString()
         });
         Utils.alertSuccess({
-          text: 'Role has been saved.',
+          text: 'บันทึกบทบาทสำเร็จ',
         });
         this.search();
       }
@@ -117,7 +117,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Role has been deleted.',
+              text: 'ลบบทบาทสำเร็จ',
             });
             this.search();
           } else {
@@ -157,7 +157,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

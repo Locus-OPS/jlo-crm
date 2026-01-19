@@ -16,6 +16,9 @@ export class Globals {
   profile: Profile;
   menuItems: any[];
 
+  // Flag to prevent individual spinners during initial tab loading
+  isInitialTabLoading = false;
+
   constructor(
     private jwtHelper: JwtHelperService,
     private translate: TranslateService,
@@ -96,6 +99,8 @@ export class Globals {
 
   clear() {
     sessionStorage.clear();
+    this.profile = null;
+    this.menuItems = null;
   }
 
 }

@@ -1,20 +1,37 @@
-<!-- <button class="close" mat-button [mat-dialog-close]="true">X</button> -->
-<h2 mat-dialog-title>File Description</h2>
-<mat-dialog-content class="mat-typography">
-  <p>Type: {{ fileType }}</p>
-
-  @if(fileUrl){
-  <div>
-    <iframe style="border: 0" width="80%" height="100%" [src]="fileUrl"> </iframe>
+<div mat-dialog-content class="dialog-content">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="header-icon">
+      <mat-icon>description</mat-icon>
+    </div>
+    <h4 class="header-title">File Preview</h4>
+    <button type="button" class="dialog-close" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
-  } @if(!fileUrl){
-  <div width="90%" height="100%">
-    {{ fileName }}
-    <a [href]="downloadfileUrl" [download]="fileName">DownloadFile</a>
-  </div>
-  }
-</mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Close</button>
-</mat-dialog-actions>
+  <!-- File Info -->
+  <div class="file-info">
+    <span class="file-type">Type: <strong>{{ fileType }}</strong></span>
+  </div>
+
+  <!-- Preview Content -->
+  <div class="preview-container">
+    @if(fileUrl){
+    <iframe [src]="fileUrl"></iframe>
+    } @else {
+    <div class="download-section">
+      <span class="file-name">{{ fileName }}</span>
+      <a [href]="downloadfileUrl" [download]="fileName" class="download-link">
+        <mat-icon>download</mat-icon>
+        Download File
+      </a>
+    </div>
+    }
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="dialog-footer">
+    <button mat-button mat-dialog-close class="btn-close">Close</button>
+  </div>
+</div>

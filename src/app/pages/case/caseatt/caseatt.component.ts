@@ -138,7 +138,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
       this.tableControl.total = result.total;
     }, () => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -164,13 +164,13 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Attachment has been deleted.',
+              text: 'ลบไฟล์แนบสำเร็จ',
             });
             this.search();
 
           } else {
             Utils.alertError({
-              text: 'Attachment has not been deleted.',
+              text: 'ไม่สามารถลบไฟล์แนบได้',
             });
           }
         });
@@ -264,7 +264,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
         if (event.status === 200) {
           const response: ApiResponse<Caseatt> = <ApiResponse<Caseatt>>JSON.parse(<string>event.body);
           Utils.alertSuccess({
-            text: 'Attachment has been saved.',
+            text: 'บันทึกไฟล์แนบสำเร็จ',
           });
 
           this.search();
@@ -285,7 +285,7 @@ export class CaseattComponent extends BaseComponent implements OnInit, OnDestroy
             if (event.status === 200) {
               const response: ApiResponse<Caseatt> = <ApiResponse<Caseatt>>JSON.parse(<string>event.body);
               Utils.alertSuccess({
-                text: 'Attachment has been saved.',
+                text: 'บันทึกไฟล์แนบสำเร็จ',
               });
 
               this.search();

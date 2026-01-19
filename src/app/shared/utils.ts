@@ -5,7 +5,7 @@ import { ApiResponse } from '../model/api-response.model';
 import * as _ from "lodash";
 
 export default class Utils {
-  static errorDuplicateMessage = 'There is duplicate information. <br/> Please recheck before proceeding.';
+  static errorDuplicateMessage = 'พบข้อมูลซ้ำ <br/> กรุณาตรวจสอบก่อนดำเนินการ';
 
   static asyncDebounce(func, wait) {
     const debounced = _.debounce(async (resolve, reject, bindSelf, args) => {
@@ -27,114 +27,77 @@ export default class Utils {
     return returnFunc;
   }
 
+  // Modern minimal alert styles
+  static swalCustomClass = {
+    popup: 'swal-modern-popup',
+    title: 'swal-modern-title',
+    htmlContainer: 'swal-modern-content',
+    confirmButton: 'swal-modern-btn swal-modern-btn-primary',
+    cancelButton: 'swal-modern-btn swal-modern-btn-default',
+    actions: 'swal-modern-actions',
+  };
+
   static alertSuccess(options: SweetAlertOptions) {
-    // return new SwalComponent({
-    //   type: 'success',
-    //   confirmButtonClass: 'btn btn-success',
-    //   buttonsStyling: false,
-    //   ...options
-    // }).show();
-
-    // return Swal.fire({
-    //   icon: 'success',
-    //   customClass: 'btn btn-success',
-    //   ...options
-    // });
-
     return Swal.fire({
       icon: 'success',
-      customClass: {
-        confirmButton: 'btn btn-info'
-      },
+      iconColor: '#10b981',
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
       ...options
     });
   }
 
   static confirmDelete() {
-    // return new SwalComponent({
-    //   title: 'Are you sure?',
-    //   text: 'You won\'t be able to revert this!',
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonClass: 'btn btn-success',
-    //   cancelButtonClass: 'btn btn-danger',
-    //   confirmButtonText: 'Yes, delete it!',
-    //   buttonsStyling: false
-    // }).show();
-
     return Swal.fire({
       icon: 'warning',
-      title: 'Are you sure?',
-      text: 'You won\'t be able to revert this!',
+      iconColor: '#f59e0b',
+      title: 'ยืนยันการลบ?',
+      text: 'คุณจะไม่สามารถกู้คืนข้อมูลนี้ได้!',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      didClose: () => {
-        return false;
-      }
+      confirmButtonText: 'ใช่, ลบเลย!',
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonColor: '#ef4444',
+      cancelButtonColor: '#6b7280',
+      customClass: this.swalCustomClass,
+      reverseButtons: true,
     });
   }
 
   static confirm(title, content, btnText) {
-    // return new SwalComponent({
-    //   title: title,
-    //   text: content,
-    //   type: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonClass: 'btn btn-success',
-    //   cancelButtonClass: 'btn btn-danger',
-    //   confirmButtonText: btnText,
-    //   buttonsStyling: false
-    // }).show();
-
     return Swal.fire({
-      icon: 'warning',
+      icon: 'question',
+      iconColor: '#337ab7',
       title: title,
       text: content,
       showCancelButton: true,
       confirmButtonText: btnText,
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonColor: '#337ab7',
+      cancelButtonColor: '#6b7280',
+      customClass: this.swalCustomClass,
+      reverseButtons: true,
     });
   }
-  static alertDuplicateError() {
-    // return new SwalComponent({
-    //   type: 'error',
-    //   confirmButtonClass: 'btn btn-info',
-    //   buttonsStyling: false,
-    //   html: this.errorDuplicateMessage
-    // }).show();
 
+  static alertDuplicateError() {
     return Swal.fire({
       icon: 'error',
+      iconColor: '#ef4444',
+      title: 'ข้อมูลซ้ำ',
       html: this.errorDuplicateMessage,
-      showCancelButton: true,
-      didClose: () => {
-        return false;
-      }
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
     });
-
   }
 
   static alertError(options: SweetAlertOptions) {
-    // return new SwalComponent({
-    //   type: 'error',
-    //   confirmButtonClass: 'btn btn-info',
-    //   buttonsStyling: false,
-    //   ...options
-    // }).show();
-
-    // return Swal.fire({
-    //   icon: 'error',
-    //   customClass: 'btn btn-info',
-    //   ...options
-    // });
-
     return Swal.fire({
       icon: 'error',
-      customClass: {
-        confirmButton: 'btn btn-info'
-      },
+      iconColor: '#ef4444',
+      confirmButtonColor: '#337ab7',
+      customClass: this.swalCustomClass,
       ...options
     });
-
   }
 
   static assign(target: object, ...sources: object[]) {
@@ -214,7 +177,7 @@ export default class Utils {
 
     if (result > 0) {
       this.alertError({
-        text: 'Start date must be before end date.',
+        text: 'วันที่เริ่มต้นต้องอยู่ก่อนวันที่สิ้นสุด',
       });
       return false;
     } else {
@@ -258,15 +221,15 @@ export default class Utils {
   static showError(obj1, obj2) {
     if (obj1 !== null) {
       this.alertError({
-        text: `There is a logical problem.
-        errorCode : ${obj1.errorCode}
-        message : ${obj1.message}`,
+        text: `เกิดข้อผิดพลาด
+        รหัสข้อผิดพลาด : ${obj1.errorCode}
+        ข้อความ : ${obj1.message}`,
       });
     } else {
       this.alertError({
-        text: `There is a problem in the server, please, try later.
-        errorCode : ${obj2.errorCode}
-        message : ${obj2.message}`,
+        text: `เกิดปัญหาที่เซิร์ฟเวอร์ กรุณาลองใหม่ภายหลัง
+        รหัสข้อผิดพลาด : ${obj2.errorCode}
+        ข้อความ : ${obj2.message}`,
       });
     }
   }
@@ -284,15 +247,15 @@ export default class Utils {
     let msgText = null;
 
     if (!isDeleted) {
-      msgTitle = isCreated ? 'Created!' : 'Updated!';
-      msgText = isCreated ? `${objName} has been created.!` : `${objName} has been updated.`;
+      msgTitle = isCreated ? 'สร้างสำเร็จ!' : 'อัปเดตสำเร็จ!';
+      msgText = isCreated ? `${objName} ถูกสร้างแล้ว` : `${objName} ถูกอัปเดตแล้ว`;
       this.alertSuccess({
         title: msgTitle,
         text: msgText,
       });
     } else {
-      msgTitle = 'Deleted';
-      msgText = `${objName} has been deleted.!`;
+      msgTitle = 'ลบสำเร็จ';
+      msgText = `${objName} ถูกลบแล้ว`;
       this.alertSuccess({
         title: msgTitle,
         text: msgText,
@@ -302,7 +265,7 @@ export default class Utils {
 
   static showUploadSuccess(result: ApiResponse<any>, uploadTarget?: string) {
 
-    let msgTitle = 'Product Upload';
+    let msgTitle = 'อัปโหลดข้อมูล';
 
     if (uploadTarget !== null || uploadTarget !== undefined) {
       msgTitle = uploadTarget;
@@ -312,8 +275,7 @@ export default class Utils {
     const msgSuccess = result.data.success;
     const msgTotalRecord = result.data.totalRecord;
 
-    const msgText = `Summary -
-                    Total Record : ${msgTotalRecord}, Success : ${msgSuccess}, Error : ${msgError}`;
+    const msgText = `สรุป - ทั้งหมด : ${msgTotalRecord}, สำเร็จ : ${msgSuccess}, ผิดพลาด : ${msgError}`;
 
     this.alertSuccess({
       title: msgTitle,
@@ -323,14 +285,13 @@ export default class Utils {
 
   static showUploadError(result: ApiResponse<any>) {
 
-    const msgTitle = 'Product Upload';
+    const msgTitle = 'อัปโหลดข้อมูล';
 
     const msgError = result.data.error;
     const msgSuccess = result.data.success;
     const msgTotalRecord = result.data.totalRecord;
 
-    const msgText = `Summary -
-                    Total Record : ${msgTotalRecord}, Success : ${msgSuccess}, Error : ${msgError}`;
+    const msgText = `สรุป - ทั้งหมด : ${msgTotalRecord}, สำเร็จ : ${msgSuccess}, ผิดพลาด : ${msgError}`;
 
     this.alertSuccess({
       title: msgTitle,
@@ -363,7 +324,7 @@ export default class Utils {
         }
         else {
           this.alertError({
-            text: 'Citizen ID is not compliant with the rules.',
+            text: 'เลขบัตรประชาชนไม่ถูกต้อง',
           });
           return false;
         }
@@ -371,7 +332,7 @@ export default class Utils {
     }
     else {
       this.alertError({
-        text: 'Please specify a 13 digit ID citizen ID.',
+        text: 'กรุณาระบุเลขบัตรประชาชน 13 หลัก',
       });
       return false;
     }

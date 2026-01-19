@@ -1,0 +1,67 @@
+// Modern minimal KB keyword styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+:host {
+  display: block;
+
+  // Chip grid form field - scoped to this component only
+  ::ng-deep .mat-mdc-form-field {
+    width: 100%;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-chip-grid {
+    .mat-mdc-chip {
+      background: rgba($brand-color, 0.1) !important;
+      color: $brand-color !important;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 500;
+      height: 28px;
+
+      &:hover {
+        background: rgba($brand-color, 0.15) !important;
+      }
+
+      .mat-mdc-chip-action-label {
+        color: $brand-color;
+      }
+
+      // Remove icon
+      mat-icon[matChipRemove] {
+        color: $brand-color;
+        opacity: 0.7;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    input {
+      color: $text-primary;
+      font-size: 14px;
+
+      &::placeholder {
+        color: $text-secondary;
+      }
+    }
+  }
+}
+
+// Button row
+.pull-right {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid $border-color;
+  display: flex;
+  justify-content: flex-end;
+}

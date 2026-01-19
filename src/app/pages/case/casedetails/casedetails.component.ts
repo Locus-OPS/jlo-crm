@@ -387,7 +387,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
     if (this.customerForm.invalid) {
       Utils.alertError({
-        text: 'Please, Select Customer',
+        text: 'กรุณาเลือกลูกค้า',
       });
       return;
     }
@@ -444,7 +444,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
         this.customerForm.patchValue(result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Case has been saved.',
+          text: 'บันทึกเคสสำเร็จ',
         });
 
 
@@ -467,12 +467,12 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
 
       } else {
         Utils.alertError({
-          text: 'Case has not been saved.',
+          text: 'ไม่สามารถบันทึกเคสได้',
         });
       }
     }, () => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -502,7 +502,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
       }
     }, () => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -628,7 +628,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
             });
           } else {
             Utils.alertError({
-              text: "Please try again later.",
+              text: "กรุณาลองใหม่ภายหลัง",
             });
           }
         }
@@ -661,7 +661,7 @@ export class CasedetailsComponent extends BaseComponent implements OnInit, OnDes
     if (this.customerForm.invalid) {
 
       Utils.alertError({
-        text: 'Please, Select Customer',
+        text: 'กรุณาเลือกลูกค้า',
       });
       return;
     }
