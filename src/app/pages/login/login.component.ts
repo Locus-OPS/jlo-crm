@@ -7,8 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TabManageService } from 'src/app/layouts/admin/tab-manage.service';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 
-declare var $: any;
-
 @Component({
     selector: 'app-login-cmp',
     templateUrl: './login.component.html',

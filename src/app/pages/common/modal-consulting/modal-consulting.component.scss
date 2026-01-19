@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal modal consulting styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -230,7 +232,7 @@ textarea.mat-mdc-input-element {
   transition: all 0.15s ease !important;
 
   &:hover {
-    background: darken($brand-color, 8%) !important;
+    background: color.adjust($brand-color, $lightness: -8%) !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
   }
 }

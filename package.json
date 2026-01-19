@@ -54,7 +54,6 @@
     "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
     "file-saver": "^2.0.5",
-    "jquery": "^3.5.1",
     "moment": "^2.24.0",
     "ng-keyboard-shortcuts": "^13.0.8",
     "ngx-mat-select-search": "^8.0.4",

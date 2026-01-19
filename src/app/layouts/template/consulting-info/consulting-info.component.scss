@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal consulting styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -167,7 +169,7 @@ $warning-color: #f59e0b;
       color: #ffffff;
 
       &:hover {
-        background: darken($brand-color, 8%);
+        background: color.adjust($brand-color, $lightness: -8%);
         box-shadow: 0 4px 6px -1px rgba($brand-color, 0.3);
       }
     }
@@ -177,7 +179,7 @@ $warning-color: #f59e0b;
       color: #ffffff;
 
       &:hover {
-        background: darken(#ef4444, 8%);
+        background: color.adjust(#ef4444, $lightness: -8%);
         box-shadow: 0 4px 6px -1px rgba(#ef4444, 0.3);
       }
     }

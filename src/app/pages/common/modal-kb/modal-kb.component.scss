@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal modal styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -321,7 +323,7 @@ $content-height: calc(85vh - 140px); // Total height minus header and footer
   }
 
   &:hover {
-    background: darken($brand-color, 8%) !important;
+    background: color.adjust($brand-color, $lightness: -8%) !important;
   }
 }
 

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Login log content styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -122,7 +124,7 @@ $bg-light: #f9fafb;
   }
 
   &:hover {
-    background: darken(#ec4899, 8%) !important;
+    background: color.adjust(#ec4899, $lightness: -8%) !important;
   }
 }
 

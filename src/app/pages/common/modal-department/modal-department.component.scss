@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal modal styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -224,7 +226,7 @@ $bg-light: #f9fafb;
   transition: all 0.15s ease !important;
 
   &:hover {
-    background: darken($brand-color, 8%) !important;
+    background: color.adjust($brand-color, $lightness: -8%) !important;
   }
 }
 
@@ -239,7 +241,7 @@ $bg-light: #f9fafb;
   text-transform: none !important;
 
   &:hover {
-    background: darken(#ec4899, 8%) !important;
+    background: color.adjust(#ec4899, $lightness: -8%) !important;
   }
 }
 

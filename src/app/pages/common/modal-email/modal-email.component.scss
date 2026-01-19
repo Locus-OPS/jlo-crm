@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal modal email styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -217,7 +219,7 @@ $bg-light: #f9fafb;
   }
 
   &:hover {
-    background: darken($brand-color, 8%) !important;
+    background: color.adjust($brand-color, $lightness: -8%) !important;
   }
 }
 

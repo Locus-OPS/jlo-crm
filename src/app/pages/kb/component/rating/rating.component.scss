@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Modern minimal KB rating styles
 $brand-color: #337ab7;
 $text-primary: #374151;
@@ -34,7 +36,7 @@ $star-color: #f59e0b;
     color: $star-color;
 
     &:hover {
-      color: darken($star-color, 10%);
+      color: color.adjust($star-color, $lightness: -10%);
     }
   }
 }

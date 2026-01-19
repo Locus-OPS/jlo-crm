@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-declare const $: any;
 const md: any = {
   misc: {
     navbar_menu_visible: 0,
@@ -17,168 +16,226 @@ const md: any = {
     imports: [CommonModule]
 })
 
-export class FixedpluginComponent implements OnInit {
+export class FixedpluginComponent implements OnInit, OnDestroy {
+
+  private cleanupFunctions: (() => void)[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    // fixed plugin
-    const $sidebar = $('.sidebar');
-    const $sidebar_img_container = $sidebar.find('.sidebar-background');
-    //
-    const $full_page = $('.full-page');
-    //
-    const $sidebar_responsive = $('body > .navbar-collapse');
-    const window_width = $(window).width();
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    const sidebarImgContainer = sidebar?.querySelector('.sidebar-background') as HTMLElement;
+    const fullPage = document.querySelector('.full-page') as HTMLElement;
+    const sidebarResponsive = document.querySelector('body > .navbar-collapse') as HTMLElement;
+    const windowWidth = window.innerWidth;
 
-    const fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+    const fixedPluginOpenEl = document.querySelector('.sidebar .sidebar-wrapper .nav li.active a p');
+    const fixedPluginOpen = fixedPluginOpenEl?.innerHTML;
 
-    if (window_width > 767 && fixed_plugin_open === 'Dashboard') {
-      if ($('.fixed-plugin .dropdown').hasClass('show-dropdown')) {
-        $('.fixed-plugin .dropdown').addClass('open');
+    if (windowWidth > 767 && fixedPluginOpen === 'Dashboard') {
+      const dropdown = document.querySelector('.fixed-plugin .dropdown');
+      if (dropdown?.classList.contains('show-dropdown')) {
+        dropdown.classList.add('open');
       }
-
     }
 
-    $('.fixed-plugin a').click(function (event) {
-      // Alex: if we click on switch, stop propagation of the event,
-      // so the dropdown will not be hide, otherwise we set the  section active
-      if ($(this).hasClass('switch-trigger')) {
-        if (event.stopPropagation) {
+    // Click handler for fixed-plugin anchors
+    const fixedPluginLinks = document.querySelectorAll('.fixed-plugin a');
+    fixedPluginLinks.forEach(link => {
+      const clickHandler = (event: Event) => {
+        if ((link as HTMLElement).classList.contains('switch-trigger')) {
           event.stopPropagation();
-        } else if (window.event) {
-          window.event.cancelBubble = true;
         }
-      }
+      };
+      link.addEventListener('click', clickHandler);
+      this.cleanupFunctions.push(() => link.removeEventListener('click', clickHandler));
     });
 
-    $('.fixed-plugin .active-color span').click(function () {
-      const $full_page_background = $('.full-page-background');
+    // Active color span click handler
+    const activeColorSpans = document.querySelectorAll('.fixed-plugin .active-color span');
+    activeColorSpans.forEach(span => {
+      const clickHandler = () => {
+        const siblings = span.parentElement?.children;
+        if (siblings) {
+          Array.from(siblings).forEach(sibling => sibling.classList.remove('active'));
+        }
+        span.classList.add('active');
+        const newColor = (span as HTMLElement).dataset['color'];
 
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      const new_color = $(this).data('color');
-
-      if ($sidebar.length !== 0) {
-        $sidebar.attr('data-color', new_color);
-      }
-
-      if ($full_page.length !== 0) {
-        $full_page.attr('filter-color', new_color);
-      }
-
-      if ($sidebar_responsive.length !== 0) {
-        $sidebar_responsive.attr('data-color', new_color);
-      }
+        if (sidebar) {
+          sidebar.setAttribute('data-color', newColor || '');
+        }
+        if (fullPage) {
+          fullPage.setAttribute('filter-color', newColor || '');
+        }
+        if (sidebarResponsive) {
+          sidebarResponsive.setAttribute('data-color', newColor || '');
+        }
+      };
+      span.addEventListener('click', clickHandler);
+      this.cleanupFunctions.push(() => span.removeEventListener('click', clickHandler));
     });
 
-    $('.fixed-plugin .background-color span').click(function () {
-      $(this).siblings().removeClass('active');
-      $(this).addClass('active');
-      const new_color = $(this).data('color');
+    // Background color span click handler
+    const backgroundColorSpans = document.querySelectorAll('.fixed-plugin .background-color span');
+    backgroundColorSpans.forEach(span => {
+      const clickHandler = () => {
+        const siblings = span.parentElement?.children;
+        if (siblings) {
+          Array.from(siblings).forEach(sibling => sibling.classList.remove('active'));
+        }
+        span.classList.add('active');
+        const newColor = (span as HTMLElement).dataset['color'];
 
-      if ($sidebar.length !== 0) {
-        $sidebar.attr('data-background-color', new_color);
-      }
+        if (sidebar) {
+          sidebar.setAttribute('data-background-color', newColor || '');
+        }
+      };
+      span.addEventListener('click', clickHandler);
+      this.cleanupFunctions.push(() => span.removeEventListener('click', clickHandler));
     });
 
-    $('.fixed-plugin .img-holder').click(function () {
-      const $full_page_background = $('.full-page-background');
+    // Image holder click handler
+    const imgHolders = document.querySelectorAll('.fixed-plugin .img-holder');
+    imgHolders.forEach(holder => {
+      const clickHandler = () => {
+        const fullPageBackground = document.querySelector('.full-page-background') as HTMLElement;
+        const parentLi = holder.parentElement;
+        const siblings = parentLi?.parentElement?.children;
 
-      $(this).parent('li').siblings().removeClass('active');
-      $(this).parent('li').addClass('active');
+        if (siblings) {
+          Array.from(siblings).forEach(sibling => sibling.classList.remove('active'));
+        }
+        parentLi?.classList.add('active');
 
-      let new_image = $(this).find('img').attr('src');
+        const img = holder.querySelector('img') as HTMLImageElement;
+        let newImage = img?.getAttribute('src') || '';
 
-      if ($sidebar_img_container.length !== 0 && $('.switch-sidebar-image input:checked').length !== 0) {
-        $sidebar_img_container.fadeOut('fast', function () {
-          $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-          $sidebar_img_container.fadeIn('fast');
-        });
-      }
+        const switchImageChecked = document.querySelector('.switch-sidebar-image input:checked');
 
-      if ($full_page_background.length !== 0 && $('.switch-sidebar-image input:checked').length !== 0) {
-        const new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-        $full_page_background.fadeOut('fast', function () {
-          $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          $full_page_background.fadeIn('fast');
-        });
-      }
-
-      if ($('.switch-sidebar-image input:checked').length === 0) {
-        new_image = $('.fixed-plugin li.active .img-holder').find('img').attr('src');
-        const new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
-
-        $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-        $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-      }
-
-      if ($sidebar_responsive.length !== 0) {
-        $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-      }
-    });
-
-    $('.switch-sidebar-image input').change(function () {
-      const $full_page_background = $('.full-page-background');
-      const $input = $(this);
-
-      if ($input.is(':checked')) {
-        if ($sidebar_img_container.length !== 0) {
-          $sidebar_img_container.fadeIn('fast');
-          $sidebar.attr('data-image', '#');
+        if (sidebarImgContainer && switchImageChecked) {
+          this.fadeOut(sidebarImgContainer, () => {
+            sidebarImgContainer.style.backgroundImage = `url("${newImage}")`;
+            this.fadeIn(sidebarImgContainer);
+          });
         }
 
-        if ($full_page_background.length !== 0) {
-          $full_page_background.fadeIn('fast');
-          $full_page.attr('data-image', '#');
+        if (fullPageBackground && switchImageChecked) {
+          const activeImgHolder = document.querySelector('.fixed-plugin li.active .img-holder img') as HTMLImageElement;
+          const newImageFullPage = activeImgHolder?.dataset['src'] || '';
+
+          this.fadeOut(fullPageBackground, () => {
+            fullPageBackground.style.backgroundImage = `url("${newImageFullPage}")`;
+            this.fadeIn(fullPageBackground);
+          });
         }
 
-        const background_image = true;
-      } else {
-        if ($sidebar_img_container.length !== 0) {
-          $sidebar.removeAttr('data-image');
-          $sidebar_img_container.fadeOut('fast');
+        if (!switchImageChecked) {
+          const activeImgHolder = document.querySelector('.fixed-plugin li.active .img-holder img') as HTMLImageElement;
+          newImage = activeImgHolder?.getAttribute('src') || '';
+          const newImageFullPage = activeImgHolder?.dataset['src'] || '';
+
+          if (sidebarImgContainer) {
+            sidebarImgContainer.style.backgroundImage = `url("${newImage}")`;
+          }
+          if (fullPageBackground) {
+            fullPageBackground.style.backgroundImage = `url("${newImageFullPage}")`;
+          }
         }
 
-        if ($full_page_background.length !== 0) {
-          $full_page.removeAttr('data-image', '#');
-          $full_page_background.fadeOut('fast');
+        if (sidebarResponsive) {
+          sidebarResponsive.style.backgroundImage = `url("${newImage}")`;
         }
-
-        const background_image = false;
-      }
+      };
+      holder.addEventListener('click', clickHandler);
+      this.cleanupFunctions.push(() => holder.removeEventListener('click', clickHandler));
     });
 
-    $('.switch-sidebar-mini input').change(function () {
-      const $body = $('body');
+    // Switch sidebar image change handler
+    const switchSidebarImageInput = document.querySelector('.switch-sidebar-image input') as HTMLInputElement;
+    if (switchSidebarImageInput) {
+      const changeHandler = () => {
+        const fullPageBackground = document.querySelector('.full-page-background') as HTMLElement;
 
-      const $input = $(this);
+        if (switchSidebarImageInput.checked) {
+          if (sidebarImgContainer) {
+            this.fadeIn(sidebarImgContainer);
+            sidebar?.setAttribute('data-image', '#');
+          }
+          if (fullPageBackground) {
+            this.fadeIn(fullPageBackground);
+            fullPage?.setAttribute('data-image', '#');
+          }
+        } else {
+          if (sidebarImgContainer) {
+            sidebar?.removeAttribute('data-image');
+            this.fadeOut(sidebarImgContainer);
+          }
+          if (fullPageBackground) {
+            fullPage?.removeAttribute('data-image');
+            this.fadeOut(fullPageBackground);
+          }
+        }
+      };
+      switchSidebarImageInput.addEventListener('change', changeHandler);
+      this.cleanupFunctions.push(() => switchSidebarImageInput.removeEventListener('change', changeHandler));
+    }
 
-      if (md.misc.sidebar_mini_active === true) {
-        $('body').removeClass('sidebar-mini');
-        md.misc.sidebar_mini_active = false;
+    // Switch sidebar mini change handler
+    const switchSidebarMiniInput = document.querySelector('.switch-sidebar-mini input') as HTMLInputElement;
+    if (switchSidebarMiniInput) {
+      const changeHandler = () => {
+        const body = document.body;
 
-      } else {
-        setTimeout(function () {
-          $('body').addClass('sidebar-mini');
+        if (md.misc.sidebar_mini_active === true) {
+          body.classList.remove('sidebar-mini');
+          md.misc.sidebar_mini_active = false;
+        } else {
+          setTimeout(() => {
+            body.classList.add('sidebar-mini');
+            const collapseElements = document.querySelectorAll('.sidebar .collapse') as NodeListOf<HTMLElement>;
+            collapseElements.forEach(el => el.style.height = 'auto');
+            md.misc.sidebar_mini_active = true;
+          }, 300);
+        }
 
-          $('.sidebar .collapse').css('height', 'auto');
-          md.misc.sidebar_mini_active = true;
-        }, 300);
-      }
+        // Simulate window resize so charts get updated in realtime
+        const simulateWindowResize = setInterval(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 180);
 
-      // we simulate the window Resize so the charts will get updated in realtime.
-      const simulateWindowResize = setInterval(function () {
-        window.dispatchEvent(new Event('resize'));
-      }, 180);
+        // Stop the simulation after animations complete
+        setTimeout(() => {
+          clearInterval(simulateWindowResize);
+        }, 1000);
+      };
+      switchSidebarMiniInput.addEventListener('change', changeHandler);
+      this.cleanupFunctions.push(() => switchSidebarMiniInput.removeEventListener('change', changeHandler));
+    }
+  }
 
-      // we stop the simulation of Window Resize after the animations are completed
-      setTimeout(function () {
-        clearInterval(simulateWindowResize);
-      }, 1000);
+  ngOnDestroy() {
+    this.cleanupFunctions.forEach(cleanup => cleanup());
+    this.cleanupFunctions = [];
+  }
 
-    });
+  private fadeOut(element: HTMLElement, callback?: () => void) {
+    element.style.transition = 'opacity 150ms';
+    element.style.opacity = '0';
+    setTimeout(() => {
+      element.style.display = 'none';
+      if (callback) callback();
+    }, 150);
+  }
+
+  private fadeIn(element: HTMLElement, callback?: () => void) {
+    element.style.display = '';
+    element.style.opacity = '0';
+    element.style.transition = 'opacity 150ms';
+    setTimeout(() => {
+      element.style.opacity = '1';
+      if (callback) callback();
+    }, 10);
   }
 
 }

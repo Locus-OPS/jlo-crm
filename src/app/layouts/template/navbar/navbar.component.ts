@@ -235,8 +235,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.sidebarVisible = false;
     body.classList.remove('nav-open');
-    // $('html').removeClass('nav-open');
-    body.classList.remove('nav-open');
     if ($layer) {
       $layer.remove();
     }
