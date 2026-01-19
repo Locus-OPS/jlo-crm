@@ -1,0 +1,26 @@
+sep=,
+"CASE MODULE - Work Breakdown Structure",,,,,,
+"Total Story Points: 48-58",,,,,,
+,,,,,,
+"WBS ID","Task Name","Description","Complexity","Points (Min)","Points (Max)","Status"
+"2","Case Module","","","48","58",""
+"2.1","Case List Page","Search/List Case with filters (12 fields)","MEDIUM","10","12",""
+"2.1.1","Search Form","Advanced search with 12 filter criteria","MEDIUM","4","5",""
+"2.1.2","Data Table","Case list with sorting/pagination","MEDIUM","4","5",""
+"2.1.3","Customer/Owner Modals","Modal selection for filtering","LOW","2","2",""
+"2.2","Case Detail Page","Case form (23 fields) with validation","HIGH","15","18",""
+"2.2.1","Case Form","Main case form with 23 fields","HIGH","6","8",""
+"2.2.2","Validation Logic","Date validation, required fields","MEDIUM","4","5",""
+"2.2.3","SLA Calculation","Priority to SLA mapping","MEDIUM","3","3",""
+"2.2.4","Consulting Integration","Link case to consulting session","LOW","2","2",""
+"2.3","Case Activity Tab","CRUD Activity with Modal","MEDIUM","8","10",""
+"2.3.1","Activity List","Table with sorting/pagination","MEDIUM","3","4",""
+"2.3.2","Activity Form","Create/Edit activity form","MEDIUM","3","4",""
+"2.3.3","Owner/Dept Selection","Modal selection for assignment","LOW","2","2",""
+"2.4","Case Attachment Tab","Upload/Download attachments","MEDIUM-HIGH","10","12",""
+"2.4.1","Attachment List","Table with file information","MEDIUM","3","4",""
+"2.4.2","File Upload","Upload with validation (type, size)","MEDIUM","4","5",""
+"2.4.3","File Preview/Download","Preview for images/PDF, download others","MEDIUM","3","3",""
+"2.5","Case KB Tab","Link Knowledge Base articles","LOW-MEDIUM","5","6",""
+"2.5.1","KB Reference List","Linked KB articles list","LOW","2","3",""
+"2.5.2","KB Selection Modal","Search and link KB articles","LOW","3","3",""

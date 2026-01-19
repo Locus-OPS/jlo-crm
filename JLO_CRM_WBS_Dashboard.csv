@@ -1,0 +1,16 @@
+sep=,
+"DASHBOARD MODULE - Work Breakdown Structure",,,,,,
+"Total Story Points: 15-20",,,,,,
+,,,,,,
+"WBS ID","Task Name","Description","Complexity","Points (Min)","Points (Max)","Status"
+"4","Dashboard Module","","","15","20",""
+"4.1","Dashboard Charts","Statistical visualizations","MEDIUM","8","10",""
+"4.1.1","Case Statistics Chart","Case count by status/type","MEDIUM","3","4",""
+"4.1.2","Consulting Statistics","Consulting metrics chart","MEDIUM","3","4",""
+"4.1.3","Chart Interactions","Click handlers, tooltips","LOW","2","2",""
+"4.2","Dashboard Widgets","Summary cards and KPIs","LOW-MEDIUM","4","5",""
+"4.2.1","Summary Cards","Count cards for key metrics","LOW","2","2",""
+"4.2.2","Quick Actions","Navigation shortcuts","LOW","2","3",""
+"4.3","Data Refresh","Auto-refresh and date filters","LOW-MEDIUM","3","5",""
+"4.3.1","Date Range Filter","Filter dashboard by date","LOW","2","3",""
+"4.3.2","Auto Refresh","Periodic data refresh","LOW","1","2",""

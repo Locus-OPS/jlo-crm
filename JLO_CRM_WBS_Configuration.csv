@@ -1,0 +1,46 @@
+sep=,
+"CONFIGURATION & INFRASTRUCTURE - Work Breakdown Structure",,,,,,
+"Total Story Points: 53-79",,,,,,
+,,,,,,
+"WBS ID","Task Name","Description","Complexity","Points (Min)","Points (Max)","Status"
+"7","Shared/Infrastructure","","","53","79",""
+"7.1","Authentication System","Login, token management","HIGH","15","20",""
+"7.1.1","Login Page","Login form with validation","MEDIUM","4","5",""
+"7.1.2","Token Management","JWT token handling, refresh","HIGH","6","8",""
+"7.1.3","Auth Guard","Route protection","MEDIUM","3","4",""
+"7.1.4","Session Timeout","Auto logout on inactivity","LOW","2","3",""
+"7.2","Layout Components","Admin layout, sidebar, navbar","MEDIUM","10","15",""
+"7.2.1","Admin Layout","Main layout container","MEDIUM","3","4",""
+"7.2.2","Sidebar","Navigation menu component","MEDIUM","4","6",""
+"7.2.3","Navbar","Top navigation bar","LOW","2","3",""
+"7.2.4","Footer","Footer component","LOW","1","2",""
+"7.3","Common Modals","Shared modal components","MEDIUM","8","12",""
+"7.3.1","Customer Modal","Customer selection modal","MEDIUM","3","4",""
+"7.3.2","User Modal","User selection modal","LOW","2","3",""
+"7.3.3","Department Modal","Department tree modal","LOW","2","3",""
+"7.3.4","Confirm Modal","Confirmation dialog","LOW","1","2",""
+"7.4","Taskbar System","Softphone, task queue","HIGH","12","18",""
+"7.4.1","Taskbar Component","Main taskbar container","MEDIUM","3","4",""
+"7.4.2","Softphone","WebRTC softphone integration","HIGH","5","8",""
+"7.4.3","Task Queue","Agent task queue display","MEDIUM","4","6",""
+"7.5","API Services","HTTP interceptors, base service","MEDIUM","8","14",""
+"7.5.1","API Service","Base HTTP service","MEDIUM","3","4",""
+"7.5.2","HTTP Interceptor","Token injection, error handling","MEDIUM","3","5",""
+"7.5.3","WebSocket Service","STOMP WebSocket connection","MEDIUM","2","5",""
+,,,,,,
+,,,,,,
+"DEPLOYMENT CHECKLIST",,,,,,
+"Item","Description","Required","Priority",,
+"Environment Config","Configure environment.ts files","Yes","HIGH",,
+"API Endpoints","Set backend API URLs","Yes","HIGH",,
+"Authentication","Configure auth endpoints","Yes","HIGH",,
+"CORS Settings","Backend CORS configuration","Yes","HIGH",,
+"SSL Certificate","HTTPS configuration","Yes","HIGH",,
+"Codebook Data","Initial codebook/lookup data","Yes","HIGH",,
+"User Accounts","Create initial admin users","Yes","HIGH",,
+"Role Setup","Configure roles and permissions","Yes","HIGH",,
+"Menu Configuration","Setup menu structure","Yes","MEDIUM",,
+"Email Templates","Configure email templates","No","MEDIUM",,
+"SLA Rules","Configure SLA settings","No","MEDIUM",,
+"Holiday Calendar","Setup holiday dates","No","LOW",,
+"i18n Files","Translation files (en.json, th.json)","No","LOW",,

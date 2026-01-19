@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(npm install:*)",
+      "Bash(node scripts/generate-wbs-excel.js:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
