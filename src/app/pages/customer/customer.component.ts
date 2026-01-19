@@ -37,7 +37,7 @@ export class CustomerComponent extends BaseComponent implements OnInit {
   createFormDirective: FormGroupDirective;
 
   dataSource: CustomerData[];
-  displayedColumns: string[] = ['fullName', 'citizenId', 'customerType', 'customerStatus', 'updatedDate', 'updatedByName'];
+  displayedColumns: string[] = ['fullName', 'citizenId', 'customerType', 'customerStatus', 'updatedDate', 'updatedByName', 'action'];
   tableControl: TableControl = new TableControl(() => { this.search(); });
 
   searchForm: FormGroup;
@@ -173,12 +173,6 @@ export class CustomerComponent extends BaseComponent implements OnInit {
 
 
 
-  selectCustomer(row) {
-    this.selectedRow = row;
-    this.createForm.patchValue(row);
-  }
-
-
   clear() {
     this.searchForm.reset();
     //this.clearSort();
@@ -189,77 +183,72 @@ export class CustomerComponent extends BaseComponent implements OnInit {
     this.sort.sort({ id: '', start: 'asc', disableClear: false });
   }
 
-  selectCustomerConsulting(customerType: string) {
-
+  viewCustomerDetail(row: CustomerData) {
     if (ConsultingUtils.isConsulting()) {
       const contData = JSON.parse(ConsultingUtils.getConsultingData());
       const params = {
         data: {
           consultingNumber: contData.consultingNumber,
-          customerId: this.createForm.controls['customerId'].value,
-          contactId: this.createForm.controls['customerId'].value
+          customerId: row.customerId,
+          contactId: row.customerId
         }
       };
 
       this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {
         this.spinner.hide("approve_process_spinner");
         if (result.status) {
-
-          this.gotoMemberCustomerPage(customerType);
-
+          this.router.navigate(["/customer/customer", { customerId: row.customerId }]);
         } else {
-
-
-
           setTimeout(() => {
             this.spinner.hide("approve_process_spinner");
           }, 1000);
 
-
-          if (result.message != "") {
-            Utils.alertError({
-              text: result.message,
-            });
-          } else {
-            Utils.alertError({
-              text: "กรุณาลองใหม่ภายหลัง",
-            });
-          }
+          Utils.alertError({
+            text: result.message || "กรุณาลองใหม่ภายหลัง",
+          });
         }
       }, (err: any) => {
         Utils.alertError({
           text: err.message,
         });
-      }
-
-      );
+      });
     } else {
-      this.gotoMemberCustomerPage(customerType);
+      this.router.navigate(["/customer/customer", { customerId: row.customerId }]);
     }
-
   }
 
+  viewMemberDetail(row: CustomerData) {
+    if (ConsultingUtils.isConsulting()) {
+      const contData = JSON.parse(ConsultingUtils.getConsultingData());
+      const params = {
+        data: {
+          consultingNumber: contData.consultingNumber,
+          customerId: row.customerId,
+          contactId: row.customerId
+        }
+      };
 
-  gotoMemberCustomerPage(customerType: string) {
+      this.consultingService.updateConsultingBindingCustomer(params).then((result: any) => {
+        this.spinner.hide("approve_process_spinner");
+        if (result.status) {
+          this.router.navigate(["/customer/member", { memberId: row.memberId }]);
+        } else {
+          setTimeout(() => {
+            this.spinner.hide("approve_process_spinner");
+          }, 1000);
 
-    if (customerType == "member") {
-      this.router.navigate([
-        "/customer/member",
-        {
-          memberId: this.createForm.controls['memberId'].value,
-        },
-      ]);
+          Utils.alertError({
+            text: result.message || "กรุณาลองใหม่ภายหลัง",
+          });
+        }
+      }, (err: any) => {
+        Utils.alertError({
+          text: err.message,
+        });
+      });
+    } else {
+      this.router.navigate(["/customer/member", { memberId: row.memberId }]);
     }
-
-    if (customerType == "customer") {
-      this.router.navigate([
-        "/customer/customer",
-        {
-          customerId: this.createForm.controls['customerId'].value,
-        },
-      ]);
-    }
-
   }
 
   getDisplayName(element: CustomerData): string {

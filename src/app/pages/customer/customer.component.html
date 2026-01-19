@@ -130,9 +130,22 @@
                   </td>
                 </ng-container>
 
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef style="width: 120px; text-align: center;"></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;">
+                    <button mat-icon-button matTooltip="View Customer" (click)="viewCustomerDetail(element); $event.stopPropagation()">
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    @if(element.memberId != null) {
+                    <button mat-icon-button matTooltip="View Member" (click)="viewMemberDetail(element); $event.stopPropagation()">
+                      <mat-icon>card_membership</mat-icon>
+                    </button>
+                    }
+                  </td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selectCustomer(row)"
-                  [ngClass]="{ 'selected-row': selectedRow == row }"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
               </table>
             </div>
             <mat-paginator class="mat-paginator-sticky" (page)="tableControl.onPage($event)"
@@ -149,160 +162,5 @@
       <!-- end col-md-12 -->
     </div>
     <!-- end row -->
-    <!-- form create customer -->
-    @if(selectedRow != null){
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header card-header-rose card-header-icon">
-          <div class="card-icon">
-            <i class="material-icons">diversity_3</i>
-          </div>
-          <div class="header-actions">
-            <ng-container *ngIf="createForm.value.memberId != null; else elseCustomer">
-              <button (click)="selectCustomerConsulting('member')" mat-raised-button
-                class="btn btn-fill btn-default">View Member Detail</button>
-            </ng-container>
-            <ng-template #elseCustomer></ng-template>
-
-            <button (click)="selectCustomerConsulting('customer')" mat-raised-button
-              class="btn btn-fill btn-default">View Customer Detail</button>
-          </div>
-          <h4 class="card-title">Customer</h4>
-          <mat-card-subtitle>Customer Name :
-            <b>{{ (selectedRow.firstName || selectedRow.businessName || '') + ' ' + (selectedRow.lastName || '') }}</b>
-          </mat-card-subtitle>
-        </div>
-        <div class="card-body">
-          <form #createFormDirective="ngForm" [formGroup]="createForm" novalidate>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="row d-flex align-items-stretch">
-                  <div class="col-md-4 d-sm-none d-md-block">
-                    <div class="card-simple">
-                      <img class="card-bg" loading="lazy" [src]="
-                          this.createForm.controls['pictureUrl'].value
-                            ? customerService.getCustomerProfileImagePath(this.createForm.controls['pictureUrl'].value)
-                            : './assets/img/profile_image_not_found.png'
-                        " />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8">
-                @if(createForm.value.customerType){
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="row">
-                      <mat-form-field class="col-md-3">
-                        <mat-label>{{ 'member.title' | translate }}</mat-label>
-                        <mat-select formControlName="title" disabled>
-                          <mat-option>--</mat-option>
-                          <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{ 'member.firstName' | translate }}</mat-label>
-                        <input matInput type="text" formControlName="firstName" readonly />
-                      </mat-form-field>
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{ 'member.lastName' | translate }}</mat-label>
-                        <input matInput type="text" formControlName="lastName" readonly />
-                      </mat-form-field>
-                    </div>
-                    <div class="row">
-                      <mat-form-field class="col-md-3">
-                        <mat-label>{{ 'member.nationality' | translate }}</mat-label>
-                        <mat-select formControlName="nationality" disabled>
-                          <mat-option>--</mat-option>
-                          <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }}
-                          </mat-option>
-                        </mat-select>
-                      </mat-form-field>
-                      @if(createForm.controls['nationality'].value == THAI_NATIONALITY){
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{ 'member.citizenId' | translate }}</mat-label>
-                        <input matInput type="text" formControlName="citizenId" maxlength="13" readonly />
-                      </mat-form-field>
-                      } @if(createForm.controls['nationality'].value != THAI_NATIONALITY){
-                      <mat-form-field class="col-md-4">
-                        <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
-                        <input matInput type="text" formControlName="passportNo" readonly />
-                      </mat-form-field>
-                      }
-                    </div>
-                  </div>
-                </div>
-                } @if(!createForm.value.customerType){
-                <div class="row">
-                  <mat-form-field class="col-md-10">
-                    <mat-label>{{ 'member.businessName' | translate }}</mat-label>
-                    <input matInput type="text" formControlName="businessName" readonly />
-                  </mat-form-field>
-                  <mat-form-field class="col-md-2">
-                    <mat-label>{{ 'member.taxId' | translate }}</mat-label>
-                    <input matInput type="text" formControlName="taxId" readonly />
-                  </mat-form-field>
-                </div>
-                }
-              </div>
-            </div>
-
-            <!-- <div class="row" *ngIf="createForm.value.customerType">
-              <div class="col-md-6">
-                <div class="row">
-                  <mat-form-field class="col-md-2" disabled>
-                    <mat-label>{{ 'member.title' | translate }}</mat-label>
-                    <mat-select formControlName="title">
-                      <mat-option>--</mat-option>
-                      <mat-option *ngFor="let item of titleNameList" [value]="item.codeId">{{ item.codeName }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field class="col-md-5" disabled>
-                    <mat-label>{{ 'member.firstName' | translate }}</mat-label>
-                    <input matInput type="text" formControlName="firstName" />
-                  </mat-form-field>
-                  <mat-form-field class="col-md-5" disabled>
-                    <mat-label>{{ 'member.lastName' | translate }}</mat-label>
-                    <input matInput type="text" formControlName="lastName" />
-                  </mat-form-field>
-                </div>
-              </div>
-              <mat-form-field class="col-md-3" disabled>
-                <mat-label>{{ 'member.nationality' | translate }}</mat-label>
-                <mat-select formControlName="nationality">
-                  <mat-option>--</mat-option>
-                  <mat-option *ngFor="let item of nationalityList" [value]="item.codeId">{{ item.codeName }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value == THAI_NATIONALITY"
-                disabled>
-                <mat-label>{{ 'member.citizenId' | translate }}</mat-label>
-                <input matInput type="text" formControlName="citizenId" maxlength="13" />
-              </mat-form-field>
-              <mat-form-field class="col-md-3" *ngIf="createForm.controls['nationality'].value != THAI_NATIONALITY"
-                disabled>
-                <mat-label>{{ 'member.passportNo' | translate }}</mat-label>
-                <input matInput type="text" formControlName="passportNo" />
-              </mat-form-field>
-            </div>
-
-            <div class="row" *ngIf="!createForm.value.customerType">
-              <mat-form-field class="col-md-10" disabled>
-                <mat-label>{{ 'member.businessName' | translate }}</mat-label>
-                <input matInput type="text" formControlName="businessName" />
-              </mat-form-field>
-              <mat-form-field class="col-md-2" disabled>
-                <mat-label>{{ 'member.taxId' | translate }}</mat-label>
-                <input matInput type="text" formControlName="taxId" />
-              </mat-form-field>
-            </div> -->
-          </form>
-        </div>
-      </div>
-    </div>
-    }
   </div>
 </div>

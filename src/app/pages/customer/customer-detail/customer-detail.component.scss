@@ -239,6 +239,20 @@ $bg-light: #f9fafb;
   }
 }
 
+// Tab Content Wrapper
+.tab-content-wrapper {
+  padding: 20px 0;
+}
+
+// Detail Tabs styling
+.detail-tabs {
+  ::ng-deep {
+    .mat-mdc-tab-body-content {
+      padding: 0;
+    }
+  }
+}
+
 // Responsive
 @media (max-width: 768px) {
   .customer-header-row {

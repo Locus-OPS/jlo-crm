@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit {
   logout() {
     this.tabManageService.removeTabs();
     this.globals.clear();
-    window.location.href = '/login';
+    this.router.navigate(['/login']);
   }
 
 }

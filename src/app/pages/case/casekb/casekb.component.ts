@@ -99,8 +99,9 @@ export class CasekbComponent extends BaseComponent implements OnInit, OnDestroy 
   }
   onActCreate() {
     const dialogRef = this.dialog.open(ModalKbComponent, {
-      width: '80%',
-      height: '70%',
+      width: '90%',
+      height: '85%',
+      panelClass: 'my-dialog',
       data: {
         caseNumber: this.searchForm.get('caseNumber').value
       }

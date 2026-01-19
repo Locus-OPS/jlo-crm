@@ -17,6 +17,14 @@
             </div>
           </div>
           <div class="card-body">
+            <mat-tab-group class="detail-tabs" animationDuration="200ms" mat-stretch-tabs="false" mat-align-tabs="start">
+              <!-- Tab 1: Customer Info -->
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <i class="material-icons tab-icon">perm_identity</i>
+                  <span>{{ 'member.customerDetail' | translate }}</span>
+                </ng-template>
+                <div class="tab-content-wrapper">
             <form [formGroup]="createForm" (ngSubmit)="onSave()" novalidate>
               <!-- Top Section: Profile + Customer Type -->
               <div class="row customer-header-row">
@@ -263,54 +271,59 @@
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+                </div>
+              </mat-tab>
 
-        <!-- Tabs Card -->
-        <div class="card">
-          <div class="card-header card-header-primary card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">folder_open</i>
-            </div>
-            <h4 class="card-title">{{ 'member.additionalInfo' | translate }}</h4>
-          </div>
-          <div class="card-body">
-            <mat-tab-group class="detail-tabs" animationDuration="200ms" mat-stretch-tabs="false" mat-align-tabs="start">
+              <!-- Tab 2: Address -->
               <mat-tab>
                 <ng-template mat-tab-label>
                   <i class="material-icons tab-icon">location_on</i>
                   <span>{{ 'member.address' | translate }}</span>
                 </ng-template>
-                @if(this.customerId != null){
-                <app-customer-address #customerAddress [customerIdParam]="this.customerId"></app-customer-address>
-                }
+                <div class="tab-content-wrapper">
+                  @if(this.customerId != null){
+                  <app-customer-address #customerAddress [customerIdParam]="this.customerId"></app-customer-address>
+                  }
+                </div>
               </mat-tab>
+
+              <!-- Tab 3: Case -->
               <mat-tab>
                 <ng-template mat-tab-label>
                   <i class="material-icons tab-icon">work</i>
                   <span>{{ 'case.title' | translate }}</span>
                 </ng-template>
-                @if(this.customerId != null){
-                <app-customer-case #customerCase [customerIdParam]="this.customerId"></app-customer-case>
-                }
+                <div class="tab-content-wrapper">
+                  @if(this.customerId != null){
+                  <app-customer-case #customerCase [customerIdParam]="this.customerId"></app-customer-case>
+                  }
+                </div>
               </mat-tab>
+
+              <!-- Tab 4: Contact History -->
               <mat-tab>
                 <ng-template mat-tab-label>
                   <i class="material-icons tab-icon">history</i>
                   <span>{{ 'contact.history' | translate }}</span>
                 </ng-template>
-                @if(this.customerId != null){
-                <app-contact-history-tl #contactHistoryTlComponent [customerIdParam]="this.customerId"></app-contact-history-tl>
-                }
+                <div class="tab-content-wrapper">
+                  @if(this.customerId != null){
+                  <app-contact-history-tl #contactHistoryTlComponent [customerIdParam]="this.customerId"></app-contact-history-tl>
+                  }
+                </div>
               </mat-tab>
+
+              <!-- Tab 5: Change Log -->
               <mat-tab>
                 <ng-template mat-tab-label>
                   <i class="material-icons tab-icon">update</i>
                   <span>{{ 'member.changeLog' | translate }}</span>
                 </ng-template>
-                @if(this.customerId != null){
-                <app-customer-audit-log #customerAuditLogComponent [customerIdParam]="this.customerId"></app-customer-audit-log>
-                }
+                <div class="tab-content-wrapper">
+                  @if(this.customerId != null){
+                  <app-customer-audit-log #customerAuditLogComponent [customerIdParam]="this.customerId"></app-customer-audit-log>
+                  }
+                </div>
               </mat-tab>
             </mat-tab-group>
           </div>
