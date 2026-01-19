@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ import { Caseactivity } from '../case/caseactivity/caseactivity.model';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-dashboard',
@@ -26,6 +27,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     imports: [SharedModule, NgxChartsModule]
 })
 export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
+
+  private destroyRef = inject(DestroyRef);
 
   searchForm: FormGroup;
   searchFormCase: FormGroup;
@@ -135,11 +138,10 @@ export class DashboardComponent extends BaseComponent implements OnInit, AfterVi
 
     this.translate.get([
       'dashboard.channel', 'case.type', 'dashboard.number'
-    ]).subscribe(translation => {
+    ]).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(translation => {
       this.yAxisLabel = translation['dashboard.channel'];
       this.yAxisLabelPie = translation['case.type'];
       this.xAxisLabel = translation['dashboard.number'];
-
     });
   }
 

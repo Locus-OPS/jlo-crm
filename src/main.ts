@@ -12,6 +12,7 @@ import TokenUtils from './app/shared/token-utils';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import routes from './app/app-routing';
 import { RouterModule } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 
 if (environment.production) {
   enableProdMode();
@@ -61,6 +62,21 @@ bootstrapApplication(AppComponent, {
           useFactory: HttpLoaderFactory,
           deps: [HttpClient],
         },
+      }),
+      QuillModule.forRoot({
+        modules: {
+          toolbar: {
+            container: [
+              [{ header: [1, 2, false] }],
+              ['bold', 'italic', 'underline', 'strike'],
+              [{ 'align': [] }],
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'indent': '-1' }, { 'indent': '+1' }],
+              ['link'],
+              ['clean']
+            ]
+          }
+        }
       }),
     ),
   ],

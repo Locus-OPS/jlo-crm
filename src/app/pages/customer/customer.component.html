@@ -80,15 +80,14 @@
                     {{ 'member.name' | translate }}
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.customerType ? element.firstName + ' ' + element.lastName : element.businessName }}
+                    {{ getDisplayName(element) }}
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="citizenId">
                   <th mat-header-cell *matHeaderCellDef>{{ 'member.citizenId' | translate }}/{{ 'member.passportNo' |
                     translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.customerType ? (element.nationality == THAI_NATIONALITY ? element.citizenId :
-                    element.passportNo) : element.taxId }}
+                    {{ getIdentification(element) }}
                   </td>
                 </ng-container>
 
@@ -180,7 +179,7 @@
                 <div class="row d-flex align-items-stretch">
                   <div class="col-md-4 d-sm-none d-md-block">
                     <div class="card-simple">
-                      <img class="card-bg" [src]="
+                      <img class="card-bg" loading="lazy" [src]="
                           this.createForm.controls['pictureUrl'].value
                             ? customerService.getCustomerProfileImagePath(this.createForm.controls['pictureUrl'].value)
                             : './assets/img/profile_image_not_found.png'

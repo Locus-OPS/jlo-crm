@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, DestroyRef, inject } from '@angular/core';
 import { Dropdown } from 'src/app/model/dropdown.model';
 import { ApiService } from 'src/app/services/api.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Globals } from 'src/app/shared/globals';
 import { CodebookData } from './codebook.model';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { CreatedByComponent } from '../../common/created-by/created-by.component';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-codebook',
@@ -20,6 +20,8 @@ import { Subject, takeUntil } from 'rxjs';
     imports: [SharedModule, CreatedByComponent]
 })
 export class CodebookComponent extends BaseComponent implements OnInit {
+
+  private destroyRef = inject(DestroyRef);
 
   @ViewChild('createFormDirective')
   createFormDirective: FormGroupDirective;
@@ -96,10 +98,9 @@ export class CodebookComponent extends BaseComponent implements OnInit {
 
 
 
-    this.searchForm.get("inputFilter").valueChanges.pipe(takeUntil(new Subject<void>()))
+    this.searchForm.get("inputFilter").valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
         this.codeTypeFilter = this.codeTypeList.filter(vl => vl.codeName.toUpperCase().indexOf(this.searchForm.get("inputFilter").value.toUpperCase()) >= 0);
-
       });
   }
 

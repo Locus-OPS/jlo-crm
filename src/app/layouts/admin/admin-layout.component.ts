@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, Injector, OnDestroy, ViewE
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { NavbarComponent } from '../../layouts/template/navbar/navbar.component';
-import { filter, tap } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { Globals } from 'src/app/shared/globals';
 import { TabManageService, Tab, TabParam } from './tab-manage.service';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -84,15 +84,10 @@ export class AdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async ngOnInit() {
     this.initWebsocket();
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      tap((event: NavigationEnd) => {
-        this.navbar.sidebarClose();
-      })
-    );
 
     this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((routeChange: NavigationEnd) => {
+        this.navbar?.sidebarClose();
         if (this.tabManageService.isTab(routeChange.url)) {
           const child = this.route.snapshot.firstChild;
           if (this.tabsKeys.indexOf(routeChange.url) === -1) {

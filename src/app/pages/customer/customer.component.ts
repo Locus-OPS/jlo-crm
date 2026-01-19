@@ -262,6 +262,17 @@ export class CustomerComponent extends BaseComponent implements OnInit {
 
   }
 
+  getDisplayName(element: CustomerData): string {
+    return element.customerType
+      ? `${element.firstName || ''} ${element.lastName || ''}`.trim()
+      : element.businessName || '';
+  }
 
+  getIdentification(element: CustomerData): string {
+    if (element.customerType) {
+      return element.nationality == this.THAI_NATIONALITY ? element.citizenId : element.passportNo;
+    }
+    return element.taxId || '';
+  }
 
 }

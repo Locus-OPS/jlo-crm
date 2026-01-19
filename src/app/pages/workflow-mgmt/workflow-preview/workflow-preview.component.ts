@@ -8,13 +8,13 @@ import { Globals } from 'src/app/shared/globals';
 import { SharedModule } from 'src/app/shared/module/shared.module';
 import { WorkflowTrackingService } from '../../workflow-tracking/workflow-tracking.service';
 import { WorkflowMgmtService } from '../workflow-mgmt.service';
-import { ClusterNode, Edge, Layout } from '@swimlane/ngx-graph';
+import { ClusterNode, Edge, Layout, NgxGraphModule } from '@swimlane/ngx-graph';
 import { Subject } from 'rxjs';
 import * as shape from 'd3-shape';
 
 @Component({
     selector: 'app-workflow-preview',
-    imports: [SharedModule],
+    imports: [SharedModule, NgxGraphModule],
     templateUrl: './workflow-preview.component.html',
     styleUrl: './workflow-preview.component.scss'
 })

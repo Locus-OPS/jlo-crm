@@ -14,12 +14,38 @@ import { environment } from './../../environments/environment';
 })
 export class ApiService {
 
-
   private rootPath = environment.endpoint;
+
+  // Cache for codebook/lookup data
+  private cache = new Map<string, { data: any; timestamp: number }>();
+  private CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
   constructor(
     private http: HttpClient
   ) { }
+
+  private getCacheKey(method: string, param?: any): string {
+    return `${method}:${param ? JSON.stringify(param) : ''}`;
+  }
+
+  private getFromCache<T>(key: string): T | null {
+    const cached = this.cache.get(key);
+    if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
+      return cached.data as T;
+    }
+    if (cached) {
+      this.cache.delete(key);
+    }
+    return null;
+  }
+
+  private setCache(key: string, data: any): void {
+    this.cache.set(key, { data, timestamp: Date.now() });
+  }
+
+  clearCache(): void {
+    this.cache.clear();
+  }
 
   getRootPath() {
     return this.rootPath;
@@ -73,33 +99,74 @@ export class ApiService {
     return this.http.request(req);
   }
 
-  getMultipleCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Map<string, Dropdown[]>>> {
-    return this.http.post(this.rootPath + '/common/selector/getMultipleCodebookByCodeType', param).toPromise();
+  async getMultipleCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Map<string, Dropdown[]>>> {
+    const cacheKey = this.getCacheKey('getMultipleCodebookByCodeType', param);
+    const cached = this.getFromCache<ApiResponse<Map<string, Dropdown[]>>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Map<string, Dropdown[]>>>(this.rootPath + '/common/selector/getMultipleCodebookByCodeType', param).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
-  getCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getCodebookByCodeType', param).toPromise();
+  async getCodebookByCodeType(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getCodebookByCodeType', param);
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getCodebookByCodeType', param).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
   getCodebookByCodeTypeAndParentId(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
     return this.http.post(this.rootPath + '/common/selector/getCodebookByCodeTypeAndParentId', param).toPromise();
   }
 
-  getBusinessUnit(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getBusinessUnit', {}).toPromise();
+  async getBusinessUnit(): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getBusinessUnit');
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getBusinessUnit', {}).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
-  getRole(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getRole', {}).toPromise();
+  async getRole(): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getRole');
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getRole', {}).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
-  getPosition(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getPosition', {}).toPromise();
+  async getPosition(): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getPosition');
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getPosition', {}).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
-
-  getDepartment(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getDepartment', {}).toPromise();
+  async getDepartment(): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getDepartment');
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getDepartment', {}).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
   getTeamByDepartmentId(param: ApiRequest<any>): Promise<ApiResponse<Dropdown[]>> {
@@ -107,8 +174,15 @@ export class ApiService {
   }
 
 
-  getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
-    return this.http.post(this.rootPath + '/common/selector/getCodebookType', {}).toPromise();
+  async getCodebookType(): Promise<ApiResponse<Dropdown[]>> {
+    const cacheKey = this.getCacheKey('getCodebookType');
+    const cached = this.getFromCache<ApiResponse<Dropdown[]>>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const result = await this.http.post<ApiResponse<Dropdown[]>>(this.rootPath + '/common/selector/getCodebookType', {}).toPromise();
+    this.setCache(cacheKey, result);
+    return result;
   }
 
   getParentMenu(): Promise<any> {

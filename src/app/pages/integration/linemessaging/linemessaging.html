@@ -81,7 +81,7 @@
                   <div class="text-message">
                     {{ interaction.messageText }} @if(interaction.messageType==='IMAGE' || interaction.messageType==='VIDEO' ||
                     interaction.messageType==='AUDIO') { @if (interaction.loadedDataUrl) { @switch (interaction.messageType) { @case ('IMAGE') {
-                    <img [src]="interaction.loadedDataUrl" alt="Loaded image" width="200" style="border-radius: 12px" />
+                    <img loading="lazy" [src]="interaction.loadedDataUrl" alt="Loaded image" width="200" style="border-radius: 12px" />
                     } @case ('VIDEO') {
                     <video [src]="interaction.loadedDataUrl" controls width="300" style="border-radius: 12px"></video>
                     } @case ('AUDIO') {

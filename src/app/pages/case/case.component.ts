@@ -292,4 +292,10 @@ export class CaseComponent extends BaseComponent implements OnInit {
     }
   }
 
+  getCustomerDisplayName(element: Case): string {
+    return element.businessName
+      ? element.businessName
+      : `${element.firstName || ''} ${element.lastName || ''}`.trim();
+  }
+
 }

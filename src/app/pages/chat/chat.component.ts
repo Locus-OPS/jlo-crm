@@ -19,6 +19,8 @@ import { BroadcastComponent } from './broadcast/broadcast.component';
 })
 export class ChatComponent extends BaseComponent implements OnInit {
 
+  private styleCache = new Map<string, string>();
+
   chatList: any[] = [];
   users: any[] = [];
   chatGroups: any[] = [];
@@ -367,6 +369,21 @@ export class ChatComponent extends BaseComponent implements OnInit {
         }
       });
     }
+  }
+
+  getBackgroundStyle(pictureUrl: string): { [key: string]: string } {
+    const cacheKey = pictureUrl || 'default';
+    if (!this.styleCache.has(cacheKey)) {
+      const url = !pictureUrl || pictureUrl === ''
+        ? './assets/img/chat-user-default.png'
+        : this.api.getProfileImagePath(pictureUrl);
+      this.styleCache.set(cacheKey, `url(${url})`);
+    }
+    return { 'background-image': this.styleCache.get(cacheKey) };
+  }
+
+  getStaticBackgroundStyle(url: string): { [key: string]: string } {
+    return { 'background-image': `url(${url})` };
   }
 
 }

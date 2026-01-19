@@ -23,10 +23,7 @@
               @if(chat.messageType === 'private'){
               <div
                 class="photo"
-                [ngStyle]="{
-                  'background-image':
-                    'url(' + (chat.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(chat.pictureUrl)) + ')'
-                }"
+                [ngStyle]="getBackgroundStyle(chat.pictureUrl)"
               >
                 @if(chat.isOnline && chat.messageType == 'private'){
                 <div class="online"></div>
@@ -37,9 +34,7 @@
               } @if(chat.messageType === 'public'){
               <div
                 class="photo"
-                [ngStyle]="{
-                  'background-image': 'url(' + chat.pictureUrl + ')'
-                }"
+                [ngStyle]="getStaticBackgroundStyle(chat.pictureUrl)"
               >
                 <!-- <div *ngIf="chat.isOnline" class="online"></div> -->
               </div>
@@ -57,10 +52,7 @@
             <div *ngFor="let user of users" class="discussion" (click)="onSelectUser(user)">
               <div
                 class="photo"
-                [ngStyle]="{
-                  'background-image':
-                    'url(' + (user.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
-                }"
+                [ngStyle]="getBackgroundStyle(user.pictureUrl)"
               >
                 @if(user.isOnline){
                 <div class="online"></div>
@@ -82,9 +74,7 @@
             <div *ngFor="let chatGroup of chatGroups" class="discussion" (click)="onSelectGroup(chatGroup)">
               <div
                 class="photo"
-                [ngStyle]="{
-                  'background-image': 'url(' + './assets/img/chatgroup.png' + ')'
-                }"
+                [ngStyle]="getStaticBackgroundStyle('./assets/img/chatgroup.png')"
               >
                 <!-- <div *ngIf="chatGroup.isOnline" class="online"></div> -->
               </div>
@@ -144,10 +134,7 @@
                 <div class="message">
                   <div
                     class="photo"
-                    [ngStyle]="{
-                      'background-image':
-                        'url(' + (user.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(user.pictureUrl)) + ')'
-                    }"
+                    [ngStyle]="getBackgroundStyle(user.pictureUrl)"
                   >
                     <!-- <div class="online"></div> -->
                   </div>
@@ -195,10 +182,7 @@
                 <div class="message">
                   <div
                     class="photo"
-                    [ngStyle]="{
-                      'background-image':
-                        'url(' + (message.pictureUrl == '' ? './assets/img/chat-user-default.png' : api.getProfileImagePath(message.pictureUrl)) + ')'
-                    }"
+                    [ngStyle]="getBackgroundStyle(message.pictureUrl)"
                     [matTooltip]="message.senderName"
                   ></div>
                   <p class="text">{{ message.messageText }}</p>

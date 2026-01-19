@@ -21,11 +21,12 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { VideoHandler, ImageHandler, Options } from 'ngx-quill-upload';
 import Quill from 'quill';
 import { TranslateService } from '@ngx-translate/core';
+import { QuillModule } from 'ngx-quill';
 
 
 @Component({
     selector: 'app-email-template',
-    imports: [SharedModule, CreatedByComponent],
+    imports: [SharedModule, CreatedByComponent, QuillModule],
     templateUrl: './email-template.component.html',
     styleUrl: './email-template.component.scss'
 })

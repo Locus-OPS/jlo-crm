@@ -19,6 +19,7 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ModalCustomerComponent } from '../modal-customer/modal-customer.component';
 import { TranslateService } from '@ngx-translate/core';
+import { QuillModule } from 'ngx-quill';
 
 interface Emails {
   email: string;
@@ -27,7 +28,7 @@ interface Emails {
 
 @Component({
     selector: 'app-modal-email',
-    imports: [SharedModule],
+    imports: [SharedModule, QuillModule],
     templateUrl: './modal-email.component.html',
     styleUrl: './modal-email.component.scss'
 })

@@ -13,10 +13,11 @@ import Utils from 'src/app/shared/utils';
 import Quill from 'quill';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModalContentFileComponent } from '../../common/modal-file/modal-file.component';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-email-inbound-detail',
-  imports: [SharedModule],
+  imports: [SharedModule, QuillModule],
   templateUrl: './email-inbound-detail.component.html',
   styleUrl: './email-inbound-detail.component.scss'
 })

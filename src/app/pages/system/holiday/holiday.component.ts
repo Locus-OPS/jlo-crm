@@ -18,6 +18,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { format, parseISO } from 'date-fns';
 import Utils from 'src/app/shared/utils';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 interface Holiday {
   date: Date;
@@ -27,7 +28,8 @@ interface Holiday {
 @Component({
   selector: 'app-holiday',
   imports: [
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ],
   templateUrl: './holiday.component.html',
   styleUrl: './holiday.component.scss'
