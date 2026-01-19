@@ -4,7 +4,13 @@
       "Bash(grep:*)",
       "Bash(ls:*)",
       "Bash(xargs:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm outdated:*)",
+      "Bash(npm view:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm rebuild:*)"
     ]
   }
 }

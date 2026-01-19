@@ -278,8 +278,19 @@ app-created-by {
 }
 
 .mat-mdc-checkbox {
+  .mdc-form-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mdc-checkbox {
+    flex-shrink: 0;
+  }
+
   .mdc-label {
-    padding-top: 6px;
+    padding-top: 0;
+    padding-left: 4px;
     font-family: var(--mat-form-field-container-text-font);
     color: var(--mat-app-text-color);
     font-size: var(--mat-form-field-container-text-size);
