@@ -6,11 +6,11 @@
 
     <form class="login-form">
       <div class="form-field">
-        <label for="username">Username</label>
+        <label for="username">ชื่อผู้ใช้</label>
         <input
           type="text"
           id="username"
-          placeholder="Enter username"
+          placeholder="กรอกชื่อผู้ใช้"
           name="username"
           required
           minlength="5"
@@ -20,11 +20,11 @@
       </div>
 
       <div class="form-field">
-        <label for="password">Password</label>
+        <label for="password">รหัสผ่าน</label>
         <input
           type="password"
           id="password"
-          placeholder="Enter password"
+          placeholder="กรอกรหัสผ่าน"
           name="password"
           required
           minlength="5"
@@ -35,7 +35,7 @@
       </div>
 
       <button type="button" class="login-btn" (click)="onLogin()">
-        Sign In
+        เข้าสู่ระบบ
       </button>
     </form>
 
@@ -43,16 +43,16 @@
     <ng-container
       *ngIf="usernameVal.errors?.['required'] && passwordVal.errors?.['required'] && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); else notBothRequired"
     >
-      <div class="login-error">Username and password are required.</div>
+      <div class="login-error">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน</div>
     </ng-container>
     <ng-template #notBothRequired>
       <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)" class="login-error">
-        <span *ngIf="usernameVal.errors?.['required']">Username is required.</span>
-        <span *ngIf="usernameVal.errors?.['minlength']">Username must be at least 5 characters.</span>
+        <span *ngIf="usernameVal.errors?.['required']">กรุณากรอกชื่อผู้ใช้</span>
+        <span *ngIf="usernameVal.errors?.['minlength']">ชื่อผู้ใช้ต้องมีอย่างน้อย 5 ตัวอักษร</span>
       </div>
       <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)" class="login-error">
-        <span *ngIf="passwordVal.errors?.['required']">Password is required.</span>
-        <span *ngIf="passwordVal.errors?.['minlength']">Password must be at least 5 characters.</span>
+        <span *ngIf="passwordVal.errors?.['required']">กรุณากรอกรหัสผ่าน</span>
+        <span *ngIf="passwordVal.errors?.['minlength']">รหัสผ่านต้องมีอย่างน้อย 5 ตัวอักษร</span>
       </div>
     </ng-template>
 

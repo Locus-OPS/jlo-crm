@@ -99,6 +99,8 @@ export class Globals {
 
   clear() {
     sessionStorage.clear();
+    this.profile = null;
+    this.menuItems = null;
   }
 
 }
