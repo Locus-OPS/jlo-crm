@@ -1,8 +1,10 @@
 <router-outlet></router-outlet>
 <ngx-spinner
-  bdColor = "rgba(51,51,51,0.8)"
-  size = "medium"
-  color = "#fff"
-  type = "ball-pulse-sync"
+  bdColor="rgba(255, 255, 255, 0.85)"
+  size="medium"
+  color="#337ab7"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
 >
+  <p class="loading-text">กำลังโหลด...</p>
 </ngx-spinner>

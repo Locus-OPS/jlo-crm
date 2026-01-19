@@ -4,7 +4,7 @@
     @if(isPdf(mainDoc.fileExtension)){
     <pdf-viewer [src]="getDocPath(mainDoc.filePath, mainDoc.fileName)" class="pdf-viewer" [render-text]="true" style="display: block"></pdf-viewer>
     } @if(isImg(mainDoc.fileExtension)){
-    <img [src]="getDocPath(mainDoc.filePath, mainDoc.fileName)" />
+    <img loading="lazy" [src]="getDocPath(mainDoc.filePath, mainDoc.fileName)" />
     }
   </div>
   }

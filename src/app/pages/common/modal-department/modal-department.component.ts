@@ -90,7 +90,7 @@ export class ModalDepartmentComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

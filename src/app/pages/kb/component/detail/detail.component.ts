@@ -181,7 +181,7 @@ export class DetailComponent extends BaseComponent implements OnInit, OnDestroy 
         this.updateFormValue(result.data);
         Utils.alertSuccess({
           title: 'Updated!',
-          text: 'KB has been updated.',
+          text: 'อัปเดต KB สำเร็จ',
         });
         //if (isCreate) {
         this.kbStore.loadKbContentType(this.kbStore.getKbContentType());

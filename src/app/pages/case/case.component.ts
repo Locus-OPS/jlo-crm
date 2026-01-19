@@ -160,7 +160,7 @@ export class CaseComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -290,6 +290,12 @@ export class CaseComponent extends BaseComponent implements OnInit {
         this.searchForm.get('closedDateEnd').setValue(this.searchForm.value['closedDateStart']);
       }
     }
+  }
+
+  getCustomerDisplayName(element: Case): string {
+    return element.businessName
+      ? element.businessName
+      : `${element.firstName || ''} ${element.lastName || ''}`.trim();
   }
 
 }

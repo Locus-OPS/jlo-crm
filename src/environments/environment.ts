@@ -4,9 +4,12 @@
 
 export const environment = {
   production: false,
-  endpoint: 'http://localhost:8080/jlo-crm-backend',
-  whitelistedDomains: ['localhost:8080'],
-  endpointWebsocket: 'ws://localhost:8080/jlo-crm-backend/chat',
+  // endpoint: 'http://localhost:8080/jlo-crm-backend',
+  // whitelistedDomains: ['localhost:8080'],
+  // endpointWebsocket: 'ws://localhost:8080/jlo-crm-backend/chat',
+  endpoint: 'https://dev.locus.co.th/jlo-crm-backend',
+  endpointWebsocket: 'ws://52.221.33.21/jlo-crm-ws/chat',
+  whitelistedDomains: ['dev.locus.co.th']
   // endpoint: 'http://192.168.10.177:8080/JLOXG',
   // whitelistedDomains: ['192.168.10.177:8080']
   // endpoint: 'https://jlo.locus.co.th/jlo-crm-backend',

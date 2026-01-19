@@ -90,13 +90,13 @@ export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit
   }
 
   saveWfTaskAssign() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowMgmtService.createWorkflowTaskAssign({ data: { ...param, taskId: this.taskId } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Task assign has been created." });
+              Utils.alertSuccess({ text: "สร้างการมอบหมายงานสำเร็จ" });
               this.onSearch();
               this.initForm();
             } else {
@@ -110,13 +110,13 @@ export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit
   }
 
   editWfTaskAssign() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createForm.getRawValue();
           this.workflowMgmtService.updateWorkflowtaskAssign({ data: { ...param, taskId: this.taskId } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Task assign has been updated." });
+              Utils.alertSuccess({ text: "อัปเดตการมอบหมายงานสำเร็จ" });
               this.onSearch();
             } else {
               Utils.alertError({ text: res.message });
@@ -129,12 +129,12 @@ export class WorkflowTaskAssignComponent extends BaseComponent implements OnInit
   }
 
   onDeleteWorkflowTaskAssign(element: any) {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.workflowMgmtService.updateWorkflowtaskAssign({ data: { ...element, status: "Cancelled" } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Workflow task assign has been deleted." });
+              Utils.alertSuccess({ text: "ลบการมอบหมายงานสำเร็จ" });
               this.onSearch();
               this.initForm();
             } else {

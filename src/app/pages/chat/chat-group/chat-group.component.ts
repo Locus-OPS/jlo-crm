@@ -82,13 +82,13 @@ export class ChatGroupComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
 
           this.chatService.createChatRoom({ data: { ...this.createForm.getRawValue(), userList: this.users } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Chat room has been created." });
+              Utils.alertSuccess({ text: "สร้างห้องแชทเรียบร้อยแล้ว" });
               this.dialogRef.close('create');
             } else {
               Utils.alertError({ text: res.message });
@@ -144,13 +144,13 @@ export class ChatGroupComponent extends BaseComponent implements OnInit {
     if (!this.createForm.valid) {
       return;
     }
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
 
           this.chatService.updateChatRoom({ data: { ...this.createForm.getRawValue(), userList: this.users } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Chat room has been updated." });
+              Utils.alertSuccess({ text: "อัปเดตห้องแชทเรียบร้อยแล้ว" });
               this.dialogRef.close('edit');
             } else {
               Utils.alertError({ text: res.message });
@@ -163,12 +163,12 @@ export class ChatGroupComponent extends BaseComponent implements OnInit {
   }
 
   deleteChatRoom() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.chatService.deleteChatRoom({ data: { ...this.createForm.getRawValue(), userList: this.users } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Chat room has been deleted." });
+              Utils.alertSuccess({ text: "ลบห้องแชทเรียบร้อยแล้ว" });
               this.dialogRef.close('delete');
             } else {
               Utils.alertError({ text: res.message });

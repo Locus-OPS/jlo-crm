@@ -91,12 +91,12 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
         this.total = result.total;
       } else {
         Utils.alertError({
-          text: 'Please try again later.',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -160,11 +160,11 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          title: 'Updated!',
-          text: 'Scheduler has been updated.',
+          title: 'อัปเดตสำเร็จ!',
+          text: 'อัปเดตตารางงานสำเร็จ',
         });
       } else {
-        let message = 'Please try again later.';
+        let message = 'กรุณาลองใหม่ภายหลัง';
         if (result.message === 'DUPLICATE') {
           Utils.alertDuplicateError();
           return;
@@ -175,7 +175,7 @@ export class SchedulerComponent extends BaseComponent implements OnInit {
       }
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

@@ -234,8 +234,26 @@ app-created-by {
             --mdc-icon-button-state-layer-size: 30px;
             width: var(--mdc-icon-button-state-layer-size);
             height: var(--mdc-icon-button-state-layer-size);
-            padding-top: 17px;
-            padding-left: 14px;
+            padding: 0;
+            margin-right: 4px;
+            position: relative;
+
+            .mat-mdc-button-touch-target {
+              width: 30px;
+              height: 30px;
+            }
+
+            .mat-mdc-button-persistent-ripple,
+            .mat-mdc-focus-indicator {
+              display: none;
+            }
+
+            svg {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
           }
         }
 
@@ -289,5 +307,479 @@ app-created-by {
   .mat-mdc-select-panel {
     min-width: max-content;
     max-width: 80vw;
+  }
+}
+
+// =====================================================
+// Modern Minimal Card & Form Styles
+// =====================================================
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+// Card styling
+.card {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  .card-header {
+    background: #ffffff !important;
+    border-bottom: 1px solid $border-color;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &.card-header-icon {
+      .card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: rgba($brand-color, 0.1) !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        float: none;
+
+        i.material-icons,
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+          color: $brand-color;
+          line-height: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: $text-primary;
+    }
+  }
+
+  .card-body {
+    padding: 20px;
+    overflow-x: hidden;
+  }
+}
+
+// Prevent horizontal overflow
+.main-content {
+  overflow-x: hidden;
+}
+
+// Tab group styling
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 12px;
+  }
+
+  .mat-mdc-tab {
+    min-width: 120px;
+    padding: 0 24px;
+    height: 48px;
+
+    .mdc-tab__text-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-secondary;
+      letter-spacing: normal;
+    }
+
+    &.mdc-tab--active .mdc-tab__text-label {
+      color: $brand-color;
+    }
+  }
+
+  .mdc-tab-indicator__content--underline {
+    border-color: $brand-color;
+  }
+
+  .mat-mdc-tab-body-content {
+    // padding-top: 16px;
+    overflow-x: hidden !important;
+  }
+}
+
+// ============================================
+// Shared Detail Tabs Styles
+// ============================================
+.detail-tabs {
+  .mat-mdc-tab-header {
+    border-bottom: 1px solid $border-color;
+    margin-bottom: 20px;
+  }
+
+  .mat-mdc-tab {
+    min-width: 140px;
+    padding: 0 20px;
+    height: 48px;
+    border-radius: 8px 8px 0 0;
+    background: $bg-light;
+    margin-right: 4px;
+    transition: all 0.2s ease;
+
+    &:hover:not(.mdc-tab--active) {
+      background: darken($bg-light, 3%);
+    }
+
+    .mdc-tab__text-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: $text-secondary;
+      transition: color 0.2s ease;
+    }
+
+    &.mdc-tab--active {
+      background: #ffffff;
+      border: 1px solid $border-color;
+      border-bottom: 2px solid $brand-color;
+
+      .mdc-tab__text-label {
+        color: $brand-color;
+        font-weight: 600;
+      }
+
+      .tab-icon {
+        color: $brand-color;
+      }
+    }
+
+    .mdc-tab-indicator {
+      display: none;
+    }
+  }
+
+  .tab-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: $text-secondary;
+    transition: color 0.2s ease;
+  }
+
+  .mat-mdc-tab-body-wrapper {
+    padding-top: 8px;
+  }
+}
+
+// Panel icon for expansion panels
+.panel-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  color: $text-secondary;
+  transition: color 0.2s ease;
+}
+
+.mat-expansion-panel.mat-expanded .panel-icon {
+  color: $brand-color;
+}
+
+// Accordion / Expansion panel styling
+.mat-accordion {
+  display: block;
+
+  .mat-expansion-panel {
+    border: 1px solid $border-color;
+    border-radius: 8px !important;
+    margin-bottom: 12px;
+    box-shadow: none !important;
+
+    &:not(.mat-expanded) {
+      .mat-expansion-panel-header:hover {
+        background: $bg-light;
+      }
+    }
+
+    &.mat-expanded {
+      .mat-expansion-panel-header {
+        background: rgba($brand-color, 0.04);
+        border-bottom: 1px solid $border-color;
+      }
+    }
+  }
+
+  .mat-expansion-panel-header {
+    padding: 12px 20px;
+    height: auto !important;
+    min-height: 48px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+
+    .mat-expansion-panel-header-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    .mat-expansion-indicator::after {
+      color: $text-secondary;
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 20px;
+  }
+}
+
+// Button styling
+.btn-primary,
+.btn.btn-primary {
+  background: $brand-color !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+  }
+}
+
+.btn-rose,
+.btn.btn-rose {
+  background: $brand-color !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+  }
+}
+
+.btn-default,
+.btn.btn-default,
+.btn.btn-fill.btn-default {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}
+
+.btn-danger,
+.btn.btn-danger {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+
+  &:hover {
+    background: #dc2626 !important;
+  }
+}
+
+// Round fab button style (edit, delete, etc.)
+.btn-round.btn-fab,
+.btn.btn-round.btn-fab {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  .mat-button-wrapper,
+  span.mat-button-wrapper {
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  i.material-icons {
+    position: static !important;
+    font-size: 18px !important;
+    line-height: 32px !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  &.btn-danger {
+    background: rgba(#ef4444, 0.1) !important;
+    color: #ef4444 !important;
+
+    &:hover {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+    }
+  }
+
+  &.btn-primary {
+    background: rgba($brand-color, 0.1) !important;
+    color: $brand-color !important;
+
+    &:hover {
+      background: $brand-color !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+// Table styling
+.material-datatables {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+
+    &.mat-elevation-z4 {
+      box-shadow: none !important;
+    }
+  }
+}
+
+.mat-mdc-table {
+  background: #ffffff;
+
+  .mat-mdc-header-row {
+    background: $bg-light;
+    min-height: 44px;
+  }
+
+  .mat-mdc-header-cell {
+    color: $text-secondary;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid $border-color;
+    padding: 12px 16px;
+  }
+
+  .mat-mdc-row {
+    min-height: 48px;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba($brand-color, 0.04);
+    }
+
+    &.selected-row {
+      background: rgba($brand-color, 0.1);
+    }
+  }
+
+  .mat-mdc-cell {
+    color: $text-primary;
+    font-size: 13px;
+    border-bottom: 1px solid $border-color;
+    padding: 12px 16px;
+  }
+}
+
+// ============================================
+// SweetAlert2 Modern Minimal Styling
+// ============================================
+.swal-modern-popup {
+  border-radius: 12px !important;
+  padding: 24px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid $border-color !important;
+
+  .swal2-icon {
+    margin: 0 auto 16px !important;
+  }
+}
+
+.swal-modern-title {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: $text-primary !important;
+  padding: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.swal-modern-content {
+  font-size: 14px !important;
+  color: $text-secondary !important;
+  line-height: 1.5 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.swal-modern-actions {
+  margin-top: 24px !important;
+  gap: 8px !important;
+}
+
+.swal-modern-btn {
+  font-family: 'Noto Sans Thai', Roboto, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
+  border-radius: 6px !important;
+  min-width: 100px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.swal-modern-btn-primary {
+  background: $brand-color !important;
+  color: #fff !important;
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+  }
+}
+
+.swal-modern-btn-default {
+  background: #f3f4f6 !important;
+  color: $text-primary !important;
+
+  &:hover {
+    background: #e5e7eb !important;
   }
 }

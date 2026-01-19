@@ -18,6 +18,7 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { format, parseISO } from 'date-fns';
 import Utils from 'src/app/shared/utils';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 interface Holiday {
   date: Date;
@@ -27,7 +28,8 @@ interface Holiday {
 @Component({
   selector: 'app-holiday',
   imports: [
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ],
   templateUrl: './holiday.component.html',
   styleUrl: './holiday.component.scss'
@@ -137,7 +139,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     const param = this.holidayForm.getRawValue();
     const year = moment(this.holidayForm.get('holidayDate').value).year();
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.holidayService.saveHoliday({ data: { ...param, year: year } }).then((res) => {
@@ -146,7 +148,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
               this.holidayForm.patchValue({ year: this.selectedYear });
               this.getHolidayList();
               this.holidayDateInputElement.nativeElement.focus();
-              Utils.alertSuccess({ text: 'Holiday has been saved.' });
+              Utils.alertSuccess({ text: 'บันทึกวันหยุดสำเร็จ' });
             } else {
               Utils.alertError({ text: res.message });
             }
@@ -165,7 +167,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     }
     const params = this.holidayForm.getRawValue();
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.holidayService.editHoliday({ data: params }).then((res) => {
@@ -174,7 +176,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
               this.holidayForm.patchValue({ year: this.selectedYear });
               this.getHolidayList();
               this.holidayDateInputElement.nativeElement.focus();
-              Utils.alertSuccess({ text: 'Holiday has been updated.' });
+              Utils.alertSuccess({ text: 'อัปเดตวันหยุดสำเร็จ' });
             } else {
               Utils.alertError({ text: res.message });
             }
@@ -193,7 +195,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
     }
     const params = this.holidayForm.getRawValue();
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.holidayService.deleteHoliday({ data: params }).then((res) => {
@@ -202,7 +204,7 @@ export class HolidayComponent extends BaseComponent implements OnInit {
               this.holidayForm.patchValue({ year: this.selectedYear });
               this.getHolidayList();
               this.holidayDateInputElement.nativeElement.focus();
-              Utils.alertSuccess({ text: 'Holiday has been deleted.' });
+              Utils.alertSuccess({ text: 'ลบวันหยุดสำเร็จ' });
             } else {
               Utils.alertError({ text: res.message });
             }

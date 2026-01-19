@@ -1,0 +1,388 @@
+// Modern minimal modal styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+$content-height: calc(85vh - 140px); // Total height minus header and footer
+
+:host {
+  display: block;
+}
+
+// Dialog content
+.dialog-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+// Hide modal's own scrollbar
+::ng-deep {
+  .mat-mdc-dialog-surface {
+    overflow: hidden !important;
+  }
+
+  .mat-mdc-dialog-content {
+    overflow: hidden !important;
+    max-height: none !important;
+  }
+}
+
+// Header section (fixed)
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid $border-color;
+  background: #ffffff;
+
+  .header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba($brand-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+      color: $brand-color;
+    }
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+// Close button
+.dialog-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+  }
+}
+
+// Form container
+.form-container {
+  height: $content-height;
+  overflow: hidden;
+}
+
+// Tab styling
+.detail-tabs {
+  height: 100%;
+
+  ::ng-deep {
+    .mat-mdc-tab-header {
+      background: $bg-light;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .mat-mdc-tab {
+      min-width: 140px;
+    }
+
+    .mat-mdc-tab-body-wrapper {
+      height: calc(100% - 49px); // Minus tab header height
+    }
+
+    .mat-mdc-tab-body {
+      height: 100%;
+    }
+
+    .mat-mdc-tab-body-content {
+      height: 100%;
+      overflow: hidden !important;
+    }
+  }
+}
+
+.tab-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+// Tab content
+.tab-content {
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+
+  > .row {
+    height: 100%;
+    margin: 0 -8px;
+    display: flex;
+  }
+}
+
+// Column styling
+.col-md-4 {
+  height: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.col-md-8 {
+  height: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+// Tree panel - LEFT side scrollable
+.tree-panel {
+  height: 100%;
+  background: $bg-light;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($brand-color, 0.05);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba($brand-color, 0.5);
+    }
+  }
+}
+
+// Detail panel - RIGHT side scrollable
+.detail-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 4px;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($brand-color, 0.05);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba($brand-color, 0.5);
+    }
+  }
+}
+
+.panel-actions {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: $bg-light;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+}
+
+// Accordion styling
+.kb-accordion {
+  flex-shrink: 0;
+
+  ::ng-deep {
+    .mat-expansion-panel {
+      border: 1px solid $border-color;
+      border-radius: 8px !important;
+      margin-bottom: 10px;
+      box-shadow: none !important;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:not(.mat-expanded) {
+        .mat-expansion-panel-header:hover {
+          background: rgba($brand-color, 0.04);
+        }
+      }
+
+      &.mat-expanded {
+        .mat-expansion-panel-header {
+          background: rgba($brand-color, 0.06);
+          border-bottom: 1px solid $border-color;
+        }
+      }
+    }
+
+    .mat-expansion-panel-header {
+      padding: 10px 14px;
+      height: auto !important;
+      min-height: 44px;
+    }
+
+    .mat-expansion-panel-header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: $text-primary;
+    }
+
+    .mat-expansion-panel-body {
+      padding: 14px;
+    }
+  }
+}
+
+.panel-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  color: $brand-color;
+}
+
+// Footer actions (fixed)
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 24px;
+  border-top: 1px solid $border-color;
+  background: $bg-light;
+}
+
+// Button styling
+.btn-primary {
+  background: $brand-color !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.15s ease !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+  }
+}
+
+.btn-cancel {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}
+
+// Responsive
+@media screen and (max-width: 992px) {
+  .tab-content > .row {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .col-md-4,
+  .col-md-8 {
+    height: auto;
+    max-width: 100%;
+    flex: none;
+    margin-bottom: 16px;
+  }
+
+  .tree-panel {
+    height: 280px;
+  }
+
+  .detail-panel {
+    height: auto;
+    overflow-y: visible;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dialog-header {
+    padding: 14px 18px;
+  }
+
+  .tab-content {
+    padding: 14px;
+  }
+
+  .dialog-footer {
+    flex-direction: column-reverse;
+    padding: 14px 18px;
+
+    button {
+      width: 100%;
+    }
+  }
+}

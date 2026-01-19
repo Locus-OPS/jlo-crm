@@ -79,21 +79,21 @@
                     </mat-form-field>
                     <br /><br />
                     <div>
-                      <button mat-raised-button color="warn" type="reset" class="button-margin btn btn-fill btn-rose">
+                      <button mat-raised-button type="reset" class="btn btn-fill btn-default">
                         {{ 'button.clear' | translate }}
                       </button>
                       @if(holidayForm.get('id').value){
                       <span>
-                        <button mat-raised-button color="warn" type="submit" class="button-margin" (click)="onDeleteHoliday()">
+                        <button mat-raised-button type="submit" class="btn btn-fill btn-danger" (click)="onDeleteHoliday()">
                           {{ 'button.delete' | translate }}
                         </button>
-                        <button mat-raised-button color="primary" class="button-margin" (click)="onEditHoliday()">
+                        <button mat-raised-button class="btn btn-fill btn-primary" (click)="onEditHoliday()">
                           {{ 'button.save' | translate }}
                         </button>
                       </span>
                       } @if(!holidayForm.get('id').value){
                       <span>
-                        <button mat-raised-button color="primary" class="button-margin" (click)="onSaveHoliday()">
+                        <button mat-raised-button class="btn btn-fill btn-primary" (click)="onSaveHoliday()">
                           {{ 'button.save' | translate }}
                         </button>
                       </span>

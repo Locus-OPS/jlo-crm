@@ -88,13 +88,13 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   }
 
   createBusinessRule() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createform.getRawValue();
           this.workflowMgmtService.createBusinessRule({ data: { ...param, workflowId: this.workflowId } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Business rule has been created." });
+              Utils.alertSuccess({ text: "สร้างกฎธุรกิจสำเร็จ" });
               this.initForm();
               this.onSearch();
 
@@ -109,13 +109,13 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   }
 
   editBusinessRule() {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           const param = this.createform.getRawValue();
           this.workflowMgmtService.updateBusinessRule({ data: { ...param, workflowId: this.workflowId } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Business rule has been updated." });
+              Utils.alertSuccess({ text: "อัปเดตกฎธุรกิจสำเร็จ" });
               this.onSearch();
             } else {
               Utils.alertError({ text: res.message });
@@ -128,13 +128,13 @@ export class WorkflowBusinessRuleComponent extends BaseComponent implements OnIn
   }
 
   onDeleteBusinessRule(element: any) {
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           //const param = this.createform.getRawValue();
           this.workflowMgmtService.updateBusinessRule({ data: { ...element, workflowId: this.workflowId, status: "InActive" } }).then((res) => {
             if (res.status) {
-              Utils.alertSuccess({ text: "Business rule has been deleted." });
+              Utils.alertSuccess({ text: "ลบกฎธุรกิจสำเร็จ" });
               this.onSearch();
               this.initForm();
             } else {

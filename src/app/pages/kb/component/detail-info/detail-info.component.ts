@@ -88,7 +88,7 @@ export class DetailInfoComponent extends BaseComponent implements OnInit, OnDest
         this.updateFormValue(result.data);
         Utils.alertSuccess({
           title: 'Updated!',
-          text: 'KB Detail Info has been updated.',
+          text: 'อัปเดตข้อมูล KB สำเร็จ',
         });
       }
     });

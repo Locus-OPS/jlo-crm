@@ -5,7 +5,7 @@ import { BaseComponent } from 'src/app/shared/base.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Globals } from 'src/app/shared/globals';
-import { Edge, Node, ClusterNode, Layout } from '@swimlane/ngx-graph';
+import { Edge, Node, ClusterNode, Layout, NgxGraphModule } from '@swimlane/ngx-graph';
 import { nodes, clusters, links } from './process-flow.model';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-process-flow',
-    imports: [SharedModule],
+    imports: [SharedModule, NgxGraphModule],
     templateUrl: './process-flow.component.html',
     styleUrl: './process-flow.component.scss'
 })

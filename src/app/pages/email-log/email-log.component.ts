@@ -115,7 +115,7 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
     }, error => {
 
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
 
     });
@@ -126,9 +126,9 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
 
     console.log(row);
 
-    var title = "Confirmation Message";
-    var content = "Are you sure you want to resend email ?";
-    var btnText = "Yes";
+    var title = "ยืนยันการดำเนินการ";
+    var content = "คุณต้องการส่งอีเมลอีกครั้งหรือไม่?";
+    var btnText = "ใช่";
 
     Utils.confirm(title, content, btnText).then(confirm => {
       if (confirm.value) {
@@ -150,8 +150,8 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
       if (result.status) {
         // Utils.assign(this.selectedRow, result.data);
 
-        const msgTitle = 'Send Email!';
-        const msgText = 'Send has been Success.';
+        const msgTitle = 'ส่งอีเมลสำเร็จ!';
+        const msgText = 'ส่งอีเมลเรียบร้อยแล้ว';
 
         Utils.alertSuccess({
           title: msgTitle,
@@ -159,14 +159,14 @@ export class EmailLogComponent extends BaseComponent implements OnInit {
         });
       } else {
         Utils.alertError({
-          text: 'Send failed, please try again later.',
+          text: 'ส่งอีเมลไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
         });
       }
       this.search();
 
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 

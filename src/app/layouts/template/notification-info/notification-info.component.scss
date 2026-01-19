@@ -1,101 +1,222 @@
-.pull-center {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}
+// Modern minimal notification styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
 
 .btn-group {
   margin-top: 0px;
   margin-bottom: 0px;
+}
 
-  button {
-    margin-top: 1px;
-    margin-bottom: 0px;
+// Notification button
+.btnnotification {
+  position: relative;
+  background: #ffffff !important;
+  border: 1px solid $border-color !important;
+  color: $text-secondary;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+    .material-icons {
+      color: $brand-color;
+    }
   }
 
-  .dropdown-menu {
-    form {
-      width: 400px;
-      max-width: 300px;
-    }
+  .material-icons {
+    color: $text-secondary;
+    font-size: 22px;
+    line-height: 1;
   }
 }
 
-@media (max-width: 991px) {
-  .btn-group {
-    .dropdown-menu-right {
-      transform: translateX(-100px);
-      right: 0px !important;
-      left: 0px !important;
-      width: 80vw;
-      max-width: 300px;
+// Dropdown panel
+.noti-dropdown {
+  min-width: 360px;
+  max-width: 400px;
+  padding: 0;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 
-      form {
-        width: 80vw;
-        max-width: 300px;
+  // Header
+  .dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid $border-color;
+    gap: 10px;
+
+    .material-icons {
+      color: $brand-color;
+      font-size: 22px;
+    }
+
+    span {
+      font-size: 15px;
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    .badge {
+      margin-left: auto;
+      background: $brand-color;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+  }
+
+  // Tabs styling
+  .noti-tabs {
+    ::ng-deep {
+      .mat-mdc-tab-header {
+        background: $bg-light;
+        border-bottom: 1px solid $border-color;
+      }
+
+      .mat-mdc-tab {
+        min-width: 100px;
+        padding: 0 24px;
+        height: 44px;
+
+        .mdc-tab__text-label {
+          color: $text-secondary;
+          font-weight: 500;
+          font-size: 13px;
+        }
+
+        &.mdc-tab--active .mdc-tab__text-label {
+          color: $brand-color;
+        }
+      }
+
+      .mat-mdc-tab-body-wrapper {
+        background: #ffffff;
+      }
+
+      .mdc-tab-indicator__content--underline {
+        border-color: $brand-color;
       }
     }
   }
 }
 
-.btnnotification {
-  position: relative;
-  // top: 17px;
-  border: 1px solid #fff;
-  // right: 290px;
-  //font-size: 18px;
-  background: #f9f9f9;
-  color: blueviolet;
-  // min-width: 35px;
-  //padding: 10px 8px 9px 12px;
-  // height: 33px;
-  // border-radius: 30px;
-  // text-align: center;
-  //   line-height: 28px;
-  display: block;
-}
-
-.btnnotifications {
-  position: absolute;
-  top: 17px;
-  border: 1px solid #fff;
-  right: 290px;
-  font-size: 18px;
-  background: #f9f9f9;
-  color: blueviolet;
-  min-width: 35px;
-  padding: 2px 7px 4px 8px;
-  height: 33px;
-  border-radius: 30px;
-  text-align: center;
-  line-height: 28px;
-  display: block;
-}
-
-.list-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 5px 0;
-}
-
-.blue-dot {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  background-color: blue;
-  border-radius: 50%;
-  margin-left: 10px;
-}
-
+// List container
 .list-container {
-  max-height: 300px; /* กำหนดความสูงของ ListView */
-  width: 300px;
-  overflow-y: auto; /* เพิ่ม Scrollbar เมื่อมีรายการเกิน */
-  border: 1px solid #ccc;
-  padding: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
 }
 
+// Empty state
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: $text-secondary;
+
+  .material-icons {
+    font-size: 48px;
+    opacity: 0.3;
+    margin-bottom: 12px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+// List items
 .list-item {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px 14px;
+  margin: 4px 0;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: $brand-color;
+    background: rgba($brand-color, 0.02);
+    transform: translateX(2px);
+  }
+
+  .item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .item-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: $brand-color;
+  }
+
+  .unread-dot {
+    width: 8px;
+    height: 8px;
+    background: $brand-color;
+    border-radius: 50%;
+    margin-left: 8px;
+  }
+
+  .item-desc {
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    color: $text-primary;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .item-time {
+    margin: 0;
+    font-size: 11px;
+    color: $text-secondary;
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .noti-dropdown {
+    min-width: 300px;
+    max-width: calc(100vw - 20px);
+    right: 10px !important;
+    left: auto !important;
+  }
 }

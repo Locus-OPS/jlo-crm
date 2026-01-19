@@ -379,7 +379,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
 
     if (this.customerForm.invalid) {
       Utils.alertError({
-        text: 'Please, Select Customer',
+        text: 'กรุณาเลือกลูกค้า',
       });
       return;
     }
@@ -419,16 +419,16 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
         this.customerForm.patchValue(result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Service Request has been saved.',
+          text: 'บันทึกคำขอบริการสำเร็จ',
         });
       } else {
         Utils.alertError({
-          text: 'Service Request has not been saved.',
+          text: 'ไม่สามารถบันทึกคำขอบริการได้',
         });
       }
     }, () => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -458,7 +458,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
       }
     }, () => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -530,7 +530,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
             });
           } else {
             Utils.alertError({
-              text: "Please try again later.",
+              text: "กรุณาลองใหม่ภายหลัง",
             });
           }
         }
@@ -563,7 +563,7 @@ export class ServiceRequestDetailsComponent extends BaseComponent implements OnI
     if (this.customerForm.invalid) {
 
       Utils.alertError({
-        text: 'Please, Select Customer',
+        text: 'กรุณาเลือกลูกค้า',
       });
       return;
     }

@@ -1,12 +1,20 @@
-<h1 mat-dialog-title>
-  {{title}}
-</h1>
+<div mat-dialog-content class="dialog-content">
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="header-icon warning">
+      <mat-icon>help_outline</mat-icon>
+    </div>
+    <h4 class="header-title">{{ title }}</h4>
+  </div>
 
-<div mat-dialog-content>
-  <p>{{message}}</p>
-</div>
+  <!-- Message -->
+  <div class="dialog-body">
+    <p class="message">{{ message }}</p>
+  </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onDismiss()">No</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+  <!-- Footer Actions -->
+  <div class="dialog-footer">
+    <button mat-button (click)="onDismiss()" class="btn-cancel">No</button>
+    <button mat-raised-button (click)="onConfirm()" class="btn-confirm">Yes</button>
+  </div>
 </div>

@@ -48,9 +48,24 @@ mat-select.select-prefix-currency {
   --jlo-primary-color: #e53935;
 }
 
-mat-tab-body {
-  padding-top: 15px;
+/* Loading Indicator Styles */
+.loading-text {
+  font-size: 14px;
+  color: #337ab7;
+  margin-top: 16px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
 }
+
+ngx-spinner {
+  .overlay {
+    backdrop-filter: blur(2px);
+  }
+}
+
+// mat-tab-body {
+//   padding-top: 15px;
+// }
 
 .mat-form-field-appearance-fill.mat-form-field-disabled .select-prefix-currency .mat-select-arrow-wrapper {
   transform: translateY(0);
@@ -765,14 +780,18 @@ td .mat-icon[svgicon='circle-modified'] svg {
 */
 
 /* IA */
-/* header  tab */
-.main-tab>mat-tab-header .mat-tab-label {
-  background: rgba(0, 0, 0, 0.1);
-}
+/* header tab - main-tab styles moved to custom-theme.scss */
+.main-tab>mat-tab-header {
+  .mat-mdc-tab-label-container {
+    flex-grow: 1;
+  }
 
-.main-tab>mat-tab-header .mat-tab-label {
-  color: #000000 !important;
-  opacity: 1;
+  .mdc-tab__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
 }
 
 /* card */

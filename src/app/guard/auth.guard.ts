@@ -31,7 +31,7 @@ export class AuthGuard {
         return true;
       } else {
         Utils.alertError({
-          text: 'Unauthorized Access',
+          text: 'ไม่มีสิทธิ์เข้าถึง',
         });
         return false;
       }

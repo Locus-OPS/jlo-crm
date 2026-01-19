@@ -66,7 +66,7 @@ export class TreeModalComponent implements OnInit {
 
   confirmSelect() {
     if (!this.activeNode) {
-      Utils.alertError({ text: 'Please select a folder.' });
+      Utils.alertError({ text: 'กรุณาเลือกโฟลเดอร์' });
       return;
     }
     this.dialogRef.close(this.activeNode);
@@ -77,22 +77,26 @@ export class TreeModalComponent implements OnInit {
   }
 
   private convertFlatListToTree(list) {
+    if (!list || list.length === 0) {
+      return [];
+    }
     const map = {}, roots = [];
     let node: KbNode, i: number;
     for (i = 0; i < list.length; i++) {
-      if (list[i].parentId != null) {
-        map[list[i].id] = i;
-        list[i].children = [];
-      }
+      map[list[i].id] = i;
+      list[i].children = [];
     }
     for (i = 0; i < list.length; i++) {
-      if (list[i].parentId != null) {
-        node = list[i];
-        if (node.parentId !== '0') {
-          list[map[node.parentId]].children.push(node);
+      node = list[i];
+      if (node.parentId && node.parentId !== '0') {
+        const parentIndex = map[node.parentId];
+        if (parentIndex !== undefined) {
+          list[parentIndex].children.push(node);
         } else {
           roots.push(node);
         }
+      } else {
+        roots.push(node);
       }
     }
     return roots;

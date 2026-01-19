@@ -1,12 +1,12 @@
 <div class="wrapper">
-  <div class="sidebar" data-color="white" data-background-color="blue">
+  <div class="sidebar" data-color="primary" data-background-color="white">
     <app-sidebar-cmp></app-sidebar-cmp>
     <div class="sidebar-background"></div>
   </div>
   <div class="main-panel">
     <app-navbar-cmp></app-navbar-cmp>
     <mat-tab-group
-      animationDuration="0ms"
+      animationDuration="200ms"
       class="main-tab"
       [selectedIndex]="selectedTab"
       mat-stretch-tabs="false"
@@ -15,19 +15,53 @@
     >
       <mat-tab *ngFor="let tab of tabsComponents; index as i">
         <ng-template mat-tab-label>
-          {{ tab.title | translate : tab.titleParam }}
-          <button *ngIf="tab.canClose" mat-icon-button class="close-icon" style="margin-left: 35px" (click)="closeTab($event, i)">
-            <mat-icon class="close-icon"> close </mat-icon>
-          </button>
+          <div class="tab-label-wrapper" (contextmenu)="onTabContextMenu($event, i)">
+            <span #tabLabel class="tab-label-text"
+                  [matTooltip]="tab.title | translate : tab.titleParam"
+                  matTooltipPosition="above"
+                  [matTooltipDisabled]="!isTextTruncated(tabLabel)">{{ tab.title | translate : tab.titleParam }}</span>
+            <button *ngIf="tab.canClose" mat-icon-button class="close-icon-btn" (click)="closeTab($event, i)">
+              <mat-icon class="close-icon">close</mat-icon>
+            </button>
+          </div>
         </ng-template>
         <ng-scrollbar>
           <ng-container *ngComponentOutlet="tab.component; injector: tab.params"></ng-container>
         </ng-scrollbar>
       </mat-tab>
     </mat-tab-group>
+
+    <!-- Tab Context Menu -->
+    <div
+      class="tab-context-menu-trigger"
+      [style.left.px]="contextMenuPosition.x"
+      [style.top.px]="contextMenuPosition.y"
+      [matMenuTriggerFor]="tabContextMenu">
+    </div>
+    <mat-menu #tabContextMenu="matMenu" panelClass="tab-context-menu">
+      <button mat-menu-item class="tab-context-menu-item close-others" (click)="closeOtherTabs()">
+        <mat-icon>flip_to_back</mat-icon>
+        <span>ปิด Tab อื่น</span>
+      </button>
+      <button mat-menu-item class="tab-context-menu-item close-all" (click)="closeAllTabs()">
+        <mat-icon>layers_clear</mat-icon>
+        <span>ปิดทั้งหมด</span>
+      </button>
+    </mat-menu>
   </div>
   <!-- <app-fixedplugin></app-fixedplugin> -->
 </div>
 <app-taskbar-cmp></app-taskbar-cmp>
 <ng-keyboard-shortcuts [shortcuts]="shortcuts"></ng-keyboard-shortcuts>
 <ng-keyboard-shortcuts-help [key]="'f1'" [closeKey]="'escape'" [title]="'Help'"></ng-keyboard-shortcuts-help>
+
+<ngx-spinner
+  name="initialTab"
+  bdColor="rgba(255, 255, 255, 0.9)"
+  size="medium"
+  color="#337ab7"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p class="loading-text">กำลังโหลดหน้าที่เปิดไว้...</p>
+</ngx-spinner>

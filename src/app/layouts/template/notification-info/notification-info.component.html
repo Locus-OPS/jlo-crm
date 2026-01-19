@@ -1,95 +1,63 @@
 <div class="btn-group">
-  <!-- <mat-icon [matBadge]="countNew" class="notification" [matBadgeHidden]="hiddenNoti" (click)="toggleBadgeVisibility()"
-        style="cursor: hand;">notifications</mat-icon> -->
-
   <button
-    mat-icon-button
+    type="button"
     [matBadge]="countNew"
     [matBadgeHidden]="hiddenNoti"
     class="btnnotification"
-    aria-label="Example icon-button with heart icon"
-    data-toggle="dropdown"
-    data-display="static"
+    aria-label="Notifications"
+    data-bs-toggle="dropdown"
+    data-bs-auto-close="outside"
     aria-expanded="false"
-    (click)="toggleBadgeVisibility()"
   >
-    <mat-icon>notifications</mat-icon>
+    <i class="material-icons">notifications</i>
   </button>
-  <!-- 
-    <button type="button" [matBadge]="countNew" [matBadgeHidden]="hiddenNoti" class="btnnotification"
-        data-toggle="dropdown" data-display="static" aria-expanded="false">
-        <i class="material-icons">notifications</i>
-    </button> -->
 
-  <div class="dropdown-menu dropdown-menu-right" width="200">
-    <div mat-dialog-content class="flex-container">
-      <div class="main-content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">notifications</i>
-                  </div>
-                  <h4 class="card-title">notification</h4>
-                </div>
-                <div class="card-body">
-                  <!-- <form class="px-2 py-1" [formGroup]="consultingForm" novalidate>
-                    <mat-form-field class="form-group">
-                      <mat-label for="txtConsultingNumber">{{ 'consulting.header.number' | translate }}</mat-label>
-                      <input
-                        matInput
-                        formControlName="consultingNumber"
-                        class="form-control"
-                        id="txtConsultingNumber"
-                        type="text"
-                        style="color: blue; font-size: medium"
-                      />
-                    </mat-form-field>
-                  </form> -->
-                  <mat-tab-group>
-                    <mat-tab label="Case">
-                      <div class="list-container">
-                        <div *ngFor="let item of caseNotificationList">
-                          <div class="list-item" (click)="onSelectNotification(item)">
-                            <h5>
-                              <strong>{{ item.caseNumber }} </strong><span *ngIf="!item.read" class="blue-dot"></span>
-                            </h5>
-                            <p>
-                              {{ item.description + ' ' }}
-                            </p>
-                            <p>
-                              <i>{{ 'เวลา ' + item.createdDate }}</i>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </mat-tab>
-                    <mat-tab label="Activity">
-                      <div class="list-container">
-                        <div *ngFor="let item of activityNotificationList">
-                          <div class="list-item" (click)="onSelectNotification(item)">
-                            <h5>
-                              <strong>{{ item.caseNumber }}</strong> <span *ngIf="!item.read" class="blue-dot"></span>
-                            </h5>
-                            <p>
-                              {{ item.description }}
-                            </p>
-                            <p>
-                              <i>{{ 'เวลา ' + item.createdDate }}</i>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </mat-tab>
-                  </mat-tab-group>
-                </div>
-              </div>
+  <div class="dropdown-menu dropdown-menu-end noti-dropdown" (click)="$event.stopPropagation()">
+    <div class="dropdown-header">
+      <i class="material-icons">notifications</i>
+      <span>Notifications</span>
+      <span class="badge" *ngIf="countNew > 0">{{ countNew }}</span>
+    </div>
+
+    <mat-tab-group class="noti-tabs">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>Case</span>
+        </ng-template>
+        <div class="list-container">
+          <div class="empty-state" *ngIf="caseNotificationList.length === 0">
+            <i class="material-icons">inbox</i>
+            <p>No notifications</p>
+          </div>
+          <div class="list-item" *ngFor="let item of caseNotificationList" (click)="onSelectNotification(item)">
+            <div class="item-header">
+              <span class="item-number">{{ item.caseNumber }}</span>
+              <span class="unread-dot" *ngIf="!item.read"></span>
             </div>
+            <p class="item-desc">{{ item.description }}</p>
+            <p class="item-time">{{ item.createdDate }}</p>
           </div>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span>Activity</span>
+        </ng-template>
+        <div class="list-container">
+          <div class="empty-state" *ngIf="activityNotificationList.length === 0">
+            <i class="material-icons">inbox</i>
+            <p>No activities</p>
+          </div>
+          <div class="list-item" *ngFor="let item of activityNotificationList" (click)="onSelectNotification(item)">
+            <div class="item-header">
+              <span class="item-number">{{ item.caseNumber }}</span>
+              <span class="unread-dot" *ngIf="!item.read"></span>
+            </div>
+            <p class="item-desc">{{ item.description }}</p>
+            <p class="item-time">{{ item.createdDate }}</p>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>

@@ -13,9 +13,9 @@
       <app-consulting-info> </app-consulting-info>
     </div>
 
-    <button mat-button class="navbar-toggler btn-no-ripple" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button mat-button class="navbar-toggler btn-no-ripple" type="button" (click)="sidebarToggle()"
+      aria-label="Toggle navigation">
+      <i class="material-icons">menu</i>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navigation">

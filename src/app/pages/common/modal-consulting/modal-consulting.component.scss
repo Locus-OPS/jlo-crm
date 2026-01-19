@@ -1,0 +1,290 @@
+// Modern minimal modal consulting styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+// Dialog container
+:host {
+  display: block;
+}
+
+// Close button (inside header)
+.dialog-close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: $text-secondary;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1;
+  }
+}
+
+// Dialog content
+.dialog-content {
+  padding: 0;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Header section (fixed)
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px;
+  border-bottom: 1px solid $border-color;
+  background: #ffffff;
+  flex-shrink: 0;
+
+  .header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba($brand-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: $brand-color;
+    }
+  }
+
+  .header-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: $text-primary;
+  }
+}
+
+// Form container (scrollable)
+.form-container {
+  padding: 24px;
+  background: #ffffff;
+  flex: 1;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($brand-color, 0.05);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba($brand-color, 0.5);
+  }
+}
+
+// Form section
+.form-section {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Section title
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $border-color;
+}
+
+// Form row
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Form field wrapper
+.field-wrapper {
+  flex: 1;
+  min-width: 200px;
+
+  &.full-width {
+    flex-basis: 100%;
+    min-width: 100%;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+// Custom form field styling
+::ng-deep {
+  .mat-mdc-form-field {
+    .mdc-text-field--outlined {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: $border-color;
+      }
+    }
+
+    &.mat-focused .mdc-text-field--outlined {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: $brand-color;
+      }
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+      mat-icon {
+        color: $text-secondary;
+        cursor: pointer;
+        transition: color 0.15s ease;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+
+        &:hover {
+          color: $brand-color;
+        }
+
+        &:last-child:hover {
+          color: #ef4444;
+        }
+      }
+    }
+  }
+}
+
+// Textarea styling
+textarea.mat-mdc-input-element {
+  min-height: 100px;
+  resize: vertical;
+}
+
+// Footer actions (fixed)
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid $border-color;
+  background: $bg-light;
+  flex-shrink: 0;
+}
+
+// Button styling
+.btn-primary {
+  background: $brand-color !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 24px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.15s ease !important;
+
+  &:hover {
+    background: darken($brand-color, 8%) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.btn-cancel {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 24px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  text-transform: none !important;
+  transition: all 0.15s ease !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}
+
+// Created by section
+app-created-by {
+  display: block;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid $border-color;
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+  .dialog-header {
+    padding: 16px 20px;
+  }
+
+  .form-container {
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .field-wrapper {
+    min-width: 100%;
+  }
+
+  .dialog-footer {
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -235,7 +235,7 @@ export class ModalConsultingComponent extends BaseComponent implements OnInit {
           });
         } else {
           Utils.alertError({
-            text: "Please try again later.",
+            text: "กรุณาลองใหม่ภายหลัง",
           });
         }
       }

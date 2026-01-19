@@ -19,6 +19,7 @@ import { ApiResponse } from 'src/app/model/api-response.model';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ModalCustomerComponent } from '../modal-customer/modal-customer.component';
 import { TranslateService } from '@ngx-translate/core';
+import { QuillModule } from 'ngx-quill';
 
 interface Emails {
   email: string;
@@ -27,7 +28,7 @@ interface Emails {
 
 @Component({
     selector: 'app-modal-email',
-    imports: [SharedModule],
+    imports: [SharedModule, QuillModule],
     templateUrl: './modal-email.component.html',
     styleUrl: './modal-email.component.scss'
 })
@@ -104,7 +105,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 
@@ -254,7 +255,7 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
           this.dialogRef.close();
         } else {
           Utils.alertError({
-            text: 'Save failed, please try again later.',
+            text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
           });
         }
       }
@@ -282,12 +283,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
       } else {
         Utils.alertError({
-          text: 'Save failed, please try again later.',
+          text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 
@@ -309,12 +310,12 @@ export class ModalEmailComponent extends BaseComponent implements OnInit {
 
       } else {
         Utils.alertError({
-          text: 'Save failed, please try again later.',
+          text: 'บันทึกไม่สำเร็จ กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
 

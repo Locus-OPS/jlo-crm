@@ -82,7 +82,7 @@ export class CustomerCaseComponent extends BaseComponent implements OnInit {
       this.caseForm.disable();
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

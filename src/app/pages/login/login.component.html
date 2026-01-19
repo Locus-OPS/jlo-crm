@@ -1,94 +1,69 @@
-<div class="wrapper wrapper-full-page">
-  <div class="page-header login-page header-filter" class="login-container">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="div-logo ml-auto mr-auto col">
-          <div class="text-center">
-            <img src="./assets/img/locus_logo.png" style="max-width: 300px" />
-          </div>
-        </div>
-      </div>
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="./assets/img/locus_logo.png" alt="Locus Logo" />
     </div>
 
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6">
-          <div class="card card-login">
-            <h5 class="card-title text-center">Sign In</h5>
-            <div class="card-body">
-              <form>
-                <div class="mb-3">
-                  <div class="input-group">
-                    <span class="input-group-text">
-                      <i class="material-icons">face</i>
-                    </span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Username"
-                      name="username"
-                      required
-                      minlength="5"
-                      [(ngModel)]="username"
-                      #usernameVal="ngModel"
-                    />
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <div class="input-group">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      required
-                      minlength="5"
-                      #passwordVal="ngModel"
-                      [(ngModel)]="password"
-                      (keyup.enter)="onLogin()"
-                    />
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div class="card-footer text-center">
-              <a class="btn btn-primary btn-lg d-inline-block mx-auto" (click)="onLogin()">Login</a>
-            </div>
-            <ng-container
-              *ngIf="usernameVal.errors?.['required'] && passwordVal.errors?.['required'] && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); else notBothRequired"
-            >
-              <div class="alert alert-danger mt-3">Username password is required.</div>
-            </ng-container>
-            <ng-template #notBothRequired>
-              <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)" class="alert alert-danger mt-3">
-                <div *ngIf="usernameVal.errors?.['required']">Username is required.</div>
-                <div *ngIf="usernameVal.errors?.['minlength']">Username must be at least 4 characters long.</div>
-              </div>
-              <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)" class="alert alert-danger mt-3">
-                <div *ngIf="passwordVal.errors?.['required']">Password is required.</div>
-                <div *ngIf="passwordVal.errors?.['minlength']">Password must be at least 4 characters long.</div>
-              </div>
-            </ng-template>
-
-            <div *ngIf="error_description" class="alert alert-danger mt-3">
-              {{ error_description }}
-            </div>
-          </div>
-        </div>
+    <form class="login-form">
+      <div class="form-field">
+        <label for="username">ชื่อผู้ใช้</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="กรอกชื่อผู้ใช้"
+          name="username"
+          required
+          minlength="5"
+          [(ngModel)]="username"
+          #usernameVal="ngModel"
+        />
       </div>
+
+      <div class="form-field">
+        <label for="password">รหัสผ่าน</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="กรอกรหัสผ่าน"
+          name="password"
+          required
+          minlength="5"
+          [(ngModel)]="password"
+          #passwordVal="ngModel"
+          (keyup.enter)="onLogin()"
+        />
+      </div>
+
+      <button type="button" class="login-btn" (click)="onLogin()">
+        เข้าสู่ระบบ
+      </button>
+    </form>
+
+    <!-- Validation Errors -->
+    <ng-container
+      *ngIf="usernameVal.errors?.['required'] && passwordVal.errors?.['required'] && (usernameVal.dirty || usernameVal.touched) && (passwordVal.dirty || passwordVal.touched); else notBothRequired"
+    >
+      <div class="login-error">กรุณากรอกชื่อผู้ใช้และรหัสผ่าน</div>
+    </ng-container>
+    <ng-template #notBothRequired>
+      <div *ngIf="usernameVal.invalid && (usernameVal.dirty || usernameVal.touched)" class="login-error">
+        <span *ngIf="usernameVal.errors?.['required']">กรุณากรอกชื่อผู้ใช้</span>
+        <span *ngIf="usernameVal.errors?.['minlength']">ชื่อผู้ใช้ต้องมีอย่างน้อย 5 ตัวอักษร</span>
+      </div>
+      <div *ngIf="passwordVal.invalid && (passwordVal.dirty || passwordVal.touched)" class="login-error">
+        <span *ngIf="passwordVal.errors?.['required']">กรุณากรอกรหัสผ่าน</span>
+        <span *ngIf="passwordVal.errors?.['minlength']">รหัสผ่านต้องมีอย่างน้อย 5 ตัวอักษร</span>
+      </div>
+    </ng-template>
+
+    <!-- Server Error -->
+    <div *ngIf="error_description" class="login-error">
+      {{ error_description }}
     </div>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="copyright pull-right">
-          &copy;
-          {{ currentDate | date : 'yyyy' }},
-          <a href="https://www.locus.co.th" target="_blank">Locus Telecommunication Inc., Ltd.</a>
-        </div>
-      </div>
-    </footer>
   </div>
+
+  <footer class="login-footer">
+    &copy; {{ currentDate | date : 'yyyy' }}
+    <a href="https://www.locus.co.th" target="_blank">Locus Telecommunication Inc., Ltd.</a>
+  </footer>
 </div>

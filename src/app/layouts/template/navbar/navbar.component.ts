@@ -112,7 +112,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.navTitleSubscription.unsubscribe();
+    this.navTitleSubscription?.unsubscribe();
   }
 
   changeLanguage(event) {

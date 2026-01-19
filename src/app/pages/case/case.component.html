@@ -175,7 +175,7 @@
                 <ng-container matColumnDef="fullName">
                   <th mat-header-cell *matHeaderCellDef>{{ 'member.firstName' | translate }}</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.businessName ? element.businessName : element.firstName + ' ' + element.lastName }}
+                    {{ getCustomerDisplayName(element) }}
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="subTypeName">

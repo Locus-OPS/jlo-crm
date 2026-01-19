@@ -1,0 +1,29 @@
+// Modern minimal KB detail info styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+
+:host {
+  display: block;
+}
+
+.row {
+  margin-bottom: 8px;
+
+  &.pull-right {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid $border-color;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+// Textarea styling
+::ng-deep {
+  textarea.mat-mdc-input-element {
+    resize: vertical;
+    min-height: 100px;
+  }
+}

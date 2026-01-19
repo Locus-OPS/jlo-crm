@@ -1,0 +1,228 @@
+// Login log content styles
+$brand-color: #337ab7;
+$text-primary: #374151;
+$text-secondary: #6b7280;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+
+.login-log-content {
+  padding: 20px 24px 0 24px;
+}
+
+// Search form section
+.search-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $border-color;
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 180px;
+  }
+}
+
+.search-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+// Table section
+.table-section {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table-container {
+  max-height: 350px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($brand-color, 0.3);
+    border-radius: 3px;
+  }
+}
+
+// Table styling
+::ng-deep {
+  .mat-mdc-table {
+    width: 100%;
+
+    .mat-mdc-header-row {
+      background: $bg-light;
+    }
+
+    .mat-mdc-header-cell {
+      color: $text-secondary;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .mat-mdc-cell {
+      color: $text-primary;
+      font-size: 13px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .mat-mdc-row {
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba($brand-color, 0.04);
+      }
+    }
+  }
+
+  .mat-mdc-paginator {
+    background: $bg-light;
+    border-top: 1px solid $border-color;
+    padding: 0 !important;
+
+    .mat-mdc-paginator-container {
+      min-height: 40px !important;
+      padding: 0 8px !important;
+    }
+  }
+}
+
+// Button styling
+.btn-search {
+  background: #ec4899 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: darken(#ec4899, 8%) !important;
+  }
+}
+
+.btn-clear {
+  background: #ffffff !important;
+  color: $text-secondary !important;
+  border: 1px solid $border-color !important;
+  padding: 8px 20px !important;
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+
+  &:hover {
+    background: $bg-light !important;
+    border-color: #d1d5db !important;
+    color: $text-primary !important;
+  }
+}
+
+// Status Badge
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+
+  &.success {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  &.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+// Type Badge
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: #e0e7ff;
+  color: #3730a3;
+
+  &.login {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+
+  &.logout {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+}
+
+// IP Address
+.ip-address {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 12px;
+  background-color: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #475569;
+}
+
+// Data Not Found
+.data-not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+  }
+
+  span {
+    font-size: 14px;
+  }
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+  .search-row {
+    flex-direction: column;
+
+    mat-form-field {
+      min-width: 100%;
+    }
+  }
+}

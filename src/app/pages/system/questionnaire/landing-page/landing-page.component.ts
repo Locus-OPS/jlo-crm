@@ -77,7 +77,7 @@ export class LandingPageComponent implements OnInit {
 
         } else {
           Utils.alertError({
-            text: "Data not found",
+            text: "ไม่พบข้อมูล",
           });
 
         }
@@ -151,7 +151,7 @@ export class LandingPageComponent implements OnInit {
     const respondent = this.respondentForm.getRawValue();
     const responseList = Object.entries(this.answerForm.getRawValue()).map(([key, value]) => ({ "responseText": (value).toString(), "questionId": Number(key), "questionnaireHeaderId": this.headerId }));
 
-    Utils.confirm('Are you sure?', 'Do you want to proceed?', 'Yes')
+    Utils.confirm('คุณแน่ใจหรือไม่?', 'คุณต้องการดำเนินการต่อหรือไม่?', 'ใช่')
       .then((result) => {
         if (result.isConfirmed) {
           this.landingPageService.createQuestionnaire({ data: { respodent: respondent, responses: responseList } }).then((res) => {

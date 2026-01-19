@@ -99,7 +99,7 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
       this.addrTableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
     this.CHECK_FORM_PERMISSION(this.addressForm);
@@ -115,7 +115,7 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
 
   addressAdd() {
     if (this.customerIdParam == null) {
-      Utils.confirm("Warning", "Please Save Customer before create address.", "Save Customer").then(confirm => {
+      Utils.confirm("คำเตือน", "กรุณาบันทึกข้อมูลลูกค้าก่อนสร้างที่อยู่", "บันทึกลูกค้า").then(confirm => {
         if (confirm.value) {
 
         }
@@ -277,7 +277,7 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
       }).then(result => {
         if (result.data) {
           let fullAddress = result.data.fullAddress;
-          Utils.confirm("Warning", "Save this address as a primary will remove primary flag from \"" + fullAddress + "\" , do you want to save this address?", "Save Address").then(confirm => {
+          Utils.confirm("คำเตือน", "การบันทึกที่อยู่นี้เป็นหลักจะยกเลิกสถานะหลักจาก \"" + fullAddress + "\" คุณต้องการบันทึกที่อยู่นี้หรือไม่?", "บันทึกที่อยู่").then(confirm => {
             if (confirm.value) {
               this.saveAddress();
             }
@@ -287,7 +287,7 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
         }
       }, error => {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       });
     } else {
@@ -303,8 +303,8 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
       primaryYn: Utils.convertToYN(this.addressForm.value['primary']),
     };
 
-    const msgTitle = this.addressForm.value.addressId == null ? 'Created!' : 'Updated!';
-    const msgText = this.addressForm.value.addressId == null ? 'Address has been created.!' : 'Address has been updated.';
+    const msgTitle = this.addressForm.value.addressId == null ? 'สร้างสำเร็จ!' : 'อัปเดตสำเร็จ!';
+    const msgText = this.addressForm.value.addressId == null ? 'ที่อยู่ถูกสร้างแล้ว' : 'ที่อยู่ถูกอัปเดตแล้ว';
 
     this.customerService.saveCustomerAddress({
       data: param
@@ -322,13 +322,13 @@ export class CustomerAddressComponent extends BaseComponent implements OnInit {
         this.addressForm.reset();
       } else {
         Utils.alertError({
-          text: 'Please, try again later',
+          text: 'กรุณาลองใหม่ภายหลัง',
         });
       }
     }, error => {
       console.log("error");
       Utils.alertError({
-        text: 'Please, try again later',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }

@@ -91,7 +91,7 @@
   </app-created-by>
   <div class="d-flex justify-content-end gap-2">
     @if(CAN_WRITE() && !creating){
-    <button mat-raised-button type="button" class="btn btn-primary" (click)="create()">
+    <button mat-raised-button type="button" class="btn btn-fill btn-primary" (click)="create()">
       {{ 'button.create' | translate }}
     </button>
     } @if(CAN_WRITE() && creating){
@@ -99,7 +99,7 @@
       {{ 'button.cancel' | translate }}
     </button>
     } @if(CAN_WRITE()){
-    <button mat-raised-button type="submit" class="btn btn-rose">{{ 'button.save' | translate }}</button>
+    <button mat-raised-button type="submit" class="btn btn-fill btn-rose">{{ 'button.save' | translate }}</button>
     }
   </div>
 </form>

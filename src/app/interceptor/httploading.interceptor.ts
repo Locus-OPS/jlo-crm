@@ -8,6 +8,7 @@ import TokenUtils from '../shared/token-utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../services/auth.service';
+import { Globals } from '../shared/globals';
 
 const IGNORE_LOADING = [
   '/api/casenoti/getcasenotilist'
@@ -24,6 +25,7 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
     private spinner: NgxSpinnerService,
     private authService: AuthService,
     private jwtHelper: JwtHelperService,
+    private globals: Globals,
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -87,6 +89,10 @@ export class HttpLoadingInterceptor implements HttpInterceptor {
   }
 
   private checkIgnoreLoading(url: string) {
+    // Skip individual spinners during initial tab batch loading
+    if (this.globals.isInitialTabLoading) {
+      return true;
+    }
     if (url.indexOf(environment.endpoint) > -1) {
       const path = url.replace(environment.endpoint, "");
       return IGNORE_LOADING.find((item) => path.indexOf(item) > -1) != null;

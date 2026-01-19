@@ -87,7 +87,7 @@ export class PositionComponent extends BaseComponent implements OnInit {
       this.tableControl.total = result.total;
     }, error => {
       Utils.alertError({
-        text: 'Please try again later.',
+        text: 'กรุณาลองใหม่ภายหลัง',
       });
     });
   }
@@ -113,7 +113,7 @@ export class PositionComponent extends BaseComponent implements OnInit {
         }).then(result => {
           if (result.status) {
             Utils.alertSuccess({
-              text: 'Position has been deleted.',
+              text: 'ลบตำแหน่งสำเร็จ',
             });
             this.search();
           } else {
@@ -144,7 +144,7 @@ export class PositionComponent extends BaseComponent implements OnInit {
         Utils.assign(this.selectedRow, result.data);
         this.createForm.patchValue(result.data);
         Utils.alertSuccess({
-          text: 'Position has been saved.',
+          text: 'บันทึกตำแหน่งสำเร็จ',
         });
         this.search();
       }
